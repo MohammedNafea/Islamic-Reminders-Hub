@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "موقع الأذكار الإسلامية"
+version = "1.0.0"
+id = "artifacts/adhkar"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19682
+
+[services.development]
+run = "pnpm --filter @workspace/adhkar run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/adhkar", "run", "build" ]
+publicDir = "artifacts/adhkar/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19682"
+BASE_PATH = "/"
