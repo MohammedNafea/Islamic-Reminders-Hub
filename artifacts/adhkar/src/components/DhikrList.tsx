@@ -12,9 +12,10 @@ interface DhikrListProps {
   adhkar: Dhikr[];
   titleKey: string;
   isEvening?: boolean;
+  compact?: boolean;
 }
 
-export function DhikrList({ adhkar, titleKey, isEvening = false }: DhikrListProps) {
+export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false }: DhikrListProps) {
   const { t } = useTranslation();
   const [progress, setProgress] = useState<Record<string, number>>({});
   const settings = getSettings();
@@ -64,18 +65,20 @@ export function DhikrList({ adhkar, titleKey, isEvening = false }: DhikrListProp
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-border/50">
-        <h2 className="text-2xl font-heading font-bold text-primary mb-3">{t(titleKey)}</h2>
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>{Math.round(percentComplete)}%</span>
-            <span>{totalCompleted} / {totalRequired}</span>
+      {!compact && (
+        <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-4 -mx-4 px-4 sm:mx-0 sm:px-0 border-b border-border/50">
+          <h2 className="text-2xl font-heading font-bold text-primary mb-3">{t(titleKey)}</h2>
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm text-muted-foreground">
+              <span>{Math.round(percentComplete)}%</span>
+              <span>{totalCompleted} / {totalRequired}</span>
+            </div>
+            <Progress value={percentComplete} className="h-2 bg-muted">
+              <div className="h-full bg-primary transition-all" style={{ width: `${percentComplete}%` }} />
+            </Progress>
           </div>
-          <Progress value={percentComplete} className="h-2 bg-muted">
-            <div className="h-full bg-primary transition-all" style={{ width: `${percentComplete}%` }} />
-          </Progress>
         </div>
-      </div>
+      )}
 
       <div className="space-y-4">
         <AnimatePresence>

@@ -5,6 +5,7 @@ export default {
   },
   nav: {
     home: "Home",
+    adhkar: "Adhkar",
     morning: "Morning Adhkar",
     evening: "Evening Adhkar",
     both: "Morning & Evening",
@@ -14,6 +15,7 @@ export default {
     times: "Prayer Times",
     fasting: "Fasting Days",
     tasbih: "Tasbih",
+    settings: "Settings",
   },
   home: {
     greeting_morning: "Good Morning",
@@ -21,8 +23,28 @@ export default {
     greeting_night: "Good Night",
     today: "Today",
     progress: "Today's Progress",
-    completed: "completed",
+    completed: "Completed",
     start: "Start Adhkar",
+    salawat_banner: "Allahumma Salli 'ala Muhammad",
+    salawat_subtitle: "Tap to send prayers upon the Prophet ﷺ",
+    salawat_today: "Today",
+  },
+  salawat: {
+    title: "Prayers Upon the Prophet ﷺ",
+    virtue: "Virtues of Salawat",
+    simple: "Simple Salawat",
+    ibrahimiya: "Ibrahimi Prayer",
+    tap_count: "Tap to count",
+  },
+  adhkar_hub: {
+    title: "Adhkar",
+    subtitle: "Choose a type of Adhkar",
+    morning_desc: "Adhkar said in the morning for protection",
+    evening_desc: "Adhkar said in the evening for protection",
+    sleep_desc: "Adhkar said at bedtime for safety and peace",
+    prayer_desc: "Post-prayer adhkar & Salawat upon the Prophet ﷺ",
+    ruqyah_desc: "Quranic verses for healing and protection",
+    post_prayer: "Post-Prayer Adhkar",
   },
   prayer: {
     fajr: "Fajr",
@@ -52,6 +74,8 @@ export default {
     },
     last_third: "Last Third of Night",
     imsak: "Imsak",
+    calendar: "Monthly Calendar",
+    today_prayers: "Today's Prayer Times",
   },
   dhikr: {
     count: "Count",
@@ -120,7 +144,19 @@ export default {
   dates: {
     hijri: "AH",
     gregorian: "AD",
+    calendar: "Calendar",
+    today: "Today",
+    days_short: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    hijri_months: [
+      "Muharram", "Safar", "Rabi' al-Awwal", "Rabi' al-Thani",
+      "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Sha'ban",
+      "Ramadan", "Shawwal", "Dhul Qa'dah", "Dhul Hijjah"
+    ],
+    gregorian_months: [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ],
   },
   settings: {
     title: "Settings",
@@ -132,6 +168,10 @@ export default {
     calculation: "Prayer Calculation Method",
     font_size: "Font Size",
     notifications: "Notifications",
+    font_sm: "Small",
+    font_md: "Medium",
+    font_lg: "Large",
+    font_xl: "Extra Large",
   },
   common: {
     loading: "Loading...",
