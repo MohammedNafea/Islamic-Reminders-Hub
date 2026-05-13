@@ -6,8 +6,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/Layout";
 
-// Pages
 import Home from "@/pages/Home";
+import AdhkarHub from "@/pages/AdhkarHub";
 import Morning from "@/pages/Morning";
 import Evening from "@/pages/Evening";
 import Sleep from "@/pages/Sleep";
@@ -25,6 +25,7 @@ function Router() {
     <Layout>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/adhkar" component={AdhkarHub} />
         <Route path="/morning" component={Morning} />
         <Route path="/evening" component={Evening} />
         <Route path="/sleep" component={Sleep} />
