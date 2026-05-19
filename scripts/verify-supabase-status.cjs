@@ -1,6 +1,6 @@
 const dns = require('dns');
 
-const hostname = 'siimuzrjiobhxftntppr.supabase.co';
+const hostname = 'cohcnmqarjvoradzlsov.supabase.co';
 
 console.log(`Checking DNS resolution for ${hostname}...`);
 

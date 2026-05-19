@@ -3,8 +3,8 @@ const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
 // Configuration
-const SUPABASE_URL = 'https://siimuzrjiobhxftntppr.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpaW11enJqaW9iaHhmdG50cHByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MTEyODQsImV4cCI6MjA4OTE4NzI4NH0.zLlGRSARTlDXqXuTJT3OgBzBLnnx87fyamSomOkUpPI';
+const SUPABASE_URL = 'https://cohcnmqarjvoradzlsov.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvaGNubXFhcmp2b3JhZHpsc292Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3OTE4ODM1MCwiZXhwIjoyMDk0NzY0MzUwfQ.n-RRLjrf_vJ-CUBbR3-tJb4IXFwaoxNhtxRgx3ZP3fc';
 
 const CF_ACCOUNT_ID = '904150a4e5a4ec9686bdba22644371ed';
 const CF_TOKEN = 'cfut_a30IRZ1ovKTPTrvE8ZGj6dpm8UzQC4oe14qEyNkBa4b42378';

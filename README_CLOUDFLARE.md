@@ -37,8 +37,8 @@
 
 | اسم المتغير | القيمة |
 | :--- | :--- |
-| `VITE_SUPABASE_URL` | `https://siimuzrjiobhxftntppr.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` (انسخه من ملف المفاتيح) |
+| `VITE_SUPABASE_URL` | `https://cohcnmqarjvoradzlsov.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNvaGNubXFhcmp2b3JhZHpsc292Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxODgzNTAsImV4cCI6MjA5NDc2NDM1MH0.5YvQ4iAPQjq8ReqefwhkqWYy4LNegaH7hLjKKAQu4oo` |
 
 ---
 

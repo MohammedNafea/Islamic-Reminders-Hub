@@ -15,8 +15,15 @@ create table if not exists public.library_items (
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
--- Disable Row Level Security (RLS) so that the ingestion script can run using the public anon key
-alter table public.library_items disable row level security;
+-- Enable Row Level Security (RLS)
+alter table public.library_items enable row level security;
+
+-- Create RLS Policies to allow anonymous read access
+create policy "Allow anonymous read access"
+  on public.library_items
+  for select
+  to anon
+  using (true);
 
 -- Create an HNSW index for fast similarity search using Cosine distance
 create index if not exists library_items_embedding_hnsw_idx 
