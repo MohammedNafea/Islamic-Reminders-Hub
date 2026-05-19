@@ -19,6 +19,7 @@ create table if not exists public.library_items (
 alter table public.library_items enable row level security;
 
 -- Create RLS Policies to allow anonymous read access
+drop policy if exists "Allow anonymous read access" on public.library_items;
 create policy "Allow anonymous read access"
   on public.library_items
   for select
