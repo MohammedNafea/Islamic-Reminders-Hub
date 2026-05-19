@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getTasbihCount, setTasbihCount, getSettings } from "@/lib/store";
-import { RotateCcw, Target } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { RotateCcw } from "lucide-react";
 
 const TARGETS = [33, 99, 100, 1000];
 
@@ -100,7 +98,7 @@ export default function Tasbih() {
             />
           </svg>
           
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="wait">
             <motion.span
               key={count}
               initial={{ opacity: 0, y: 10, scale: 0.8 }}

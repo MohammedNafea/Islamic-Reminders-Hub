@@ -4,9 +4,10 @@ import { adhkarPrayer, adhkarSalawat, salawatVirtues } from "@/data/adhkar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { isArabic, getTranslation } from "@/lib/content-i18n";
 
 export default function Prayer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="animate-in fade-in duration-500 space-y-8">
@@ -35,7 +36,23 @@ export default function Prayer() {
                     <p className="dhikr-text text-right text-base leading-relaxed" dir="rtl" style={{ fontSize: "0.95rem" }}>
                       {v.arabic}
                     </p>
-                    <p className="text-xs text-muted-foreground text-right">{v.source}</p>
+                    {!isArabic(i18n.language) && (() => {
+                      const translatedVirtue = getTranslation(t, `salawat.virtues.${v.id}`);
+                      return translatedVirtue ? (
+                        <p className="text-xs text-muted-foreground text-left border-t border-border/20 pt-2 mt-2" dir="ltr">
+                          {translatedVirtue}
+                        </p>
+                      ) : null;
+                    })()}
+                    <p className="text-xs text-muted-foreground text-right" dir="rtl">{v.source}</p>
+                    {!isArabic(i18n.language) && (() => {
+                      const translatedSource = getTranslation(t, `adhkar.sources.${v.source}`);
+                      return translatedSource ? (
+                        <p className="text-[10px] text-muted-foreground/60 text-left" dir="ltr">
+                          {translatedSource}
+                        </p>
+                      ) : null;
+                    })()}
                   </CardContent>
                 </Card>
               </motion.div>

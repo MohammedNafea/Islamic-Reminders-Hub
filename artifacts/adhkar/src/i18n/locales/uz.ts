@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "Islom markazi", tagline: "Kundalik maʼnaviy hamrohingiz" },
+  nav: { home: "Bosh sahifa", adhkar: "Azkorlar", morning: "Tonggi azkorlar", evening: "Kechki azkorlar", both: "Tong va Kech", sleep: "Uyqu azkorlari", prayer: "Namoz azkorlari", ruqyah: "Ruqiya", times: "Namoz vaqtlari", fasting: "Roʻza kunlari", tasbih: "Tasbih", settings: "Sozlamalar", hadith: "Hadis va hukmlar", quran: "Qurʼon", qibla: "Qibla", zakat: "Zakot", favorites: "Sevimlilar", search: "Qidirish" },
+  home: { greeting_morning: "Xayrli tong", greeting_evening: "Xayrli kech", greeting_night: "Xayrli tun", today: "Bugun", progress: "Bugungi ilgarilash", completed: "bajarildi", start: "Boshlash" },
+  prayer: { fajr: "Bomdod", sunrise: "Quyosh chiqishi", dhuhr: "Peshin", asr: "Asr", maghrib: "Shom", isha: "Xufton", next: "Keyingi namoz", remaining: "Qolgan vaqt", location: "Joylashuvingiz", location_required: "Joylashuv ruxsati bering", allow_location: "Ruxsat berish", enter_city: "Shahar kiriting", calculation_method: "Hisoblash usuli", methods: { MuslimWorldLeague: "Musulmon Jahon Ligasi", Egyptian: "Misr Boshqarmasi", Karachi: "Karachi Universiteti", UmmAlQura: "Umm Al-Qura", Dubai: "Dubay", NorthAmerica: "Shimoliy Amerika", Kuwait: "Quvayt", Qatar: "Qatar", Singapore: "Singapur", Turkey: "Turkiya" }, last_third: "Tunning soʻnggi uchdanbiri", imsak: "Imsok" },
+  dhikr: { count: "Son", times: "marta", source: "Manba", tap_to_count: "Sanash uchun bosing", completed_msg: "Bajarildi!", reset: "Qayta tiklash", reset_all: "Barchasini qayta tiklash", morning_form: "Tonggi shakl", evening_form: "Kechki shakl", note: "Eslatma", benefit: "Foyda" },
+  tasbih: { title: "Erkin tasbih", count: "Joriy son", target: "Maqsad", set_target: "Maqsad qoʻyish", reset: "Qayta tiklash", vibrate: "Tebranish", sound: "Ovoz", custom: "Maxsus", saved: "Saqlandi" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Sunnat roʻza kunlari", white_days: "Oq kunlar", white_days_desc: "Har oyda Hijriy 13, 14 va 15", white_days_hadith: "Har oyda 3 kun roʻza tutish abadiy roʻza tutishdek", arafah: "Arafa kuni", arafah_desc: "Zulhijja 9", arafah_hadith: "Arafa roʻzasi oʻtgan va kelasi yil gunohlarini kechiradi", monday: "Dushanba", monday_desc: "Har hafta dushanba", monday_hadith: "Men tugʻilgan va vahiy tushgan kun", thursday: "Payshanba", thursday_desc: "Har hafta payshanba", thursday_hadith: "Amallar dushanba va payshanba koʻrsatiladi", shawwal: "Shavvolning 6 kuni", shawwal_desc: "Hayitdan keyin 6 kun", shawwal_hadith: "Ramazon va 6 kun roʻza tutgan abadiy roʻza tutgandek", upcoming: "Kelayotgan", today_fasting: "Bugun", passed: "Oʻtgan", gregorian_date: "Milodiy", hijri_date: "Hijriy", days_remaining: "{{days}} kun qoldi", days_passed: "{{days}} kun oldin", monthly: "Oylik", weekly: "Haftalik", yearly: "Yillik" },
+  dates: { hijri: "H", gregorian: "M", days: ["Yakshanba", "Dushanba", "Seshanba", "Chorshanba", "Payshanba", "Juma", "Shanba"] },
+  settings: { title: "Sozlamalar", language: "Til", theme: "Mavzu", dark: "Qorongʻu", light: "Yorugʻ", system: "Tizim", calculation: "Hisoblash usuli", font_size: "Shrift oʻlchami", notifications: "Bildirishnomalar" },
+  common: { loading: "Yuklanmoqda...", error: "Xatolik yuz berdi", retry: "Qayta urinish", close: "Yopish", save: "Saqlash", cancel: "Bekor qilish", done: "Tayyor", search: "Qidirish", share: "Ulashish", copied: "Nusxalandi", copy: "Nusxalash", of: "/", back: "Orqaga" },
+  hadith: { title: "Hadis va hukmlar", subtitle: "Hadislar, hukmlar va ilmiy qarashlar ensiklopediyasi", search_placeholder: "Hadis, hukm yoki kalit soʻz qidiring...", loading_data: "Maʼlumotlar yuklanmoqda...", no_results: "Natija topilmadi", try_another_search: "Boshqa soʻz bilan urinib koʻring", cat_all: "Barchasi", cat_tafsir: "Tafsir", cat_creed: "Aqida", cat_fiqh: "Fiqh", cat_hadith: "Hadis", cat_ethics: "Axloq", cat_general: "Umumiy" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

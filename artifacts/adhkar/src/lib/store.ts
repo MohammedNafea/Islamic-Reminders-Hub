@@ -49,7 +49,9 @@ export function setDhikrCount(dhikrId: string, count: number): void {
       delete all[keys.shift()!];
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {}
+  } catch {
+    // ignore
+  }
 }
 
 export function resetDayProgress(): void {
@@ -59,7 +61,9 @@ export function resetDayProgress(): void {
     const todayKey = getTodayKey();
     delete all[todayKey];
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {}
+  } catch {
+    // ignore
+  }
 }
 
 export function getSettings(): AppSettings {
@@ -76,7 +80,9 @@ export function saveSettings(settings: Partial<AppSettings>): void {
   try {
     const current = getSettings();
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...current, ...settings }));
-  } catch {}
+  } catch {
+    // ignore
+  }
 }
 
 function defaultSettings(): AppSettings {
@@ -90,17 +96,21 @@ function defaultSettings(): AppSettings {
   };
 }
 
-export function getTasbihCount(name: string): number {
+export function getTasbihCount(name: string, daily = false): number {
   try {
-    const stored = localStorage.getItem(`tasbih_${name}`);
+    const key = daily ? `tasbih_${name}_${getTodayKey()}` : `tasbih_${name}`;
+    const stored = localStorage.getItem(key);
     return stored ? parseInt(stored) : 0;
   } catch {
     return 0;
   }
 }
 
-export function setTasbihCount(name: string, count: number): void {
+export function setTasbihCount(name: string, count: number, daily = false): void {
   try {
-    localStorage.setItem(`tasbih_${name}`, String(count));
-  } catch {}
+    const key = daily ? `tasbih_${name}_${getTodayKey()}` : `tasbih_${name}`;
+    localStorage.setItem(key, String(count));
+  } catch {
+    // ignore
+  }
 }

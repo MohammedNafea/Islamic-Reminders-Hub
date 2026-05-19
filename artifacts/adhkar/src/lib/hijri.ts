@@ -85,7 +85,6 @@ function jdToHijri(jd: number): { year: number; month: number; day: number } {
 }
 
 export function formatHijriDate(h: HijriDate, lang = "ar"): string {
-  const dayName = lang === "ar" ? "" : "";
   if (lang === "ar") {
     return `${h.day} ${h.monthName} ${h.year}هـ`;
   }
@@ -123,4 +122,26 @@ export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): D
   const month = j + 2 - 12 * llll;
   const year = 100 * (n - 49) + i + llll;
   return new Date(year, month - 1, day);
+}
+
+export function isFastingDay(h: HijriDate, g: Date): string | null {
+  // Arafah: 9 Dhul Hijjah
+  if (h.month === 12 && h.day === 9) return "arafah";
+  // Ashura: 10 Muharram
+  if (h.month === 1 && h.day === 10) return "ashura";
+  // Tasua: 9 Muharram
+  if (h.month === 1 && h.day === 9) return "tasua";
+  // White Days: 13, 14, 15 of every Hijri month
+  if (h.day >= 13 && h.day <= 15) return "white_days";
+  // Dhul Hijjah first 9 days
+  if (h.month === 12 && h.day >= 1 && h.day <= 9) return "dhul_hijjah";
+  // Shawwal 6 days (approximate for display)
+  if (h.month === 10 && h.day >= 2 && h.day <= 7) return "shawwal";
+  
+  // Monday/Thursday
+  const day = g.getDay();
+  if (day === 1) return "monday";
+  if (day === 4) return "thursday";
+  
+  return null;
 }

@@ -6,7 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Dhikr } from "@/data/adhkar";
 import { getDailyProgress, setDhikrCount, getSettings } from "@/lib/store";
-import { Check, Repeat } from "lucide-react";
+import { Check, Repeat, Volume2, Square, Heart } from "lucide-react";
+import { useFavorites } from "@/hooks/useFavorites";
+import { isArabic, getTranslation } from "@/lib/content-i18n";
 
 interface DhikrListProps {
   adhkar: Dhikr[];
@@ -16,11 +18,11 @@ interface DhikrListProps {
 }
 
 export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false }: DhikrListProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [progress, setProgress] = useState<Record<string, number>>({});
+  const { toggleFavorite, isFavorite } = useFavorites();
   const settings = getSettings();
   
-  // Use a ref to track if we've played the vibration to avoid spamming
   const vibrateRef = useRef<number>(0);
 
   useEffect(() => {
@@ -40,9 +42,9 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
       const now = Date.now();
       if (now - vibrateRef.current > 100) {
         if (next === dhikr.count) {
-          navigator.vibrate([50, 100, 50]); // Success pattern
+          navigator.vibrate([50, 100, 50]); 
         } else {
-          navigator.vibrate(20); // Tap pattern
+          navigator.vibrate(20); 
         }
         vibrateRef.current = now;
       }
@@ -54,6 +56,22 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
     delete newProgress[id];
     setProgress(newProgress);
     setDhikrCount(id, 0);
+  };
+
+  const [speakingId, setSpeakingId] = useState<string | null>(null);
+
+  const speak = (id: string, text: string) => {
+    if (speakingId === id) {
+      window.speechSynthesis.cancel();
+      setSpeakingId(null);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "ar-SA";
+    utterance.onend = () => setSpeakingId(null);
+    window.speechSynthesis.speak(utterance);
+    setSpeakingId(id);
   };
 
   const totalRequired = adhkar.reduce((sum, d) => sum + d.count, 0);
@@ -85,7 +103,17 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
           {adhkar.map((dhikr, index) => {
             const count = progress[dhikr.id] || 0;
             const isCompleted = count >= dhikr.count;
-            const text = isEvening && dhikr.eveningVariant ? dhikr.eveningVariant : dhikr.arabic;
+            
+            // Arabic original is ALWAYS shown; translation appears below for non-Arabic languages
+            const arabicText = isEvening && dhikr.eveningVariant ? dhikr.eveningVariant : dhikr.arabic;
+            const translationKey = `adhkar.items.${dhikr.id}`;
+            const translatedText = isArabic(i18n.language) ? null : getTranslation(t, translationKey);
+            
+            const sourceKey = `adhkar.sources.${dhikr.source}`;
+            const translatedSource = isArabic(i18n.language) ? null : getTranslation(t, sourceKey);
+            const showTranslation = translatedText !== null;
+            const showSourceTranslation = translatedSource !== null;
+
 
             return (
               <motion.div
@@ -104,17 +132,35 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
                   onClick={() => handleTap(dhikr)}
                 >
                   <CardContent className="p-6 space-y-6">
+                    {/* Arabic original — always shown */}
                     <div 
                       className="dhikr-text text-right"
                       dir="rtl"
                     >
-                      {text}
+                      {arabicText}
                     </div>
+                    
+                    {/* Translation — shown only for non-Arabic languages when available */}
+                    {showTranslation && (
+                      <div 
+                        className="dhikr-translation text-left text-muted-foreground border-t border-border/30 pt-4"
+                        dir="ltr"
+                      >
+                        {translatedText}
+                      </div>
+                    )}
                     
                     <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-sm text-muted-foreground">
                       <div className="space-y-1 flex-1">
-                        <p className="font-medium text-foreground">{dhikr.source}</p>
-                        {dhikr.note && <p className="text-xs">{dhikr.note}</p>}
+                        <p className="font-medium text-foreground" dir="rtl">{dhikr.source}</p>
+                        {showSourceTranslation && (
+                          <p className="text-xs" dir="ltr">{translatedSource}</p>
+                        )}
+                        {dhikr.note && (
+                          <p className="text-xs">
+                            {t(`adhkar.notes.${dhikr.note}`, { defaultValue: dhikr.note })}
+                          </p>
+                        )}
                       </div>
                       
                       <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-4 sm:pt-0">
@@ -130,6 +176,36 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
                             <Repeat className="w-4 h-4" />
                           </button>
                         )}
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFavorite(dhikr.id);
+                          }}
+                          className={cn(
+                            "p-2 rounded-full transition-colors",
+                            isFavorite(dhikr.id)
+                              ? "text-red-500 bg-red-50"
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          )}
+                        >
+                          <Heart className={cn("w-4 h-4", isFavorite(dhikr.id) && "fill-current")} />
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            speak(dhikr.id, arabicText);
+                          }}
+                          className={cn(
+                            "p-2 rounded-full transition-colors",
+                            speakingId === dhikr.id 
+                              ? "bg-primary/20 text-primary animate-pulse" 
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          )}
+                        >
+                          {speakingId === dhikr.id ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                        </button>
                         
                         <div className={cn(
                           "flex items-center justify-center gap-2 rounded-full px-4 py-2 font-medium transition-colors",

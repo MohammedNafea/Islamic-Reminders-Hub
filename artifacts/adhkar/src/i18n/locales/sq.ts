@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "Qendra Islame", tagline: "Shoqëruesi juaj shpirtëror i përditshëm" },
+  nav: { home: "Kryefaqja", adhkar: "Adhkare", morning: "Adhkaret e mëngjesit", evening: "Adhkaret e mbrëmjes", both: "Mëngjes dhe Mbrëmje", sleep: "Adhkaret e gjumit", prayer: "Adhkaret e namazit", ruqyah: "Rukje", times: "Kohët e namazit", fasting: "Ditët e agjërimit", tasbih: "Tesbih", settings: "Cilësimet", hadith: "Hadithe dhe Vendime", quran: "Kurani", qibla: "Kibla", zakat: "Zekat", favorites: "Të preferuarat", search: "Kërko" },
+  home: { greeting_morning: "Mirëmëngjes", greeting_evening: "Mirëmbrëmje", greeting_night: "Natën e mirë", today: "Sot", progress: "Progresi i sotëm", completed: "përfunduar", start: "Fillo" },
+  prayer: { fajr: "Fexhr", sunrise: "Lindja e diellit", dhuhr: "Dhuhr", asr: "Asr", maghrib: "Magrib", isha: "Isha", next: "Namazi i ardhshëm", remaining: "Koha e mbetur", location: "Vendndodhja juaj", location_required: "Lejo qasjen në vendndodhje", allow_location: "Lejo", enter_city: "Shkruaj qytetin", calculation_method: "Metoda e llogaritjes", methods: { MuslimWorldLeague: "Liga Botërore Islame", Egyptian: "Autoriteti Egjiptian", Karachi: "Universiteti i Karaçisë", UmmAlQura: "Umm Al-Kura", Dubai: "Dubai", NorthAmerica: "Amerika e Veriut", Kuwait: "Kuvajt", Qatar: "Katar", Singapore: "Singapor", Turkey: "Turqi" }, last_third: "E treta e fundit e natës", imsak: "Imsak" },
+  dhikr: { count: "Numri", times: "herë", source: "Burimi", tap_to_count: "Prek për të numëruar", completed_msg: "U përfundua!", reset: "Rivendos", reset_all: "Rivendos të gjitha", morning_form: "Forma e mëngjesit", evening_form: "Forma e mbrëmjes", note: "Shënim", benefit: "Dobi" },
+  tasbih: { title: "Tesbih i lirë", count: "Numri aktual", target: "Objektivi", set_target: "Vendos objektivin", reset: "Rivendos", vibrate: "Dridhje", sound: "Zë", custom: "Personalizuar", saved: "U ruajt" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Ditët e agjërimit Sunnet", white_days: "Ditët e bardha", white_days_desc: "13, 14 dhe 15 Hixhri çdo muaj", white_days_hadith: "Agjërimi 3 ditë çdo muaj është si agjërimi i përjetshëm", arafah: "Dita e Arafatit", arafah_desc: "9 Dhul Hixheh", arafah_hadith: "Agjërimi i Arafatit fshin mëkatet e vitit të kaluar dhe atij që vjen", monday: "E hënë", monday_desc: "Çdo të hënë", monday_hadith: "Dita kur kam lindur dhe kur ka zbritur shpallja", thursday: "E enjte", thursday_desc: "Çdo të enjte", thursday_hadith: "Veprat paraqiten të hënën dhe të enjten", shawwal: "6 ditë të Shevalit", shawwal_desc: "6 ditë pas Bajramit", shawwal_hadith: "Kush agjëron Ramazanin dhe 6 ditë është si agjërimi i përjetshëm", upcoming: "Në ardhje", today_fasting: "Sot", passed: "Kaluar", gregorian_date: "Gregorian", hijri_date: "Hixhri", days_remaining: "{{days}} ditë të mbetur", days_passed: "Para {{days}} ditëve", monthly: "Mujor", weekly: "Javor", yearly: "Vjetor" },
+  dates: { hijri: "H", gregorian: "G", days: ["E diel", "E hënë", "E martë", "E mërkurë", "E enjte", "E premte", "E shtunë"] },
+  settings: { title: "Cilësimet", language: "Gjuha", theme: "Tema", dark: "E errët", light: "E ndritshme", system: "Sistemi", calculation: "Metoda e llogaritjes", font_size: "Madhësia e fontit", notifications: "Njoftimet" },
+  common: { loading: "Duke u ngarkuar...", error: "Ndodhi një gabim", retry: "Provo përsëri", close: "Mbyll", save: "Ruaj", cancel: "Anulo", done: "U krye", search: "Kërko", share: "Ndaj", copied: "U kopjua", copy: "Kopjo", of: "nga", back: "Kthehu" },
+  hadith: { title: "Hadithe dhe Vendime", subtitle: "Enciklopedi e haditheve, vendimeve dhe pikëpamjeve shkencore", search_placeholder: "Kërko hadith, vendim ose fjalëkyç...", loading_data: "Duke ngarkuar të dhënat...", no_results: "Nuk u gjetën rezultate", try_another_search: "Provo fjalë të tjera", cat_all: "Të gjitha", cat_tafsir: "Tefsir", cat_creed: "Akide", cat_fiqh: "Fikh", cat_hadith: "Hadith", cat_ethics: "Etikë", cat_general: "Të përgjithshme" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

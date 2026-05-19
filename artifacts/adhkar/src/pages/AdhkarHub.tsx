@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
-import { Sun, Moon, Star, Clock, Heart, BookOpen } from "lucide-react";
+import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { getDailyProgress } from "@/lib/store";
@@ -63,6 +63,39 @@ const categories = [
     activeBg: "bg-emerald-100 dark:bg-emerald-900/40",
     adhkar: () => adhkarRuqyah,
   },
+  {
+    href: "/morning-ruqyah",
+    Icon: Heart,
+    titleKey: "nav.merged_morning",
+    descKey: "home.merged_morning_desc",
+    color: "text-rose-600 dark:text-rose-400",
+    bg: "bg-rose-50 dark:bg-rose-950/30",
+    border: "border-rose-200 dark:border-rose-800/50",
+    activeBg: "bg-rose-100 dark:bg-rose-900/40",
+    adhkar: () => [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarMorningOnly, ...adhkarRuqyah],
+  },
+  {
+    href: "/evening-ruqyah",
+    Icon: Heart,
+    titleKey: "nav.merged_evening",
+    descKey: "home.merged_evening_desc",
+    color: "text-fuchsia-600 dark:text-fuchsia-400",
+    bg: "bg-fuchsia-50 dark:bg-fuchsia-950/30",
+    border: "border-fuchsia-200 dark:border-fuchsia-800/50",
+    activeBg: "bg-fuchsia-100 dark:bg-fuchsia-900/40",
+    adhkar: () => [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarEveningOnly, ...adhkarRuqyah],
+  },
+  {
+    href: "/zakat",
+    Icon: Coins,
+    titleKey: "nav.zakat",
+    descKey: "zakat.subtitle",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bg: "bg-emerald-50 dark:bg-emerald-950/30",
+    border: "border-emerald-200 dark:border-emerald-800/50",
+    activeBg: "bg-emerald-100 dark:bg-emerald-900/40",
+    adhkar: () => [],
+  },
 ];
 
 export default function AdhkarHub() {
@@ -112,20 +145,24 @@ export default function AdhkarHub() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <h3 className="font-heading font-bold text-lg text-foreground">{t(cat.titleKey)}</h3>
-                        <span className={cn("text-sm font-semibold tabular-nums", cat.color)}>
-                          {pct}%
-                        </span>
+                        {cat.href !== "/zakat" && (
+                          <span className={cn("text-sm font-semibold tabular-nums", cat.color)}>
+                            {pct}%
+                          </span>
+                        )}
                       </div>
                       <p className="text-sm text-muted-foreground line-clamp-1">{t(cat.descKey)}</p>
-                      <div className="mt-3 h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                          className={cn("h-full rounded-full", isComplete ? "bg-primary" : "bg-current opacity-60")}
-                          style={{ color: "currentColor" }}
-                          initial={{ width: 0 }}
-                          animate={{ width: `${pct}%` }}
-                          transition={{ duration: 0.8, delay: i * 0.07 + 0.2 }}
-                        />
-                      </div>
+                      {cat.href !== "/zakat" && (
+                        <div className="mt-3 h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+                          <motion.div
+                            className={cn("h-full rounded-full", isComplete ? "bg-primary" : "bg-current opacity-60")}
+                            style={{ color: "currentColor" }}
+                            initial={{ width: 0 }}
+                            animate={{ width: `${pct}%` }}
+                            transition={{ duration: 0.8, delay: i * 0.07 + 0.2 }}
+                          />
+                        </div>
+                      )}
                     </div>
                     <BookOpen className={cn("w-4 h-4 opacity-40 shrink-0 group-hover:opacity-70 transition-opacity", cat.color)} />
                   </div>

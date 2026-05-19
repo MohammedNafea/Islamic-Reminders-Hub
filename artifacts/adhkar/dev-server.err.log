@@ -1,0 +1,13 @@
+[33mYou are using Node.js 20.11.0. Vite requires Node.js version 20.19+ or 22.12+. Please upgrade your Node.js version.[39m
+[31merror when starting dev server:
+TypeError: crypto.hash is not a function
+    at getHash (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:2444:19)
+    at getLockfileHash (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:32403:9)
+    at getDepHash (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:32406:23)
+    at initDepsOptimizerMetadata (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:31865:53)
+    at createDepsOptimizer (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:34053:17)
+    at new DevEnvironment (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:34833:109)
+    at Object.defaultCreateClientDevEnvironment [as createEnvironment] (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35245:9)
+    at file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:25409:52
+    at Array.map (<anonymous>)
+    at _createServer (file:///D:/Islamic-Reminders-Hub/node_modules/.pnpm/vite@7.3.3_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.32.0_terser@5.47.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:25408:58)[39m

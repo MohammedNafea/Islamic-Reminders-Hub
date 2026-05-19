@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "ఇస్లామిక్ హబ్", tagline: "మీ రోజువారీ ఆధ్యాత్మిక సహచరుడు" },
+  nav: { home: "హోమ్", adhkar: "అజ్కార్", morning: "ఉదయపు అజ్కార్", evening: "సాయంత్రపు అజ్కార్", both: "ఉదయం & సాయంత్రం", sleep: "నిద్ర అజ్కార్", prayer: "నమాజ్ అజ్కార్", ruqyah: "రుఖ్యా", times: "నమాజ్ సమయాలు", fasting: "ఉపవాస దినాలు", tasbih: "తస్బీహ్", settings: "సెట్టింగ్‌లు", hadith: "హదీస్ & ఫిఖ్హ్", quran: "ఖుర్ఆన్", qibla: "ఖిబ్లా", zakat: "జకాత్", favorites: "ఇష్టమైనవి", search: "వెతకండి" },
+  home: { greeting_morning: "శుభోదయం", greeting_evening: "శుభ సాయంత్రం", greeting_night: "శుభ రాత్రి", today: "ఈరోజు", progress: "ఈరోజు పురోగతి", completed: "పూర్తయింది", start: "ప్రారంభం" },
+  prayer: { fajr: "ఫజ్ర్", sunrise: "సూర్యోదయం", dhuhr: "జుహ్ర్", asr: "అస్ర్", maghrib: "మగ్రిబ్", isha: "ఇషా", next: "తదుపరి నమాజ్", remaining: "మిగిలిన సమయం", location: "మీ స్థానం", location_required: "స్థాన అనుమతి ఇవ్వండి", allow_location: "అనుమతి", enter_city: "నగరం నమోదు చేయండి", calculation_method: "లెక్కింపు పద్ధతి", methods: { MuslimWorldLeague: "ముస్లిం వరల్డ్ లీగ్", Egyptian: "ఈజిప్టు అథారిటీ", Karachi: "కరాచీ విశ్వవిద్యాలయం", UmmAlQura: "ఉమ్ అల్-ఖురా", Dubai: "దుబాయ్", NorthAmerica: "ఉత్తర అమెరికా", Kuwait: "కువైట్", Qatar: "ఖతార్", Singapore: "సింగపూర్", Turkey: "టర్కీ" }, last_third: "రాత్రి చివరి మూడవ భాగం", imsak: "ఇమ్సాక్" },
+  dhikr: { count: "సంఖ్య", times: "సార్లు", source: "మూలం", tap_to_count: "లెక్కించడానికి నొక్కండి", completed_msg: "పూర్తయింది!", reset: "రీసెట్", reset_all: "అన్నీ రీసెట్", morning_form: "ఉదయ రూపం", evening_form: "సాయంత్ర రూపం", note: "గమనిక", benefit: "ప్రయోజనం" },
+  tasbih: { title: "స్వేచ్ఛా తస్బీహ్", count: "ప్రస్తుత సంఖ్య", target: "లక్ష్యం", set_target: "లక్ష్యం పెట్టండి", reset: "రీసెట్", vibrate: "కంపనం", sound: "ధ్వని", custom: "అనుకూలం", saved: "సేవ్ చేయబడింది" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "సున్నత్ ఉపవాస దినాలు", white_days: "తెల్ల రోజులు", white_days_desc: "ప్రతి నెలా హిజ్రీ 13, 14, 15", white_days_hadith: "ప్రతి నెలా 3 రోజులు ఉపవాసం శాశ్వత ఉపవాసం వంటిది", arafah: "అరఫా రోజు", arafah_desc: "జుల్ హిజ్జా 9", arafah_hadith: "అరఫా ఉపవాసం గత మరియు రాబోయే సంవత్సరం పాపాలను క్షమిస్తుంది", monday: "సోమవారం", monday_desc: "ప్రతి సోమవారం", monday_hadith: "నేను పుట్టిన మరియు వహీ దిగిన రోజు", thursday: "గురువారం", thursday_desc: "ప్రతి గురువారం", thursday_hadith: "కర్మలు సోమవారం మరియు గురువారం సమర్పించబడతాయి", shawwal: "షవ్వాల్ 6 రోజులు", shawwal_desc: "ఈద్ తర్వాత 6 రోజులు", shawwal_hadith: "రమజాన్ మరియు 6 రోజులు ఉపవాసం శాశ్వత ఉపవాసం వంటిది", upcoming: "రాబోతున్న", today_fasting: "ఈరోజు", passed: "గడిచింది", gregorian_date: "గ్రెగోరియన్", hijri_date: "హిజ్రీ", days_remaining: "{{days}} రోజులు మిగిలి ఉన్నాయి", days_passed: "{{days}} రోజుల క్రితం", monthly: "నెలవారీ", weekly: "వారవారీ", yearly: "వార్షిక" },
+  dates: { hijri: "హి", gregorian: "గ్రె", days: ["ఆదివారం", "సోమవారం", "మంగళవారం", "బుధవారం", "గురువారం", "శుక్రవారం", "శనివారం"] },
+  settings: { title: "సెట్టింగ్‌లు", language: "భాష", theme: "థీమ్", dark: "చీకటి", light: "వెలుతురు", system: "సిస్టమ్", calculation: "లెక్కింపు పద్ధతి", font_size: "ఫాంట్ పరిమాణం", notifications: "నోటిఫికేషన్లు" },
+  common: { loading: "లోడ్ అవుతోంది...", error: "లోపం సంభవించింది", retry: "మళ్ళీ ప్రయత్నించండి", close: "మూసివేయండి", save: "సేవ్", cancel: "రద్దు", done: "పూర్తయింది", search: "వెతకండి", share: "షేర్", copied: "కాపీ చేయబడింది", copy: "కాపీ", of: "/", back: "వెనుకకు" },
+  hadith: { title: "హదీస్ & ఫిఖ్హ్", subtitle: "హదీస్‌లు, ఫిఖ్హ్ మరియు శాస్త్రీయ దృక్పథాల విజ్ఞానకోశం", search_placeholder: "హదీస్, ఫిఖ్హ్ లేదా కీవర్డ్ వెతకండి...", loading_data: "డేటా లోడ్ అవుతోంది...", no_results: "ఫలితాలు కనుగొనబడలేదు", try_another_search: "వేరే పదం ప్రయత్నించండి", cat_all: "అన్నీ", cat_tafsir: "తఫ్సీర్", cat_creed: "అఖీదా", cat_fiqh: "ఫిఖ్హ్", cat_hadith: "హదీస్", cat_ethics: "నీతి", cat_general: "సాధారణ" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

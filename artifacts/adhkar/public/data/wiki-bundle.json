@@ -1,0 +1,380 @@
+{
+  "metadata": {
+    "lastUpdated": "2026-05-19T10:21:49.367Z",
+    "totalSources": 33,
+    "totalConcepts": 33,
+    "totalLibraryItems": 104,
+    "storage": "static-json",
+    "redaction": "enabled"
+  },
+  "library": [
+    {
+      "id": "source-001",
+      "title": "مصدر تفسيري محقق 001",
+      "bookTitle": "مصدر تفسيري محقق 001",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر تفسيري محقق 001 - مصدر علمي محقق 001",
+      "category": "tafsir",
+      "source": "مصدر علمي محقق 001",
+      "sourceFile": "source-001",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-002",
+      "title": "مصدر علمي شرعي 002",
+      "bookTitle": "مصدر علمي شرعي 002",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 002 - مصدر علمي محقق 002",
+      "category": "general",
+      "source": "مصدر علمي محقق 002",
+      "sourceFile": "source-002",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-003",
+      "title": "مصدر تفسيري محقق 003",
+      "bookTitle": "مصدر تفسيري محقق 003",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر تفسيري محقق 003 - مصدر علمي محقق 003",
+      "category": "tafsir",
+      "source": "مصدر علمي محقق 003",
+      "sourceFile": "source-003",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-004",
+      "title": "مصدر علمي شرعي 004",
+      "bookTitle": "مصدر علمي شرعي 004",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 004 - مصدر علمي محقق 004",
+      "category": "general",
+      "source": "مصدر علمي محقق 004",
+      "sourceFile": "source-004",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-005",
+      "title": "مصدر علمي شرعي 005",
+      "bookTitle": "مصدر علمي شرعي 005",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 005 - مصدر علمي محقق 005",
+      "category": "general",
+      "source": "مصدر علمي محقق 005",
+      "sourceFile": "source-005",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-006",
+      "title": "مصدر حديثي محقق 006",
+      "bookTitle": "مصدر حديثي محقق 006",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر حديثي محقق 006 - مصدر علمي محقق 006",
+      "category": "hadith",
+      "source": "مصدر علمي محقق 006",
+      "sourceFile": "source-006",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-007",
+      "title": "مصدر فقهي معاصر 007",
+      "bookTitle": "مصدر فقهي معاصر 007",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر فقهي معاصر 007 - مصدر علمي محقق 007",
+      "category": "fiqh",
+      "source": "مصدر علمي محقق 007",
+      "sourceFile": "source-007",
+      "reviewStatus": "needs_review"
+    },
+    {
+      "id": "source-008",
+      "title": "مصدر علمي شرعي 008",
+      "bookTitle": "مصدر علمي شرعي 008",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 008 - مصدر علمي محقق 008",
+      "category": "general",
+      "source": "مصدر علمي محقق 008",
+      "sourceFile": "source-008",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-009",
+      "title": "مصدر تفسيري محقق 009",
+      "bookTitle": "مصدر تفسيري محقق 009",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر تفسيري محقق 009 - مصدر علمي محقق 009",
+      "category": "tafsir",
+      "source": "مصدر علمي محقق 009",
+      "sourceFile": "source-009",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-010",
+      "title": "مصدر علمي شرعي 010",
+      "bookTitle": "مصدر علمي شرعي 010",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 010 - مصدر علمي محقق 010",
+      "category": "general",
+      "source": "مصدر علمي محقق 010",
+      "sourceFile": "source-010",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-011",
+      "title": "مصدر عقدي معاصر 011",
+      "bookTitle": "مصدر عقدي معاصر 011",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر عقدي معاصر 011 - مصدر علمي محقق 011",
+      "category": "creed",
+      "source": "مصدر علمي محقق 011",
+      "sourceFile": "source-011",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-012",
+      "title": "مصدر حديثي محقق 012",
+      "bookTitle": "مصدر حديثي محقق 012",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر حديثي محقق 012 - مصدر علمي محقق 012",
+      "category": "hadith",
+      "source": "مصدر علمي محقق 012",
+      "sourceFile": "source-012",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-013",
+      "title": "مصدر فقهي معاصر 013",
+      "bookTitle": "مصدر فقهي معاصر 013",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر فقهي معاصر 013 - مصدر علمي محقق 013",
+      "category": "fiqh",
+      "source": "مصدر علمي محقق 013",
+      "sourceFile": "source-013",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-014",
+      "title": "مصدر عقدي معاصر 014",
+      "bookTitle": "مصدر عقدي معاصر 014",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر عقدي معاصر 014 - مصدر علمي محقق 014",
+      "category": "creed",
+      "source": "مصدر علمي محقق 014",
+      "sourceFile": "source-014",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-015",
+      "title": "مصدر علمي شرعي 015",
+      "bookTitle": "مصدر علمي شرعي 015",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 015 - مصدر علمي محقق 015",
+      "category": "general",
+      "source": "مصدر علمي محقق 015",
+      "sourceFile": "source-015",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-016",
+      "title": "مصدر علمي شرعي 016",
+      "bookTitle": "مصدر علمي شرعي 016",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 016 - مصدر علمي محقق 016",
+      "category": "general",
+      "source": "مصدر علمي محقق 016",
+      "sourceFile": "source-016",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-017",
+      "title": "مصدر حديثي محقق 017",
+      "bookTitle": "مصدر حديثي محقق 017",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر حديثي محقق 017 - مصدر علمي محقق 017",
+      "category": "hadith",
+      "source": "مصدر علمي محقق 017",
+      "sourceFile": "source-017",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-018",
+      "title": "مصدر علمي شرعي 018",
+      "bookTitle": "مصدر علمي شرعي 018",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 018 - مصدر علمي محقق 018",
+      "category": "general",
+      "source": "مصدر علمي محقق 018",
+      "sourceFile": "source-018",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-019",
+      "title": "مصدر علمي شرعي 019",
+      "bookTitle": "مصدر علمي شرعي 019",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 019 - مصدر علمي محقق 019",
+      "category": "general",
+      "source": "مصدر علمي محقق 019",
+      "sourceFile": "source-019",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-020",
+      "title": "مصدر علمي شرعي 020",
+      "bookTitle": "مصدر علمي شرعي 020",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 020 - مصدر علمي محقق 020",
+      "category": "general",
+      "source": "مصدر علمي محقق 020",
+      "sourceFile": "source-020",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-021",
+      "title": "مصدر علمي شرعي 021",
+      "bookTitle": "مصدر علمي شرعي 021",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 021 - مصدر علمي محقق 021",
+      "category": "general",
+      "source": "مصدر علمي محقق 021",
+      "sourceFile": "source-021",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-022",
+      "title": "مصدر علمي شرعي 022",
+      "bookTitle": "مصدر علمي شرعي 022",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 022 - مصدر علمي محقق 022",
+      "category": "general",
+      "source": "مصدر علمي محقق 022",
+      "sourceFile": "source-022",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-023",
+      "title": "مصدر علمي شرعي 023",
+      "bookTitle": "مصدر علمي شرعي 023",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 023 - مصدر علمي محقق 023",
+      "category": "general",
+      "source": "مصدر علمي محقق 023",
+      "sourceFile": "source-023",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-024",
+      "title": "مصدر علمي شرعي 024",
+      "bookTitle": "مصدر علمي شرعي 024",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 024 - مصدر علمي محقق 024",
+      "category": "general",
+      "source": "مصدر علمي محقق 024",
+      "sourceFile": "source-024",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-025",
+      "title": "مصدر علمي شرعي 025",
+      "bookTitle": "مصدر علمي شرعي 025",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 025 - مصدر علمي محقق 025",
+      "category": "general",
+      "source": "مصدر علمي محقق 025",
+      "sourceFile": "source-025",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-026",
+      "title": "مصدر علمي شرعي 026",
+      "bookTitle": "مصدر علمي شرعي 026",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 026 - مصدر علمي محقق 026",
+      "category": "general",
+      "source": "مصدر علمي محقق 026",
+      "sourceFile": "source-026",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-027",
+      "title": "مصدر علمي شرعي 027",
+      "bookTitle": "مصدر علمي شرعي 027",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 027 - مصدر علمي محقق 027",
+      "category": "general",
+      "source": "مصدر علمي محقق 027",
+      "sourceFile": "source-027",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-028",
+      "title": "مصدر علمي شرعي 028",
+      "bookTitle": "مصدر علمي شرعي 028",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 028 - مصدر علمي محقق 028",
+      "category": "general",
+      "source": "مصدر علمي محقق 028",
+      "sourceFile": "source-028",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-029",
+      "title": "مصدر علمي شرعي 029",
+      "bookTitle": "مصدر علمي شرعي 029",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 029 - مصدر علمي محقق 029",
+      "category": "general",
+      "source": "مصدر علمي محقق 029",
+      "sourceFile": "source-029",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-030",
+      "title": "مصدر علمي شرعي 030",
+      "bookTitle": "مصدر علمي شرعي 030",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 030 - مصدر علمي محقق 030",
+      "category": "general",
+      "source": "مصدر علمي محقق 030",
+      "sourceFile": "source-030",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-031",
+      "title": "مصدر علمي شرعي 031",
+      "bookTitle": "مصدر علمي شرعي 031",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 031 - مصدر علمي محقق 031",
+      "category": "general",
+      "source": "مصدر علمي محقق 031",
+      "sourceFile": "source-031",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-032",
+      "title": "مصدر علمي شرعي 032",
+      "bookTitle": "مصدر علمي شرعي 032",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 032 - مصدر علمي محقق 032",
+      "category": "general",
+      "source": "مصدر علمي محقق 032",
+      "sourceFile": "source-032",
+      "reviewStatus": "auto_extracted"
+    },
+    {
+      "id": "source-033",
+      "title": "مصدر علمي شرعي 033",
+      "bookTitle": "مصدر علمي شرعي 033",
+      "author": "لجنة التحقيق والتدقيق العلمي",
+      "text": "مصدر علمي شرعي 033 - مصدر علمي محقق 033",
+      "category": "general",
+      "source": "مصدر علمي محقق 033",
+      "sourceFile": "source-033",
+      "reviewStatus": "auto_extracted"
+    }
+  ],
+  "adhkar": {},
+  "daily": {
+    "verse": "فاذكروني أذكركم واشكروا لي ولا تكفرون",
+    "inspiration": "العلم النافع ما قاد إلى العمل والخشية وحسن الاتباع."
+  }
+}

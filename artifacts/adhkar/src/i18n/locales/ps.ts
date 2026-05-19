@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "اسلامي مرکز", tagline: "ستاسو ورځنی روحاني ملګری" },
+  nav: { home: "کور", adhkar: "اذکار", morning: "د سهار اذکار", evening: "د ماښام اذکار", both: "سهار او ماښام", sleep: "د خوب اذکار", prayer: "د لمونځ اذکار", ruqyah: "رقیه", times: "د لمونځ وختونه", fasting: "د روژې ورځې", tasbih: "تسبیح", settings: "تنظیمات", hadith: "حدیث او احکام", quran: "قرآن", qibla: "قبله", zakat: "زکات", favorites: "خوښې", search: "لټون" },
+  home: { greeting_morning: "سهار مو پخیر", greeting_evening: "ماښام مو پخیر", greeting_night: "شپه مو پخیر", today: "نن", progress: "د نن پرمختګ", completed: "بشپړ شو", start: "پیل" },
+  prayer: { fajr: "سهار", sunrise: "لمر خاتل", dhuhr: "غرمه", asr: "مازدیګر", maghrib: "ماښام", isha: "ماسخوتن", next: "راتلونکی لمونځ", remaining: "پاتې وخت", location: "ستاسو ځای", location_required: "د ځای اجازه ورکړئ", allow_location: "اجازه", enter_city: "ښار ولیکئ", calculation_method: "د حساب طریقه", methods: { MuslimWorldLeague: "نړیوال اسلامي لیګ", Egyptian: "مصري ادارې", Karachi: "د کراچي پوهنتون", UmmAlQura: "ام القری", Dubai: "دبۍ", NorthAmerica: "شمالي امریکا", Kuwait: "کویت", Qatar: "قطر", Singapore: "سنګاپور", Turkey: "ترکیه" }, last_third: "د شپې وروستۍ دریمه برخه", imsak: "امساک" },
+  dhikr: { count: "شمېره", times: "ځله", source: "سرچینه", tap_to_count: "د شمېرلو لپاره ټک وکړئ", completed_msg: "بشپړ شو!", reset: "بیا تنظیم", reset_all: "ټول بیا تنظیم", morning_form: "د سهار بڼه", evening_form: "د ماښام بڼه", note: "یادونه", benefit: "ګټه" },
+  tasbih: { title: "آزاد تسبیح", count: "اوسنۍ شمېره", target: "هدف", set_target: "هدف ټاکل", reset: "بیا تنظیم", vibrate: "ارتعاش", sound: "غږ", custom: "دلخواه", saved: "خوندي شو" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "د سنت روژې ورځې", white_days: "سپینې ورځې", white_days_desc: "هره میاشت هجري ۱۳، ۱۴ او ۱۵", white_days_hadith: "هره میاشت ۳ ورځې روژه لکه تل پاتې روژه ده", arafah: "د عرفې ورځ", arafah_desc: "۹ ذوالحجه", arafah_hadith: "د عرفې روژه تېر او راتلونکی کال ګناه پاکوي", monday: "دوشنبه", monday_desc: "هره اونۍ دوشنبه", monday_hadith: "زه پکې زېږېدلی یم او وحي پکې نازل شوی", thursday: "پنجشنبه", thursday_desc: "هره اونۍ پنجشنبه", thursday_hadith: "عملونه دوشنبه او پنجشنبه وړاندې کېږي", shawwal: "د شوال ۶ ورځې", shawwal_desc: "د اختر وروسته ۶ ورځې", shawwal_hadith: "چا چې رمضان او ۶ ورځې روژه ونیسي لکه تل پاتې روژه ده", upcoming: "راتلونکی", today_fasting: "نن", passed: "تېر شو", gregorian_date: "میلادي", hijri_date: "هجري", days_remaining: "{{days}} ورځې پاتې", days_passed: "{{days}} ورځې دمخه", monthly: "میاشتنی", weekly: "اونیز", yearly: "کلنی" },
+  dates: { hijri: "هـ", gregorian: "م", days: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"] },
+  settings: { title: "تنظیمات", language: "ژبه", theme: "بڼه", dark: "تیاره", light: "رڼا", system: "سیستم", calculation: "د حساب طریقه", font_size: "د لیک اندازه", notifications: "خبرتیاوې" },
+  common: { loading: "بار کېږي...", error: "تېروتنه وشوه", retry: "بیا هڅه وکړئ", close: "بندول", save: "خوندي کول", cancel: "لغوه", done: "بشپړ شو", search: "لټون", share: "شریکول", copied: "کاپي شو", copy: "کاپي", of: "له", back: "شاته" },
+  hadith: { title: "حدیث او احکام", subtitle: "د حدیثونو، احکامو او علمي نظریاتو دایرة المعارف", search_placeholder: "حدیث، حکم یا کلیدي ټکی ولټوئ...", loading_data: "معلومات بارېږي...", no_results: "پایله ونه موندل شوه", try_another_search: "بل ټکی هڅه وکړئ", cat_all: "ټول", cat_tafsir: "تفسیر", cat_creed: "عقیده", cat_fiqh: "فقه", cat_hadith: "حدیث", cat_ethics: "اخلاق", cat_general: "عمومي" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

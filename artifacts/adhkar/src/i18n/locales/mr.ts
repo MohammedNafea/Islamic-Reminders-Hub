@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "इस्लामिक हब", tagline: "तुमचा दैनंदिन आध्यात्मिक सोबती" },
+  nav: { home: "मुख्यपृष्ठ", adhkar: "अज़कार", morning: "सकाळचे अज़कार", evening: "संध्याकाळचे अज़कार", both: "सकाळ आणि संध्याकाळ", sleep: "झोपेचे अज़कार", prayer: "नमाजचे अज़कार", ruqyah: "रुक्या", times: "नमाजचे वेळ", fasting: "उपवासाचे दिवस", tasbih: "तसबीह", settings: "सेटिंग्ज", hadith: "हदीस आणि फिक्ह", quran: "कुरआन", qibla: "किबला", zakat: "ज़कात", favorites: "आवडते", search: "शोधा" },
+  home: { greeting_morning: "सुप्रभात", greeting_evening: "शुभ संध्या", greeting_night: "शुभ रात्री", today: "आज", progress: "आजची प्रगती", completed: "पूर्ण", start: "सुरू करा" },
+  prayer: { fajr: "फज्र", sunrise: "सूर्योदय", dhuhr: "ज़ुह्र", asr: "अस्र", maghrib: "मग्रिब", isha: "इशा", next: "पुढील नमाज", remaining: "उरलेला वेळ", location: "तुमचे स्थान", location_required: "स्थान परवानगी द्या", allow_location: "परवानगी", enter_city: "शहर प्रविष्ट करा", calculation_method: "गणना पद्धत", methods: { MuslimWorldLeague: "मुस्लिम वर्ल्ड लीग", Egyptian: "इजिप्शियन प्राधिकरण", Karachi: "कराची विद्यापीठ", UmmAlQura: "उम्म अल-कुरा", Dubai: "दुबई", NorthAmerica: "उत्तर अमेरिका", Kuwait: "कुवेत", Qatar: "कतार", Singapore: "सिंगापूर", Turkey: "तुर्की" }, last_third: "रात्रीचा शेवटचा तिसरा भाग", imsak: "इमसाक" },
+  dhikr: { count: "संख्या", times: "वेळा", source: "स्रोत", tap_to_count: "मोजण्यासाठी टॅप करा", completed_msg: "पूर्ण झाले!", reset: "रीसेट", reset_all: "सर्व रीसेट", morning_form: "सकाळचा प्रकार", evening_form: "संध्याकाळचा प्रकार", note: "टीप", benefit: "फायदा" },
+  tasbih: { title: "मुक्त तसबीह", count: "सध्याची संख्या", target: "लक्ष्य", set_target: "लक्ष्य ठरवा", reset: "रीसेट", vibrate: "कंपन", sound: "आवाज", custom: "सानुकूल", saved: "जतन केले" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "सुन्नत उपवास दिवस", white_days: "पांढरे दिवस", white_days_desc: "दर महिन्याला हिजरी 13, 14 आणि 15", white_days_hadith: "दर महिन्याला 3 दिवस उपवास करणे हे कायम उपवासासारखे आहे", arafah: "अराफाचा दिवस", arafah_desc: "ज़ुलहिज्जा 9", arafah_hadith: "अराफाचा उपवास मागील आणि पुढील वर्षाचे पाप मिटवतो", monday: "सोमवार", monday_desc: "दर सोमवारी", monday_hadith: "माझा जन्मदिवस आणि वहीचा दिवस", thursday: "गुरुवार", thursday_desc: "दर गुरुवारी", thursday_hadith: "कर्मे सोमवार आणि गुरुवारी सादर केली जातात", shawwal: "शव्वालचे 6 दिवस", shawwal_desc: "ईदनंतर 6 दिवस", shawwal_hadith: "रमजान आणि 6 दिवस उपवास करणारा कायम उपवास करतो", upcoming: "आगामी", today_fasting: "आज", passed: "गेलेले", gregorian_date: "ग्रेगोरियन", hijri_date: "हिजरी", days_remaining: "{{days}} दिवस शिल्लक", days_passed: "{{days}} दिवसांपूर्वी", monthly: "मासिक", weekly: "साप्ताहिक", yearly: "वार्षिक" },
+  dates: { hijri: "हि", gregorian: "ग्रे", days: ["रविवार", "सोमवार", "मंगळवार", "बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"] },
+  settings: { title: "सेटिंग्ज", language: "भाषा", theme: "थीम", dark: "गडद", light: "उजळ", system: "सिस्टम", calculation: "गणना पद्धत", font_size: "फॉन्ट आकार", notifications: "सूचना" },
+  common: { loading: "लोड होत आहे...", error: "त्रुटी आली", retry: "पुन्हा प्रयत्न", close: "बंद करा", save: "जतन करा", cancel: "रद्द करा", done: "पूर्ण", search: "शोधा", share: "शेअर करा", copied: "कॉपी झाले", copy: "कॉपी", of: "पैकी", back: "मागे" },
+  hadith: { title: "हदीस आणि फिक्ह", subtitle: "हदीस, फिक्ह आणि वैज्ञानिक दृष्टिकोनांचा विश्वकोश", search_placeholder: "हदीस, फिक्ह किंवा कीवर्ड शोधा...", loading_data: "डेटा लोड होत आहे...", no_results: "परिणाम सापडले नाहीत", try_another_search: "दुसरा शब्द वापरून पहा", cat_all: "सर्व", cat_tafsir: "तफसीर", cat_creed: "अकीदा", cat_fiqh: "फिक्ह", cat_hadith: "हदीस", cat_ethics: "नैतिकता", cat_general: "सामान्य" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};
