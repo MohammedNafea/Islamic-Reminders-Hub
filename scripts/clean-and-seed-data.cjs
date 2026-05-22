@@ -120,6 +120,10 @@ function processData() {
     if (item.id.startsWith("seed-")) {
       continue;
     }
+    if (item.id.startsWith("pdf-")) {
+      processedItems.push(item);
+      continue;
+    }
     if (item.id.includes("-item-")) {
       if (isIndexOrTOC(item.text)) continue;
       if (isCorruptedText(item.text)) continue;

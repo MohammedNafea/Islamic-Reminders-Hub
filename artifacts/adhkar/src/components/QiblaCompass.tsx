@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { TranslatedText } from "@/components/TranslatedText";
+import { getTranslation } from "@/lib/content-i18n";
 
 interface QiblaCompassProps {
   lat: number;
@@ -11,7 +13,7 @@ interface QiblaCompassProps {
 }
 
 export function QiblaCompass({ lat, lng }: QiblaCompassProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [qibla, setQibla] = useState(0);
   const [heading, setHeading] = useState(0);
   const [cameraActive, setCameraActive] = useState(false);
@@ -75,8 +77,23 @@ export function QiblaCompass({ lat, lng }: QiblaCompassProps) {
       )}
 
       <div className={cn("text-center relative z-10", cameraActive && "text-white")}>
-        <h3 className={cn("font-heading font-bold text-lg", cameraActive ? "text-white" : "text-primary")}>{t("prayer.qibla.direction")}</h3>
-        <p className="text-xs opacity-70 uppercase tracking-widest font-bold">{Math.round(qibla)}° {t("prayer.qibla.from_north")}</p>
+        <h3 className={cn("font-heading font-bold text-lg", cameraActive ? "text-white" : "text-primary")}>
+          <TranslatedText
+            text="اتجاه القبلة"
+            staticTranslation={getTranslation(t, "prayer.qibla.direction", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
+        </h3>
+        <p className="text-xs opacity-70 uppercase tracking-widest font-bold">
+          {Math.round(qibla)}°{" "}
+          <TranslatedText
+            text="من الشمال"
+            staticTranslation={getTranslation(t, "prayer.qibla.from_north", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
+        </p>
       </div>
 
       <div className="relative w-48 h-48 flex items-center justify-center z-10">
@@ -115,11 +132,25 @@ export function QiblaCompass({ lat, lng }: QiblaCompassProps) {
           onClick={toggleCamera}
         >
           {cameraActive ? <CameraOff className="w-4 h-4" /> : <Camera className="w-4 h-4" />}
-          {cameraActive ? t("prayer.qibla.camera_disable") : t("prayer.qibla.camera_enable")}
+          <TranslatedText
+            text={cameraActive ? "إيقاف الكاميرا" : "تفعيل رؤية الواقع المعزز (AR)"}
+            staticTranslation={
+              cameraActive
+                ? getTranslation(t, "prayer.qibla.camera_disable", i18n.language) || undefined
+                : getTranslation(t, "prayer.qibla.camera_enable", i18n.language) || undefined
+            }
+            keepArabic={false}
+            inline
+          />
         </Button>
 
         <p className={cn("text-[10px] max-w-[200px] text-center leading-tight opacity-60", cameraActive ? "text-white" : "text-muted-foreground")}>
-          {t("prayer.qibla_hint")}
+          <TranslatedText
+            text="قم بتحريك الهاتف بشكل (8) لمعايرة الحساسات. استخدم زر الكاميرا لرؤية القبلة في محيطك."
+            staticTranslation={getTranslation(t, "prayer.qibla_hint", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
         </p>
       </div>
     </div>

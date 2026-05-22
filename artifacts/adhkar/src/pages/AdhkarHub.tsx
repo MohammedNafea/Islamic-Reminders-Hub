@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
-import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins } from "lucide-react";
+import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins, Home, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { getDailyProgress } from "@/lib/store";
-import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah } from "@/data/adhkar";
+import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah, adhkarHouse, adhkarMasjid } from "@/data/adhkar";
 import { useEffect, useState } from "react";
+import { TranslatedText } from "@/components/TranslatedText";
+import { getTranslation } from "@/lib/content-i18n";
 
 const categories = [
   {
@@ -86,6 +88,28 @@ const categories = [
     adhkar: () => [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarEveningOnly, ...adhkarRuqyah],
   },
   {
+    href: "/house",
+    Icon: Home,
+    titleKey: "nav.house",
+    descKey: "adhkar_hub.house_desc",
+    color: "text-teal-600 dark:text-teal-400",
+    bg: "bg-teal-50 dark:bg-teal-950/30",
+    border: "border-teal-200 dark:border-teal-800/50",
+    activeBg: "bg-teal-100 dark:bg-teal-900/40",
+    adhkar: () => adhkarHouse,
+  },
+  {
+    href: "/masjid",
+    Icon: MapPin,
+    titleKey: "nav.masjid",
+    descKey: "adhkar_hub.masjid_desc",
+    color: "text-violet-600 dark:text-violet-400",
+    bg: "bg-violet-50 dark:bg-violet-950/30",
+    border: "border-violet-200 dark:border-violet-800/50",
+    activeBg: "bg-violet-100 dark:bg-violet-900/40",
+    adhkar: () => adhkarMasjid,
+  },
+  {
     href: "/zakat",
     Icon: Coins,
     titleKey: "nav.zakat",
@@ -99,7 +123,7 @@ const categories = [
 ];
 
 export default function AdhkarHub() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [progress, setProgress] = useState<Record<string, number>>({});
 
   useEffect(() => {
@@ -109,8 +133,22 @@ export default function AdhkarHub() {
   return (
     <div className="animate-in fade-in duration-500 space-y-6 max-w-2xl mx-auto">
       <div className="pt-4 space-y-1">
-        <h1 className="text-3xl font-heading font-bold text-primary">{t("adhkar_hub.title")}</h1>
-        <p className="text-muted-foreground">{t("adhkar_hub.subtitle")}</p>
+        <h1 className="text-3xl font-heading font-bold text-primary">
+          <TranslatedText
+            text="مركز الأذكار"
+            staticTranslation={getTranslation(t, "adhkar_hub.title", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
+        </h1>
+        <p className="text-muted-foreground">
+          <TranslatedText
+            text="حصنك اليومي من الأذكار والرقية"
+            staticTranslation={getTranslation(t, "adhkar_hub.subtitle", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
+        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4">
@@ -144,14 +182,28 @@ export default function AdhkarHub() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <h3 className="font-heading font-bold text-lg text-foreground">{t(cat.titleKey)}</h3>
+                        <h3 className="font-heading font-bold text-lg text-foreground">
+                          <TranslatedText
+                            text={t(cat.titleKey, { lng: "ar" })}
+                            staticTranslation={getTranslation(t, cat.titleKey, i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </h3>
                         {cat.href !== "/zakat" && (
                           <span className={cn("text-sm font-semibold tabular-nums", cat.color)}>
                             {pct}%
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground line-clamp-1">{t(cat.descKey)}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-1">
+                        <TranslatedText
+                          text={t(cat.descKey, { lng: "ar" })}
+                          staticTranslation={getTranslation(t, cat.descKey, i18n.language) || undefined}
+                          keepArabic={false}
+                          inline
+                        />
+                      </p>
                       {cat.href !== "/zakat" && (
                         <div className="mt-3 h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
                           <motion.div

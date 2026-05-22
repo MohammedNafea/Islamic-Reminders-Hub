@@ -7,6 +7,13 @@
     "hello": "tsx ./src/hello.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.105.4",
+    "dotenv": "^17.4.2",
+    "pdf-parse": "^2.4.5",
+    "tesseract.js": "^7.0.0",
+    "ws": "^8.20.1"
+  },
   "devDependencies": {
     "@types/node": "catalog:",
     "tsx": "catalog:"

@@ -3,7 +3,7 @@
     "lastUpdated": "2026-05-19T10:21:49.367Z",
     "totalSources": 33,
     "totalConcepts": 33,
-    "totalLibraryItems": 104,
+    "totalLibraryItems": 300,
     "storage": "static-json",
     "redaction": "enabled"
   },
@@ -375,6 +375,9 @@
   "adhkar": {},
   "daily": {
     "verse": "فاذكروني أذكركم واشكروا لي ولا تكفرون",
-    "inspiration": "العلم النافع ما قاد إلى العمل والخشية وحسن الاتباع."
+    "inspiration": "العلم النافع ما قاد إلى العمل والخشية وحسن الاتباع.",
+    "sura": "البقرة",
+    "verse_number": "152",
+    "verse_en": "So remember Me; I will remember you. And be grateful to Me and do not deny Me."
   }
 }

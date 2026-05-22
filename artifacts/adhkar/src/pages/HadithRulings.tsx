@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { isArabic } from "@/lib/content-i18n";
+import { getTranslation, getTextDirection } from "@/lib/content-i18n";
+import { TranslatedText } from "@/components/TranslatedText";
 import { useLibraryContent } from "@/hooks/useLibraryContent";
 import type { LibraryContentItem } from "@/types/library";
 import Fuse from "fuse.js";
@@ -112,7 +113,6 @@ export default function HadithRulings() {
     { id: "library", label: t("hadith.cat_library", "المكتبة"), icon: LibraryIcon },
   ];
 
-  const showArabicDirection = isArabic(i18n.language);
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-8 max-w-4xl mx-auto pb-12">
@@ -213,7 +213,7 @@ export default function HadithRulings() {
                                   {categoryLabel}
                                 </span>
                                 <h3 className="text-xl font-bold text-foreground/90 font-heading leading-tight">
-                                  {item.bookTitle || item.title}
+                                  <TranslatedText text={item.bookTitle || item.title} keepArabic={false} className="text-xl font-bold font-heading" />
                                 </h3>
                                 {item.reviewStatus === "needs_review" && (
                                   <p className="text-xs text-amber-600 font-medium">
@@ -235,23 +235,26 @@ export default function HadithRulings() {
                               </button>
                             </div>
 
-                            <div
-                              className="dhikr-text text-2xl leading-relaxed text-foreground/80 text-right"
-                              dir={showArabicDirection ? "rtl" : "auto"}
-                            >
-                              <p>{paragraphText}</p>
-                            </div>
+                            <TranslatedText
+                              text={paragraphText}
+                              keepArabic={true}
+                              className="dhikr-text text-2xl leading-relaxed text-foreground/80"
+                              arabicClassName="text-right"
+                              translationClassName="pt-4"
+                            />
 
                             {item.tags && item.tags.length > 0 && (
                               <div className="flex flex-wrap gap-2 pt-4 border-t border-primary/5">
                                 {item.islamicRuling && (
                                   <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">
-                                    حكم: {item.islamicRuling}
+                                    <TranslatedText text="حكم" keepArabic={false} inline={true} />:{" "}
+                                    <TranslatedText text={item.islamicRuling} keepArabic={false} inline={true} />
                                   </span>
                                 )}
                                 {item.jurisdiction && (
                                   <span className="text-[11px] font-medium text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
-                                    مذهب: {item.jurisdiction}
+                                    <TranslatedText text="مذهب" keepArabic={false} inline={true} />:{" "}
+                                    <TranslatedText text={item.jurisdiction} keepArabic={false} inline={true} />
                                   </span>
                                 )}
                                 {item.language && (
@@ -261,7 +264,7 @@ export default function HadithRulings() {
                                 )}
                                 {item.tags.map((tag) => (
                                   <span key={tag} className="text-[11px] font-medium text-muted-foreground bg-muted px-2.5 py-1 rounded-lg">
-                                    #{tag}
+                                    #<TranslatedText text={tag} staticTranslation={getTranslation(t, `hadith.tags.${tag}`, i18n.language) || undefined} keepArabic={false} inline={true} />
                                   </span>
                                 ))}
                               </div>
@@ -273,9 +276,11 @@ export default function HadithRulings() {
                                   <Quote className="w-3.5 h-3.5" />
                                   <span className="text-[11px] font-bold uppercase tracking-wider">{t("hadith.source_label")}</span>
                                 </div>
-                                <p className="text-sm text-muted-foreground/80 leading-relaxed" dir="rtl">
-                                  {item.source}
-                                </p>
+                                <TranslatedText
+                                  text={item.source}
+                                  keepArabic={false}
+                                  className="text-sm text-muted-foreground/80 leading-relaxed text-right"
+                                />
                               </div>
                             )}
 
@@ -287,9 +292,13 @@ export default function HadithRulings() {
                                 </div>
                                 <ul className="space-y-1.5">
                                   {item.benefits.map((benefit, benefitIndex) => (
-                                    <li key={`${parentId}-benefit-${benefitIndex}`} className="text-sm text-muted-foreground/80 leading-relaxed flex gap-2" dir="rtl">
+                                    <li
+                                      key={`${parentId}-benefit-${benefitIndex}`}
+                                      className="text-sm text-muted-foreground/80 leading-relaxed flex gap-2"
+                                      dir={getTextDirection(i18n.language)}
+                                    >
                                       <span className="text-primary/40 mt-1 shrink-0">•</span>
-                                      <span>{benefit}</span>
+                                      <TranslatedText text={benefit} keepArabic={false} className="flex-1 text-sm" />
                                     </li>
                                   ))}
                                 </ul>

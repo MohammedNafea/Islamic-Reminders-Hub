@@ -82,11 +82,11 @@ export function formatTime(date: Date, locale = "ar"): string {
   });
 }
 
-export async function getCityFromCoords(lat: number, lng: number): Promise<string> {
+export async function getCityFromCoords(lat: number, lng: number, locale = "ar"): Promise<string> {
   try {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
-      { headers: { "Accept-Language": "ar" } }
+      { headers: { "Accept-Language": locale } }
     );
     const data = await res.json();
     return data.address?.city || data.address?.town || data.address?.village || data.address?.county || "";

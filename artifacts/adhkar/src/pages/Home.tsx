@@ -4,13 +4,46 @@ import { toHijri, formatHijriDate } from "@/lib/hijri";
 import { getPrayerTimesFromAPI } from "@/lib/prayer-times";
 import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sun, Moon, Bed, Bookmark, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart } from "lucide-react";
+import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 import { isArabic, getTranslation } from "@/lib/content-i18n";
 import { fastingDays } from "@/data/fasting-days";
 import { useWiki } from "@/hooks/useWiki";
+import { TranslatedText } from "@/components/TranslatedText";
+import { logTasbihIncrement } from "@/lib/tracker";
+
+const QURAN_SURAHS = [
+  "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+  "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+  "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+  "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+  "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+  "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+  "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+  "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+  "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+  "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العادية",
+  "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+  "المسد", "الإخلاص", "الفلق", "الناس"
+];
+
+function getSurahNumber(suraName: string | undefined): number {
+  if (!suraName) return 1;
+  const normalize = (name: string) => {
+    return name
+      .replace(/[\u064B-\u0652]/g, "")
+      .replace(/[إأآا]/g, "ا")
+      .replace(/ة/g, "ه")
+      .replace(/ى/g, "ي")
+      .replace(/[\s-_]+/g, "")
+      .trim();
+  };
+  const normalizedInput = normalize(suraName);
+  const index = QURAN_SURAHS.findIndex(name => normalize(name) === normalizedInput);
+  return index !== -1 ? index + 1 : 1;
+}
 
 export default function Home() {
   const { t, i18n } = useTranslation();
@@ -29,6 +62,7 @@ export default function Home() {
       if (now.getDate() !== prevDayRef.current) {
         prevDayRef.current = now.getDate();
         setHijri(toHijri(now));
+        setSalawatCount(getTasbihCount("home_salawat", true));
       }
     }, 1000);
     return () => clearInterval(timer);
@@ -62,6 +96,7 @@ export default function Home() {
     const next = salawatCount + 1;
     setSalawatCount(next);
     setTasbihCount("home_salawat", next, true);
+    logTasbihIncrement(1);
     if (settings?.vibrate && navigator.vibrate) {
       const now = Date.now();
       if (now - vibrateRef.current > 80) {
@@ -147,17 +182,7 @@ export default function Home() {
     };
   }, [t, wikiData, i18n, hourlyRandom]);
 
-  const dailyHadith = useMemo(() => {
-    // Use adhkar pool for authentic hadiths
-    const hadithPool = [
-      { id: "h1", arabic: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى", english: "Actions are but by intentions, and every person shall have what he intended.", source: "متفق عليه" },
-      { id: "h2", arabic: "مَنْ صَلَّى عَلَيَّ صَلَاةً وَاحِدَةً صَلَّى اللَّهُ عَلَيْهِ عَشْرًا", english: "Whoever sends blessings upon me once, Allah sends blessings upon him ten times.", source: "رواه مسلم" },
-      { id: "h3", arabic: "بَلِّغُوا عَنِّي وَلَوْ آيَةً", english: "Convey from me even if it is a single verse.", source: "رواه البخاري" },
-      { id: "h4", arabic: "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ", english: "A Muslim is the one from whose tongue and hand the Muslims are safe.", source: "متفق عليه" },
-      { id: "h5", arabic: "الدِّينُ النَّصِيحَةُ", english: "Religion is sincerity (advice).", source: "رواه مسلم" },
-    ];
-    return hadithPool[hourlyRandom(hadithPool.length)];
-  }, [hourlyRandom]);
+
 
   const upcomingFasting = useMemo(() => {
     return fastingDays.find(d => {
@@ -180,7 +205,15 @@ export default function Home() {
             {t(greetingKey)}
           </h1>
           <p className="text-muted-foreground text-sm font-medium">
-            {wikiData?.daily?.inspiration || t("app.tagline")}
+            {wikiData?.daily?.inspiration ? (
+              <TranslatedText
+                text={wikiData.daily.inspiration}
+                keepArabic={false}
+                inline
+              />
+            ) : (
+              t("app.tagline")
+            )}
           </p>
         </div>
 
@@ -238,86 +271,45 @@ export default function Home() {
         </button>
       </motion.div>
 
-      {/* Daily Verse & Hadith Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Daily Verse Section */}
+      <div className="w-full">
         <AnimatePresence mode="wait">
-          <motion.div
-            key="verse-wiki"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            whileHover={{ y: -5 }}
-            className="bg-card/40 backdrop-blur-sm border border-primary/5 rounded-3xl p-6 shadow-sm flex flex-col justify-between group"
-          >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
-                  <BookOpen className="w-4 h-4" />
-                  {t("quran.verse_of_hour")}
-                </div>
-              </div>
-              {/* Arabic original — always shown */}
-              <p className="dhikr-text text-xl leading-relaxed text-foreground/90 text-right" dir="rtl">
-                {dailyVerse?.arabicText || dailyVerse?.text}
-              </p>
-              {/* Translation — shown for non-Arabic languages */}
-              {!isArabic(i18n.language) && dailyVerse?.translatedText && (
-                <p className="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3" dir="ltr">
-                  {dailyVerse.translatedText}
-                </p>
-              )}
-            </div>
-            <p className="text-xs text-primary/60 font-bold mt-4 text-right">
-              {dailyVerse?.sura && dailyVerse.sura !== "" 
-                ? `${t(`quran.suras.${dailyVerse.sura}`, { defaultValue: dailyVerse.sura })}${dailyVerse.verse_number ? ` : ${dailyVerse.verse_number}` : ''}` 
-                : t("nav.quran")}
-            </p>
-          </motion.div>
-        </AnimatePresence>
-
-        <AnimatePresence mode="wait">
-          {dailyHadith && (
-            <motion.div
-              key={`hadith-${dailyHadith.id}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              whileHover={{ y: -5 }}
-              className="bg-card/40 backdrop-blur-sm border border-primary/5 rounded-3xl p-6 shadow-sm flex flex-col justify-between group"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600">
-                    <Bookmark className="w-4 h-4" />
+          {dailyVerse && (
+            <Link href={`/quran?surah=${getSurahNumber(dailyVerse.sura)}&ayah=${dailyVerse.verse_number || 1}`}>
+              <motion.div
+                key="verse-wiki"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                whileHover={{ y: -5 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-card/40 backdrop-blur-sm border border-primary/5 rounded-3xl p-6 shadow-sm flex flex-col justify-between group w-full cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all text-start"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                      <BookOpen className="w-4 h-4" />
+                      {t("quran.verse_of_hour")}
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-amber-600 uppercase tracking-widest">{t("home.hadith_of_hour")}</h3>
-                    <p className="text-[10px] text-muted-foreground font-medium">{t("salawat.title")}</p>
-                  </div>
+                  {/* Arabic original — always shown */}
+                  <p className="dhikr-text text-xl leading-relaxed text-foreground/90 text-right" dir="rtl">
+                    {dailyVerse.arabicText || dailyVerse.text}
+                  </p>
+                  {/* Translation — shown for non-Arabic languages */}
+                  {!isArabic(i18n.language) && dailyVerse.translatedText && (
+                    <p className="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3" dir="ltr">
+                      {dailyVerse.translatedText}
+                    </p>
+                  )}
                 </div>
-                {/* Arabic original — always shown */}
-                <p className="dhikr-text text-xl leading-relaxed text-foreground/80 line-clamp-4 text-right" dir="rtl">
-                  {dailyHadith.arabic}
+                <p className="text-xs text-primary/60 font-bold mt-4 text-right">
+                  {dailyVerse.sura && dailyVerse.sura !== "" 
+                    ? `${t(`quran.suras.${dailyVerse.sura}`, { defaultValue: dailyVerse.sura })}${dailyVerse.verse_number ? ` : ${dailyVerse.verse_number}` : ''}` 
+                    : t("nav.quran")}
                 </p>
-                {/* Translation — shown for non-Arabic languages */}
-                {!isArabic(i18n.language) && dailyHadith.english && (
-                  <p className="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3 line-clamp-3" dir="ltr">
-                    {dailyHadith.english}
-                  </p>
-                )}
-              </div>
-              <p className="text-xs text-amber-600/60 font-bold mt-4 text-right" dir="rtl">
-                {dailyHadith.source}
-              </p>
-              {!isArabic(i18n.language) && (() => {
-                const translatedSource = getTranslation(t, `adhkar.sources.${dailyHadith.source}`);
-                return translatedSource ? (
-                  <p className="text-[10px] text-amber-600/40 mt-1" dir="ltr">
-                    {translatedSource}
-                  </p>
-                ) : null;
-              })()}
-            </motion.div>
+              </motion.div>
+            </Link>
           )}
         </AnimatePresence>
       </div>
@@ -405,13 +397,6 @@ export default function Home() {
             description="quran.subtitle"
           />
           <HubCard 
-            href="/hadith"
-            titleKey="nav.hadith"
-            Icon={BookOpen}
-            color="bg-amber-700"
-            description="hadith.subtitle"
-          />
-          <HubCard 
             href="/fasting"
             titleKey="nav.fasting"
             Icon={Clock}
@@ -421,37 +406,55 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Golden About Us Card */}
+      {/* Dark Emerald & Gold About Us Card */}
       <div className="pt-12 px-2 pb-16">
-        <Card className="relative overflow-hidden border-none bg-gradient-to-br from-[#D4AF37] via-[#FFD700] to-[#B8860B] text-white shadow-2xl rounded-[3rem]">
-          <div className="absolute inset-0 opacity-20 pointer-events-none" 
-               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-          <CardContent className="p-8 md:p-12 relative z-10">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-              <div className="space-y-4 text-center md:text-right flex-1">
-                <h3 className="text-3xl md:text-4xl font-heading font-black drop-shadow-lg">
-                  {t("settings.about_us_title")}
-                </h3>
-                <p className="text-white/95 leading-relaxed text-lg md:text-xl font-medium max-w-2xl">
-                  {t("settings.about_us_content")}
-                </p>
+        <Card className="relative overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-[#0c2419] via-[#123122] to-[#081810] text-white shadow-xl rounded-[2rem] group">
+          <div className="absolute inset-0 opacity-10 pointer-events-none" 
+               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+          <CardContent className="p-6 md:p-8 relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-3 text-center md:text-right flex-1">
+                <TranslatedText
+                  text="عن مركز الأذكار"
+                  staticTranslation={getTranslation(t, "settings.about_us_title", i18n.language) || undefined}
+                  keepArabic={false}
+                  arabicClassName="text-2xl md:text-3xl font-heading font-black text-amber-200 drop-shadow-sm text-center md:text-right"
+                  translationClassName="text-amber-200/90 leading-relaxed text-base md:text-lg font-heading font-black border-t-0 pt-0 mt-1 text-center md:text-right"
+                />
+                
+                <TranslatedText
+                  text="منصة متكاملة للأذكار اليومية والقرآن ومواقيت الصلاة، صُممت لتكون صدقة جارية تخدم المسلم في يومه وليله."
+                  staticTranslation={getTranslation(t, "settings.about_us_content", i18n.language) || undefined}
+                  keepArabic={false}
+                  arabicClassName="text-emerald-100/90 leading-relaxed text-sm md:text-base font-medium max-w-2xl text-center md:text-right block"
+                  translationClassName="text-emerald-100/80 leading-relaxed text-xs md:text-sm font-medium max-w-2xl text-center md:text-right block border-t border-white/10 pt-2.5 mt-2.5"
+                />
               </div>
-              <div className="bg-white/25 backdrop-blur-2xl rounded-[2.5rem] p-8 border border-white/40 shadow-inner group-hover:scale-110 transition-transform duration-500">
-                <Heart className="w-16 h-16 md:w-20 md:h-20 text-white fill-current animate-pulse" />
+              <div className="bg-[#c9a84c]/10 backdrop-blur-md rounded-2xl p-6 border border-[#c9a84c]/20 shadow-inner group-hover:scale-105 transition-transform duration-300">
+                <Heart className="w-12 h-12 md:w-14 md:h-14 text-[#c9a84c] fill-[#c9a84c]/50 animate-pulse" />
               </div>
             </div>
             
-            <div className="mt-10 pt-8 border-t border-white/20 flex flex-wrap items-center justify-center md:justify-between gap-6">
-              <div className="flex gap-4">
-                <div className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest border border-white/20">
-                  صدقة جارية
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center md:justify-between gap-4">
+              <div className="flex gap-3 flex-wrap justify-center">
+                <div className="px-5 py-1.5 bg-[#c9a84c]/15 backdrop-blur-sm rounded-full border border-[#c9a84c]/20 flex flex-col items-center">
+                  <TranslatedText
+                    text="صدقة جارية"
+                    staticTranslation={getTranslation(t, "home.sadaqa_jariya", i18n.language) || undefined}
+                    keepArabic={false}
+                    arabicClassName="text-[9px] font-black uppercase tracking-widest text-amber-200/90 block text-center"
+                    translationClassName="text-[8px] font-bold text-amber-200/70 block text-center border-t-0 pt-0 mt-0.5"
+                  />
                 </div>
-                <div className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-black uppercase tracking-widest border border-white/20">
-                  Vite 6 + React 19
+                <div className="px-5 py-1.5 bg-[#c9a84c]/15 backdrop-blur-sm rounded-full border border-[#c9a84c]/20 flex flex-col items-center">
+                  <TranslatedText
+                    text="صُنع بحب لأمة الإسلام"
+                    staticTranslation={getTranslation(t, "home.made_with_love", i18n.language) || undefined}
+                    keepArabic={false}
+                    arabicClassName="text-[9px] font-black uppercase tracking-widest text-amber-200/90 block text-center"
+                    translationClassName="text-[8px] font-bold text-amber-200/70 block text-center border-t-0 pt-0 mt-0.5"
+                  />
                 </div>
-              </div>
-              <div className="text-white/60 text-[10px] font-bold tracking-widest uppercase">
-                MADE WITH LOVE FOR THE UMMAH
               </div>
             </div>
           </CardContent>
@@ -464,7 +467,10 @@ export default function Home() {
 function HubCard({ href, titleKey, Icon, color, description }: {
   href: string; titleKey: string; Icon: React.ComponentType<{ className?: string }>; color: string; description: string;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const arabicTitle = t(titleKey, { lng: "ar" });
+  const arabicDescription = t(description, { lng: "ar" });
+
   return (
     <Link href={href} aria-label={t(titleKey)}>
       <motion.div
@@ -478,8 +484,22 @@ function HubCard({ href, titleKey, Icon, color, description }: {
               <Icon className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-lg leading-tight">{t(titleKey)}</h3>
-              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{t(description)}</p>
+              <h3 className="font-bold text-lg leading-tight">
+                <TranslatedText
+                  text={arabicTitle}
+                  staticTranslation={getTranslation(t, titleKey, i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                <TranslatedText
+                  text={arabicDescription}
+                  staticTranslation={getTranslation(t, description, i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </p>
             </div>
           </CardContent>
         </Card>

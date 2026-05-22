@@ -3,9 +3,11 @@ import { AlertCircle, Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { getTranslation } from "@/lib/content-i18n";
+import { TranslatedText } from "@/components/TranslatedText";
 
 export default function NotFound() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="min-h-[80vh] w-full flex items-center justify-center p-4">
@@ -16,19 +18,33 @@ export default function NotFound() {
               <AlertCircle className="h-12 w-12 text-destructive" />
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">
-              {t("common.not_found_title")}
+              <TranslatedText
+                text="الصفحة غير موجودة"
+                staticTranslation={getTranslation(t, "common.not_found_title", i18n.language) || undefined}
+                keepArabic={false}
+                inline
+              />
             </h1>
           </div>
 
-          <p className="text-muted-foreground leading-relaxed">
-            {t("common.not_found_desc")}
-          </p>
+          <div className="text-muted-foreground leading-relaxed">
+            <TranslatedText
+              text="عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها."
+              staticTranslation={getTranslation(t, "common.not_found_desc", i18n.language) || undefined}
+              keepArabic={false}
+            />
+          </div>
 
           <div className="pt-4">
             <Link href="/">
               <Button className="rounded-2xl px-8 gap-2 font-bold h-12 w-full sm:w-auto">
                 <Home className="w-4 h-4" />
-                {t("common.back_home")}
+                <TranslatedText
+                  text="العودة للرئيسية"
+                  staticTranslation={getTranslation(t, "common.back_home", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
               </Button>
             </Link>
           </div>
@@ -37,3 +53,4 @@ export default function NotFound() {
     </div>
   );
 }
+

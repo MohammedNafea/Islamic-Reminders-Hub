@@ -13,18 +13,22 @@ import Evening from "@/pages/Evening";
 import Sleep from "@/pages/Sleep";
 import Prayer from "@/pages/Prayer";
 import Ruqyah from "@/pages/Ruqyah";
+import HouseAdhkar from "@/pages/HouseAdhkar";
+import MasjidAdhkar from "@/pages/MasjidAdhkar";
 import PrayerTimesPage from "@/pages/PrayerTimesPage";
 import Fasting from "@/pages/Fasting";
 import Tasbih from "@/pages/Tasbih";
 import Settings from "@/pages/Settings";
 import Quran from "@/pages/Quran";
-import HadithPage from "@/pages/HadithRulings";
+// TEMPORARILY HIDDEN
+// import HadithPage from "@/pages/HadithRulings";
 import MergedDhikr from "@/pages/MergedDhikr";
-import Favorites from "@/pages/Favorites";
-import SearchPage from "@/pages/Search";
-import LibraryAdmin from "@/pages/LibraryAdmin";
+// import Favorites from "@/pages/Favorites";
+// import SearchPage from "@/pages/Search";
+// import LibraryAdmin from "@/pages/LibraryAdmin";
 import Zakat from "@/pages/Zakat";
 import Qibla from "@/pages/Qibla";
+import TrackerDashboard from "@/pages/TrackerDashboard";
 import { monitoring } from "@/lib/monitoring";
 
 // Initialize monitoring for production telemetry
@@ -45,17 +49,21 @@ function Router() {
         <Route path="/sleep" component={Sleep} />
         <Route path="/prayer" component={Prayer} />
         <Route path="/ruqyah" component={Ruqyah} />
+        <Route path="/house" component={HouseAdhkar} />
+        <Route path="/masjid" component={MasjidAdhkar} />
         <Route path="/times" component={PrayerTimesPage} />
         <Route path="/fasting" component={Fasting} />
         <Route path="/tasbih" component={Tasbih} />
+        <Route path="/tracker" component={TrackerDashboard} />
         <Route path="/quran" component={Quran} />
-        <Route path="/hadith" component={HadithPage} />
+        {/* TEMPORARILY HIDDEN */}
+        {/* <Route path="/hadith" component={HadithPage} /> */}
         <Route path="/morning-ruqyah" component={MergedDhikr} />
         <Route path="/evening-ruqyah" component={MergedDhikr} />
         <Route path="/settings" component={Settings} />
-        <Route path="/favorites" component={Favorites} />
-        <Route path="/search" component={SearchPage} />
-        <Route path="/admin/library" component={LibraryAdmin} />
+        {/* <Route path="/favorites" component={Favorites} /> */}
+        {/* <Route path="/search" component={SearchPage} /> */}
+        {/* <Route path="/admin/library" component={LibraryAdmin} /> */}
         <Route path="/zakat" component={Zakat} />
         <Route path="/qibla" component={Qibla} />
         <Route component={NotFound} />

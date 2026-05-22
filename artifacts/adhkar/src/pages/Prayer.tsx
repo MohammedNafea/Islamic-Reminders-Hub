@@ -4,7 +4,9 @@ import { adhkarPrayer, adhkarSalawat, salawatVirtues } from "@/data/adhkar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
-import { isArabic, getTranslation } from "@/lib/content-i18n";
+import { getTranslation } from "@/lib/content-i18n";
+import { TranslatedText } from "@/components/TranslatedText";
+
 
 export default function Prayer() {
   const { t, i18n } = useTranslation();
@@ -32,27 +34,25 @@ export default function Prayer() {
                 transition={{ delay: i * 0.06 }}
               >
                 <Card className="w-64 sm:w-72 bg-primary/5 border-primary/20 shrink-0">
-                  <CardContent className="p-4 space-y-2">
-                    <p className="dhikr-text text-right text-base leading-relaxed" dir="rtl" style={{ fontSize: "0.95rem" }}>
-                      {v.arabic}
-                    </p>
-                    {!isArabic(i18n.language) && (() => {
-                      const translatedVirtue = getTranslation(t, `salawat.virtues.${v.id}`);
-                      return translatedVirtue ? (
-                        <p className="text-xs text-muted-foreground text-left border-t border-border/20 pt-2 mt-2" dir="ltr">
-                          {translatedVirtue}
-                        </p>
-                      ) : null;
-                    })()}
-                    <p className="text-xs text-muted-foreground text-right" dir="rtl">{v.source}</p>
-                    {!isArabic(i18n.language) && (() => {
-                      const translatedSource = getTranslation(t, `adhkar.sources.${v.source}`);
-                      return translatedSource ? (
-                        <p className="text-[10px] text-muted-foreground/60 text-left" dir="ltr">
-                          {translatedSource}
-                        </p>
-                      ) : null;
-                    })()}
+                  <CardContent className="p-4 space-y-4">
+                    <TranslatedText
+                      text={v.arabic}
+                      staticTranslation={getTranslation(t, `salawat.virtues.${v.id}`, i18n.language) || undefined}
+                      keepArabic={true}
+                      arabicClassName="text-right text-[0.95rem] leading-relaxed"
+                      translationClassName="text-xs text-muted-foreground text-left border-t border-border/20 pt-2 mt-2"
+                    />
+                    
+                    <div className="space-y-1">
+                      <TranslatedText
+                        text={v.source}
+                        staticTranslation={getTranslation(t, `adhkar.sources.${v.source}`, i18n.language) || undefined}
+                        keepArabic={true}
+                        isDhikr={false}
+                        arabicClassName="text-xs text-muted-foreground text-right block"
+                        translationClassName="text-[10px] text-muted-foreground/60 text-left block border-t-0 pt-0 mt-0"
+                      />
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

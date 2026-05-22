@@ -16,10 +16,11 @@ import { DhikrList } from "@/components/DhikrList";
 import { useLibraryContent } from "@/hooks/useLibraryContent";
 import type { LibraryContentItem } from "@/types/library";
 
+// Labels are resolved dynamically inside the component via t() calls
 const typeConfig = {
-  dhikr: { icon: MessageSquare, color: "text-amber-500", bg: "bg-amber-500/10", label: "أذكار" },
-  quran: { icon: BookOpen, color: "text-emerald-500", bg: "bg-emerald-500/10", label: "قرآن" },
-  library: { icon: Book, color: "text-blue-500", bg: "bg-blue-500/10", label: "مكتبة" },
+  dhikr: { icon: MessageSquare, color: "text-amber-500", bg: "bg-amber-500/10", labelKey: "nav.adhkar" },
+  quran: { icon: BookOpen, color: "text-emerald-500", bg: "bg-emerald-500/10", labelKey: "nav.quran" },
+  library: { icon: Book, color: "text-blue-500", bg: "bg-blue-500/10", labelKey: "search.library_label" },
 } as const;
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -41,7 +42,16 @@ const FILTER_TABS: { id: ContentType; labelKey: string; icon: React.ElementType 
 
 export default function SearchPage() {
   const { t, i18n } = useTranslation();
-  const { query, setQuery, results, activeType, setActiveType } = useUnifiedSearch();
+  const { 
+    query, 
+    setQuery, 
+    results, 
+    activeType, 
+    setActiveType, 
+    isSmartSearch, 
+    setIsSmartSearch, 
+    isSearching 
+  } = useUnifiedSearch();
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const { items: libraryData } = useLibraryContent();
 
@@ -98,6 +108,43 @@ export default function SearchPage() {
         />
       </div>
 
+      {/* Smart Search Toggle */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 rounded-2xl bg-primary/5 border border-primary/10 backdrop-blur-sm shadow-sm gap-4 transition-all duration-300">
+        <div className="space-y-1 text-right w-full sm:w-auto" dir="rtl">
+          <h4 className="text-sm font-bold text-foreground/90 flex items-center gap-1.5 justify-start">
+            <span className="relative flex h-2 w-2">
+              <span className={cn(
+                "absolute inline-flex h-full w-full rounded-full opacity-75",
+                isSmartSearch ? "animate-ping bg-emerald-500" : "bg-muted-foreground"
+              )}></span>
+              <span className={cn(
+                "relative inline-flex rounded-full h-2 w-2",
+                isSmartSearch ? "bg-emerald-500" : "bg-muted-foreground"
+              )}></span>
+            </span>
+            <span>{t("search.smart_search_title", { defaultValue: "البحث بالمعنى (البحث الذكي 🤖)" })}</span>
+          </h4>
+          <p className="text-xs text-muted-foreground">
+            {t("search.smart_search_desc", { defaultValue: "يبحث في المقاصد والمعنى السياقي للفقرات بدلاً من المطابقة الحرفية للكلمات" })}
+          </p>
+        </div>
+        <button
+          id="semantic-search"
+          onClick={() => setIsSmartSearch(!isSmartSearch)}
+          className={cn(
+            "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 self-end sm:self-auto",
+            isSmartSearch ? "bg-emerald-500" : "bg-muted"
+          )}
+        >
+          <span
+            className={cn(
+              "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-background shadow-lg ring-0 transition duration-200 ease-in-out",
+              isSmartSearch ? "translate-x-5" : "translate-x-0"
+            )}
+          />
+        </button>
+      </div>
+
       {/* Filter Tabs */}
       <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
         {FILTER_TABS.map((tab) => {
@@ -122,7 +169,22 @@ export default function SearchPage() {
 
       {/* Results */}
       <div className="space-y-3">
-        {activeType === "favorites" ? (
+        {isSearching ? (
+          <div className="space-y-4 animate-pulse pt-2" dir="rtl">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="p-5 rounded-2xl bg-card/45 border border-border/40 space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-xl bg-muted" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-muted rounded w-1/4" />
+                    <div className="h-3 bg-muted rounded w-1/2" />
+                  </div>
+                </div>
+                <div className="h-10 bg-muted rounded-xl w-full" />
+              </div>
+            ))}
+          </div>
+        ) : activeType === "favorites" ? (
           <div className="space-y-12 animate-in fade-in duration-500 pt-2">
             {/* Adhkar Section */}
             {favoriteAdhkar.length > 0 && (
@@ -213,9 +275,9 @@ export default function SearchPage() {
             )}
           </div>
         ) : (
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence>
             {results.length > 0 ? (
-              <>
+              <div className="space-y-4">
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">
                   {results.length} {t("search.results_count", { defaultValue: "نتيجة" })}
                 </p>
@@ -243,17 +305,27 @@ export default function SearchPage() {
                             <div className="flex-1 space-y-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
                                 <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-                                  {config.label}
+                                  {t(config.labelKey, { defaultValue: result.type })}
                                 </span>
                                 {result.category && (
                                   <span className="text-[10px] font-medium text-primary/60 truncate">
                                     # {result.category}
                                   </span>
                                 )}
+                                {result.similarity !== undefined && (
+                                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full dark:bg-emerald-950/30 dark:text-emerald-400">
+                                    {t("search.match_percent", { defaultValue: "تطابق" })}: {Math.round(result.similarity * 100)}%
+                                  </span>
+                                )}
                               </div>
                               <h3 className="font-bold text-base text-foreground truncate">
                                 {result.title}
                               </h3>
+                              {result.author && (
+                                <p className="text-[11px] text-muted-foreground/80 font-medium" dir="rtl">
+                                  {t("search.author_source", { defaultValue: "المصدر" })}: {result.author}
+                                </p>
+                              )}
                               <p
                                 className="text-muted-foreground text-sm line-clamp-2 leading-relaxed"
                                 dir="rtl"
@@ -287,7 +359,7 @@ export default function SearchPage() {
                     </motion.div>
                   );
                 })}
-              </>
+              </div>
             ) : query.length >= 2 ? (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -311,7 +383,7 @@ export default function SearchPage() {
                 className="text-center py-16 space-y-4"
               >
                 <div className="grid grid-cols-3 gap-3 max-w-xs mx-auto">
-                  {(["أذكار الصباح", "سورة البقرة", "أحكام الصيام"] as string[]).map((hint) => (
+                  {([t("search.hint_morning", { defaultValue: "أذكار الصباح" }), t("search.hint_baqarah", { defaultValue: "سورة البقرة" }), t("search.hint_fasting", { defaultValue: "أحكام الصيام" })] as string[]).map((hint) => (
                     <button
                       key={hint}
                       onClick={() => setQuery(hint)}

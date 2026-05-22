@@ -1,23 +1,84 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { getSettings, saveSettings } from "@/lib/store";
 import { supportedLanguages } from "@/i18n";
 import { useTheme } from "@/components/ThemeProvider";
 type Theme = "dark" | "light" | "system" | "fajr" | "duha" | "maghrib" | "sahar" | "dynamic";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { NotificationManager } from "@/lib/notifications";
-import { Link } from "wouter";
-import { ChevronRight, User, Cloud, LogOut, LogIn } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { motion, AnimatePresence } from "framer-motion";
+import { TranslatedText } from "@/components/TranslatedText";
+import { getTranslation } from "@/lib/content-i18n";
+import { Button } from "@/components/ui/button";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
   const [settings, setLocalSettings] = useState(getSettings());
+  const [testingSound, setTestingSound] = useState(false);
+  const [testAudio, setTestAudio] = useState<HTMLAudioElement | null>(null);
+  const testAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    testAudioRef.current = testAudio;
+  }, [testAudio]);
+
+  useEffect(() => {
+    const handleStopAllAudio = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail && customEvent.detail.sender !== "settings") {
+        if (testAudioRef.current) {
+          testAudioRef.current.pause();
+        }
+        setTestingSound(false);
+        setTestAudio(null);
+      }
+    };
+
+    window.addEventListener("stop-all-audio", handleStopAllAudio);
+    return () => {
+      window.removeEventListener("stop-all-audio", handleStopAllAudio);
+      if (testAudioRef.current) {
+        testAudioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const playTestSound = () => {
+    if (testingSound && testAudio) {
+      testAudio.pause();
+      setTestingSound(false);
+      setTestAudio(null);
+      return;
+    }
+
+    // Dispatch global stop-all-audio event
+    window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "settings" } }));
+
+    const soundUrl = settings.notificationsAthan === "azan1"
+      ? "https://www.islamcan.com/audio/athan/azan6.mp3"
+      : "https://www.islamcan.com/audio/athan/azan4.mp3";
+
+    const audio = new Audio(soundUrl);
+    setTestAudio(audio);
+    setTestingSound(true);
+
+    audio.play()
+      .then(() => {
+        audio.onended = () => {
+          setTestingSound(false);
+          setTestAudio(null);
+        };
+      })
+      .catch((err) => {
+        console.error("Test sound play failed:", err);
+        setTestingSound(false);
+        setTestAudio(null);
+      });
+  };
 
   useEffect(() => {
     setLocalSettings(getSettings());
@@ -27,9 +88,7 @@ export default function Settings() {
     let finalValue: typeof settings[typeof key] = value;
     if (key === "notifications" && value === true) {
       const granted = await NotificationManager.requestPermission();
-      if (granted) {
-        NotificationManager.scheduleReminders();
-      } else {
+      if (!granted) {
         finalValue = false as typeof settings[typeof key];
       }
     }
@@ -38,46 +97,40 @@ export default function Settings() {
     setLocalSettings(newSettings);
     saveSettings(newSettings);
 
+    if (newSettings.notifications && (key === "notifications" || key === "notificationsPrayers" || key === "notificationsAdhkar" || key === "notificationsNight")) {
+      NotificationManager.scheduleReminders();
+    } else if (!newSettings.notifications && key === "notifications") {
+      NotificationManager.cancelAll();
+    }
+
     if (key === "language") {
       i18n.changeLanguage(finalValue as string);
     }
   };
 
-  const [user, setUser] = useState<{ id?: string; email?: string } | null>(null);
 
-  useEffect(() => {
-    if (supabase) {
-      supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user ?? null);
-      });
-      return () => subscription.unsubscribe();
-    }
-  }, []);
-
-  const handleAuth = async () => {
-    if (!supabase) return;
-    if (user) {
-      await supabase.auth.signOut();
-    } else {
-      // For demo/simplicity, we use email/password or a simple magic link
-      // In a real app, you'd show a dialog. Here we just trigger a sign in.
-      const email = window.prompt(t("settings.enter_email") || "Enter your email:");
-      if (email) {
-        const { error } = await supabase.auth.signInWithOtp({ email });
-        if (error) alert(error.message);
-        else alert(t("settings.check_email") || "Check your email for the login link!");
-      }
-    }
-  };
 
   return (
     <div className="animate-in fade-in duration-500 max-w-2xl mx-auto space-y-6">
-      <h2 className="text-2xl font-heading font-bold text-primary pt-4">{t("settings.title")}</h2>
+      <h2 className="text-2xl font-heading font-bold text-primary pt-4">
+        <TranslatedText
+          text="الإعدادات"
+          staticTranslation={getTranslation(t, "settings.title", i18n.language) || undefined}
+          keepArabic={false}
+          inline
+        />
+      </h2>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t("settings.language")}</CardTitle>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="اللغة"
+              staticTranslation={getTranslation(t, "settings.language", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Select 
@@ -85,7 +138,7 @@ export default function Settings() {
             onValueChange={(val) => updateSetting("language", val)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("settings.language")} />
+              <SelectValue placeholder={getTranslation(t, "settings.language", i18n.language) || "اللغة"} />
             </SelectTrigger>
             <SelectContent>
               {supportedLanguages.map(lang => (
@@ -104,7 +157,14 @@ export default function Settings() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t("settings.theme")}</CardTitle>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="المظهر"
+              staticTranslation={getTranslation(t, "settings.theme", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Select 
@@ -112,17 +172,73 @@ export default function Settings() {
             onValueChange={(val) => setTheme(val as Theme)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("settings.theme")} />
+              <SelectValue placeholder={getTranslation(t, "settings.theme", i18n.language) || "المظهر"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="light">{t("settings.light")}</SelectItem>
-              <SelectItem value="dark">{t("settings.dark")}</SelectItem>
-              <SelectItem value="system">{t("settings.system")}</SelectItem>
-              <SelectItem value="dynamic">{t("settings.dynamic") || "ديناميكي (حسب الوقت)"}</SelectItem>
-              <SelectItem value="fajr">{t("settings.theme_fajr") || "الفجر (بنفسجي)"}</SelectItem>
-              <SelectItem value="duha">{t("settings.theme_duha") || "الضحى (سماوي)"}</SelectItem>
-              <SelectItem value="maghrib">{t("settings.theme_maghrib") || "المغرب (غروبي)"}</SelectItem>
-              <SelectItem value="sahar">{t("settings.theme_sahar") || "السحر (ليلي عميق)"}</SelectItem>
+              <SelectItem value="light">
+                <TranslatedText
+                  text="فاتح"
+                  staticTranslation={getTranslation(t, "settings.light", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="dark">
+                <TranslatedText
+                  text="داكن"
+                  staticTranslation={getTranslation(t, "settings.dark", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="system">
+                <TranslatedText
+                  text="حسب النظام"
+                  staticTranslation={getTranslation(t, "settings.system", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="dynamic">
+                <TranslatedText
+                  text="ديناميكي (تلقائي)"
+                  staticTranslation={getTranslation(t, "settings.dynamic", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="fajr">
+                <TranslatedText
+                  text="سكينة الفجر"
+                  staticTranslation={getTranslation(t, "settings.theme_fajr", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="duha">
+                <TranslatedText
+                  text="إشراق الضحى"
+                  staticTranslation={getTranslation(t, "settings.theme_duha", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="maghrib">
+                <TranslatedText
+                  text="هدوء المغرب"
+                  staticTranslation={getTranslation(t, "settings.theme_maghrib", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="sahar">
+                <TranslatedText
+                  text="روحانية السحر"
+                  staticTranslation={getTranslation(t, "settings.theme_sahar", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
             </SelectContent>
           </Select>
         </CardContent>
@@ -130,7 +246,14 @@ export default function Settings() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t("settings.calculation")}</CardTitle>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="طريقة حساب المواقيت"
+              staticTranslation={getTranslation(t, "settings.calculation", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Select 
@@ -138,12 +261,17 @@ export default function Settings() {
             onValueChange={(val) => updateSetting("calculationMethod", val)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("settings.calculation")} />
+              <SelectValue placeholder={getTranslation(t, "settings.calculation", i18n.language) || "طريقة حساب المواقيت"} />
             </SelectTrigger>
             <SelectContent>
               {["MuslimWorldLeague", "Egyptian", "Karachi", "UmmAlQura", "Dubai", "NorthAmerica", "Kuwait", "Qatar", "Singapore", "Turkey"].map(method => (
                 <SelectItem key={method} value={method}>
-                  {t(`prayer.methods.${method}`)}
+                  <TranslatedText
+                    text={getTranslation(t, `prayer.methods.${method}`, "ar") || method}
+                    staticTranslation={getTranslation(t, `prayer.methods.${method}`, i18n.language) || undefined}
+                    keepArabic={false}
+                    inline
+                  />
                 </SelectItem>
               ))}
             </SelectContent>
@@ -153,7 +281,14 @@ export default function Settings() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">{t("settings.font_size")}</CardTitle>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="حجم الخط"
+              staticTranslation={getTranslation(t, "settings.font_size", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <Select 
@@ -161,88 +296,220 @@ export default function Settings() {
             onValueChange={(val) => updateSetting("fontSize", val)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("settings.font_size")} />
+              <SelectValue placeholder={getTranslation(t, "settings.font_size", i18n.language) || "حجم الخط"} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="sm">{t("settings.font_sm") || "Small"}</SelectItem>
-              <SelectItem value="md">{t("settings.font_md") || "Medium"}</SelectItem>
-              <SelectItem value="lg">{t("settings.font_lg") || "Large"}</SelectItem>
-              <SelectItem value="xl">{t("settings.font_xl") || "Extra Large"}</SelectItem>
+              <SelectItem value="sm">
+                <TranslatedText
+                  text="صغير"
+                  staticTranslation={getTranslation(t, "settings.font_sm", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="md">
+                <TranslatedText
+                  text="متوسط"
+                  staticTranslation={getTranslation(t, "settings.font_md", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="lg">
+                <TranslatedText
+                  text="كبير"
+                  staticTranslation={getTranslation(t, "settings.font_lg", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="xl">
+                <TranslatedText
+                  text="كبير جداً"
+                  staticTranslation={getTranslation(t, "settings.font_xl", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
             </SelectContent>
           </Select>
         </CardContent>
       </Card>
 
-      <Card className="border-none shadow-md bg-primary/5">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
-            <Cloud className="w-5 h-5 text-primary" />
-            {t("settings.cloud_sync") || "المزامنة السحابية"}
-          </CardTitle>
-          <CardDescription>
-            {t("settings.cloud_desc") || "قم بتسجيل الدخول لمزامنة أذكارك ومفضلاتك عبر جميع أجهزتك."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-3 bg-background rounded-2xl border border-primary/10">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <User className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <p className="text-sm font-bold">{user ? user.email : t("settings.guest") || "زائر"}</p>
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                  {user ? t("settings.sync_active") || "المزامنة نشطة" : t("settings.local_only") || "تخزين محلي فقط"}
-                </p>
-              </div>
-            </div>
-            <Button 
-              variant={user ? "outline" : "default"} 
-              size="sm" 
-              className="rounded-xl gap-2"
-              onClick={handleAuth}
-              disabled={!supabase}
-            >
-              {user ? <LogOut className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
-              {user ? t("settings.logout") || "خروج" : t("settings.login") || "دخول"}
-            </Button>
-          </div>
-          {!supabase && (
-            <p className="text-[10px] text-red-500 text-center italic">
-              * Supabase is not configured. Check environment variables.
-            </p>
-          )}
-        </CardContent>
-      </Card>
+
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="pt-6 space-y-4">
           <div className="flex items-center justify-between">
-            <Label htmlFor="notifications" className="text-base font-medium">{t("settings.notifications")}</Label>
+            <Label htmlFor="notifications" className="text-base font-medium">
+              <TranslatedText
+                text="تنبيهات الصلوات"
+                staticTranslation={getTranslation(t, "settings.notifications", i18n.language) || undefined}
+                keepArabic={false}
+                inline
+              />
+            </Label>
             <Switch 
               id="notifications" 
               checked={settings.notifications}
               onCheckedChange={(val) => updateSetting("notifications", val)}
             />
           </div>
-          <div className="h-px bg-border my-4" />
+
+          <AnimatePresence>
+            {settings.notifications && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden space-y-3 pl-4 pr-4 border-r-2 border-primary/20 mr-2"
+              >
+                <div className="flex items-center justify-between py-1">
+                  <Label htmlFor="notificationsPrayers" className="text-sm font-normal text-muted-foreground">
+                    <TranslatedText
+                      text="تنبيهات مواقيت الصلاة"
+                      staticTranslation={getTranslation(t, "settings.notifications_prayers", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </Label>
+                  <Switch 
+                    id="notificationsPrayers" 
+                    checked={settings.notificationsPrayers}
+                    onCheckedChange={(val) => updateSetting("notificationsPrayers", val)}
+                  />
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <Label htmlFor="notificationsAdhkar" className="text-sm font-normal text-muted-foreground">
+                    <TranslatedText
+                      text="تنبيهات أذكار الصباح والمساء"
+                      staticTranslation={getTranslation(t, "settings.notifications_adhkar_sub", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </Label>
+                  <Switch 
+                    id="notificationsAdhkar" 
+                    checked={settings.notificationsAdhkar}
+                    onCheckedChange={(val) => updateSetting("notificationsAdhkar", val)}
+                  />
+                </div>
+                <div className="flex items-center justify-between py-1">
+                  <Label htmlFor="notificationsNight" className="text-sm font-normal text-muted-foreground">
+                    <TranslatedText
+                      text="تنبيهات الليل والاستغفار بالأسحار"
+                      staticTranslation={getTranslation(t, "settings.notifications_night", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </Label>
+                  <Switch 
+                    id="notificationsNight" 
+                    checked={settings.notificationsNight}
+                    onCheckedChange={(val) => updateSetting("notificationsNight", val)}
+                  />
+                </div>
+
+                <div className="h-px bg-border/40 my-2" />
+                
+                <div className="space-y-2 py-1">
+                  <Label htmlFor="notificationsAthan" className="text-sm font-medium text-muted-foreground">
+                    <TranslatedText
+                      text="صوت الأذان عند التنبيه"
+                      staticTranslation={getTranslation(t, "settings.notifications_athan", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </Label>
+                  <div className="flex gap-2 items-center">
+                    <Select
+                      value={settings.notificationsAthan}
+                      onValueChange={(val) => updateSetting("notificationsAthan", val as "off" | "azan1" | "azan2")}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder={getTranslation(t, "settings.notifications_athan", i18n.language) || "صوت الأذان"} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="off">
+                          <TranslatedText
+                            text="بدون صوت (تنبيه فقط)"
+                            staticTranslation={getTranslation(t, "settings.athan_none", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="azan1">
+                          <TranslatedText
+                            text="أذان 1 (عبد الباسط)"
+                            staticTranslation={getTranslation(t, "settings.athan_azan1", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="azan2">
+                          <TranslatedText
+                            text="أذان 2 (مكة المكرمة)"
+                            staticTranslation={getTranslation(t, "settings.athan_azan2", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {settings.notificationsAthan !== "off" && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={playTestSound}
+                        className="whitespace-nowrap rounded-md text-xs font-semibold px-3 h-10 border-border/60 hover:bg-muted"
+                      >
+                        {testingSound ? (
+                          <span className="flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                            <TranslatedText text="إيقاف" staticTranslation={i18n.language === "ar" ? "إيقاف" : "Stop"} keepArabic={false} inline />
+                          </span>
+                        ) : (
+                          <TranslatedText
+                            text="تجربة الصوت"
+                            staticTranslation={getTranslation(t, "settings.test_sound", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground/80 mt-1 leading-relaxed">
+                    <TranslatedText
+                      text="اختر صوت الأذان أو قم بتعطيله"
+                      staticTranslation={getTranslation(t, "settings.notifications_athan_desc", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="h-px bg-border my-2" />
           <div className="flex items-center justify-between">
-            <Label htmlFor="vibrate" className="text-base font-medium">{t("tasbih.vibrate")}</Label>
+            <Label htmlFor="vibrate" className="text-base font-medium">
+              <TranslatedText
+                text="الاهتزاز عند اللمس"
+                staticTranslation={getTranslation(t, "tasbih.vibrate", i18n.language) || undefined}
+                keepArabic={false}
+                inline
+              />
+            </Label>
             <Switch 
               id="vibrate" 
               checked={settings.vibrate}
               onCheckedChange={(val) => updateSetting("vibrate", val)}
             />
           </div>
-          <div className="h-px bg-border my-4" />
-          <Link href="/admin/library">
-            <div className="flex items-center justify-between cursor-pointer group">
-              <Label className="text-base font-medium cursor-pointer group-hover:text-primary transition-colors">{t("admin.library_title")}</Label>
-              <div className="p-2 rounded-lg bg-primary/5 group-hover:bg-primary/10 transition-colors">
-                <ChevronRight className="w-4 h-4 text-primary" />
-              </div>
-            </div>
-          </Link>
         </CardContent>
       </Card>
 
@@ -251,12 +518,22 @@ export default function Settings() {
           <svg className="w-24 h-24 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
         </div>
         <CardHeader>
-          <CardTitle className="text-amber-600 dark:text-amber-400 font-heading">{t("settings.about_us_title")}</CardTitle>
+          <TranslatedText
+            text="عن مركز الأذكار"
+            staticTranslation={getTranslation(t, "settings.about_us_title", i18n.language) || undefined}
+            keepArabic={false}
+            arabicClassName="text-amber-600 dark:text-amber-400 font-heading text-lg font-bold text-right"
+            translationClassName="text-amber-700 dark:text-amber-300 font-heading text-sm font-bold border-t-0 pt-0 mt-1"
+          />
         </CardHeader>
         <CardContent>
-          <p className="text-sm leading-relaxed text-muted-foreground italic">
-            {t("settings.about_us_content")}
-          </p>
+          <TranslatedText
+            text="منصة متكاملة للأذكار اليومية والقرآن ومواقيت الصلاة، صُممت لتكون صدقة جارية تخدم المسلم في يومه وليله."
+            staticTranslation={getTranslation(t, "settings.about_us_content", i18n.language) || undefined}
+            keepArabic={false}
+            arabicClassName="text-sm leading-relaxed text-muted-foreground italic text-right block"
+            translationClassName="text-xs leading-relaxed text-muted-foreground/80 italic block border-t border-amber-500/10 pt-2 mt-2"
+          />
         </CardContent>
       </Card>
     </div>

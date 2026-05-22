@@ -36,10 +36,21 @@ export class NotificationManager {
   }
 
   static scheduleAdhkarReminders() {
-    // Morning Adhkar (7:00 AM)
-    this.scheduleAtHour(7, 0, "أذكار الصباح", "حان وقت أذكار الصباح لتبدأ يومك بذكر الله.");
-    // Evening Adhkar (6:00 PM)
-    this.scheduleAtHour(18, 0, "أذكار المساء", "حان وقت أذكار المساء، اجعل خاتمة يومك ذكرًا.");
+    const settings = getSettings();
+    
+    if (settings.notificationsAdhkar) {
+      // Morning Adhkar (7:00 AM)
+      this.scheduleAtHour(7, 0, "أذكار الصباح", "حان وقت أذكار الصباح لتبدأ يومك بذكر الله.");
+      // Evening Adhkar (6:00 PM)
+      this.scheduleAtHour(18, 0, "أذكار المساء", "حان وقت أذكار المساء، اجعل خاتمة يومك ذكرًا.");
+    }
+    
+    if (settings.notificationsNight) {
+      // Sleep Adhkar (10:00 PM)
+      this.scheduleAtHour(22, 0, "أذكار النوم", "حان وقت أذكار النوم، حافظ على أوراد النوم الحافظة.");
+      // Sahar / Istighfar (3:00 AM)
+      this.scheduleAtHour(3, 0, "الاستغفار بالأسحار", "والمستغفرين بالأسحار.. حان وقت الاستغفار والدعاء.");
+    }
   }
 
   private static scheduleAtHour(hour: number, minute: number, title: string, body: string) {

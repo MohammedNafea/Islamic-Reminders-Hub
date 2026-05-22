@@ -13,16 +13,21 @@ import { NotificationManager } from "@/lib/notifications";
 export function usePrayerNotifications() {
   const { t } = useTranslation();
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const athanAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const clearAll = useCallback(() => {
     timeoutsRef.current.forEach(clearTimeout);
     timeoutsRef.current = [];
+    if (athanAudioRef.current) {
+      athanAudioRef.current.pause();
+      athanAudioRef.current = null;
+    }
   }, []);
 
   const schedulePrayerNotifications = useCallback(
     async (times: PrayerTimesResult) => {
       const settings = getSettings();
-      if (!settings.notifications || Notification.permission !== "granted") return;
+      if (!settings.notifications || !settings.notificationsPrayers || Notification.permission !== "granted") return;
 
       clearAll();
       const now = Date.now();
@@ -74,6 +79,24 @@ export function usePrayerNotifications() {
                 tag: `prayer-now-${nameKey}`,
               }
             );
+
+            // Play Athan if configured
+            const s = getSettings();
+            if (s.notificationsAthan && s.notificationsAthan !== "off") {
+              const url = s.notificationsAthan === "azan1"
+                ? "https://www.islamcan.com/audio/athan/azan6.mp3"
+                : "https://www.islamcan.com/audio/athan/azan4.mp3";
+              try {
+                if (athanAudioRef.current) {
+                  athanAudioRef.current.pause();
+                }
+                const audio = new Audio(url);
+                athanAudioRef.current = audio;
+                audio.play().catch(e => console.log("Athan autoplay blocked or failed:", e));
+              } catch (err) {
+                console.error("Athan playback error:", err);
+              }
+            }
           }, prayerMs - now);
           timeoutsRef.current.push(id);
         }
@@ -84,7 +107,7 @@ export function usePrayerNotifications() {
 
   useEffect(() => {
     const settings = getSettings();
-    if (!settings.notifications) return;
+    if (!settings.notifications || !settings.notificationsPrayers) return;
     if (!("Notification" in window) || Notification.permission !== "granted") return;
 
     let cancelled = false;

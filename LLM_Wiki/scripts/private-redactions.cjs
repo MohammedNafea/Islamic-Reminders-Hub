@@ -68,6 +68,13 @@ function redactText(input, options = {}) {
   output = output.replace(/الغناء\s+في\s+الميزان/gu, "دراسة أحكام الغناء");
   output = output.replace(/الخرسانية/gu, "الرسالة العقائدية");
   output = output.replace(/نواقض\s+الإسلام/gu, "مسائل التوحيد");
+  output = output.replace(/الاختلاط:\s*تحرير\s*وتقرير\s*وتعقيب/gu, "مسألة الاختلاط في الميزان");
+  output = output.replace(/عشرة\s+النساء\s+من\s+المغني/gu, "أحكام عشرة النساء");
+  output = output.replace(/مختصر\s+صحيح\s+أذكار\s+الصباح\s+والمساء/gu, "أذكار اليوم والليلة المحققة");
+  output = output.replace(/الأذان\s+والإقامة/gu, "أحكام الأذان والإقامة");
+  output = output.replace(/علل\s+أحاديث\s+الأحكام:\s*الطهارة/gu, "دراسة علل أحاديث الطهارة");
+  output = output.replace(/الإعلام\s+بشرح\s+نواقض\s+الإسلام/gu, "الإعلام بمسائل التوحيد");
+  output = output.replace(/محاضرة\s+حكم\s+الغناء/gu, "محاضرة في أحكام الغناء والقرآن");
 
   output = output
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/gu, "")

@@ -4,7 +4,8 @@ import { fastingDays } from "@/data/fasting-days";
 import { toHijri, formatHijriDate, hijriToGregorian } from "@/lib/hijri";
 import { useMemo } from "react";
 import { Calendar, Clock, Info } from "lucide-react";
-import { isArabic, getTranslation } from "@/lib/content-i18n";
+import { getTranslation } from "@/lib/content-i18n";
+import { TranslatedText } from "@/components/TranslatedText";
 
 export default function Fasting() {
   const { t, i18n } = useTranslation();
@@ -53,10 +54,20 @@ export default function Fasting() {
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-8 max-w-3xl mx-auto pb-12">
       <div className="text-center space-y-3 pt-6">
         <h2 className="text-4xl font-heading font-bold text-primary tracking-tight">
-          {t("fasting.title")}
+          <TranslatedText
+            text={t("fasting.title", { lng: "ar" })}
+            staticTranslation={getTranslation(t, "fasting.title", i18n.language) || undefined}
+            keepArabic={false}
+            className="text-4xl font-heading font-bold text-primary tracking-tight"
+          />
         </h2>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-          {t("fasting.white_days_desc")}
+          <TranslatedText
+            text={t("fasting.white_days_desc", { lng: "ar" })}
+            staticTranslation={getTranslation(t, "fasting.white_days_desc", i18n.language) || undefined}
+            keepArabic={false}
+            className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
+          />
         </p>
       </div>
 
@@ -77,7 +88,12 @@ export default function Fasting() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <CardTitle className="text-2xl font-bold text-primary font-heading">
-                        {t(day.nameKey)}
+                        <TranslatedText
+                          text={t(day.nameKey, { lng: "ar" })}
+                          staticTranslation={getTranslation(t, day.nameKey, i18n.language) || undefined}
+                          keepArabic={false}
+                          className="text-2xl font-bold font-heading"
+                        />
                       </CardTitle>
                       {isToday && (
                         <span className="bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
@@ -85,10 +101,22 @@ export default function Fasting() {
                         </span>
                       )}
                     </div>
-                    <p className="text-muted-foreground font-medium">{t(day.descriptionKey)}</p>
+                    <p className="text-muted-foreground font-medium">
+                      <TranslatedText
+                        text={t(day.descriptionKey, { lng: "ar" })}
+                        staticTranslation={getTranslation(t, day.descriptionKey, i18n.language) || undefined}
+                        keepArabic={false}
+                        className="text-muted-foreground font-medium"
+                      />
+                    </p>
                   </div>
                   <div className="bg-primary/10 text-primary text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                    {t(`fasting.${day.type}`)}
+                    <TranslatedText
+                      text={t(`fasting.${day.type}`, { lng: "ar" })}
+                      staticTranslation={getTranslation(t, `fasting.${day.type}`, i18n.language) || undefined}
+                      keepArabic={false}
+                      inline={true}
+                    />
                   </div>
                 </div>
               </CardHeader>
@@ -109,20 +137,25 @@ export default function Fasting() {
                 
                 <div className="relative p-6 rounded-2xl bg-muted/30 border border-border/50">
                   <Info className="absolute top-4 right-4 w-5 h-5 text-primary/20" />
-                  <p className="dhikr-text text-xl leading-relaxed text-foreground/80 italic pr-8" dir="rtl">
-                    "{t(day.hadithKey)}"
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-4 font-bold uppercase tracking-wider" dir="rtl">
-                    — {day.source}
-                  </p>
-                  {!isArabic(i18n.language) && (() => {
-                    const translatedSource = getTranslation(t, `fasting.sources.${day.id}`);
-                    return translatedSource ? (
-                      <p className="text-[10px] text-muted-foreground/60 mt-1" dir="ltr">
-                        — {translatedSource}
-                      </p>
-                    ) : null;
-                  })()}
+                  <TranslatedText
+                    text={t(day.hadithKey, { lng: "ar" })}
+                    staticTranslation={getTranslation(t, day.hadithKey, i18n.language) || undefined}
+                    keepArabic={true}
+                    className="dhikr-text text-xl leading-relaxed text-foreground/80 italic pr-8"
+                    arabicClassName="text-right"
+                    translationClassName="pt-4"
+                  />
+                  <div className="mt-4 border-t border-primary/5 pt-2 flex flex-col items-end">
+                    <TranslatedText
+                      text={day.source}
+                      staticTranslation={getTranslation(t, `fasting.sources.${day.id}`, i18n.language) || undefined}
+                      keepArabic={true}
+                      isDhikr={false}
+                      className="text-xs text-muted-foreground font-bold uppercase tracking-wider"
+                      arabicClassName="text-right block text-xs"
+                      translationClassName="text-[10px] text-muted-foreground/60 block border-t-0 pt-1 mt-0"
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>

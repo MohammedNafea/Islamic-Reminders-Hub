@@ -81,8 +81,12 @@ export function getTextDirection(lang: string): "rtl" | "ltr" {
  * Gets a translated text from i18n, returns null if no translation exists
  * (i.e., the key itself is returned — meaning the translation is missing)
  */
-export function getTranslation(t: (key: string) => string, key: string): string | null {
-  const result = t(key);
+export function getTranslation(
+  t: (key: string, options?: any) => string,
+  key: string,
+  lng?: string
+): string | null {
+  const result = lng ? t(key, { lng, fallbackLng: [] }) : t(key);
   // If i18next returns the key itself, it means no translation was found
   if (result === key) return null;
   return result;

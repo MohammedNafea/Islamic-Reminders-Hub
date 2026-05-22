@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { QiblaCompass } from "@/components/QiblaCompass";
+import { TranslatedText } from "@/components/TranslatedText";
+import { getTranslation } from "@/lib/content-i18n";
 
 type Tab = "times" | "calendar" | "qibla";
 
@@ -38,16 +40,16 @@ export default function PrayerTimesPage() {
         lat = pos.coords.latitude;
         lng = pos.coords.longitude;
         setCoords({ lat, lng });
-        const c = await getCityFromCoords(lat, lng);
+        const c = await getCityFromCoords(lat, lng, i18n.language);
         setCity(c);
-      } catch { setCity("Makkah"); }
-    } else { setCity("Makkah"); }
+      } catch { setCity(i18n.language === "ar" ? "مكة المكرمة" : "Makkah"); }
+    } else { setCity(i18n.language === "ar" ? "مكة المكرمة" : "Makkah"); }
     const method = settings.calculationMethod === "MuslimWorldLeague" ? 3
       : settings.calculationMethod === "Egyptian" ? 5 : 4;
     const api = await getPrayerTimesFromAPI(lat, lng, date, method);
     setTimes(api || getPrayerTimes(lat, lng, date));
     setLoading(false);
-  }, [settings.calculationMethod]);
+  }, [settings.calculationMethod, i18n.language]);
 
   useEffect(() => { fetchTimes(); }, [fetchTimes]);
 
@@ -66,19 +68,19 @@ export default function PrayerTimesPage() {
   const todayHijri = toHijri(today);
 
   const prayerList = times ? [
-    { id: "fajr", label: t("prayer.fajr"), time: times.fajr },
-    { id: "sunrise", label: t("prayer.sunrise"), time: times.sunrise },
-    { id: "dhuhr", label: t("prayer.dhuhr"), time: times.dhuhr },
-    { id: "asr", label: t("prayer.asr"), time: times.asr },
-    { id: "maghrib", label: t("prayer.maghrib"), time: times.maghrib },
-    { id: "isha", label: t("prayer.isha"), time: times.isha },
+    { id: "fajr", labelKey: "prayer.fajr", arLabel: "الفجر", time: times.fajr },
+    { id: "sunrise", labelKey: "prayer.sunrise", arLabel: "الشروق", time: times.sunrise },
+    { id: "dhuhr", labelKey: "prayer.dhuhr", arLabel: "الظهر", time: times.dhuhr },
+    { id: "asr", labelKey: "prayer.asr", arLabel: "العصر", time: times.asr },
+    { id: "maghrib", labelKey: "prayer.maghrib", arLabel: "المغرب", time: times.maghrib },
+    { id: "isha", labelKey: "prayer.isha", arLabel: "العشاء", time: times.isha },
   ] : [];
 
   const nightTimes = times ? [
-    { id: "first_third", label: t("prayer.first_third"), time: times.firstThirdOfNight },
-    { id: "midnight", label: t("prayer.midnight"), time: times.middleOfTheNight },
-    { id: "last_third", label: t("prayer.last_third"), time: times.lastThirdOfNight },
-    { id: "suhoor", label: t("prayer.suhoor"), time: times.suhoor },
+    { id: "first_third", labelKey: "prayer.first_third", arLabel: "ثلث الليل الأول", time: times.firstThirdOfNight },
+    { id: "midnight", labelKey: "prayer.midnight", arLabel: "منتصف الليل", time: times.middleOfTheNight },
+    { id: "last_third", labelKey: "prayer.last_third", arLabel: "ثلث الليل الآخر (التهجد)", time: times.lastThirdOfNight },
+    { id: "suhoor", labelKey: "prayer.suhoor", arLabel: "وقت السحور", time: times.suhoor },
   ] : [];
 
   const nextPrayer = times ? getNextPrayer(times) : null;
@@ -87,7 +89,14 @@ export default function PrayerTimesPage() {
     <div className="animate-in fade-in duration-500 space-y-6 max-w-lg mx-auto pb-10">
       {/* Header */}
       <div className="flex items-center justify-between pt-4">
-        <h2 className="text-3xl font-heading font-bold text-primary">{t("nav.times")}</h2>
+        <h2 className="text-3xl font-heading font-bold text-primary">
+          <TranslatedText
+            text="مواقيت الصلاة"
+            staticTranslation={getTranslation(t, "nav.times", i18n.language) || undefined}
+            keepArabic={false}
+            inline
+          />
+        </h2>
         <Button variant="outline" size="icon" onClick={fetchTimes} disabled={loading} className="rounded-full hover:bg-primary/5 hover:text-primary transition-colors">
           <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
         </Button>
@@ -102,7 +111,12 @@ export default function PrayerTimesPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="text-center sm:text-start">
               <p className="text-primary-foreground/70 text-xs font-bold uppercase tracking-widest mb-1">
-                {t("dates.today")}
+                <TranslatedText
+                  text="اليوم"
+                  staticTranslation={getTranslation(t, "dates.today", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
               </p>
               <p className="text-3xl font-serif font-bold drop-shadow-sm">{formatHijriDate(todayHijri, i18n.language)}</p>
               <p className="text-primary-foreground/90 text-sm font-medium mt-1">
@@ -113,8 +127,28 @@ export default function PrayerTimesPage() {
               <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md rounded-2xl px-4 py-3 text-sm border border-white/20">
                 <MapPin className="w-5 h-5 text-white shrink-0" />
                 <div>
-                  <p className="font-bold text-white">{city}</p>
-                  <p className="text-white/70 text-[10px] uppercase font-bold">{t(`prayer.methods.${settings.calculationMethod}`)}</p>
+                  <p className="font-bold text-white">
+                    <TranslatedText text={city} keepArabic={false} inline />
+                  </p>
+                  <p className="text-white/70 text-[10px] uppercase font-bold">
+                    <TranslatedText
+                      text={{
+                        MuslimWorldLeague: "رابطة العالم الإسلامي",
+                        Egyptian: "الهيئة المصرية العامة للمساحة",
+                        Karachi: "جامعة العلوم الإسلامية بكراتشي",
+                        UmmAlQura: "جامعة أم القرى",
+                        Dubai: "دبي",
+                        NorthAmerica: "الجمعية الإسلامية لأمريكا الشمالية",
+                        Kuwait: "الكويت",
+                        Qatar: "قطر",
+                        Singapore: "مجلس علماء إندونيسيا",
+                        Turkey: "رئاسة الشؤون الدينية التركية",
+                      }[settings.calculationMethod] || "جامعة أم القرى"}
+                      staticTranslation={getTranslation(t, `prayer.methods.${settings.calculationMethod}`, i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </p>
                 </div>
               </div>
             )}
@@ -135,7 +169,18 @@ export default function PrayerTimesPage() {
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
-            {tp === "times" ? t("prayer.today_prayers") : tp === "calendar" ? t("prayer.calendar") : t("prayer.qibla.direction", { defaultValue: "اتجاه القبلة" })}
+            <TranslatedText
+              text={tp === "times" ? "صلوات اليوم" : tp === "calendar" ? "التقويم الشهري" : "اتجاه القبلة"}
+              staticTranslation={
+                tp === "times"
+                  ? getTranslation(t, "prayer.today_prayers", i18n.language) || undefined
+                  : tp === "calendar"
+                    ? getTranslation(t, "prayer.calendar", i18n.language) || undefined
+                    : getTranslation(t, "prayer.qibla.direction", i18n.language) || undefined
+              }
+              keepArabic={false}
+              inline
+            />
           </button>
         ))}
       </div>
@@ -175,28 +220,51 @@ export default function PrayerTimesPage() {
                             )}>
                               <Clock className="w-5 h-5" />
                             </div>
-                            <span className="font-bold text-lg">{p.label}</span>
-                          </div>
-                          <span className="font-sans font-black tabular-nums text-2xl tracking-tighter">
-                            {formatTime(p.time, i18n.language)}
-                          </span>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                  
-                  {/* Qibla Compass Integrated */}
-                  <QiblaCompass lat={coords.lat} lng={coords.lng} />
-
-                  <div className="pt-4 pb-2">
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1 mb-3">
-                      {t("hadith.cat_worship")} - {t("nav.times")}
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                      {nightTimes.map((p) => (
-                        <Card key={p.id} className="border-none bg-muted/40 rounded-2xl shadow-sm">
-                          <CardContent className="p-4 flex flex-col items-center justify-center gap-1 text-center">
-                            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{p.label}</span>
+                             <span className="font-bold text-lg">
+                               <TranslatedText
+                                 text={p.arLabel}
+                                 staticTranslation={getTranslation(t, p.labelKey, i18n.language) || undefined}
+                                 keepArabic={false}
+                                 inline
+                               />
+                             </span>
+                           </div>
+                           <span className="font-sans font-black tabular-nums text-2xl tracking-tighter">
+                             {formatTime(p.time, i18n.language)}
+                           </span>
+                         </CardContent>
+                       </Card>
+                     );
+                   })}
+                   
+                   <div className="pt-4 pb-2">
+                     <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1 mb-3">
+                       <TranslatedText
+                         text="عبادات"
+                         staticTranslation={getTranslation(t, "hadith.cat_worship", i18n.language) || undefined}
+                         keepArabic={false}
+                         inline
+                       />
+                       {" - "}
+                       <TranslatedText
+                         text="مواقيت الصلاة"
+                         staticTranslation={getTranslation(t, "nav.times", i18n.language) || undefined}
+                         keepArabic={false}
+                         inline
+                       />
+                     </p>
+                     <div className="grid grid-cols-2 gap-3">
+                       {nightTimes.map((p) => (
+                         <Card key={p.id} className="border-none bg-muted/40 rounded-2xl shadow-sm">
+                           <CardContent className="p-4 flex flex-col items-center justify-center gap-1 text-center">
+                             <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                               <TranslatedText
+                                 text={p.arLabel}
+                                 staticTranslation={getTranslation(t, p.labelKey, i18n.language) || undefined}
+                                 keepArabic={false}
+                                 inline
+                               />
+                             </span>
                             <span className="font-sans font-bold text-lg tabular-nums text-foreground">
                               {p.time ? formatTime(p.time, i18n.language) : "--:--"}
                             </span>
@@ -241,7 +309,16 @@ export default function PrayerTimesPage() {
                 className="text-xs font-bold gap-2 rounded-xl"
               >
                 <Music className="w-4 h-4" />
-                {viewMode === "grid" ? t("common.list_view") : t("common.grid_view")}
+                <TranslatedText
+                  text={viewMode === "grid" ? "عرض القائمة" : "عرض الشبكة"}
+                  staticTranslation={
+                    viewMode === "grid"
+                      ? getTranslation(t, "common.list_view", i18n.language) || undefined
+                      : getTranslation(t, "common.grid_view", i18n.language) || undefined
+                  }
+                  keepArabic={false}
+                  inline
+                />
               </Button>
             </div>
 
@@ -306,12 +383,54 @@ export default function PrayerTimesPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="bg-muted/50 border-b border-border/50">
-                        <th className="p-3 text-start font-bold">{t("dates.today")}</th>
-                        <th className="p-3 text-center">{t("prayer.fajr")}</th>
-                        <th className="p-3 text-center">{t("prayer.dhuhr")}</th>
-                        <th className="p-3 text-center">{t("prayer.asr")}</th>
-                        <th className="p-3 text-center">{t("prayer.maghrib")}</th>
-                        <th className="p-3 text-center">{t("prayer.isha")}</th>
+                        <th className="p-3 text-start font-bold">
+                          <TranslatedText
+                            text="اليوم"
+                            staticTranslation={getTranslation(t, "dates.today", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
+                        <th className="p-3 text-center">
+                          <TranslatedText
+                            text="الفجر"
+                            staticTranslation={getTranslation(t, "prayer.fajr", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
+                        <th className="p-3 text-center">
+                          <TranslatedText
+                            text="الظهر"
+                            staticTranslation={getTranslation(t, "prayer.dhuhr", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
+                        <th className="p-3 text-center">
+                          <TranslatedText
+                            text="العصر"
+                            staticTranslation={getTranslation(t, "prayer.asr", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
+                        <th className="p-3 text-center">
+                          <TranslatedText
+                            text="المغرب"
+                            staticTranslation={getTranslation(t, "prayer.maghrib", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
+                        <th className="p-3 text-center">
+                          <TranslatedText
+                            text="العشاء"
+                            staticTranslation={getTranslation(t, "prayer.isha", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -351,7 +470,14 @@ export default function PrayerTimesPage() {
                   <CalendarIcon className="w-6 h-6" />
                 </div>
                 <div className="space-y-0.5">
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{t("fasting.hijri_date")}</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
+                    <TranslatedText
+                      text="التاريخ الهجري"
+                      staticTranslation={getTranslation(t, "fasting.hijri_date", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </p>
                   <p className="font-serif font-bold text-primary text-xl">
                     {formatHijriDate(toHijri(new Date(year, month, 15)), i18n.language)}
                   </p>
@@ -371,15 +497,31 @@ export default function PrayerTimesPage() {
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2 text-primary">
                 <Compass className="w-8 h-8" />
               </div>
-              <h2 className="text-3xl font-heading font-bold text-primary">{t("prayer.qibla.direction", { defaultValue: "تحديد القبلة" })}</h2>
-              <p className="text-muted-foreground">{t("prayer.qibla.subtitle", { defaultValue: "بوصلة دقيقة مدعومة بالواقع المعزز (AR)" })}</p>
+              <h2 className="text-3xl font-heading font-bold text-primary">
+                <TranslatedText
+                  text="تحديد القبلة"
+                  staticTranslation={getTranslation(t, "prayer.qibla.direction", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </h2>
+              <p className="text-muted-foreground">
+                <TranslatedText
+                  text="بوصلة دقيقة مدعومة بالواقع المعزز (AR)"
+                  staticTranslation={getTranslation(t, "prayer.qibla.subtitle", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </p>
             </div>
 
             <Card className="border-none bg-card/50 backdrop-blur-sm shadow-sm rounded-3xl overflow-hidden">
               <CardContent className="p-4 flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-primary" />
                 <div className="text-sm">
-                  <p className="font-bold">{city || "Makkah"}</p>
+                  <p className="font-bold">
+                    <TranslatedText text={city || "Makkah"} keepArabic={false} inline />
+                  </p>
                   <p className="text-[10px] text-muted-foreground uppercase tabular-nums">
                     {coords.lat.toFixed(4)}, {coords.lng.toFixed(4)}
                   </p>
@@ -390,12 +532,59 @@ export default function PrayerTimesPage() {
             <QiblaCompass lat={coords.lat} lng={coords.lng} />
 
             <div className="space-y-4">
-              <h3 className="text-lg font-bold text-foreground/80 px-2">{t("prayer.qibla_guide", { defaultValue: "إرشادات الاستخدام" })}</h3>
+              <h3 className="text-lg font-bold text-foreground/80 px-2">
+                <TranslatedText
+                  text="إرشادات الاستخدام"
+                  staticTranslation={getTranslation(t, "prayer.qibla_guide", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </h3>
               <div className="grid grid-cols-1 gap-3">
-                <GuideStep number="1" text={t("prayer.qibla.guide_1", { defaultValue: "ضع الهاتف بشكل مسطح على راحة يدك" })} />
-                <GuideStep number="2" text={t("prayer.qibla.guide_2", { defaultValue: "تأكد من تفعيل مستشعرات الموقع والبوصلة" })} />
-                <GuideStep number="3" text={t("prayer.qibla.guide_3", { defaultValue: "قم بتحريك الهاتف بشكل (8) لمعايرة الحساسات" })} />
-                <GuideStep number="4" text={t("prayer.qibla.guide_4", { defaultValue: "استخدم زر الكاميرا لرؤية القبلة في محيطك" })} />
+                <GuideStep
+                  number="1"
+                  text={
+                    <TranslatedText
+                      text="ضع الهاتف بشكل مسطح على راحة يدك"
+                      staticTranslation={getTranslation(t, "prayer.qibla.guide_1", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  }
+                />
+                <GuideStep
+                  number="2"
+                  text={
+                    <TranslatedText
+                      text="تأكد من تفعيل مستشعرات الموقع والبوصلة"
+                      staticTranslation={getTranslation(t, "prayer.qibla.guide_2", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  }
+                />
+                <GuideStep
+                  number="3"
+                  text={
+                    <TranslatedText
+                      text="قم بتحريك الهاتف بشكل (8) لمعايرة الحساسات"
+                      staticTranslation={getTranslation(t, "prayer.qibla.guide_3", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  }
+                />
+                <GuideStep
+                  number="4"
+                  text={
+                    <TranslatedText
+                      text="استخدم زر الكاميرا لرؤية القبلة في محيطك"
+                      staticTranslation={getTranslation(t, "prayer.qibla.guide_4", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  }
+                />
               </div>
             </div>
           </motion.div>
@@ -417,12 +606,26 @@ export default function PrayerTimesPage() {
               <div className="space-y-6 pt-2">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="bg-muted/50 p-4 rounded-2xl text-center space-y-1">
-                    <p className="text-[10px] font-bold text-muted-foreground uppercase">{t("fasting.gregorian_date")}</p>
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase">
+                      <TranslatedText
+                        text="التاريخ الميلادي"
+                        staticTranslation={getTranslation(t, "fasting.gregorian_date", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
                     <p className="font-bold text-lg">{selectedDay.getDate()}</p>
                     <p className="text-[11px] font-medium text-muted-foreground">{selectedDay.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })}</p>
                   </div>
                   <div className="bg-primary/5 p-4 rounded-2xl text-center space-y-1 border border-primary/10">
-                    <p className="text-[10px] font-bold text-primary/70 uppercase">{t("fasting.hijri_date")}</p>
+                    <p className="text-[10px] font-bold text-primary/70 uppercase">
+                      <TranslatedText
+                        text="التاريخ الهجري"
+                        staticTranslation={getTranslation(t, "fasting.hijri_date", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
                     <p className="font-bold text-lg text-primary">{hd.day}</p>
                     <p className="text-[11px] font-medium text-primary/70">{formatHijriDate(hd, i18n.language).split(' ').slice(1).join(' ')}</p>
                   </div>
@@ -435,8 +638,42 @@ export default function PrayerTimesPage() {
                         <Info className="w-5 h-5" />
                       </div>
                       <div className="space-y-0.5">
-                        <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase">{t("fasting.today_fasting")}</p>
-                        <p className="text-sm font-bold text-amber-900 dark:text-amber-100">{t(`fasting.${fasting}`)}</p>
+                        <p className="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase">
+                          <TranslatedText
+                            text="صيام اليوم"
+                            staticTranslation={getTranslation(t, "fasting.today_fasting", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </p>
+                        <p className="text-sm font-bold text-amber-900 dark:text-amber-100">
+                          <TranslatedText
+                            text={
+                              fasting === "white_days"
+                                ? "الأيام البيض (١٣، ١٤، ١٥)"
+                                : fasting === "monday"
+                                  ? "صيام الاثنين"
+                                  : fasting === "thursday"
+                                    ? "صيام الخميس"
+                                    : fasting === "arafah"
+                                      ? "يوم عرفة"
+                                      : fasting === "ashura"
+                                        ? "يوم عاشوراء"
+                                        : fasting === "tasua"
+                                          ? "يوم تاسوعاء"
+                                          : fasting === "shaban"
+                                            ? "صيام شعبان"
+                                            : fasting === "shawwal"
+                                              ? "ست من شوال"
+                                              : fasting === "dhul_hijjah"
+                                                ? "عشر ذي الحجة"
+                                                : fasting
+                            }
+                            staticTranslation={getTranslation(t, `fasting.${fasting}`, i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -444,7 +681,12 @@ export default function PrayerTimesPage() {
                 
                 <div className="text-center">
                   <Button variant="outline" className="rounded-2xl px-8" onClick={() => setSelectedDay(null)}>
-                    {t("common.close")}
+                    <TranslatedText
+                      text="إغلاق"
+                      staticTranslation={getTranslation(t, "common.close", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
                   </Button>
                 </div>
               </div>
@@ -456,7 +698,7 @@ export default function PrayerTimesPage() {
   );
 }
 
-function GuideStep({ number, text }: { number: string; text: string }) {
+function GuideStep({ number, text }: { number: string; text: React.ReactNode }) {
   return (
     <div className="flex items-center gap-4 bg-muted/30 p-4 rounded-2xl border border-border/50">
       <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm">

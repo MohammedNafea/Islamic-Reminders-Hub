@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
 import { syncFavoritesWithCloud } from '@/lib/supabase';
+import { localDB } from '@/lib/db';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem('hub_favorites');
-    if (stored) {
-      try {
-        setFavorites(JSON.parse(stored));
-      } catch (e) {
-        console.error('Failed to parse favorites', e);
-      }
-    }
+    const stored = localDB.getGeneralProgress<string[]>('hub_favorites', []);
+    setFavorites(stored);
   }, []);
 
   const toggleFavorite = (id: string, type: string = 'adhkar') => {
@@ -21,7 +16,7 @@ export function useFavorites() {
         ? prev.filter((item) => item !== id) 
         : [...prev, id];
       
-      localStorage.setItem('hub_favorites', JSON.stringify(next));
+      localDB.saveGeneralProgress('hub_favorites', next);
       
       // Attempt to sync with cloud (background)
       syncFavoritesWithCloud(next.map(fid => ({ id: fid, type })));
