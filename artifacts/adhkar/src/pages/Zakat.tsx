@@ -50,6 +50,7 @@ export default function ZakatCalculator() {
   });
 
   const [prices, setPrices] = useState(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cached = localDB.getGeneralProgress<any>("zakat_prices", null);
     if (cached) {
       const rates = cached.rates || DEFAULT_RATES;
@@ -124,6 +125,7 @@ export default function ZakatCalculator() {
 
   useEffect(() => {
     fetchPrices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [assets, setAssets] = useState({

@@ -13,16 +13,29 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getTasbihCount } from "@/lib/store";
 
+interface KhatmahPlan {
+  targetDays: number;
+  startDate: string;
+  currentPage: number;
+}
+
+interface TrackerStat {
+  date: string;
+  dayLabel: string;
+  completions: number;
+  tasbih: number;
+}
+
 export default function TrackerDashboard() {
   const { t, i18n } = useTranslation();
   const [streak, setStreak] = useState(0);
-  const [stats, setStats] = useState<any[]>([]);
+  const [stats, setStats] = useState<TrackerStat[]>([]);
   const [totalCompletions, setTotalCompletions] = useState(0);
   const [totalTasbih, setTotalTasbih] = useState(0);
   const [salawatCount, setSalawatCount] = useState(0);
 
   // Khatmah state
-  const [khatmahPlan, setKhatmahPlan] = useState<any>(null);
+  const [khatmahPlan, setKhatmahPlan] = useState<KhatmahPlan | null>(null);
   const [targetDays, setTargetDays] = useState(30);
   const [startPage, setStartPage] = useState(0);
   const [inputPage, setInputPage] = useState(0);
@@ -50,7 +63,7 @@ export default function TrackerDashboard() {
     setSalawatCount(homeSalawat + tasbihSalawat);
 
     // Load Khatmah plan
-    const plan = localDB.getGeneralProgress<any>("khatmah_plan", null);
+    const plan = localDB.getGeneralProgress<KhatmahPlan | null>("khatmah_plan", null);
     if (plan) {
       setKhatmahPlan(plan);
       setInputPage(plan.currentPage);
@@ -386,7 +399,7 @@ export default function TrackerDashboard() {
           {/* Custom SVG/CSS Bar Chart (Highly responsive, zero dependency, 100% build guarantee) */}
           <div className="h-48 flex items-end justify-between gap-2 pt-6">
             {stats.map((day) => {
-              const maxCompletions = Math.max(...stats.map((s: any) => s.completions), 1);
+              const maxCompletions = Math.max(...stats.map((s) => s.completions), 1);
               const heightPercent = (day.completions / maxCompletions) * 100;
               
               return (

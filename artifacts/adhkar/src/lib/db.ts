@@ -5,10 +5,10 @@ const DB_VERSION = 1;
 
 // Memory cache for synchronous reads
 const dbCache = {
-  settings: {} as Record<string, any>,
-  tracker: {} as Record<string, any>,
-  bookmarks: {} as Record<string, any>,
-  progress: {} as Record<string, any>,
+  settings: {} as Record<string, unknown>,
+  tracker: {} as Record<string, unknown>,
+  bookmarks: {} as Record<string, unknown>,
+  progress: {} as Record<string, unknown>,
 };
 
 let dbInstance: IDBDatabase | null = null;
@@ -56,8 +56,9 @@ async function getAllFromStore<T>(storeName: string): Promise<Record<string, T>>
     // Use cursor or getAll/getAllKeys if supported
     const cursorRequest = store.openCursor();
     cursorRequest.onerror = () => reject(cursorRequest.error);
-    cursorRequest.onsuccess = (e: any) => {
-      const cursor = e.target.result;
+    cursorRequest.onsuccess = (e) => {
+      const target = e.target as IDBRequest<IDBCursorWithValue | null>;
+      const cursor = target.result;
       if (cursor) {
         result[cursor.key as string] = cursor.value;
         cursor.continue();
@@ -159,11 +160,11 @@ export const localDB = {
   },
 
   // TRACKER
-  getTrackerData(): Record<string, any> {
+  getTrackerData(): Record<string, unknown> {
     return { ...dbCache.tracker };
   },
 
-  saveTrackerRecord(date: string, record: any): void {
+  saveTrackerRecord(date: string, record: unknown): void {
     dbCache.tracker[date] = record;
     setToDB("tracker", date, record).catch(err =>
       console.error("IndexedDB Save Tracker Error:", err)
@@ -195,11 +196,11 @@ export const localDB = {
   },
 
   // PROGRESS & TASBIH
-  getProgress(): Record<string, any> {
+  getProgress(): Record<string, unknown> {
     return { ...dbCache.progress };
   },
 
-  saveProgressRecord(date: string, record: any): void {
+  saveProgressRecord(date: string, record: unknown): void {
     dbCache.progress[date] = record;
     setToDB("progress", date, record).catch(err =>
       console.error("IndexedDB Save Progress Error:", err)

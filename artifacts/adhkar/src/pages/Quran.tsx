@@ -76,6 +76,13 @@ interface Tafsir {
   text: string;
 }
 
+interface QuranBookmark {
+  surahNumber: number;
+  surahName: string;
+  ayahNumber: number;
+  text: string;
+}
+
 export default function Quran() {
   const { t, i18n } = useTranslation();
   const rtl = isRTL(i18n.language);
@@ -107,7 +114,7 @@ export default function Quran() {
   const audio = audioRef.current;
 
   const [lastRead, setLastRead] = useState<number | null>(null);
-  const [bookmarks, setBookmarks] = useState<{ surahNumber: number; surahName: string; ayahNumber: number; text: string }[]>([]);
+  const [bookmarks, setBookmarks] = useState<QuranBookmark[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [selectedTafsirAyah, setSelectedTafsirAyah] = useState<Ayah | null>(null);
   const ayahRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -271,7 +278,7 @@ export default function Quran() {
     const stored = localDB.getLastRead(null);
     if (stored) setLastRead(stored);
 
-    const storedBookmarks = localDB.getBookmarks<any[]>([]);
+    const storedBookmarks = localDB.getBookmarks<QuranBookmark[]>([]);
     setBookmarks(storedBookmarks);
 
     fetch("https://api.alquran.cloud/v1/surah")
@@ -281,8 +288,9 @@ export default function Quran() {
         setLoading(false);
       });
 
+    const currentAudio = audioRef.current;
     return () => {
-      audioRef.current.pause();
+      currentAudio.pause();
     };
   }, []);
 
@@ -340,6 +348,7 @@ export default function Quran() {
     if (activeSurah !== null) {
       fetchSurahAyahs(activeSurah);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedQariId]);
 
   useEffect(() => {
@@ -368,6 +377,7 @@ export default function Quran() {
         setTafsirMuyassar([]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surahParam, surahs, i18n.language]);
 
   useEffect(() => {

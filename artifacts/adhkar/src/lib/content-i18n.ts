@@ -82,6 +82,7 @@ export function getTextDirection(lang: string): "rtl" | "ltr" {
  * (i.e., the key itself is returned — meaning the translation is missing)
  */
 export function getTranslation(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   t: (key: string, options?: any) => string,
   key: string,
   lng?: string

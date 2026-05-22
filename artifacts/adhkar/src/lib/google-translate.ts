@@ -51,15 +51,15 @@ export async function translateText(text: string, targetLang: string): Promise<s
     const data = await response.json();
 
     if (data && Array.isArray(data[0])) {
-      const translated = data[0]
-        .map((item: any) => (Array.isArray(item) && typeof item[0] === 'string' ? item[0] : ""))
+      const translated = (data[0] as unknown[])
+        .map((item: unknown) => (Array.isArray(item) && typeof item[0] === 'string' ? item[0] : ""))
         .join("");
 
       if (translated) {
         // Cache the result
         try {
           localStorage.setItem(cacheKey, translated);
-        } catch (e) {
+        } catch {
           // localStorage full or disabled
         }
         return translated;

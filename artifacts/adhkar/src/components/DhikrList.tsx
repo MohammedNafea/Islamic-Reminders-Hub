@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
@@ -50,6 +50,14 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
   const [activePlayIndex, setActivePlayIndex] = useState<number | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
 
+  const stopPlaylist = useCallback(() => {
+    window.speechSynthesis.cancel();
+    cleanupAudio();
+    setIsPlayingAll(false);
+    setActivePlayIndex(null);
+    setSpeakingId(null);
+  }, []);
+
   // Sync state to ref to avoid stale closures in audio event listeners
   const progressRef = useRef(progress);
   useEffect(() => {
@@ -73,7 +81,7 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
       window.speechSynthesis.cancel();
       cleanupAudio();
     };
-  }, []);
+  }, [stopPlaylist]);
 
   const totalRequired = adhkar.reduce((sum, d) => sum + d.count, 0);
   const totalCompleted = adhkar.reduce((sum, d) => {
@@ -110,7 +118,7 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
     }
   };
 
-  const playAudioFile = (url: string, onEnd: () => void, onError: (err: any) => void) => {
+  const playAudioFile = (url: string, onEnd: () => void, onError: (err: unknown) => void) => {
     cleanupAudio();
     window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "dhikr-list" } }));
 
@@ -122,7 +130,7 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
       onEnd();
     };
 
-    const handleError = (err: any) => {
+    const handleError = (err: unknown) => {
       cleanupAudio();
       onError(err);
     };
@@ -198,14 +206,6 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
     delete newProgress[id];
     setProgress(newProgress);
     setDhikrCount(id, 0);
-  };
-
-  const stopPlaylist = () => {
-    window.speechSynthesis.cancel();
-    cleanupAudio();
-    setIsPlayingAll(false);
-    setActivePlayIndex(null);
-    setSpeakingId(null);
   };
 
   const playDhikrAtIndex = (index: number, ayahIndex = 0) => {

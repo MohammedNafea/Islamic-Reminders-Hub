@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "wouter";
 import {
   Home, Settings, Calendar, Timer, Coins, Menu,
-  Sun, Moon, Bed, Clock, Shield, Heart, BookOpen, Home as HomeIcon, MapPin, Star, TrendingUp
+  Sun, Moon, Bed, Clock, Shield, Heart, BookOpen, Home as HomeIcon, MapPin, Star, TrendingUp, Smartphone
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -31,6 +31,7 @@ const sidebarSections = [
       { href: "/zakat", Icon: Coins, labelKey: "nav.zakat" },
       { href: "/tasbih", Icon: Timer, labelKey: "nav.tasbih" },
       { href: "/settings", Icon: Settings, labelKey: "nav.settings" },
+      { href: "/download", Icon: Smartphone, labelKey: "nav.download" },
     ],
   },
   {

@@ -4,7 +4,7 @@ import { toHijri, formatHijriDate } from "@/lib/hijri";
 import { getPrayerTimesFromAPI } from "@/lib/prayer-times";
 import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart } from "lucide-react";
+import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -404,6 +404,44 @@ export default function Home() {
             description="fasting.white_days_desc"
           />
         </div>
+      </div>
+
+      {/* Download Mobile App Banner */}
+      <div className="pt-6 px-2">
+        <Link href="/download">
+          <Card className="cursor-pointer relative overflow-hidden border border-primary/10 bg-gradient-to-br from-primary/10 via-primary/5 to-background shadow-md rounded-[2rem] group hover:ring-2 hover:ring-primary/20 transition-all duration-300">
+            <CardContent className="p-6 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-start">
+                <div className="shrink-0 w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center">
+                  <Smartphone className="w-6 h-6" />
+                </div>
+                <div className="space-y-1">
+                  <h3 className="font-bold text-lg leading-tight text-foreground">
+                    <TranslatedText
+                      text="تطبيق الهاتف المحمول"
+                      staticTranslation={i18n.language === 'ar' ? "تطبيق الهاتف المحمول" : "Download Mobile App"}
+                      keepArabic={false}
+                    />
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    <TranslatedText
+                      text="احمل وردك اليومي ومواقيت الصلاة في جيبك بدون إنترنت"
+                      staticTranslation={i18n.language === 'ar' ? "احمل وردك اليومي ومواقيت الصلاة في جيبك بدون إنترنت" : "Carry your daily remembrances and prayer times offline"}
+                      keepArabic={false}
+                    />
+                  </p>
+                </div>
+              </div>
+              <div className="bg-primary text-primary-foreground px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
+                <TranslatedText
+                  text="تحميل الآن"
+                  staticTranslation={i18n.language === 'ar' ? "تحميل الآن" : "Download Now"}
+                  keepArabic={false}
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       {/* Dark Emerald & Gold About Us Card */}

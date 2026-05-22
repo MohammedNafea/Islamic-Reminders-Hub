@@ -29,6 +29,7 @@ import MergedDhikr from "@/pages/MergedDhikr";
 import Zakat from "@/pages/Zakat";
 import Qibla from "@/pages/Qibla";
 import TrackerDashboard from "@/pages/TrackerDashboard";
+import Download from "@/pages/Download";
 import { monitoring } from "@/lib/monitoring";
 
 // Initialize monitoring for production telemetry
@@ -66,6 +67,7 @@ function Router() {
         {/* <Route path="/admin/library" component={LibraryAdmin} /> */}
         <Route path="/zakat" component={Zakat} />
         <Route path="/qibla" component={Qibla} />
+        <Route path="/download" component={Download} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
