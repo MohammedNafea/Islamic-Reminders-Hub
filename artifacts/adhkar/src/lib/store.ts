@@ -23,7 +23,9 @@ export interface AppSettings {
   notificationsEarlyMinutes: number;
   notificationsAthanType: "full" | "takbeer";
   notificationsFasting: boolean;
+  notificationsFastingHoursBeforeFajr: number;
   notificationsSuhoor: boolean;
+  notificationsSuhoorMinutesBeforeFajr: number;
   location?: { lat: number; lng: number; city: string };
 }
 
@@ -78,7 +80,9 @@ function defaultSettings(): AppSettings {
     notificationsEarlyMinutes: 10,
     notificationsAthanType: "full",
     notificationsFasting: true,
+    notificationsFastingHoursBeforeFajr: 0,
     notificationsSuhoor: true,
+    notificationsSuhoorMinutesBeforeFajr: 20,
   };
 }
 

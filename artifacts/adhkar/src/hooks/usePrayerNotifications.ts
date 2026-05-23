@@ -152,25 +152,110 @@ export function usePrayerNotifications() {
           }, fastingCheckMs - now);
           timeoutsRef.current.push(id);
         }
+
+        // Pre-Fajr Fasting Reminder (based on hours before Fajr settings)
+        const hoursBeforeFajr = settings.notificationsFastingHoursBeforeFajr ?? 0;
+        if (hoursBeforeFajr > 0) {
+          // Check today's fasting early reminder (if today is a fasting day and we are before its early reminder time)
+          const todayHijri = toHijri(new Date());
+          const todayFastingType = isFastingDay(todayHijri, new Date());
+          if (todayFastingType) {
+            const todayEarlyMs = times.fajr.getTime() - hoursBeforeFajr * 60 * 60 * 1000;
+            if (todayEarlyMs > now) {
+              const id = setTimeout(() => {
+                const title = t("fasting.early_reminder_title", { defaultValue: "اقترب موعد السحور والصيام" });
+                const fastingName = t(`fasting.${todayFastingType}`, { defaultValue: todayFastingType });
+                const body = t("fasting.early_reminder_body", {
+                  defaultValue: `تذكير: تقترب بداية صيام يوم ({{name}}). يتبقى {{hours}} ساعات على أذان الفجر.`,
+                  name: fastingName,
+                  hours: String(hoursBeforeFajr),
+                }).replace("{{name}}", fastingName).replace("{{hours}}", String(hoursBeforeFajr));
+
+                NotificationManager.showNotification(title, {
+                  body,
+                  icon: "/icon-192.png",
+                  badge: "/favicon.png",
+                  tag: "fasting-early-today",
+                });
+              }, todayEarlyMs - now);
+              timeoutsRef.current.push(id);
+            }
+          }
+
+          // Check tomorrow's fasting early reminder
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          const tomorrowHijri = toHijri(tomorrow);
+          const tomorrowFastingType = isFastingDay(tomorrowHijri, tomorrow);
+          if (tomorrowFastingType) {
+            const tomorrowFajrMs = times.fajr.getTime() + 24 * 60 * 60 * 1000;
+            const tomorrowEarlyMs = tomorrowFajrMs - hoursBeforeFajr * 60 * 60 * 1000;
+            if (tomorrowEarlyMs > now) {
+              const id = setTimeout(() => {
+                const title = t("fasting.early_reminder_title", { defaultValue: "اقترب موعد السحور والصيام" });
+                const fastingName = t(`fasting.${tomorrowFastingType}`, { defaultValue: tomorrowFastingType });
+                const body = t("fasting.early_reminder_body", {
+                  defaultValue: `تذكير: تقترب بداية صيام يوم ({{name}}). يتبقى {{hours}} ساعات على أذان الفجر.`,
+                  name: fastingName,
+                  hours: String(hoursBeforeFajr),
+                }).replace("{{name}}", fastingName).replace("{{hours}}", String(hoursBeforeFajr));
+
+                NotificationManager.showNotification(title, {
+                  body,
+                  icon: "/icon-192.png",
+                  badge: "/favicon.png",
+                  tag: "fasting-early-tomorrow",
+                });
+              }, tomorrowEarlyMs - now);
+              timeoutsRef.current.push(id);
+            }
+          }
+        }
       }
 
-      // Suhoor reminder
-      if (settings.notificationsSuhoor && times.suhoor) {
-        const suhoorMs = times.suhoor.getTime();
+      // Suhoor reminder (today)
+      if (settings.notificationsSuhoor) {
+        const suhoorOffsetMins = settings.notificationsSuhoorMinutesBeforeFajr ?? 20;
+        const suhoorMs = times.fajr.getTime() - suhoorOffsetMins * 60 * 1000;
         if (suhoorMs > now) {
           const id = setTimeout(() => {
+            const bodyText = t("prayer.suhoor_body", {
+              defaultValue: `حان الآن موعد السحور ({{minutes}} دقيقة قبل صلاة الفجر). تسحروا فإن في السحور بركة.`,
+              minutes: suhoorOffsetMins,
+            }).replace("{{minutes}}", String(suhoorOffsetMins));
+
             NotificationManager.showNotification(
               t("prayer.suhoor_soon", { defaultValue: "وقت السحور" }),
               {
-                body: t("prayer.suhoor_body", {
-                  defaultValue: "حان الآن موعد السحور (20 دقيقة قبل صلاة الفجر). تسحروا فإن في السحور بركة.",
-                }),
+                body: bodyText,
                 icon: "/icon-192.png",
                 badge: "/favicon.png",
-                tag: "suhoor-reminder",
+                tag: "suhoor-reminder-today",
               }
             );
           }, suhoorMs - now);
+          timeoutsRef.current.push(id);
+        }
+
+        // Suhoor reminder (tomorrow)
+        const tomorrowSuhoorMs = times.fajr.getTime() + 24 * 60 * 60 * 1000 - suhoorOffsetMins * 60 * 1000;
+        if (tomorrowSuhoorMs > now) {
+          const id = setTimeout(() => {
+            const bodyText = t("prayer.suhoor_body", {
+              defaultValue: `حان الآن موعد السحور ({{minutes}} دقيقة قبل صلاة الفجر). تسحروا فإن في السحور بركة.`,
+              minutes: suhoorOffsetMins,
+            }).replace("{{minutes}}", String(suhoorOffsetMins));
+
+            NotificationManager.showNotification(
+              t("prayer.suhoor_soon", { defaultValue: "وقت السحور" }),
+              {
+                body: bodyText,
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "suhoor-reminder-tomorrow",
+              }
+            );
+          }, tomorrowSuhoorMs - now);
           timeoutsRef.current.push(id);
         }
       }
