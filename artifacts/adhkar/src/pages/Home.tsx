@@ -327,10 +327,8 @@ export default function Home() {
                 <p className="text-lg font-bold text-emerald-700">{t(upcomingFasting.nameKey)}</p>
               </div>
             </div>
-            <Link href="/fasting">
-              <button className="bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20">
-                {t("common.search")}
-              </button>
+            <Link href="/fasting" className="bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-transform duration-200 block text-center">
+              {t("common.search")}
             </Link>
           </CardContent>
         </Card>

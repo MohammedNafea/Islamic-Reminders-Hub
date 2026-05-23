@@ -199,8 +199,13 @@ export default function DownloadPage() {
           </CardHeader>
           
           <CardContent className="p-8 pt-0 space-y-6">
-            <a href="https://github.com/MohammedNafea/Islamic-Reminders-Hub/releases/download/v1.0.0/adhkar.apk" className="block">
-              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 h-auto rounded-xl shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <Button asChild className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 h-auto rounded-xl shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]">
+              <a 
+                href="https://github.com/MohammedNafea/Islamic-Reminders-Hub/releases/download/v1.0.0/adhkar.apk"
+                download="adhkar.apk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Download className="w-4 h-4 mr-2 ml-2" />
                 <span>
                   <TranslatedText
@@ -209,8 +214,8 @@ export default function DownloadPage() {
                     keepArabic={false}
                   />
                 </span>
-              </Button>
-            </a>
+              </a>
+            </Button>
 
             <div className="border-t border-border/60 pt-4 space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-primary">
