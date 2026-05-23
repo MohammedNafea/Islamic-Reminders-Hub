@@ -38,13 +38,6 @@ export class NotificationManager {
   static scheduleAdhkarReminders() {
     const settings = getSettings();
     
-    if (settings.notificationsAdhkar) {
-      // Morning Adhkar (7:00 AM)
-      this.scheduleAtHour(7, 0, "أذكار الصباح", "حان وقت أذكار الصباح لتبدأ يومك بذكر الله.");
-      // Evening Adhkar (6:00 PM)
-      this.scheduleAtHour(18, 0, "أذكار المساء", "حان وقت أذكار المساء، اجعل خاتمة يومك ذكرًا.");
-    }
-    
     if (settings.notificationsNight) {
       // Sleep Adhkar (10:00 PM)
       this.scheduleAtHour(22, 0, "أذكار النوم", "حان وقت أذكار النوم، حافظ على أوراد النوم الحافظة.");

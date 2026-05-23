@@ -78,11 +78,11 @@ export default function Settings() {
     window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "settings" } }));
 
     const soundUrl =
-      settings.notificationsAthan === "makkah" ? "https://www.islamcan.com/audio/athan/azan2.mp3" :
-      settings.notificationsAthan === "madinah" ? "https://www.islamcan.com/audio/athan/azan3.mp3" :
-      settings.notificationsAthan === "daghiri" ? "https://www.islamcan.com/audio/athan/azan12.mp3" :
-      settings.notificationsAthan === "azan1" ? "https://www.islamcan.com/audio/athan/azan6.mp3" :
-      "https://www.islamcan.com/audio/athan/azan4.mp3";
+      settings.notificationsAthan === "makkah" ? "https://www.islamcan.com/audio/adhan/azan2.mp3" :
+      settings.notificationsAthan === "madinah" ? "https://www.islamcan.com/audio/adhan/azan3.mp3" :
+      settings.notificationsAthan === "daghiri" ? "https://www.islamcan.com/audio/adhan/azan12.mp3" :
+      settings.notificationsAthan === "azan1" ? "https://www.islamcan.com/audio/adhan/azan6.mp3" :
+      "https://www.islamcan.com/audio/adhan/azan4.mp3";
 
     const audio = new Audio(soundUrl);
     setTestAudio(audio);
@@ -130,6 +130,7 @@ export default function Settings() {
     const newSettings = { ...settings, [key]: finalValue };
     setLocalSettings(newSettings);
     saveSettings(newSettings);
+    window.dispatchEvent(new Event("settings-changed"));
 
     if (newSettings.notifications && (
       key === "notifications" || 
@@ -379,7 +380,78 @@ export default function Settings() {
         </CardContent>
       </Card>
 
-
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="تعديل التقويم الهجري"
+              staticTranslation={getTranslation(t, "settings.hijri_offset", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <Select 
+            value={String(settings.hijriOffset ?? 0)} 
+            onValueChange={(val) => updateSetting("hijriOffset", Number(val))}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={getTranslation(t, "settings.hijri_offset", i18n.language) || "تعديل التقويم الهجري"} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="-2">
+                <TranslatedText
+                  text="تأخير يومين (-2)"
+                  staticTranslation={getTranslation(t, "settings.hijri_offset_minus_2", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="-1">
+                <TranslatedText
+                  text="تأخير يوم واحد (-1)"
+                  staticTranslation={getTranslation(t, "settings.hijri_offset_minus_1", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="0">
+                <TranslatedText
+                  text="بدون تعديل (0)"
+                  staticTranslation={getTranslation(t, "settings.hijri_offset_zero", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="1">
+                <TranslatedText
+                  text="تقديم يوم واحد (+1)"
+                  staticTranslation={getTranslation(t, "settings.hijri_offset_plus_1", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+              <SelectItem value="2">
+                <TranslatedText
+                  text="تقديم يومين (+2)"
+                  staticTranslation={getTranslation(t, "settings.hijri_offset_plus_2", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-muted-foreground leading-normal mt-1">
+            <TranslatedText
+              text="تعديل التاريخ الهجري بتقديم أو تأخير الأيام ليتوافق مع الرؤية الشرعية للهلال في بلدك."
+              staticTranslation={getTranslation(t, "settings.hijri_offset_desc", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </p>
+        </CardContent>
+      </Card>
 
       <Card>
         <CardContent className="pt-6 space-y-4">
@@ -410,8 +482,8 @@ export default function Settings() {
               >
                 {/* قسم 1: مفاتيح التشغيل الأساسية في شبكة متجاوبة */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg-muted/20 p-4 rounded-2xl border border-border/50">
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
-                    <Label htmlFor="notificationsPrayers" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsPrayers" className="text-sm font-medium text-foreground cursor-pointer select-none">
                       <TranslatedText
                         text="تنبيهات مواقيت الصلاة"
                         staticTranslation={getTranslation(t, "settings.notifications_prayers", i18n.language) || undefined}
@@ -423,11 +495,12 @@ export default function Settings() {
                       id="notificationsPrayers" 
                       checked={settings.notificationsPrayers}
                       onCheckedChange={(val) => updateSetting("notificationsPrayers", val)}
+                      className="shrink-0"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
-                    <Label htmlFor="notificationsAdhkar" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsAdhkar" className="text-sm font-medium text-foreground cursor-pointer select-none">
                       <TranslatedText
                         text="تنبيهات أذكار الصباح والمساء"
                         staticTranslation={getTranslation(t, "settings.notifications_adhkar_sub", i18n.language) || undefined}
@@ -439,11 +512,12 @@ export default function Settings() {
                       id="notificationsAdhkar" 
                       checked={settings.notificationsAdhkar}
                       onCheckedChange={(val) => updateSetting("notificationsAdhkar", val)}
+                      className="shrink-0"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
-                    <Label htmlFor="notificationsNight" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsNight" className="text-sm font-medium text-foreground cursor-pointer select-none">
                       <TranslatedText
                         text="تنبيهات الليل والاستغفار بالأسحار"
                         staticTranslation={getTranslation(t, "settings.notifications_night", i18n.language) || undefined}
@@ -455,11 +529,12 @@ export default function Settings() {
                       id="notificationsNight" 
                       checked={settings.notificationsNight}
                       onCheckedChange={(val) => updateSetting("notificationsNight", val)}
+                      className="shrink-0"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
-                    <Label htmlFor="notificationsSunanRawatib" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsSunanRawatib" className="text-sm font-medium text-foreground cursor-pointer select-none">
                       <TranslatedText
                         text="تنبيه السنن الرواتب"
                         staticTranslation={getTranslation(t, "settings.notifications_sunan_rawatib", i18n.language) || undefined}
@@ -471,11 +546,12 @@ export default function Settings() {
                       id="notificationsSunanRawatib" 
                       checked={settings.notificationsSunanRawatib}
                       onCheckedChange={(val) => updateSetting("notificationsSunanRawatib", val)}
+                      className="shrink-0"
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
-                    <Label htmlFor="notificationsHijama" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                  <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsHijama" className="text-sm font-medium text-foreground cursor-pointer select-none">
                       <TranslatedText
                         text="تنبيه أيام الحجامة"
                         staticTranslation={getTranslation(t, "settings.notifications_hijama", i18n.language) || undefined}
@@ -487,6 +563,7 @@ export default function Settings() {
                       id="notificationsHijama" 
                       checked={settings.notificationsHijama}
                       onCheckedChange={(val) => updateSetting("notificationsHijama", val)}
+                      className="shrink-0"
                     />
                   </div>
                 </div>

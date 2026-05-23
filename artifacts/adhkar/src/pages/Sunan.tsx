@@ -242,8 +242,8 @@ export default function Sunan() {
             <p className="text-xs text-foreground/90 leading-relaxed font-serif text-right" dir="rtl">
               "مَنْ صَلَّى فِي يَوْمٍ وَلَيْلَةٍ ثِنْتَيْ عَشْرَةَ رَكْعَةً بُنِيَ لَهُ بَيْتٌ فِي الْجَنَّةِ: أَرْبَعًا قَبْلَ الظُّهْرِ، وَرَكْعَتَيْنِ بَعْدَهَا، وَرَكْعَتَيْنِ بَعْدَ الْمَغْرِبِ، وَرَكْعَتَيْنِ بَعْدَ الْعِشَاءِ، وَرَكْعَتَيْنِ قَبْلَ صَلَاةِ الْغَدَاةِ."
             </p>
-            <p className="text-[10px] text-muted-foreground text-left" dir="ltr">
-              رواه مسلم والترمذي والنسائي عن أم حبيبة رضي الله عنها
+            <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
+              رواه مسلم والترمذي والنسائي عن أم حبيبة رضي الله عنها، وهو حديث صحيح
             </p>
           </div>
         </CardContent>
@@ -309,22 +309,22 @@ export default function Sunan() {
               {[
                 {
                   text: "«خَيْرُ مَا تَدَاوَيْتُمْ بِهِ الْحِجَامَةُ»",
-                  source: "رواه البخاري ومسلم عن أنس بن مالك رضي الله عنه",
+                  source: "رواه البخاري ومسلم عن أنس بن مالك رضي الله عنه، وهو حديث صحيح",
                 },
                 {
                   text: "«إِنَّ فِي الْحَجْمِ شِفَاءً»",
-                  source: "رواه مسلم عن جابر بن عبد الله رضي الله عنهما",
+                  source: "رواه مسلم عن جابر بن عبد الله رضي الله عنهما، وهو حديث صحيح",
                 },
                 {
                   text: "«إِنْ كَانَ فِي شَيْءٍ مِنْ أَدْوِيَتِكُمْ خَيْرٌ، فَفِي شَرْطَةِ مِحْجَمٍ، أَوْ شَرْبَةِ عَسَلٍ، أَوْ كَيَّةٍ بِنَارٍ، وَمَا أُحِبُّ أَنْ أَكْتَوِيَ»",
-                  source: "رواه البخاري ومسلم عن ابن عباس رضي الله عنهما",
+                  source: "رواه البخاري ومسلم عن ابن عباس رضي الله عنهما، وهو حديث صحيح",
                 },
               ].map((hadith, index) => (
                 <div key={index} className="p-4 bg-muted/20 border border-border/20 rounded-2xl space-y-2">
                   <p className="text-sm font-medium leading-relaxed font-serif text-right text-foreground/90" dir="rtl">
                     {hadith.text}
                   </p>
-                  <p className="text-[10px] text-muted-foreground text-left" dir="ltr">
+                  <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
                     {hadith.source}
                   </p>
                 </div>

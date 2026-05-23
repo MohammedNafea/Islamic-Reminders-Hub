@@ -5,18 +5,22 @@ import {
   adhkarHouse, 
   adhkarMasjid, 
   adhkarClothes, 
+  adhkarRestroom,
   adhkarWudu, 
   adhkarAthan, 
   adhkarFood, 
   adhkarTravel, 
-  adhkarSleep 
+  adhkarSleep,
+  adhkarPrayerActions,
+  adhkarDailyLifeEvents,
+  adhkarNature
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
-import { Home, Compass, Coffee, Shield, Moon, Clock } from "lucide-react";
+import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 
-type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events";
+type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature";
 
 interface TabItem {
   id: TabId;
@@ -31,10 +35,12 @@ export default function DailySupplications() {
 
   const tabs: TabItem[] = [
     { id: "house_masjid", labelAr: "البيت والمسجد", labelEn: "Home & Mosque", Icon: Home },
-    { id: "clothes_wudu", labelAr: "اللباس والوضوء", labelEn: "Clothing & Wudu", Icon: Shield },
+    { id: "clothes_wudu", labelAr: "اللباس، الخلاء والوضوء", labelEn: "Clothing, Restroom & Wudu", Icon: Shield },
     { id: "food_athan", labelAr: "الأكل والأذان", labelEn: "Food & Athan", Icon: Coffee },
     { id: "travel", labelAr: "السفر والتنقل", labelEn: "Travel & Commute", Icon: Compass },
     { id: "sleep_events", labelAr: "النوم واليقظة", labelEn: "Sleep & Waking", Icon: Moon },
+    { id: "prayer_actions", labelAr: "أفعال الصلاة", labelEn: "Prayer Actions", Icon: BookOpen },
+    { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun }
   ];
 
   // Get sleep-related waking/night events
@@ -52,13 +58,17 @@ export default function DailySupplications() {
       case "house_masjid":
         return [...adhkarHouse, ...adhkarMasjid];
       case "clothes_wudu":
-        return [...adhkarClothes, ...adhkarWudu];
+        return [...adhkarClothes, ...adhkarRestroom, ...adhkarWudu];
       case "food_athan":
         return [...adhkarFood, ...adhkarAthan];
       case "travel":
         return adhkarTravel;
       case "sleep_events":
         return sleepEvents;
+      case "prayer_actions":
+        return adhkarPrayerActions;
+      case "occasions_nature":
+        return [...adhkarDailyLifeEvents, ...adhkarNature];
       default:
         return [];
     }
@@ -76,6 +86,10 @@ export default function DailySupplications() {
         return "nav.daily_supplications";
       case "sleep_events":
         return "nav.sleep";
+      case "prayer_actions":
+        return "nav.daily_supplications";
+      case "occasions_nature":
+        return "nav.daily_supplications";
       default:
         return "nav.daily_supplications";
     }

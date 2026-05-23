@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPrayerTimesFromAPI, getPrayerTimes, getCityFromCoords, formatTime, getNextPrayer, PrayerTimesResult } from "@/lib/prayer-times";
-import { toHijri, formatHijriDate, isFastingDay } from "@/lib/hijri";
+import { toHijri, formatHijriDate, isFastingDay, isHijamaDay } from "@/lib/hijri";
 import { getSettings } from "@/lib/store";
 import { MapPin, RefreshCw, ChevronLeft, ChevronRight, Info, Calendar as CalendarIcon, Clock, Music, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -344,6 +344,7 @@ export default function PrayerTimesPage() {
                     const isToday = d.toDateString() === today.toDateString();
                     const isFri = d.getDay() === 5;
                     const fasting = isFastingDay(hd, d);
+                    const hijama = isHijamaDay(hd);
 
                     return (
                       <motion.button
@@ -355,22 +356,27 @@ export default function PrayerTimesPage() {
                           "aspect-square rounded-2xl flex flex-col items-center justify-center transition-all relative overflow-hidden",
                           isToday
                             ? "bg-primary text-primary-foreground font-bold shadow-lg shadow-primary/20 ring-2 ring-primary ring-offset-2 ring-offset-background"
-                            : isFri
-                              ? "bg-primary/10 text-primary border border-primary/10"
-                              : fasting 
-                                ? "bg-amber-500/10 text-amber-600 border border-amber-500/10"
-                                : "bg-card hover:bg-muted text-foreground border border-border/50 shadow-sm"
+                            : fasting 
+                              ? "bg-amber-500/10 text-amber-600 border border-amber-500/10"
+                              : hijama
+                                ? "bg-rose-500/10 text-rose-600 border border-rose-500/10"
+                                : isFri
+                                  ? "bg-primary/10 text-primary border border-primary/10"
+                                  : "bg-card hover:bg-muted text-foreground border border-border/50 shadow-sm"
                         )}
                       >
                         {fasting && !isToday && (
-                          <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-50 shadow-sm" />
+                          <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-amber-500 shadow-sm" />
                         )}
-                        <span className="font-black text-sm leading-none">{day}</span>
+                        {hijama && !isToday && (
+                          <div className="absolute top-1 left-1 w-1.5 h-1.5 rounded-full bg-rose-500 shadow-sm" />
+                        )}
+                        <span className="font-black text-sm leading-none">{hd.day}</span>
                         <span className={cn(
                           "text-[9px] font-bold leading-none mt-1 opacity-70",
                           isToday ? "text-primary-foreground" : "text-muted-foreground"
                         )}>
-                          {hd.day}
+                          {day}
                         </span>
                       </motion.button>
                     );
@@ -436,17 +442,32 @@ export default function PrayerTimesPage() {
                     <tbody>
                       {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
                         const d = new Date(year, month, day);
+                        const hd = toHijri(d);
                         const isToday = d.toDateString() === today.toDateString();
                         const pTimes = getPrayerTimes(coords.lat, coords.lng, d); // Simple local calc for list
+                        const fasting = isFastingDay(hd, d);
+                        const hijama = isHijamaDay(hd);
                         return (
                           <tr key={day} className={cn(
                             "border-b border-border/20 last:border-0",
-                            isToday && "bg-primary/5 font-bold"
+                            isToday && "bg-primary/5 font-bold",
+                            fasting && !isToday && "bg-amber-500/5",
+                            hijama && !isToday && "bg-rose-500/5"
                           )}>
                             <td className="p-3">
                               <div className="flex flex-col">
-                                <span>{day} {d.toLocaleDateString(i18n.language, { month: 'short' })}</span>
-                                <span className="text-[10px] text-muted-foreground">{d.toLocaleDateString(i18n.language, { weekday: 'short' })}</span>
+                                <span className="font-bold flex items-center gap-1.5">
+                                  {formatHijriDate(hd, i18n.language)}
+                                  {fasting && (
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500" title="صيام" />
+                                  )}
+                                  {hijama && (
+                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500" title="حجامة" />
+                                  )}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground">
+                                  {day} {d.toLocaleDateString(i18n.language, { month: 'short', weekday: 'long' })}
+                                </span>
                               </div>
                             </td>
                             <td className="p-3 text-center font-sans tabular-nums">{formatTime(pTimes.fajr, i18n.language).split(' ')[0]}</td>
@@ -602,21 +623,10 @@ export default function PrayerTimesPage() {
           {selectedDay && (() => {
             const hd = toHijri(selectedDay);
             const fasting = isFastingDay(hd, selectedDay);
+            const hijama = isHijamaDay(hd);
             return (
               <div className="space-y-6 pt-2">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-muted/50 p-4 rounded-2xl text-center space-y-1">
-                    <p className="text-[10px] font-bold text-muted-foreground uppercase">
-                      <TranslatedText
-                        text="التاريخ الميلادي"
-                        staticTranslation={getTranslation(t, "fasting.gregorian_date", i18n.language) || undefined}
-                        keepArabic={false}
-                        inline
-                      />
-                    </p>
-                    <p className="font-bold text-lg">{selectedDay.getDate()}</p>
-                    <p className="text-[11px] font-medium text-muted-foreground">{selectedDay.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })}</p>
-                  </div>
                   <div className="bg-primary/5 p-4 rounded-2xl text-center space-y-1 border border-primary/10">
                     <p className="text-[10px] font-bold text-primary/70 uppercase">
                       <TranslatedText
@@ -628,6 +638,18 @@ export default function PrayerTimesPage() {
                     </p>
                     <p className="font-bold text-lg text-primary">{hd.day}</p>
                     <p className="text-[11px] font-medium text-primary/70">{formatHijriDate(hd, i18n.language).split(' ').slice(1).join(' ')}</p>
+                  </div>
+                  <div className="bg-muted/50 p-4 rounded-2xl text-center space-y-1">
+                    <p className="text-[10px] font-bold text-muted-foreground uppercase">
+                      <TranslatedText
+                        text="التاريخ الميلادي"
+                        staticTranslation={getTranslation(t, "fasting.gregorian_date", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
+                    <p className="font-bold text-lg">{selectedDay.getDate()}</p>
+                    <p className="text-[11px] font-medium text-muted-foreground">{selectedDay.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })}</p>
                   </div>
                 </div>
 
@@ -673,6 +695,55 @@ export default function PrayerTimesPage() {
                             keepArabic={false}
                             inline
                           />
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {hijama && (
+                  <Card className="border-none bg-rose-50 dark:bg-rose-950/20 rounded-2xl overflow-hidden ring-1 ring-rose-200/50">
+                    <CardContent className="p-4 flex flex-col gap-3">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-rose-100 dark:bg-rose-900/40 rounded-xl flex items-center justify-center text-rose-600 dark:text-rose-400">
+                          <Info className="w-5 h-5" />
+                        </div>
+                        <div className="space-y-0.5">
+                          <p className="text-[10px] font-bold text-rose-600 dark:text-rose-400 uppercase">
+                            <TranslatedText
+                              text="أيام الحجامة المستحبة"
+                              staticTranslation={getTranslation(t, "settings.notifications_hijama", i18n.language) || undefined}
+                              keepArabic={false}
+                              inline
+                            />
+                          </p>
+                          <p className="text-sm font-bold text-rose-900 dark:text-rose-100">
+                            <TranslatedText
+                              text={`اليوم المستحب للحجامة (${hd.day} من الشهر الهجري)`}
+                              staticTranslation={
+                                i18n.language === "ar"
+                                  ? `اليوم المستحب للحجامة (${hd.day} من الشهر الهجري)`
+                                  : `Recommended day for Hijama (${hd.day} Hijri)`
+                              }
+                              keepArabic={false}
+                              inline
+                            />
+                          </p>
+                        </div>
+                      </div>
+                      <div className="border-t border-rose-200/40 dark:border-rose-900/40 pt-2.5">
+                        <p className="text-xs leading-relaxed text-rose-900/90 dark:text-rose-200/90 italic font-medium">
+                          {i18n.language === "ar" ? (
+                            <>
+                              الحديث: «مَنْ احْتَجَمَ لِسَبْعَ عَشْرَةَ، وَتِسْعَ عَشْرَةَ، وَإِحْدَى وَعِشْرِينَ، كَانَ شِفَاءً مِنْ كُلِّ دَاءٍ».
+                              <span className="block mt-1 text-[10px] text-rose-700/80 dark:text-rose-400/80 font-bold">[عن أنس بن مالك رضي الله عنه، وهو حديث صحيح]</span>
+                            </>
+                          ) : (
+                            <>
+                              Hadith: "Whoever undergoes cupping (hijama) on the 17th, 19th or 21st (of the Islamic month) will be cured of every disease."
+                              <span className="block mt-1 text-[10px] text-rose-700/80 dark:text-rose-400/80 font-bold">[Narrated by Anas bin Malik, and is a sound Hadith]</span>
+                            </>
+                          )}
                         </p>
                       </div>
                     </CardContent>

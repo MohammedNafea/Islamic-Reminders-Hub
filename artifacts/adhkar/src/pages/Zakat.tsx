@@ -646,22 +646,22 @@ export default function ZakatCalculator() {
 
 const zakatHadiths = [
   {
-    source: "متفق عليه",
+    source: "رواه البخاري ومسلم عن ابن عباس رضي الله عنهما، وهو حديث صحيح",
     textAr: "أن النبي ﷺ بعث معاذًا إلى اليمن، فقال: «ادعهم إلى شهادة أن لا إله إلا الله وأن محمدًا رسول الله، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم خمس صلوات في كل يوم وليلة، فإن هم أطاعوا لذلك، فأعلمهم أن الله افترض عليهم صدقة في أموالهم تُؤخذ من أغنيائهم وتُرد على فقرائهم».",
     textEn: "The Prophet ﷺ sent Mu'adh to Yemen and said: 'Invite them to testify that none has the right to be worshipped but Allah and that Muhammad is the Messenger of Allah. If they obey that, tell them that Allah has enjoined upon them five prayers every day and night. If they obey that, tell them that Allah has enjoined upon them Zakat (charity) on their wealth, to be taken from the rich among them and given to the poor among them.'"
   },
   {
-    source: "رواه مسلم",
+    source: "رواه مسلم عن أبي هريرة رضي الله عنه، وهو حديث صحيح",
     textAr: "قال رسول الله ﷺ: «ما من صاحب ذهب ولا فضة لا يؤدي منها حقها إلا إذا كان يوم القيامة صفحت له صفائح من نار فأحمي عليها في نار جهنم فيكوى بها جنبه وجبينه وظهره، كلما بردت أعيدت له في يوم كان مقداره خمسين ألف سنة حتى يقضى بين العباد».",
     textEn: "The Messenger of Allah ﷺ said: 'No owner of gold or silver who does not pay what is due on them, but on the Day of Resurrection sheets of fire will be prepared for him, heated in the Fire of Hell, and his sides, forehead and back will be branded with them. Whenever they cool down, they will be returned to him on a Day the length of which is fifty thousand years, until judgment is passed among people.'"
   },
   {
-    source: "رواه البخاري",
+    source: "رواه البخاري عن أبي هريرة رضي الله عنه، وهو حديث صحيح",
     textAr: "قال رسول الله ﷺ: «من آتاه الله مالاً فلم يؤد زكاته مُثِّل له ماله يوم القيامة شجاعاً أقرع له زبيبتان يطوقه يوم القيامة، ثم يأخذ بلهزمتيه - يعني بشدقيه - ثم يقول أنا مالك أنا كنزك».",
     textEn: "The Messenger of Allah ﷺ said: 'Whoever is given wealth by Allah and does not pay its Zakat, on the Day of Resurrection his wealth will be made to appear to him as a baldheaded poisonous male snake with two black spots over its eyes, which will encircle his neck on the Day of Resurrection, then it will hold his jaws and say: I am your wealth, I am your treasure.'"
   },
   {
-    source: "رواه أبو داود والترمذي",
+    source: "رواه أبو داود والترمذي عن عمرو بن شعيب عن أبيه عن جده رضي الله عنهم، وإسناده حسن",
     textAr: "أن امرأة أتت رسول الله ﷺ ومعها ابنة لها، وفي يد ابنتها مسكتان غليظتان من ذهب، فقال لها: «أتؤدين زكاة هذا؟» قالت: لا. قال: «أيسرك أن يسورك الله بهما يوم القيامة سوارين من نار؟» فخلعتهما فألقتهما إلى النبي ﷺ وقالت: هما لله ولرسوله.",
     textEn: "A woman came to the Messenger of Allah ﷺ with a daughter of hers, on whose hand were two thick gold bangles. He said to her: 'Do you pay Zakat on this?' She said: 'No.' He said: 'Would it please you if Allah branded you with two bangles of fire on the Day of Resurrection?' So she took them off, threw them to the Prophet ﷺ and said: 'They are for Allah and His Messenger.'"
   }
