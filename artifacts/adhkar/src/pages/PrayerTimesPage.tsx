@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPrayerTimesFromAPI, getPrayerTimes, getCityFromCoords, formatTime, getNextPrayer, PrayerTimesResult } from "@/lib/prayer-times";
 import { toHijri, formatHijriDate, isFastingDay, isHijamaDay } from "@/lib/hijri";
-import { getSettings } from "@/lib/store";
+import { getSettings, saveSettings } from "@/lib/store";
 import { MapPin, RefreshCw, ChevronLeft, ChevronRight, Info, Calendar as CalendarIcon, Clock, Music, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -18,38 +18,58 @@ type Tab = "times" | "calendar" | "qibla";
 export default function PrayerTimesPage() {
   const { t, i18n } = useTranslation();
   const [times, setTimes] = useState<PrayerTimesResult | null>(null);
-  const [city, setCity] = useState<string>("");
+  const settings = getSettings();
+  const [city, setCity] = useState<string>(settings.location?.city || "");
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>("times");
   const [calDate, setCalDate] = useState(new Date());
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [coords, setCoords] = useState({ lat: 21.4225, lng: 39.8262 });
-  const settings = getSettings();
+  const [coords, setCoords] = useState(
+    settings.location ? { lat: settings.location.lat, lng: settings.location.lng } : { lat: 21.4225, lng: 39.8262 }
+  );
   const today = new Date();
 
-  const fetchTimes = React.useCallback(async () => {
+  const fetchTimes = React.useCallback(async (forceRefresh = false) => {
     setLoading(true);
     const date = new Date();
-    let lat = 21.4225, lng = 39.8262;
-    if (navigator.geolocation) {
-      try {
-        const pos = await new Promise<GeolocationPosition>((res, rej) =>
-          navigator.geolocation.getCurrentPosition(res, rej, { timeout: 10000 })
-        );
-        lat = pos.coords.latitude;
-        lng = pos.coords.longitude;
-        setCoords({ lat, lng });
-        const c = await getCityFromCoords(lat, lng, i18n.language);
+    const currentSettings = getSettings();
+    let lat = currentSettings.location?.lat ?? 21.4225;
+    let lng = currentSettings.location?.lng ?? 39.8262;
+    let c = currentSettings.location?.city || "";
+
+    if (forceRefresh || !currentSettings.location) {
+      if (navigator.geolocation) {
+        try {
+          const pos = await new Promise<GeolocationPosition>((res, rej) =>
+            navigator.geolocation.getCurrentPosition(res, rej, { timeout: 10000 })
+          );
+          lat = pos.coords.latitude;
+          lng = pos.coords.longitude;
+          setCoords({ lat, lng });
+          c = await getCityFromCoords(lat, lng, i18n.language);
+          setCity(c);
+          saveSettings({ location: { lat, lng, city: c } });
+          window.dispatchEvent(new Event("settings-changed"));
+        } catch {
+          c = c || (i18n.language === "ar" ? "مكة المكرمة" : "Makkah");
+          setCity(c);
+        }
+      } else {
+        c = c || (i18n.language === "ar" ? "مكة المكرمة" : "Makkah");
         setCity(c);
-      } catch { setCity(i18n.language === "ar" ? "مكة المكرمة" : "Makkah"); }
-    } else { setCity(i18n.language === "ar" ? "مكة المكرمة" : "Makkah"); }
-    const method = settings.calculationMethod === "MuslimWorldLeague" ? 3
-      : settings.calculationMethod === "Egyptian" ? 5 : 4;
+      }
+    } else {
+      setCoords({ lat, lng });
+      setCity(c);
+    }
+
+    const method = currentSettings.calculationMethod === "MuslimWorldLeague" ? 3
+      : currentSettings.calculationMethod === "Egyptian" ? 5 : 4;
     const api = await getPrayerTimesFromAPI(lat, lng, date, method);
     setTimes(api || getPrayerTimes(lat, lng, date));
     setLoading(false);
-  }, [settings.calculationMethod, i18n.language]);
+  }, [i18n.language]);
 
   useEffect(() => { fetchTimes(); }, [fetchTimes]);
 
@@ -97,7 +117,7 @@ export default function PrayerTimesPage() {
             inline
           />
         </h2>
-        <Button variant="outline" size="icon" onClick={fetchTimes} disabled={loading} className="rounded-full hover:bg-primary/5 hover:text-primary transition-colors">
+        <Button variant="outline" size="icon" onClick={() => fetchTimes(true)} disabled={loading} className="rounded-full hover:bg-primary/5 hover:text-primary transition-colors">
           <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
         </Button>
       </div>

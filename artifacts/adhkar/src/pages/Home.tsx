@@ -74,9 +74,9 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchPrayerTimes() {
-      let lat = 21.4225;
-      let lng = 39.8262;
-      if (navigator.geolocation) {
+      let lat = settings.location?.lat ?? 21.4225;
+      let lng = settings.location?.lng ?? 39.8262;
+      if (!settings.location && navigator.geolocation) {
         try {
           const pos = await new Promise<GeolocationPosition>((res, rej) =>
             navigator.geolocation.getCurrentPosition(res, rej, { timeout: 5000 })
@@ -90,7 +90,7 @@ export default function Home() {
       await getPrayerTimesFromAPI(lat, lng, new Date(), method);
     }
     fetchPrayerTimes();
-  }, [settings.calculationMethod, hijri.day]);
+  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng]);
 
   const handleSalawat = () => {
     const next = salawatCount + 1;

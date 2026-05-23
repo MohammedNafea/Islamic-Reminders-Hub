@@ -6,11 +6,11 @@ import { NotificationManager } from "@/lib/notifications";
 import { toHijri, isFastingDay } from "@/lib/hijri";
 
 const ATHAN_SOUNDS: Record<string, string> = {
-  makkah: "https://www.islamcan.com/audio/adhan/azan2.mp3",
-  madinah: "https://www.islamcan.com/audio/adhan/azan3.mp3",
-  daghiri: "https://www.islamcan.com/audio/adhan/azan12.mp3",
-  azan1: "https://www.islamcan.com/audio/adhan/azan6.mp3",
-  azan2: "https://www.islamcan.com/audio/adhan/azan4.mp3",
+  makkah: "/audio/azan_makkah.mp3",
+  madinah: "/audio/azan_madinah.mp3",
+  daghiri: "/audio/azan_daghiri.mp3",
+  azan1: "/audio/azan1.mp3",
+  azan2: "/audio/azan2.mp3",
 };
 
 /**
@@ -475,9 +475,9 @@ export function usePrayerNotifications() {
 
     (async () => {
       try {
-        let lat = 21.4225,
-          lng = 39.8262;
-        if (navigator.geolocation) {
+        let lat = settings.location?.lat ?? 21.4225;
+        let lng = settings.location?.lng ?? 39.8262;
+        if (!settings.location && navigator.geolocation) {
           try {
             const pos = await new Promise<GeolocationPosition>((res, rej) =>
               navigator.geolocation.getCurrentPosition(res, rej, { timeout: 5000 })

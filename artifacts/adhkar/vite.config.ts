@@ -13,60 +13,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.ts",
       registerType: "autoUpdate",
       includeAssets: ["favicon.png", "apple-touch-icon.png", "icon-512.png", "data/library_content.json", "data/adhkar.ts"],
-      workbox: {
+      injectManifest: {
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff2}"],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "google-fonts-cache",
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "gstatic-fonts-cache",
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/api\.alquran\.cloud\/v1\/.*/i,
-            handler: "CacheFirst",
-            options: {
-              cacheName: "quran-api-cache",
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/api\.aladhan\.com\/v1\/.*/i,
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "prayer-times-cache",
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
-              },
-            },
-          },
-        ],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff2,mp3}"],
       },
       manifest: {
         name: "مركز الأذكار الإسلامي",

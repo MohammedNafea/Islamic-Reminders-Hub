@@ -78,11 +78,11 @@ export default function Settings() {
     window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "settings" } }));
 
     const soundUrl =
-      settings.notificationsAthan === "makkah" ? "https://www.islamcan.com/audio/adhan/azan2.mp3" :
-      settings.notificationsAthan === "madinah" ? "https://www.islamcan.com/audio/adhan/azan3.mp3" :
-      settings.notificationsAthan === "daghiri" ? "https://www.islamcan.com/audio/adhan/azan12.mp3" :
-      settings.notificationsAthan === "azan1" ? "https://www.islamcan.com/audio/adhan/azan6.mp3" :
-      "https://www.islamcan.com/audio/adhan/azan4.mp3";
+      settings.notificationsAthan === "makkah" ? "/audio/azan_makkah.mp3" :
+      settings.notificationsAthan === "madinah" ? "/audio/azan_madinah.mp3" :
+      settings.notificationsAthan === "daghiri" ? "/audio/azan_daghiri.mp3" :
+      settings.notificationsAthan === "azan1" ? "/audio/azan1.mp3" :
+      "/audio/azan2.mp3";
 
     const audio = new Audio(soundUrl);
     setTestAudio(audio);
@@ -455,24 +455,32 @@ export default function Settings() {
 
       <Card>
         <CardContent className="pt-6 space-y-4">
-          <div className="flex items-center justify-between">
-            <Label htmlFor="notifications" className="text-base font-medium">
-              <TranslatedText
-                text="التنبيهات"
-                staticTranslation={getTranslation(t, "settings.notifications", i18n.language) || undefined}
-                keepArabic={false}
-                inline
-              />
-            </Label>
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-1 flex-1">
+              <Label htmlFor="notifications" className="text-base font-medium">
+                <TranslatedText
+                  text="التنبيهات"
+                  staticTranslation={getTranslation(t, "settings.notifications", i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </Label>
+              {!(typeof window !== "undefined" && "Notification" in window) && (
+                <p className="text-xs text-amber-600 font-medium leading-normal mt-1">
+                  ⚠️ الإشعارات غير مدعومة في هذا المتصفح/الجهاز. يرجى تثبيت التطبيق PWA (إضافة إلى الشاشة الرئيسية) لتتمكن من تفعيل التنبيهات.
+                </p>
+              )}
+            </div>
             <Switch 
               id="notifications" 
-              checked={settings.notifications}
+              disabled={!(typeof window !== "undefined" && "Notification" in window)}
+              checked={settings.notifications && (typeof window !== "undefined" && "Notification" in window)}
               onCheckedChange={(val) => updateSetting("notifications", val)}
             />
           </div>
 
           <AnimatePresence>
-            {settings.notifications && (
+            {settings.notifications && (typeof window !== "undefined" && "Notification" in window) && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
