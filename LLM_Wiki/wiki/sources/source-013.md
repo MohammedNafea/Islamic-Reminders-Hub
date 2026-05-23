@@ -1,14 +1,14 @@
 ---
 id: "source-013"
-title: "مصدر فقهي معاصر 013"
-category: "fiqh"
+title: "مصدر علمي شرعي 013"
+category: "general"
 source: "مصدر علمي محقق 013"
-checksum: "0a1f9b8955b0ed4bc40813abae5935562a4af69984e9329ad9cbabba0c8c2270"
+checksum: "995b1ded3de5cc06476925d7ef3bfc18cac51fa6951b2339ffcd5639558f8395"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر فقهي معاصر 013
+# مصدر علمي شرعي 013
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 013.
 

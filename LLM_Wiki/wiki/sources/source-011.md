@@ -1,14 +1,14 @@
 ---
 id: "source-011"
-title: "مصدر عقدي معاصر 011"
-category: "creed"
+title: "مصدر فقهي معاصر 011"
+category: "fiqh"
 source: "مصدر علمي محقق 011"
-checksum: "8e7b86648f3e3dfb06fea67c2676157e180635b39c3e8f859690dda625058238"
+checksum: "97490413d26ee49d3917228d8f863f9e9c7ea597ca0f5392a971fd56674e16b2"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر عقدي معاصر 011
+# مصدر فقهي معاصر 011
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 011.
 

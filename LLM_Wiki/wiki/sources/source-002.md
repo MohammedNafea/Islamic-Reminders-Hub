@@ -1,14 +1,14 @@
 ---
 id: "source-002"
-title: "مصدر علمي شرعي 002"
-category: "general"
+title: "مصدر مكتبي شرعي 002"
+category: "library"
 source: "مصدر علمي محقق 002"
-checksum: "603e60feab3969fb8c1cffdda75c21cfa603920d428202415af838cce1bf0392"
+checksum: "ff96b79b9a0b1bedd366131aec2a872850d568d871fd5bf22dc5d5071b035559"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 002
+# مصدر مكتبي شرعي 002
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 002.
 

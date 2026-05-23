@@ -1,14 +1,14 @@
 ---
 id: "source-014"
-title: "مصدر عقدي معاصر 014"
-category: "creed"
+title: "مصدر مكتبي شرعي 014"
+category: "library"
 source: "مصدر علمي محقق 014"
-checksum: "f16a87de825760411175bc6be6e33557bccf08226b5e06a8e302c23251618b43"
+checksum: "6f428721991941914736f470278e9a268b86df587761bc69c0dd2329cfef615d"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر عقدي معاصر 014
+# مصدر مكتبي شرعي 014
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 014.
 

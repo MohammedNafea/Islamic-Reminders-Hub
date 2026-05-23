@@ -4,7 +4,7 @@ title: "مصدر تفسيري محقق 009 - مفاهيم مستخرجة"
 category: "tafsir"
 sources: ["[[source-009]]"]
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر تفسيري محقق 009 - مفاهيم مستخرجة

@@ -3,9 +3,9 @@ id: "source-012"
 title: "مصدر حديثي محقق 012"
 category: "hadith"
 source: "مصدر علمي محقق 012"
-checksum: "a042a0071408217615d9c7c055ec681956fddd09f1f6b6e7cf33d5e815407147"
+checksum: "281ac645c4103186dabd84d0a58409e1326bde02b696d9eaca512c91b5e32d1d"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر حديثي محقق 012

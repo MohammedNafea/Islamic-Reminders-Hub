@@ -8,6 +8,7 @@ import { toHijri, formatHijriDate } from "@/lib/hijri";
 import { BookOpen, Calendar, CheckCircle2, RotateCcw, Heart, Star, Sparkles } from "lucide-react";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
+import { adhkarSunanMahjora } from "@/data/adhkar";
 
 interface SunanTracker {
   fajr_pre: boolean;
@@ -343,6 +344,67 @@ export default function Sunan() {
             <p className="text-xs text-foreground/80 leading-relaxed text-right" dir="rtl">
               المستحب في الحجامة العلاجية والوقائية أن تكون في الأيام الفردية من النصف الثاني من الشهر الهجري، وأفضلها هي الأيام: **17، 19، 21** من الشهر الهجري، لما ورد عن النبي ﷺ أن الحجامة فيها تكون أبلغ في النفع والشفاء بإذن الله تعالى.
             </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* السنن النبوية المهجورة Section */}
+      <Card className="border-border/60 bg-card/60 backdrop-blur-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
+          <BookOpen className="w-32 h-32 rotate-12" />
+        </div>
+        <CardHeader className="pb-3 border-b border-border/40">
+          <CardTitle className="text-lg font-heading font-bold text-foreground flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-primary fill-primary/10" />
+            <span>
+              {i18n.language === "ar" ? "السنن النبوية المهجورة" : "Forgotten Prophetic Sunnahs"}
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6 space-y-6">
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {i18n.language === "ar"
+              ? "سنن وثوابت ثبتت عن النبي ﷺ هجرها كثير من الناس في حياتهم اليومية، وفي إحيائها أجر عظيم ونيل لمحبة الله ورسوله."
+              : "Prophetic Sunnahs established from the Prophet ﷺ that many have neglected in daily life. Reviving them brings great reward."}
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {adhkarSunanMahjora.map((sunnah) => (
+              <div
+                key={sunnah.id}
+                className="flex flex-col justify-between p-4 bg-muted/20 hover:bg-muted/30 border border-border/30 rounded-2xl transition-all duration-300 space-y-3"
+              >
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-primary/15 text-primary">
+                      {i18n.language === "ar" ? "سنة نبوية" : "Sunnah"}
+                    </span>
+                    {sunnah.count > 1 && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300">
+                        {sunnah.count} {i18n.language === "ar" ? "مرات" : "times"}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm font-semibold leading-relaxed font-serif text-right text-foreground/95" dir="rtl">
+                    {sunnah.arabic}
+                  </p>
+                </div>
+                
+                <div className="space-y-2 border-t border-border/20 pt-2.5">
+                  {sunnah.note && (
+                    <div className="text-xs text-foreground/80 leading-relaxed bg-background/50 p-2.5 rounded-xl text-right" dir="rtl">
+                      <span className="font-semibold text-primary block text-[10px] mb-0.5">
+                        {i18n.language === "ar" ? "متى وكيف تقال/تفعل:" : "When & How to say/do:"}
+                      </span>
+                      {sunnah.note}
+                    </div>
+                  )}
+                  <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
+                    {sunnah.source}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

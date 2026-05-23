@@ -3,9 +3,9 @@ id: "source-031"
 title: "مصدر علمي شرعي 031"
 category: "general"
 source: "مصدر علمي محقق 031"
-checksum: "e37c78accb2d84b63ef62b77f3be539e09dedb44d382f34d2578f26e5be1f883"
+checksum: "298e94e5594534645a7956e827a79d90a21a66912714af3a64225a113d2e6adf"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 031

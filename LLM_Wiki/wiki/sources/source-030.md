@@ -3,9 +3,9 @@ id: "source-030"
 title: "مصدر علمي شرعي 030"
 category: "general"
 source: "مصدر علمي محقق 030"
-checksum: "b8033f7e5c15ca04c67f896c6c4f363f68451e293c93d9041eaec8c46c023e26"
+checksum: "f63953f635d7e63b583baae3f81ba50f28029086bfa1e00e58c71c1e9c4ba30b"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 030

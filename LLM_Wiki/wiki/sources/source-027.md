@@ -3,9 +3,9 @@ id: "source-027"
 title: "مصدر علمي شرعي 027"
 category: "general"
 source: "مصدر علمي محقق 027"
-checksum: "9251d4c2d97c064f22d9a951ed53f95e42bbc292114e2ea5eec97a526d307c08"
+checksum: "dfef284605d87da9342b0d9840c44cc249b23a21a6b757e2bdcfa6e64ec67450"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 027

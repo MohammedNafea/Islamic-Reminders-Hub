@@ -517,7 +517,7 @@ export default function TrackerDashboard() {
             const allData = getTrackerData();
             
             const completedToday = item.isSalawat 
-              ? salawatCount >= 100 
+              ? salawatCount >= 500 
               : (allData[todayKey]?.categories.includes(item.key) || false);
 
             const rawTranslation = getTranslation(t, item.descKey, i18n.language);
@@ -579,10 +579,10 @@ export default function TrackerDashboard() {
 
                 {item.isSalawat && (
                   <div className="w-full space-y-1 mt-1 border-t border-primary/10 pt-2">
-                    <Progress value={Math.min((salawatCount / 100) * 100, 100)} className="h-1.5 rounded-full" />
+                    <Progress value={Math.min((salawatCount / 500) * 100, 100)} className="h-1.5 rounded-full" />
                     <div className="flex justify-between text-[10px] text-muted-foreground font-medium">
                       <span>{t("tracker.salawat_progress_label", { defaultValue: "التقدم اليومي" })}</span>
-                      <span className="tabular-nums font-bold text-primary">{salawatCount} / 100</span>
+                      <span className="tabular-nums font-bold text-primary">{salawatCount} / 500</span>
                     </div>
                   </div>
                 )}

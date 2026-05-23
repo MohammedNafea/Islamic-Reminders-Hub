@@ -1,14 +1,14 @@
 ---
 id: "source-017"
-title: "مصدر حديثي محقق 017"
-category: "hadith"
+title: "مصدر علمي شرعي 017"
+category: "general"
 source: "مصدر علمي محقق 017"
-checksum: "624b106132e59287e4b3bf8a65e437f57d6d9daa82b52989a8d220ec7a43c880"
+checksum: "32a2bc9025ec5396a364517df4713881b50a98409c0f7eba31e560cb2a75d1fe"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر حديثي محقق 017
+# مصدر علمي شرعي 017
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 017.
 

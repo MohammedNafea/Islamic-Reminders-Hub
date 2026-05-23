@@ -3,9 +3,9 @@ id: "source-004"
 title: "مصدر علمي شرعي 004"
 category: "general"
 source: "مصدر علمي محقق 004"
-checksum: "e2ab35a27f56c209dc310bb12d6f59152ff37c79d0810368dfba7a9e44b2745e"
+checksum: "603e60feab3969fb8c1cffdda75c21cfa603920d428202415af838cce1bf0392"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 004

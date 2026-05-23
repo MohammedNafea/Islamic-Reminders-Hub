@@ -94,6 +94,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   usePrayerNotifications();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location]);
+
+  useEffect(() => {
     document.documentElement.dir = rtl ? "rtl" : "ltr";
     document.documentElement.lang = i18n.language;
     document.documentElement.classList.remove("text-sm", "text-base", "text-lg", "text-xl");

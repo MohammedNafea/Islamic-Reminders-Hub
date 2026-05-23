@@ -1,14 +1,14 @@
 ---
 id: "source-010"
-title: "مصدر علمي شرعي 010"
-category: "general"
+title: "مصدر حديثي محقق 010"
+category: "hadith"
 source: "مصدر علمي محقق 010"
-checksum: "32a2bc9025ec5396a364517df4713881b50a98409c0f7eba31e560cb2a75d1fe"
+checksum: "6588e8342d4d63b80b44dbc57bbf2b30d66a6a0c7d67078ffd305133a2032274"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 010
+# مصدر حديثي محقق 010
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 010.
 

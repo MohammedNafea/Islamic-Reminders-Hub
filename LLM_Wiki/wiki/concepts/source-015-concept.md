@@ -4,7 +4,7 @@ title: "مصدر علمي شرعي 015 - مفاهيم مستخرجة"
 category: "general"
 sources: ["[[source-015]]"]
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 015 - مفاهيم مستخرجة

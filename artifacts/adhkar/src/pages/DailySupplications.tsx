@@ -13,7 +13,9 @@ import {
   adhkarSleep,
   adhkarPrayerActions,
   adhkarDailyLifeEvents,
-  adhkarNature
+  adhkarNature,
+  adhkarOccasions,
+  adhkarImmunization
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
 import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun } from "lucide-react";
@@ -68,7 +70,7 @@ export default function DailySupplications() {
       case "prayer_actions":
         return adhkarPrayerActions;
       case "occasions_nature":
-        return [...adhkarDailyLifeEvents, ...adhkarNature];
+        return [...adhkarDailyLifeEvents, ...adhkarNature, ...adhkarOccasions, ...adhkarImmunization];
       default:
         return [];
     }

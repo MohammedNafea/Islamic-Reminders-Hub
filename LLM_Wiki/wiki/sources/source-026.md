@@ -3,9 +3,9 @@ id: "source-026"
 title: "مصدر علمي شرعي 026"
 category: "general"
 source: "مصدر علمي محقق 026"
-checksum: "8856257dec240b2d341f7a787b7e22e8a35226f73a2e1cb4a0bc689d57d2ffe3"
+checksum: "9c7e6ff53135aeae14364180c1595ba12d64bdc75180a4f424855a364aebe284"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 026

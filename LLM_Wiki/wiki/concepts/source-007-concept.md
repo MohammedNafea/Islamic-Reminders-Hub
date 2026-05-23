@@ -1,13 +1,13 @@
 ---
 id: "source-007-concept"
-title: "مصدر فقهي معاصر 007 - مفاهيم مستخرجة"
-category: "fiqh"
+title: "مصدر علمي شرعي 007 - مفاهيم مستخرجة"
+category: "general"
 sources: ["[[source-007]]"]
-reviewStatus: "needs_review"
-updated: "2026-05-19"
+reviewStatus: "auto_extracted"
+updated: "2026-05-23"
 ---
 
-# مصدر فقهي معاصر 007 - مفاهيم مستخرجة
+# مصدر علمي شرعي 007 - مفاهيم مستخرجة
 
 تجمع هذه الصفحة أهم المقاطع القابلة للفهرسة من المصدر المحايد.
 

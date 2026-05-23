@@ -4,7 +4,7 @@ title: "مصدر حديثي محقق 012 - مفاهيم مستخرجة"
 category: "hadith"
 sources: ["[[source-012]]"]
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر حديثي محقق 012 - مفاهيم مستخرجة

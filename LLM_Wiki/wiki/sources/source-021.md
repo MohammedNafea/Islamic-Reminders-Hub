@@ -1,14 +1,14 @@
 ---
 id: "source-021"
-title: "مصدر علمي شرعي 021"
-category: "general"
+title: "مصدر عقدي معاصر 021"
+category: "creed"
 source: "مصدر علمي محقق 021"
-checksum: "642c6dba66a7706d1cba75129a429743a5bc63044c6362bd64c7e620ab2f82ee"
+checksum: "f16a87de825760411175bc6be6e33557bccf08226b5e06a8e302c23251618b43"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 021
+# مصدر عقدي معاصر 021
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 021.
 

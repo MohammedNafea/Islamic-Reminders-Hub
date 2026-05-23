@@ -3,9 +3,9 @@ id: "source-016"
 title: "مصدر علمي شرعي 016"
 category: "general"
 source: "مصدر علمي محقق 016"
-checksum: "1178cf33559181b2bc5084928197d1604cb4364a1eb436e5ea47a84f7ffa2588"
+checksum: "a5020328a759cb16ddcae84bb55b70ea1b91361bac38f719c93297fed4182f07"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 016

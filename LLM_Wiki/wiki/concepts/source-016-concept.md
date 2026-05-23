@@ -4,7 +4,7 @@ title: "مصدر علمي شرعي 016 - مفاهيم مستخرجة"
 category: "general"
 sources: ["[[source-016]]"]
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 016 - مفاهيم مستخرجة

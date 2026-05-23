@@ -1,14 +1,14 @@
 ---
 id: "source-020"
-title: "مصدر علمي شرعي 020"
-category: "general"
+title: "مصدر فقهي معاصر 020"
+category: "fiqh"
 source: "مصدر علمي محقق 020"
-checksum: "dfef284605d87da9342b0d9840c44cc249b23a21a6b757e2bdcfa6e64ec67450"
+checksum: "0a1f9b8955b0ed4bc40813abae5935562a4af69984e9329ad9cbabba0c8c2270"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 020
+# مصدر فقهي معاصر 020
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 020.
 

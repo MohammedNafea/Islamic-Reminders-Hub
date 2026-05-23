@@ -1,14 +1,14 @@
 ---
 id: "source-019"
-title: "مصدر علمي شرعي 019"
-category: "general"
+title: "مصدر فقهي معاصر 019"
+category: "fiqh"
 source: "مصدر علمي محقق 019"
-checksum: "9c7e6ff53135aeae14364180c1595ba12d64bdc75180a4f424855a364aebe284"
+checksum: "a042a0071408217615d9c7c055ec681956fddd09f1f6b6e7cf33d5e815407147"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 019
+# مصدر فقهي معاصر 019
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 019.
 

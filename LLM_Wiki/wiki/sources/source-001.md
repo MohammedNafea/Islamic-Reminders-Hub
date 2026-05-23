@@ -3,9 +3,9 @@ id: "source-001"
 title: "مصدر تفسيري محقق 001"
 category: "tafsir"
 source: "مصدر علمي محقق 001"
-checksum: "0bf9857dcccefcd3678275870f429aa0b351df7fdc1d00c6b24ba5367ee53040"
+checksum: "5a58b35c7757e195edc4b4e003de0967319f852d59a16b1b3b01b5856431cca8"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر تفسيري محقق 001

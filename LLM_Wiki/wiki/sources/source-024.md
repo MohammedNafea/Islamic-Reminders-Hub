@@ -1,14 +1,14 @@
 ---
 id: "source-024"
-title: "مصدر علمي شرعي 024"
-category: "general"
+title: "مصدر حديثي محقق 024"
+category: "hadith"
 source: "مصدر علمي محقق 024"
-checksum: "298e94e5594534645a7956e827a79d90a21a66912714af3a64225a113d2e6adf"
+checksum: "624b106132e59287e4b3bf8a65e437f57d6d9daa82b52989a8d220ec7a43c880"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 024
+# مصدر حديثي محقق 024
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 024.
 

@@ -1,14 +1,14 @@
 ---
 id: "source-006"
-title: "مصدر حديثي محقق 006"
-category: "hadith"
+title: "مصدر مكتبي شرعي 006"
+category: "library"
 source: "مصدر علمي محقق 006"
-checksum: "6588e8342d4d63b80b44dbc57bbf2b30d66a6a0c7d67078ffd305133a2032274"
+checksum: "005319194da9df8e754f5b4a9767a0dbb5d4b85928c82780888875457130dc83"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر حديثي محقق 006
+# مصدر مكتبي شرعي 006
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 006.
 

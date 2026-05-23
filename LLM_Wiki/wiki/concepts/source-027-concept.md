@@ -4,7 +4,7 @@ title: "مصدر علمي شرعي 027 - مفاهيم مستخرجة"
 category: "general"
 sources: ["[[source-027]]"]
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 027 - مفاهيم مستخرجة

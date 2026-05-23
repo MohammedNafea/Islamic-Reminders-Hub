@@ -3,9 +3,9 @@ id: "source-028"
 title: "مصدر علمي شرعي 028"
 category: "general"
 source: "مصدر علمي محقق 028"
-checksum: "d6da334cc53920ceb57b6deff3b7c3d5f1b558734a029cfb1f73d8d32e40573b"
+checksum: "642c6dba66a7706d1cba75129a429743a5bc63044c6362bd64c7e620ab2f82ee"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 028

@@ -3,9 +3,9 @@ id: "source-032"
 title: "مصدر علمي شرعي 032"
 category: "general"
 source: "مصدر علمي محقق 032"
-checksum: "36284e6bb0f825e8b58ddec483c79d0e61fd6b13b6d687a8d9f1ab65754841a6"
+checksum: "72cdf0e67e61d97f04395e624c4c100615a0b7c3a4d90589e320e3ab9331ef7f"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 032

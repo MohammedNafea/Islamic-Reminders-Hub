@@ -3,9 +3,9 @@ id: "source-029"
 title: "مصدر علمي شرعي 029"
 category: "general"
 source: "مصدر علمي محقق 029"
-checksum: "77dc0fda19358a6641d0d5b21775420e07db70c581b4a3bb4ea555a60af6a927"
+checksum: "83f0c3f9bdd8832fde1e3f3ddce4f0705db9fe169172ede0ab0093bcf64414fb"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 029

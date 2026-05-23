@@ -3,9 +3,9 @@ id: "source-015"
 title: "مصدر علمي شرعي 015"
 category: "general"
 source: "مصدر علمي محقق 015"
-checksum: "b381bb5d73219263b64d0d1b78f041e1a3b24134bb9722b390a6af1605304b8b"
+checksum: "beb1c9a9818999a3d7192f503604e018d73abcadd4c3f763a4a8539fed157523"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
 # مصدر علمي شرعي 015

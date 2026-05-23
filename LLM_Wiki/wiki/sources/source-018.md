@@ -1,14 +1,14 @@
 ---
 id: "source-018"
-title: "مصدر علمي شرعي 018"
-category: "general"
+title: "مصدر عقدي معاصر 018"
+category: "creed"
 source: "مصدر علمي محقق 018"
-checksum: "17a7881918b4ec1899fbe3b4589d86523e6346717cd45ec4ee651be0385b4fc4"
+checksum: "8e7b86648f3e3dfb06fea67c2676157e180635b39c3e8f859690dda625058238"
 reviewStatus: "auto_extracted"
-updated: "2026-05-19"
+updated: "2026-05-23"
 ---
 
-# مصدر علمي شرعي 018
+# مصدر عقدي معاصر 018
 
 المصدر محفوظ بعنوان محايد: مصدر علمي محقق 018.
 
