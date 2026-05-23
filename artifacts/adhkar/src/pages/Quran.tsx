@@ -733,7 +733,7 @@ export default function Quran() {
 
         {/* Floating bottom audio player */}
         <div className={cn(
-          "fixed bottom-6 left-4 right-4 z-40 bg-card/90 backdrop-blur-md border border-primary/10 rounded-[2.5rem] shadow-xl p-4 md:p-5 flex flex-col gap-3 animate-in slide-in-from-bottom duration-300",
+          "fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-4 right-4 z-40 bg-card/90 backdrop-blur-md border border-primary/10 rounded-[2.5rem] shadow-xl p-4 md:p-5 flex flex-col gap-3 animate-in slide-in-from-bottom duration-300",
           // On desktop, center relative to the main content area (accounting for the 64-width sidebar)
           rtl 
             ? "md:left-[calc(50%-8rem)] md:right-auto md:-translate-x-1/2 md:w-[calc(100vw-16rem-2rem)] md:max-w-3xl"

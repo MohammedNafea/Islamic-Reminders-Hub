@@ -165,7 +165,7 @@ export default function Tasbih() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed inset-0 z-50 bg-background flex flex-col justify-between p-6 select-none overflow-hidden"
+            className="fixed inset-0 z-50 bg-background flex flex-col justify-between pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] px-6 select-none overflow-hidden"
             onClick={handleTap}
           >
             {/* Ripples layer */}

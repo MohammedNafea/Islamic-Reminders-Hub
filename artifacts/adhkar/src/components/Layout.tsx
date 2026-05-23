@@ -146,7 +146,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className={cn("min-h-screen bg-background text-foreground flex flex-col md:flex-row pb-[calc(4rem+env(safe-area-inset-bottom,0px))] md:pb-0 font-sans")}>
+    <div className={cn("min-h-screen bg-background text-foreground flex flex-col md:flex-row font-sans")}>
       {/* Mobile Top Header */}
       <header className="md:hidden flex items-center justify-between px-4 pt-[calc(0.75rem+env(safe-area-inset-top,0px))] pb-3 border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-3">
@@ -264,12 +264,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </nav>
       </aside>
 
-      {/* Main Content */}
       <main className={cn(
         "flex-1 w-full",
         rtl ? "md:mr-64" : "md:ml-64"
       )}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 pb-24 md:py-8">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:py-8 md:pb-8">
           {children}
         </div>
       </main>
