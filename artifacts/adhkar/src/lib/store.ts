@@ -19,7 +19,11 @@ export interface AppSettings {
   notificationsPrayers: boolean;
   notificationsAdhkar: boolean;
   notificationsNight: boolean;
-  notificationsAthan: "off" | "azan1" | "azan2";
+  notificationsAthan: "off" | "azan1" | "azan2" | "makkah" | "madinah" | "daghiri";
+  notificationsEarlyMinutes: number;
+  notificationsAthanType: "full" | "takbeer";
+  notificationsFasting: boolean;
+  notificationsSuhoor: boolean;
   location?: { lat: number; lng: number; city: string };
 }
 
@@ -49,7 +53,9 @@ export function resetDayProgress(): void {
 }
 
 export function getSettings(): AppSettings {
-  return localDB.getSettings<AppSettings>(defaultSettings());
+  const defaults = defaultSettings();
+  const saved = localDB.getSettings<AppSettings>(defaults);
+  return { ...defaults, ...saved };
 }
 
 export function saveSettings(settings: Partial<AppSettings>): void {
@@ -69,6 +75,10 @@ function defaultSettings(): AppSettings {
     notificationsAdhkar: true,
     notificationsNight: true,
     notificationsAthan: "off",
+    notificationsEarlyMinutes: 10,
+    notificationsAthanType: "full",
+    notificationsFasting: true,
+    notificationsSuhoor: true,
   };
 }
 

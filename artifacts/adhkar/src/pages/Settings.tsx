@@ -58,13 +58,28 @@ export default function Settings() {
     // Dispatch global stop-all-audio event
     window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "settings" } }));
 
-    const soundUrl = settings.notificationsAthan === "azan1"
-      ? "https://www.islamcan.com/audio/athan/azan6.mp3"
-      : "https://www.islamcan.com/audio/athan/azan4.mp3";
+    const soundUrl =
+      settings.notificationsAthan === "makkah" ? "https://www.islamcan.com/audio/athan/azan2.mp3" :
+      settings.notificationsAthan === "madinah" ? "https://www.islamcan.com/audio/athan/azan3.mp3" :
+      settings.notificationsAthan === "daghiri" ? "https://www.islamcan.com/audio/athan/azan12.mp3" :
+      settings.notificationsAthan === "azan1" ? "https://www.islamcan.com/audio/athan/azan6.mp3" :
+      "https://www.islamcan.com/audio/athan/azan4.mp3";
 
     const audio = new Audio(soundUrl);
     setTestAudio(audio);
     setTestingSound(true);
+
+    if (settings.notificationsAthanType === "takbeer") {
+      const checkTakbeer = () => {
+        if (audio.currentTime >= 8) {
+          audio.pause();
+          audio.removeEventListener("timeupdate", checkTakbeer);
+          setTestingSound(false);
+          setTestAudio(null);
+        }
+      };
+      audio.addEventListener("timeupdate", checkTakbeer);
+    }
 
     audio.play()
       .then(() => {
@@ -411,6 +426,107 @@ export default function Settings() {
                   />
                 </div>
 
+                <div className="flex items-center justify-between py-1">
+                  <div className="space-y-0.5 text-right">
+                    <Label htmlFor="notificationsFasting" className="text-sm font-normal text-muted-foreground">
+                      <TranslatedText
+                        text="تنبيه صيام النوافل"
+                        staticTranslation={getTranslation(t, "settings.notifications_fasting", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </Label>
+                    <p className="text-xs text-muted-foreground/70 leading-relaxed block">
+                      <TranslatedText
+                        text="تنبيه بعد صلاة المغرب إذا كان غداً يوم صيام مسنون"
+                        staticTranslation={getTranslation(t, "settings.notifications_fasting_desc", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
+                  </div>
+                  <Switch 
+                    id="notificationsFasting" 
+                    checked={settings.notificationsFasting}
+                    onCheckedChange={(val) => updateSetting("notificationsFasting", val)}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between py-1">
+                  <div className="space-y-0.5 text-right">
+                    <Label htmlFor="notificationsSuhoor" className="text-sm font-normal text-muted-foreground">
+                      <TranslatedText
+                        text="تنبيه السحور"
+                        staticTranslation={getTranslation(t, "settings.notifications_suhoor", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </Label>
+                    <p className="text-xs text-muted-foreground/70 leading-relaxed block">
+                      <TranslatedText
+                        text="تنبيه قبل صلاة الفجر بـ 20 دقيقة لتناول السحور"
+                        staticTranslation={getTranslation(t, "settings.notifications_suhoor_desc", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
+                  </div>
+                  <Switch 
+                    id="notificationsSuhoor" 
+                    checked={settings.notificationsSuhoor}
+                    onCheckedChange={(val) => updateSetting("notificationsSuhoor", val)}
+                  />
+                </div>
+
+                <div className="h-px bg-border/40 my-2" />
+
+                <div className="space-y-2 py-1">
+                  <Label htmlFor="notificationsEarlyMinutes" className="text-sm font-medium text-muted-foreground">
+                    <TranslatedText
+                      text="التنبيه المبكر قبل الأذان"
+                      staticTranslation={getTranslation(t, "settings.notifications_early", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </Label>
+                  <Select
+                    value={String(settings.notificationsEarlyMinutes)}
+                    onValueChange={(val) => updateSetting("notificationsEarlyMinutes", Number(val))}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder={getTranslation(t, "settings.notifications_early", i18n.language) || "التنبيه المبكر"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">
+                        <TranslatedText
+                          text="تعطيل التنبيه المبكر"
+                          staticTranslation={getTranslation(t, "settings.notifications_early_off", i18n.language) || undefined}
+                          keepArabic={false}
+                          inline
+                        />
+                      </SelectItem>
+                      {[5, 10, 15, 20, 25, 30].map(mins => (
+                        <SelectItem key={mins} value={String(mins)}>
+                          <TranslatedText
+                            text={`${mins} دقائق`}
+                            staticTranslation={t("settings.notifications_early_mins", { defaultValue: "{{count}} دقائق", count: mins }).replace("{{count}}", String(mins))}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground/80 mt-1 leading-relaxed">
+                    <TranslatedText
+                      text="اختر المدة الزمنية للتنبيه قبل دخول وقت الصلاة"
+                      staticTranslation={getTranslation(t, "settings.notifications_early_desc", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </p>
+                </div>
+
                 <div className="h-px bg-border/40 my-2" />
                 
                 <div className="space-y-2 py-1">
@@ -425,7 +541,7 @@ export default function Settings() {
                   <div className="flex gap-2 items-center">
                     <Select
                       value={settings.notificationsAthan}
-                      onValueChange={(val) => updateSetting("notificationsAthan", val as "off" | "azan1" | "azan2")}
+                      onValueChange={(val) => updateSetting("notificationsAthan", val as any)}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder={getTranslation(t, "settings.notifications_athan", i18n.language) || "صوت الأذان"} />
@@ -435,6 +551,30 @@ export default function Settings() {
                           <TranslatedText
                             text="بدون صوت (تنبيه فقط)"
                             staticTranslation={getTranslation(t, "settings.athan_none", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="makkah">
+                          <TranslatedText
+                            text="أذان الحرم المكي الشريف"
+                            staticTranslation={getTranslation(t, "settings.muezzin_makkah", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="madinah">
+                          <TranslatedText
+                            text="أذان الحرم المدني الشريف"
+                            staticTranslation={getTranslation(t, "settings.muezzin_madinah", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="daghiri">
+                          <TranslatedText
+                            text="أذان الشيخ حمد الدغريري"
+                            staticTranslation={getTranslation(t, "settings.muezzin_daghiri", i18n.language) || undefined}
                             keepArabic={false}
                             inline
                           />
@@ -490,6 +630,53 @@ export default function Settings() {
                     />
                   </p>
                 </div>
+
+                {settings.notificationsAthan !== "off" && (
+                  <div className="space-y-2 py-1">
+                    <Label htmlFor="notificationsAthanType" className="text-sm font-medium text-muted-foreground">
+                      <TranslatedText
+                        text="نوع التنبيه الصوتي"
+                        staticTranslation={getTranslation(t, "settings.notifications_athan_type", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </Label>
+                    <Select
+                      value={settings.notificationsAthanType}
+                      onValueChange={(val) => updateSetting("notificationsAthanType", val as "full" | "takbeer")}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder={getTranslation(t, "settings.notifications_athan_type", i18n.language) || "نوع الأذان"} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="full">
+                          <TranslatedText
+                            text="الأذان كاملاً"
+                            staticTranslation={getTranslation(t, "settings.notifications_athan_type_full", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                        <SelectItem value="takbeer">
+                          <TranslatedText
+                            text="تكبير فقط"
+                            staticTranslation={getTranslation(t, "settings.notifications_athan_type_takbeer", i18n.language) || undefined}
+                            keepArabic={false}
+                            inline
+                          />
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-muted-foreground/80 mt-1 leading-relaxed">
+                      <TranslatedText
+                        text="تشغيل الأذان كاملاً أو التكبير فقط عند دخول الوقت"
+                        staticTranslation={getTranslation(t, "settings.notifications_athan_type_desc", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </p>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
