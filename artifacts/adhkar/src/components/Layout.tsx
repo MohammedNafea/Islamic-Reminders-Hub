@@ -95,7 +95,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
+
+    const timer = setTimeout(() => {
+      const scrollHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight,
+        document.documentElement.clientHeight
+      );
+      // Smoothly scroll to 50% (middle) of the page
+      const targetScroll = scrollHeight * 0.5;
+      window.scrollTo({ top: targetScroll, behavior: "smooth" });
+    }, 600);
+
+    return () => clearTimeout(timer);
   }, [location]);
+
 
   useEffect(() => {
     document.documentElement.dir = rtl ? "rtl" : "ltr";
