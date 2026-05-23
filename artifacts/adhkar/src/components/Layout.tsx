@@ -144,9 +144,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className={cn("min-h-screen bg-background text-foreground flex flex-col md:flex-row pb-16 md:pb-0 font-sans")}>
+    <div className={cn("min-h-screen bg-background text-foreground flex flex-col md:flex-row pb-[calc(4rem+env(safe-area-inset-bottom,0px))] md:pb-0 font-sans")}>
       {/* Mobile Top Header */}
-      <header className="md:hidden flex items-center justify-between px-4 py-3 border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-40 shadow-sm">
+      <header className="md:hidden flex items-center justify-between px-4 pt-[calc(0.75rem+env(safe-area-inset-top,0px))] pb-3 border-b border-border bg-card/95 backdrop-blur-md sticky top-0 z-40 shadow-sm">
         <div className="flex items-center gap-3">
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
@@ -154,7 +154,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Menu className="w-6 h-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side={rtl ? "right" : "left"} className="w-72 p-0 border-none bg-card shadow-2xl flex flex-col z-50">
+            <SheetContent side={rtl ? "right" : "left"} className="w-72 p-0 border-none bg-card shadow-2xl flex flex-col z-50 pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]">
               <SheetHeader className="p-5 border-b border-border text-start">
                 <SheetTitle className="text-xl font-heading font-bold text-primary">
                   <TranslatedText
@@ -273,7 +273,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-card/95 backdrop-blur-md z-50 flex items-stretch justify-around">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t border-border bg-card/95 backdrop-blur-md z-50 flex items-stretch justify-around pb-[env(safe-area-inset-bottom,0px)] min-h-[calc(56px+env(safe-area-inset-bottom,0px))] no-tap-highlight">
         {bottomNav.map(({ href, Icon, labelKey }) => {
           const active = isActive(href);
           return (
