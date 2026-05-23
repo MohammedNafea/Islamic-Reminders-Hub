@@ -17,8 +17,9 @@ describe("Prayer Times Library", () => {
     expect(times.maghrib).toBeInstanceOf(Date);
     expect(times.isha).toBeInstanceOf(Date);
 
-    // Dhuhr in Mecca around May 20 is around 12:18 PM
-    expect(times.dhuhr.getHours()).toBe(12);
+    // Dhuhr in Mecca around May 20 is around 12:18 PM Local Time (Asia/Riyadh)
+    const dhuhrHourInMecca = parseInt(times.dhuhr.toLocaleTimeString("en-US", { hour: "numeric", hour12: false, timeZone: "Asia/Riyadh" }), 10);
+    expect(dhuhrHourInMecca).toBe(12);
   });
 
   it("calculates night divisions and suhoor time correctly", () => {
@@ -36,8 +37,9 @@ describe("Prayer Times Library", () => {
   it("identifies the next upcoming prayer correctly", () => {
     const times = getPrayerTimes(meccaLat, meccaLng, testDate, "UmmAlQura");
 
-    // Mock system time to 10:00 AM (before Dhuhr)
-    const mockNow = new Date(2024, 4, 20, 10, 0, 0);
+    // Mock system time to 10:00 AM Mecca local time (Asia/Riyadh)
+    // Mecca is UTC+3, so 10:00 AM Mecca time corresponds to 7:00 AM UTC.
+    const mockNow = new Date(Date.UTC(2024, 4, 20, 7, 0, 0));
     vi.setSystemTime(mockNow);
 
     const next = getNextPrayer(times);
