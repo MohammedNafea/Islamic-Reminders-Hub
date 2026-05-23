@@ -330,7 +330,7 @@ export default function ZakatCalculator() {
 
           {/* Card 2: أسعار السوق الحالية */}
           <Card className="border-none shadow-md overflow-hidden bg-card/85 backdrop-blur-sm relative">
-            <CardHeader className="bg-muted/30 flex flex-row items-center justify-between gap-4 p-6 border-b border-border/40">
+            <CardHeader className="bg-muted/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 p-5 sm:p-6 border-b border-border/40">
               <CardTitle className="text-lg flex items-center gap-2 shrink-0">
                 <Coins className="w-5 h-5 text-amber-500" />
                 <TranslatedText
@@ -341,7 +341,7 @@ export default function ZakatCalculator() {
                 />
               </CardTitle>
               
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
                 <Select
                   value={selectedCurrency}
                   onValueChange={(val) => {

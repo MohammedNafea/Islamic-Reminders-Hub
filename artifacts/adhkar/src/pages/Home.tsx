@@ -339,7 +339,7 @@ export default function Home() {
       {/* Adhkar Hub Grid */}
       <div className="pt-2">
         <h2 className="text-xl font-bold text-foreground mb-4 px-1">{t("nav.adhkar")}</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
           <HubCard 
             href="/morning"
             titleKey="nav.morning"

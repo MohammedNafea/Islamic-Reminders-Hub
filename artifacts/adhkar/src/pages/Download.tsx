@@ -199,7 +199,7 @@ export default function DownloadPage() {
           </CardHeader>
           
           <CardContent className="p-8 pt-0 space-y-6">
-            <a href="/downloads/adhkar.apk" download className="block">
+            <a href="https://github.com/MohammedNafea/Islamic-Reminders-Hub/releases/download/v1.0.0/adhkar.apk" className="block">
               <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-5 h-auto rounded-xl shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]">
                 <Download className="w-4 h-4 mr-2 ml-2" />
                 <span>

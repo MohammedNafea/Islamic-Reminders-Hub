@@ -167,7 +167,7 @@ export default function TrackerDashboard() {
         {/* Worship Summary Card */}
         <Card className="border-border/60 bg-card/60 backdrop-blur-sm">
           <CardContent className="p-6 grid grid-cols-2 gap-4 h-full align-middle">
-            <div className="flex flex-col justify-center border-r border-border/40 pr-2">
+            <div className="flex flex-col justify-center border-e border-border/40 pe-2">
               <span className="text-xs text-muted-foreground font-medium block mb-1">
                 <TranslatedText
                   text="مجموع الأذكار المقروءة"
@@ -180,7 +180,7 @@ export default function TrackerDashboard() {
                 <span className="text-2xl font-bold tabular-nums">{totalCompletions}</span>
               </div>
             </div>
-            <div className="flex flex-col justify-center pl-2">
+            <div className="flex flex-col justify-center ps-2">
               <span className="text-xs text-muted-foreground font-medium block mb-1">
                 <TranslatedText
                   text="مجموع التسبيحات"

@@ -363,7 +363,7 @@ export default function Settings() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="overflow-hidden space-y-3 pl-4 pr-4 border-r-2 border-primary/20 mr-2"
+                className="overflow-hidden space-y-3 px-4 border-e-2 border-primary/20 me-2"
               >
                 <div className="flex items-center justify-between py-1">
                   <Label htmlFor="notificationsPrayers" className="text-sm font-normal text-muted-foreground">
