@@ -11,7 +11,7 @@ import { localDB } from "@/lib/db";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getTasbihCount } from "@/lib/store";
+import { getTasbihCount, getDailyProgress } from "@/lib/store";
 
 interface KhatmahPlan {
   targetDays: number;
@@ -60,7 +60,13 @@ export default function TrackerDashboard() {
     const homeSalawat = getTasbihCount("home_salawat", true);
     const tasbihStats = localDB.getGeneralProgress<Record<string, { today: number, lifetime: number, lastUpdated?: string }>>("tasbih_stats_v3", {});
     const tasbihSalawat = tasbihStats["allahummasalli"]?.today || 0;
-    setSalawatCount(homeSalawat + tasbihSalawat);
+    
+    // Also include salawat_100_prayer and salawat_100 from daily progress
+    const dailyProgress = getDailyProgress();
+    const prayerSalawat = dailyProgress["salawat_100_prayer"] || 0;
+    const generalSalawat = dailyProgress["salawat_100"] || 0;
+    
+    setSalawatCount(homeSalawat + tasbihSalawat + prayerSalawat + generalSalawat);
 
     // Load Khatmah plan
     const plan = localDB.getGeneralProgress<KhatmahPlan | null>("khatmah_plan", null);

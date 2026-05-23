@@ -259,6 +259,125 @@ export function usePrayerNotifications() {
           timeoutsRef.current.push(id);
         }
       }
+
+      // Sunan Rawatib reminders
+      if (settings.notificationsSunanRawatib) {
+        // 1. Fajr Sunnah (2 Rakahs before Fajr) - scheduled at Fajr time - 15 mins
+        const fajrSunnahMs = times.fajr.getTime() - 15 * 60 * 1000;
+        if (fajrSunnahMs > now) {
+          const id = setTimeout(() => {
+            NotificationManager.showNotification(
+              t("prayer.sunan_fajr_title", { defaultValue: "سنة الفجر القبلية" }),
+              {
+                body: t("prayer.sunan_fajr_body", { defaultValue: "ركعتا الفجر خير من الدنيا وما فيها. حافظ عليها قبل الصلاة." }),
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "sunan-rawatib-fajr",
+              }
+            );
+          }, fajrSunnahMs - now);
+          timeoutsRef.current.push(id);
+        }
+
+        // 2. Dhuhr Sunnah Qabliyah (4 Rakahs before Dhuhr) - scheduled at Dhuhr time - 10 mins
+        const dhuhrQabliyahMs = times.dhuhr.getTime() - 10 * 60 * 1000;
+        if (dhuhrQabliyahMs > now) {
+          const id = setTimeout(() => {
+            NotificationManager.showNotification(
+              t("prayer.sunan_dhuhr_qab_title", { defaultValue: "سنة الظهر القبلية" }),
+              {
+                body: t("prayer.sunan_dhuhr_qab_body", { defaultValue: "أربع ركعات قبل صلاة الظهر تسلّم من كل ركعتين." }),
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "sunan-rawatib-dhuhr-qab",
+              }
+            );
+          }, dhuhrQabliyahMs - now);
+          timeoutsRef.current.push(id);
+        }
+
+        // 3. Dhuhr Sunnah Ba'diyah (2 Rakahs after Dhuhr) - scheduled at Dhuhr time + 20 mins
+        const dhuhrBadiyahMs = times.dhuhr.getTime() + 20 * 60 * 1000;
+        if (dhuhrBadiyahMs > now) {
+          const id = setTimeout(() => {
+            NotificationManager.showNotification(
+              t("prayer.sunan_dhuhr_bad_title", { defaultValue: "سنة الظهر البعدية" }),
+              {
+                body: t("prayer.sunan_dhuhr_bad_body", { defaultValue: "ركعتان بعد صلاة الظهر من السنن الرواتب المؤكدة." }),
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "sunan-rawatib-dhuhr-bad",
+              }
+            );
+          }, dhuhrBadiyahMs - now);
+          timeoutsRef.current.push(id);
+        }
+
+        // 4. Maghrib Sunnah Ba'diyah (2 Rakahs after Maghrib) - scheduled at Maghrib time + 10 mins
+        const maghribBadiyahMs = times.maghrib.getTime() + 10 * 60 * 1000;
+        if (maghribBadiyahMs > now) {
+          const id = setTimeout(() => {
+            NotificationManager.showNotification(
+              t("prayer.sunan_maghrib_title", { defaultValue: "سنة المغرب البعدية" }),
+              {
+                body: t("prayer.sunan_maghrib_body", { defaultValue: "ركعتان بعد صلاة المغرب من السنن الرواتب المؤكدة." }),
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "sunan-rawatib-maghrib",
+              }
+            );
+          }, maghribBadiyahMs - now);
+          timeoutsRef.current.push(id);
+        }
+
+        // 5. Isha Sunnah Ba'diyah (2 Rakahs after Isha) - scheduled at Isha time + 15 mins
+        const ishaBadiyahMs = times.isha.getTime() + 15 * 60 * 1000;
+        if (ishaBadiyahMs > now) {
+          const id = setTimeout(() => {
+            NotificationManager.showNotification(
+              t("prayer.sunan_isha_title", { defaultValue: "سنة العشاء البعدية" }),
+              {
+                body: t("prayer.sunan_isha_body", { defaultValue: "ركعتان بعد صلاة العشاء من السنن الرواتب المؤكدة." }),
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "sunan-rawatib-isha",
+              }
+            );
+          }, ishaBadiyahMs - now);
+          timeoutsRef.current.push(id);
+        }
+      }
+
+      // Hijamah reminder (20 minutes after Maghrib)
+      if (settings.notificationsHijama) {
+        const maghribMs = times.maghrib.getTime();
+        const hijamaCheckMs = maghribMs + 20 * 60 * 1000;
+        if (hijamaCheckMs > now) {
+          const id = setTimeout(() => {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowHijri = toHijri(tomorrow);
+            
+            // Check if tomorrow's Hijri day is 17, 19, or 21
+            if (tomorrowHijri.day === 17 || tomorrowHijri.day === 19 || tomorrowHijri.day === 21) {
+              const dayStr = String(tomorrowHijri.day);
+              const title = t("hijama.reminder_title", { defaultValue: "تذكير بأيام الحجامة" });
+              const body = t("hijama.reminder_body", {
+                defaultValue: `غداً هو يوم {{day}} من الشهر الهجري، وهو من الأيام المستحبة للحجامة النبوية.`,
+                day: dayStr
+              }).replace("{{day}}", dayStr);
+
+              NotificationManager.showNotification(title, {
+                body,
+                icon: "/icon-192.png",
+                badge: "/favicon.png",
+                tag: "hijama-tomorrow",
+              });
+            }
+          }, hijamaCheckMs - now);
+          timeoutsRef.current.push(id);
+        }
+      }
     },
     [t, clearAll]
   );

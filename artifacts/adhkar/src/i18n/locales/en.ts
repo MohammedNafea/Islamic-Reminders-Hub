@@ -28,6 +28,8 @@ export default {
     favorites: "Favorites",
     search: "Search",
     download: "Download App",
+    sunan: "Prophetic Sunan",
+    daily_supplications: "Daily Supplications",
   },
   search: {
     title: "Unified Search",
@@ -165,8 +167,10 @@ export default {
     sleep_desc: "Sunnah of the Prophet before sleep",
     prayer_desc: "Remembrances after the obligatory prayer",
     hub_prayer_desc: "Remembrances after the obligatory prayer",
-    merged_morning_desc: "Morning adhkar with Ruqyah",
-    merged_evening_desc: "Evening adhkar with Ruqyah",
+    merged_morning_desc: "Morning + Ruqyah",
+    merged_evening_desc: "Evening + Ruqyah",
+    sunan_desc: "Sunan Rawatib and Hijamah virtues",
+    daily_supplications_desc: "Supplications for clothing, wudu, food, travel and home",
     daily_inspiration: "Daily Inspiration",
   },
   quran: {
@@ -390,6 +394,10 @@ export default {
     notifications_suhoor_mins: "Suhoor Reminder Offset",
     notifications_suhoor_mins_desc: "Choose how many minutes before Fajr to trigger Suhoor alarm",
     notifications_suhoor_mins_val: "{{count}} minutes before Fajr",
+    notifications_sunan_rawatib: "Sunan Rawatib Reminder",
+    notifications_sunan_rawatib_desc: "Remind you of Sunan Rawatib prayers associated with obligatory prayers",
+    notifications_hijama: "Hijamah Days Reminder",
+    notifications_hijama_desc: "Remind you of recommended Hijamah (cupping) days (17th, 19th, 21st of Hijri month)",
   },
   admin: {
     "library_title": "Library Dashboard",

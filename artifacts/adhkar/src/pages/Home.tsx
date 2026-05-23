@@ -401,6 +401,20 @@ export default function Home() {
             color="bg-orange-600"
             description="fasting.white_days_desc"
           />
+          <HubCard 
+            href="/sunan"
+            titleKey="nav.sunan"
+            Icon={StarIcon}
+            color="bg-amber-600"
+            description="home.sunan_desc"
+          />
+          <HubCard 
+            href="/daily-supplications"
+            titleKey="nav.daily_supplications"
+            Icon={Clock}
+            color="bg-rose-500"
+            description="home.daily_supplications_desc"
+          />
         </div>
       </div>
 

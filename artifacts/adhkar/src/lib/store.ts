@@ -26,6 +26,8 @@ export interface AppSettings {
   notificationsFastingHoursBeforeFajr: number;
   notificationsSuhoor: boolean;
   notificationsSuhoorMinutesBeforeFajr: number;
+  notificationsSunanRawatib: boolean;
+  notificationsHijama: boolean;
   location?: { lat: number; lng: number; city: string };
 }
 
@@ -83,6 +85,8 @@ function defaultSettings(): AppSettings {
     notificationsFastingHoursBeforeFajr: 0,
     notificationsSuhoor: true,
     notificationsSuhoorMinutesBeforeFajr: 20,
+    notificationsSunanRawatib: true,
+    notificationsHijama: true,
   };
 }
 

@@ -131,7 +131,16 @@ export default function Settings() {
     setLocalSettings(newSettings);
     saveSettings(newSettings);
 
-    if (newSettings.notifications && (key === "notifications" || key === "notificationsPrayers" || key === "notificationsAdhkar" || key === "notificationsNight")) {
+    if (newSettings.notifications && (
+      key === "notifications" || 
+      key === "notificationsPrayers" || 
+      key === "notificationsAdhkar" || 
+      key === "notificationsNight" ||
+      key === "notificationsSunanRawatib" ||
+      key === "notificationsHijama" ||
+      key === "notificationsFasting" ||
+      key === "notificationsSuhoor"
+    )) {
       NotificationManager.scheduleReminders();
     } else if (!newSettings.notifications && key === "notifications") {
       NotificationManager.cancelAll();
@@ -433,7 +442,7 @@ export default function Settings() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm sm:col-span-2 md:col-span-1">
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
                     <Label htmlFor="notificationsNight" className="text-sm font-medium text-foreground cursor-pointer flex-1">
                       <TranslatedText
                         text="تنبيهات الليل والاستغفار بالأسحار"
@@ -446,6 +455,38 @@ export default function Settings() {
                       id="notificationsNight" 
                       checked={settings.notificationsNight}
                       onCheckedChange={(val) => updateSetting("notificationsNight", val)}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsSunanRawatib" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                      <TranslatedText
+                        text="تنبيه السنن الرواتب"
+                        staticTranslation={getTranslation(t, "settings.notifications_sunan_rawatib", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </Label>
+                    <Switch 
+                      id="notificationsSunanRawatib" 
+                      checked={settings.notificationsSunanRawatib}
+                      onCheckedChange={(val) => updateSetting("notificationsSunanRawatib", val)}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between p-2 rounded-xl bg-background/50 border border-border/30 hover:border-primary/20 transition-all shadow-sm">
+                    <Label htmlFor="notificationsHijama" className="text-sm font-medium text-foreground cursor-pointer flex-1">
+                      <TranslatedText
+                        text="تنبيه أيام الحجامة"
+                        staticTranslation={getTranslation(t, "settings.notifications_hijama", i18n.language) || undefined}
+                        keepArabic={false}
+                        inline
+                      />
+                    </Label>
+                    <Switch 
+                      id="notificationsHijama" 
+                      checked={settings.notificationsHijama}
+                      onCheckedChange={(val) => updateSetting("notificationsHijama", val)}
                     />
                   </div>
                 </div>

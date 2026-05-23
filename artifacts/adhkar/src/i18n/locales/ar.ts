@@ -28,6 +28,8 @@ export default {
     tasbih: "التسبيح",
     tracker: "مسار الالتزام",
     download: "تحميل التطبيق",
+    sunan: "السنن النبوية",
+    daily_supplications: "أذكار اليوم والليلة",
   },
   favorites: {
     subtitle: "قائمة الأذكار والأحكام التي قمت بحفظها",
@@ -149,6 +151,8 @@ export default {
     hub_prayer_desc: "الأذكار بعد الصلاة المفروضة",
     merged_morning_desc: "أذكار الصباح مع الرقية الشرعية",
     merged_evening_desc: "أذكار المساء مع الرقية الشرعية",
+    sunan_desc: "السنن الرواتب وفضل الحجامة وأحكامها",
+    daily_supplications_desc: "أذكار اللباس والوضوء والطعام والسفر والبيت",
     daily_inspiration: "إلهام اليوم",
     sadaqa_jariya: "صدقة جارية",
     made_with_love: "صُنع بحب لأمة الإسلام",
@@ -385,6 +389,10 @@ export default {
     notifications_suhoor_mins: "وقت تنبيه السحور قبل الفجر",
     notifications_suhoor_mins_desc: "اختر كم دقيقة قبل الفجر لتنبيه السحور",
     notifications_suhoor_mins_val: "قبل الفجر بـ {{count}} دقيقة",
+    notifications_sunan_rawatib: "تنبيه السنن الرواتب",
+    notifications_sunan_rawatib_desc: "تذكير بالسنن الرواتب التابعة للصلوات المفروضة",
+    notifications_hijama: "تنبيه أيام الحجامة",
+    notifications_hijama_desc: "تذكير بأيام الحجامة المستحبة (17، 19، 21 من كل شهر هجري)",
   },
   "admin": {
     "library_title": "لوحة تحكم المكتبة",
