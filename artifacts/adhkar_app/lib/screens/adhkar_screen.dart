@@ -53,6 +53,29 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
     }
   }
 
+  List<Dhikr> _mergeWithRuqyah(List<Dhikr> baseList) {
+    final List<Dhikr> merged = List.from(baseList);
+    
+    String cleanArabic(String input) {
+      final RegExp diacritics = RegExp(r'[\u064B-\u065F\u0670]');
+      final String step1 = input.replaceAll(diacritics, '');
+      final RegExp nonArabicLetters = RegExp(r'[^\u0621-\u064A]');
+      return step1.replaceAll(nonArabicLetters, '');
+    }
+
+    for (final ruqyahItem in adhkarRuqyah) {
+      final cleanRuqyah = cleanArabic(ruqyahItem.arabic);
+      final exists = baseList.any((baseItem) {
+        final cleanBase = cleanArabic(baseItem.arabic);
+        return cleanBase == cleanRuqyah || cleanBase.contains(cleanRuqyah) || cleanRuqyah.contains(cleanBase);
+      });
+      if (!exists) {
+        merged.add(ruqyahItem);
+      }
+    }
+    return merged;
+  }
+
   List<Dhikr> _getDhikrList(String category, TrackerProvider tracker) {
     switch (category) {
       case 'morning':
@@ -68,6 +91,19 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
           ...adhkarEveningOnly,
           ...adhkarDayFull,
         ];
+      case 'morning_ruqyah':
+        return _mergeWithRuqyah([
+          ...adhkarMorningEvening,
+          ...adhkarMorningOnly,
+          ...adhkarMorningVariant,
+          ...adhkarDayFull,
+        ]);
+      case 'evening_ruqyah':
+        return _mergeWithRuqyah([
+          ...adhkarMorningEvening,
+          ...adhkarEveningOnly,
+          ...adhkarDayFull,
+        ]);
       case 'sleep':
         return adhkarSleep;
       case 'prayer':
@@ -98,6 +134,14 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
         return localizations.locale.languageCode == 'ar'
             ? 'أذكار المساء'
             : (localizations.locale.languageCode == 'en' ? 'Evening Adhkar' : 'የምሽት አዝካር');
+      case 'morning_ruqyah':
+        return localizations.locale.languageCode == 'ar'
+            ? 'الصباح والرقية'
+            : (localizations.locale.languageCode == 'en' ? 'Morning + Ruqyah' : 'የጠዋት + ሩቅያህ');
+      case 'evening_ruqyah':
+        return localizations.locale.languageCode == 'ar'
+            ? 'المساء والرقية'
+            : (localizations.locale.languageCode == 'en' ? 'Evening + Ruqyah' : 'የምሽት + ሩቅያህ');
       case 'sleep':
         return localizations.locale.languageCode == 'ar'
             ? 'أذكار النوم'
@@ -216,6 +260,8 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
     final categories = [
       {'key': 'morning', 'icon': Icons.wb_sunny, 'color': Colors.orange},
       {'key': 'evening', 'icon': Icons.brightness_3, 'color': Colors.indigo},
+      {'key': 'morning_ruqyah', 'icon': Icons.wb_sunny_outlined, 'color': Colors.deepOrange},
+      {'key': 'evening_ruqyah', 'icon': Icons.nightlight_round, 'color': Colors.deepPurple},
       {'key': 'sleep', 'icon': Icons.bedtime, 'color': Colors.purple},
       {'key': 'prayer', 'icon': Icons.volunteer_activism, 'color': Colors.teal},
       {'key': 'ruqyah', 'icon': Icons.security, 'color': Colors.red},
