@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "Trung tâm Hồi giáo", tagline: "Người bạn tâm linh hàng ngày" },
+  nav: { home: "Trang chủ", adhkar: "Azkar", morning: "Azkar buổi sáng", evening: "Azkar buổi tối", both: "Sáng và Tối", sleep: "Azkar trước ngủ", prayer: "Azkar sau salah", ruqyah: "Ruqyah", times: "Giờ cầu nguyện", fasting: "Ngày nhịn ăn", tasbih: "Tasbih", settings: "Cài đặt", hadith: "Hadith và Fiqh", quran: "Quran", qibla: "Qibla", zakat: "Zakat", favorites: "Yêu thích", search: "Tìm kiếm" },
+  home: { greeting_morning: "Chào buổi sáng", greeting_evening: "Chào buổi tối", greeting_night: "Chúc ngủ ngon", today: "Hôm nay", progress: "Tiến độ hôm nay", completed: "hoàn thành", start: "Bắt đầu" },
+  prayer: { fajr: "Fajr", sunrise: "Mặt trời mọc", dhuhr: "Dhuhr", asr: "Asr", maghrib: "Maghrib", isha: "Isha", next: "Salah tiếp theo", remaining: "Thời gian còn lại", location: "Vị trí của bạn", location_required: "Cho phép truy cập vị trí", allow_location: "Cho phép", enter_city: "Nhập thành phố", calculation_method: "Phương pháp tính", methods: { MuslimWorldLeague: "Liên đoàn Hồi giáo Thế giới", Egyptian: "Cơ quan Ai Cập", Karachi: "Đại học Karachi", UmmAlQura: "Umm Al-Qura", Dubai: "Dubai", NorthAmerica: "Bắc Mỹ", Kuwait: "Kuwait", Qatar: "Qatar", Singapore: "Singapore", Turkey: "Thổ Nhĩ Kỳ" }, last_third: "Một phần ba cuối đêm", imsak: "Imsak" },
+  dhikr: { count: "Số đếm", times: "lần", source: "Nguồn", tap_to_count: "Nhấn để đếm", completed_msg: "Hoàn thành!", reset: "Đặt lại", reset_all: "Đặt lại tất cả", morning_form: "Dạng buổi sáng", evening_form: "Dạng buổi tối", note: "Ghi chú", benefit: "Phúc lợi" },
+  tasbih: { title: "Tasbih tự do", count: "Số hiện tại", target: "Mục tiêu", set_target: "Đặt mục tiêu", reset: "Đặt lại", vibrate: "Rung", sound: "Âm thanh", custom: "Tùy chỉnh", saved: "Đã lưu" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Ngày nhịn ăn Sunnah", white_days: "Ngày trắng", white_days_desc: "Ngày 13, 14, 15 Hijri mỗi tháng", white_days_hadith: "Nhịn 3 ngày mỗi tháng như nhịn cả đời", arafah: "Ngày Arafah", arafah_desc: "9 Dhul Hijjah", arafah_hadith: "Nhịn ăn Arafah xóa tội năm trước và năm sau", monday: "Thứ Hai", monday_desc: "Mỗi thứ Hai", monday_hadith: "Ngày tôi sinh ra và nhận được mặc khải", thursday: "Thứ Năm", thursday_desc: "Mỗi thứ Năm", thursday_hadith: "Việc làm được trình bày vào thứ Hai và thứ Năm", shawwal: "6 ngày Shawwal", shawwal_desc: "6 ngày sau Eid", shawwal_hadith: "Ai nhịn Ramadan và 6 ngày như nhịn cả đời", upcoming: "Sắp tới", today_fasting: "Hôm nay", passed: "Đã qua", gregorian_date: "Dương lịch", hijri_date: "Hijri", days_remaining: "Còn {{days}} ngày", days_passed: "{{days}} ngày trước", monthly: "Hàng tháng", weekly: "Hàng tuần", yearly: "Hàng năm" },
+  dates: { hijri: "H", gregorian: "DL", days: ["Chủ nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"] },
+  settings: { title: "Cài đặt", language: "Ngôn ngữ", theme: "Giao diện", dark: "Tối", light: "Sáng", system: "Hệ thống", calculation: "Phương pháp tính", font_size: "Cỡ chữ", notifications: "Thông báo" },
+  common: { loading: "Đang tải...", error: "Đã xảy ra lỗi", retry: "Thử lại", close: "Đóng", save: "Lưu", cancel: "Hủy", done: "Xong", search: "Tìm kiếm", share: "Chia sẻ", copied: "Đã sao chép", copy: "Sao chép", of: "/", back: "Quay lại" },
+  hadith: { title: "Hadith và Fiqh", subtitle: "Bách khoa về Hadith, Fiqh và quan điểm khoa học", search_placeholder: "Tìm hadith, fiqh hoặc từ khóa...", loading_data: "Đang tải dữ liệu...", no_results: "Không tìm thấy kết quả", try_another_search: "Thử từ khóa khác", cat_all: "Tất cả", cat_tafsir: "Tafsir", cat_creed: "Aqeedah", cat_fiqh: "Fiqh", cat_hadith: "Hadith", cat_ethics: "Đạo đức", cat_general: "Chung" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

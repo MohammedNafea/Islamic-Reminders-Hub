@@ -1,3 +1,5 @@
+import { localDB } from "./db";
+
 export interface DhikrProgress {
   [dhikrId: string]: number;
 }
@@ -7,76 +9,63 @@ export interface DailyProgress {
   progress: DhikrProgress;
 }
 
-const STORAGE_KEY = "adhkar_progress";
-const SETTINGS_KEY = "adhkar_settings";
-
 export interface AppSettings {
   language: string;
-  theme: "light" | "dark" | "system";
+  theme: "light" | "dark" | "system" | "fajr" | "duha" | "maghrib" | "sahar" | "dynamic";
   calculationMethod: string;
   fontSize: "sm" | "md" | "lg" | "xl";
   vibrate: boolean;
   notifications: boolean;
+  notificationsPrayers: boolean;
+  notificationsAdhkar: boolean;
+  notificationsNight: boolean;
+  notificationsAthan: "off" | "azan1" | "azan2" | "makkah" | "madinah" | "daghiri";
+  notificationsEarlyMinutes: number;
+  notificationsAthanType: "full" | "takbeer";
+  notificationsFasting: boolean;
+  notificationsFastingHoursBeforeFajr: number;
+  notificationsSuhoor: boolean;
+  notificationsSuhoorMinutesBeforeFajr: number;
+  notificationsSunanRawatib: boolean;
+  notificationsHijama: boolean;
+  hijriOffset: number;
   location?: { lat: number; lng: number; city: string };
 }
 
 function getTodayKey(): string {
-  return new Date().toISOString().split("T")[0];
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 export function getDailyProgress(): DhikrProgress {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) return {};
-    const all: Record<string, DhikrProgress> = JSON.parse(stored);
-    const todayKey = getTodayKey();
-    return all[todayKey] ?? {};
-  } catch {
-    return {};
-  }
+  const todayKey = getTodayKey();
+  return localDB.getGeneralProgress<DhikrProgress>(todayKey, {});
 }
 
 export function setDhikrCount(dhikrId: string, count: number): void {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const all: Record<string, DhikrProgress> = stored ? JSON.parse(stored) : {};
-    const todayKey = getTodayKey();
-    if (!all[todayKey]) all[todayKey] = {};
-    all[todayKey][dhikrId] = count;
-    // Keep only last 30 days
-    const keys = Object.keys(all).sort();
-    while (keys.length > 30) {
-      delete all[keys.shift()!];
-    }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {}
+  const todayKey = getTodayKey();
+  const todayProgress = { ...getDailyProgress() };
+  todayProgress[dhikrId] = count;
+  localDB.saveGeneralProgress(todayKey, todayProgress);
 }
 
 export function resetDayProgress(): void {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    const all: Record<string, DhikrProgress> = stored ? JSON.parse(stored) : {};
-    const todayKey = getTodayKey();
-    delete all[todayKey];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
-  } catch {}
+  const todayKey = getTodayKey();
+  localDB.saveGeneralProgress(todayKey, {});
 }
 
 export function getSettings(): AppSettings {
-  try {
-    const stored = localStorage.getItem(SETTINGS_KEY);
-    if (!stored) return defaultSettings();
-    return { ...defaultSettings(), ...JSON.parse(stored) };
-  } catch {
-    return defaultSettings();
-  }
+  const defaults = defaultSettings();
+  const saved = localDB.getSettings<AppSettings>(defaults);
+  return { ...defaults, ...saved };
 }
 
 export function saveSettings(settings: Partial<AppSettings>): void {
-  try {
-    const current = getSettings();
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ ...current, ...settings }));
-  } catch {}
+  const current = getSettings();
+  localDB.saveSettings({ ...current, ...settings });
 }
 
 function defaultSettings(): AppSettings {
@@ -87,20 +76,29 @@ function defaultSettings(): AppSettings {
     fontSize: "md",
     vibrate: true,
     notifications: false,
+    notificationsPrayers: true,
+    notificationsAdhkar: true,
+    notificationsNight: true,
+    notificationsAthan: "off",
+    notificationsEarlyMinutes: 10,
+    notificationsAthanType: "full",
+    notificationsFasting: true,
+    notificationsFastingHoursBeforeFajr: 0,
+    notificationsSuhoor: true,
+    notificationsSuhoorMinutesBeforeFajr: 20,
+    notificationsSunanRawatib: true,
+    notificationsHijama: true,
+    hijriOffset: 0,
   };
 }
 
-export function getTasbihCount(name: string): number {
-  try {
-    const stored = localStorage.getItem(`tasbih_${name}`);
-    return stored ? parseInt(stored) : 0;
-  } catch {
-    return 0;
-  }
+export function getTasbihCount(name: string, daily = false): number {
+  const key = daily ? `tasbih_${name}_${getTodayKey()}` : `tasbih_${name}`;
+  return localDB.getGeneralProgress<number>(key, 0);
 }
 
-export function setTasbihCount(name: string, count: number): void {
-  try {
-    localStorage.setItem(`tasbih_${name}`, String(count));
-  } catch {}
+export function setTasbihCount(name: string, count: number, daily = false): void {
+  const key = daily ? `tasbih_${name}_${getTodayKey()}` : `tasbih_${name}`;
+  localDB.saveGeneralProgress(key, count);
 }
+

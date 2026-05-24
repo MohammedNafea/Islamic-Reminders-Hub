@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "Xarunta Islaamka", tagline: "Saaxiibkaaga ruuxiga ah ee maalinlaha" },
+  nav: { home: "Bogga hore", adhkar: "Azkaar", morning: "Azkaaridii subaxda", evening: "Azkaaridii fiidkii", both: "Subax iyo Fiid", sleep: "Azkaaridii hurdada", prayer: "Azkaaridii salaadda", ruqyah: "Ruqyo", times: "Waqtiyada salaadda", fasting: "Maalinta soonka", tasbih: "Tasbix", settings: "Dejinta", hadith: "Xadiis iyo Xukunno", quran: "Quraanka", qibla: "Qiblada", zakat: "Sakada", favorites: "Ku doorbidayaal", search: "Raadi" },
+  home: { greeting_morning: "Subax wanaagsan", greeting_evening: "Fiid wanaagsan", greeting_night: "Habeen wanaagsan", today: "Maanta", progress: "Horumarka maanta", completed: "la dhammaystay", start: "Bilow" },
+  prayer: { fajr: "Fajr", sunrise: "Qorrax soo bax", dhuhr: "Duhur", asr: "Casar", maghrib: "Magrib", isha: "Cishaa", next: "Salaadda xigta", remaining: "Waqtiga haray", location: "Goobta aad joogto", location_required: "Ogolaanshaha goobta sii", allow_location: "Ogolaan", enter_city: "Geli magaalada", calculation_method: "Habka xisaabinta", methods: { MuslimWorldLeague: "Ururka Muslimiinta Dunida", Egyptian: "Maamulka Masar", Karachi: "Jaamacadda Karaaji", UmmAlQura: "Umm Al-Qura", Dubai: "Dubai", NorthAmerica: "Waqooyiga Ameerika", Kuwait: "Kuwayt", Qatar: "Qatar", Singapore: "Singaaboor", Turkey: "Turki" }, last_third: "Saddexdii u dambeysey habeenka", imsak: "Imsaak" },
+  dhikr: { count: "Tirada", times: "jeer", source: "Isha", tap_to_count: "Taabo si aad u tiriso", completed_msg: "Waa la dhammaystay!", reset: "Dib u deji", reset_all: "Dhammaantood dib u deji", morning_form: "Qaabka subaxda", evening_form: "Qaabka fiidkii", note: "Faallo", benefit: "Faa'iido" },
+  tasbih: { title: "Tasbix xor ah", count: "Tirada hadda", target: "Bartilmaameedka", set_target: "Deji bartilmaameedka", reset: "Dib u deji", vibrate: "Gariir", sound: "Dhawaaqa", custom: "Gaar ah", saved: "Waa la kaydiyay" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Maalinta soonka Sunnada", white_days: "Maalaha caddaanka", white_days_desc: "Bil kastaa Hijri 13, 14 iyo 15", white_days_hadith: "Soonka 3 maalmood bil kasta waa sida soonka weligaa", arafah: "Maalinta Carafa", arafah_desc: "9 Dul Xijjah", arafah_hadith: "Soonka Carafa wuxuu kafaaro ah dambiyada sannadka hore iyo kan dambe", monday: "Isniin", monday_desc: "Todobaad kasta Isniin", monday_hadith: "Maalintii la i dhashay waxyigana soo degay", thursday: "Khamiis", thursday_desc: "Todobaad kasta Khamiis", thursday_hadith: "Camaladu waxay soo baxdaan Isniin iyo Khamiis", shawwal: "6 Maalmood Shawaal", shawwal_desc: "6 maalmood Ciidda ka dib", shawwal_hadith: "Qofka sooma Ramadaan iyo 6 maalmood waa sida sooman weligii", upcoming: "Soo socda", today_fasting: "Maanta", passed: "Dhaafay", gregorian_date: "Miilaadi", hijri_date: "Hijri", days_remaining: "{{days}} maalmood haray", days_passed: "{{days}} maalmood ka hor", monthly: "Bishii", weekly: "Toddobaadkii", yearly: "Sannadkii" },
+  dates: { hijri: "H", gregorian: "M", days: ["Axad", "Isniin", "Talaado", "Arbaco", "Khamiis", "Jimce", "Sabti"] },
+  settings: { title: "Dejinta", language: "Luuqadda", theme: "Muuqaalka", dark: "Mugdi", light: "Iftiinka", system: "Nidaamka", calculation: "Habka xisaabinta", font_size: "Cabbirka farta", notifications: "Ogeysiisyada" },
+  common: { loading: "Waa la soo rarayaa...", error: "Qalad ayaa dhacay", retry: "Isku day mar kale", close: "Xidh", save: "Kaydi", cancel: "Kansal", done: "Waa la dhammaystay", search: "Raadi", share: "La wadaag", copied: "Waa la koobiyay", copy: "Koobi", of: "ka mid", back: "Dib u noqo" },
+  hadith: { title: "Xadiis iyo Xukunno", subtitle: "Entsaikloobiidiyada xadiisyada, xukunnada iyo aragtida cilmiga", search_placeholder: "Raadi xadiis, xukun ama furaha...", loading_data: "Xogta waa la soo rarayaa...", no_results: "Natiijo lama helin", try_another_search: "Isku day erey kale", cat_all: "Dhammaan", cat_tafsir: "Tafsiir", cat_creed: "Caqiido", cat_fiqh: "Fiqhi", cat_hadith: "Xadiis", cat_ethics: "Akhlaaq", cat_general: "Guud" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

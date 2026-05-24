@@ -3,7 +3,7 @@ import { DhikrList } from "@/components/DhikrList";
 import { adhkarRuqyah } from "@/data/adhkar";
 
 export default function Ruqyah() {
-  const { t } = useTranslation();
+  useTranslation();
   
   return (
     <div className="animate-in fade-in duration-500">

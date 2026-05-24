@@ -24,6 +24,20 @@ import sv from "./locales/sv";
 import ko from "./locales/ko";
 import hi from "./locales/hi";
 import bs from "./locales/bs";
+import ckb from "./locales/ckb";
+import ja from "./locales/ja";
+import te from "./locales/te";
+import mr from "./locales/mr";
+import ta from "./locales/ta";
+import vi from "./locales/vi";
+import ha from "./locales/ha";
+import am from "./locales/am";
+import so from "./locales/so";
+import sq from "./locales/sq";
+import az from "./locales/az";
+import ps from "./locales/ps";
+import kk from "./locales/kk";
+import uz from "./locales/uz";
 
 const resources = {
   ar: { translation: ar },
@@ -48,6 +62,20 @@ const resources = {
   ko: { translation: ko },
   hi: { translation: hi },
   bs: { translation: bs },
+  ckb: { translation: ckb },
+  ja: { translation: ja },
+  te: { translation: te },
+  mr: { translation: mr },
+  ta: { translation: ta },
+  vi: { translation: vi },
+  ha: { translation: ha },
+  am: { translation: am },
+  so: { translation: so },
+  sq: { translation: sq },
+  az: { translation: az },
+  ps: { translation: ps },
+  kk: { translation: kk },
+  uz: { translation: uz },
 };
 
 export const supportedLanguages = [
@@ -73,6 +101,20 @@ export const supportedLanguages = [
   { code: "ko", name: "한국어", nativeName: "한국어", dir: "ltr", flag: "🇰🇷" },
   { code: "hi", name: "हिन्दी", nativeName: "हिन्दी", dir: "ltr", flag: "🇮🇳" },
   { code: "bs", name: "Bosanski", nativeName: "Bosanski", dir: "ltr", flag: "🇧🇦" },
+  { code: "ckb", name: "Kurdish", nativeName: "کوردی", dir: "rtl", flag: "☀️" },
+  { code: "ja", name: "Japanese", nativeName: "日本語", dir: "ltr", flag: "🇯🇵" },
+  { code: "te", name: "Telugu", nativeName: "తెలుగు", dir: "ltr", flag: "🇮🇳" },
+  { code: "mr", name: "Marathi", nativeName: "मराठी", dir: "ltr", flag: "🇮🇳" },
+  { code: "ta", name: "Tamil", nativeName: "தமிழ்", dir: "ltr", flag: "🇮🇳" },
+  { code: "vi", name: "Vietnamese", nativeName: "Tiếng Việt", dir: "ltr", flag: "🇻🇳" },
+  { code: "ha", name: "Hausa", nativeName: "Hausa", dir: "ltr", flag: "🇳🇬" },
+  { code: "am", name: "Amharic", nativeName: "አማርኛ", dir: "ltr", flag: "🇪🇹" },
+  { code: "so", name: "Somali", nativeName: "Soomaali", dir: "ltr", flag: "🇸🇴" },
+  { code: "sq", name: "Albanian", nativeName: "Shqip", dir: "ltr", flag: "🇦🇱" },
+  { code: "az", name: "Azerbaijani", nativeName: "Azərbaycanca", dir: "ltr", flag: "🇦🇿" },
+  { code: "ps", name: "Pashto", nativeName: "پښتو", dir: "rtl", flag: "🇦🇫" },
+  { code: "kk", name: "Kazakh", nativeName: "Қазақша", dir: "ltr", flag: "🇰🇿" },
+  { code: "uz", name: "Uzbek", nativeName: "Oʻzbekcha", dir: "ltr", flag: "🇺🇿" },
 ];
 
 i18n

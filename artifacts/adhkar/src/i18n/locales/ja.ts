@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "イスラミック・ハブ", tagline: "日々の霊的パートナー" },
+  nav: { home: "ホーム", adhkar: "アズカール", morning: "朝のアズカール", evening: "夕方のアズカール", both: "朝と夕方", sleep: "就寝のアズカール", prayer: "礼拝後のアズカール", ruqyah: "ルキヤ", times: "礼拝時間", fasting: "断食の日", tasbih: "タスビーフ", settings: "設定", hadith: "ハディースと法規定", quran: "クルアーン", qibla: "キブラ", zakat: "ザカート", favorites: "お気に入り", search: "検索" },
+  home: { greeting_morning: "おはようございます", greeting_evening: "こんばんは", greeting_night: "おやすみなさい", today: "今日", progress: "今日の進捗", completed: "完了", start: "開始" },
+  prayer: { fajr: "ファジュル", sunrise: "日の出", dhuhr: "ズフル", asr: "アスル", maghrib: "マグリブ", isha: "イシャー", next: "次の礼拝", remaining: "残り時間", location: "現在地", location_required: "位置情報を許可してください", allow_location: "許可", enter_city: "都市名を入力", calculation_method: "計算方法", methods: { MuslimWorldLeague: "ムスリム世界連盟", Egyptian: "エジプト当局", Karachi: "カラチ大学", UmmAlQura: "ウンム・アルクラー", Dubai: "ドバイ", NorthAmerica: "北米", Kuwait: "クウェート", Qatar: "カタール", Singapore: "シンガポール", Turkey: "トルコ" }, last_third: "夜の最後の3分の1", imsak: "イムサーク" },
+  dhikr: { count: "回数", times: "回", source: "出典", tap_to_count: "タップして数える", completed_msg: "完了しました！", reset: "リセット", reset_all: "すべてリセット", morning_form: "朝の形式", evening_form: "夕方の形式", note: "注記", benefit: "効果" },
+  tasbih: { title: "フリータスビーフ", count: "現在の回数", target: "目標", set_target: "目標を設定", reset: "リセット", vibrate: "振動", sound: "音", custom: "カスタム", saved: "保存済み" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "スンナの断食日", white_days: "白い日々", white_days_desc: "毎月ヒジュラ暦13・14・15日", white_days_hadith: "毎月3日断食するのは一生断食するのと同等", arafah: "アラファの日", arafah_desc: "ズル・ヒッジャ9日", arafah_hadith: "アラファの断食は前後の年の罪を贖う", monday: "月曜日", monday_desc: "毎週月曜日", monday_hadith: "私が生まれ啓示が下された日", thursday: "木曜日", thursday_desc: "毎週木曜日", thursday_hadith: "行いは月曜と木曜に示される", shawwal: "シャッワールの6日間", shawwal_desc: "イードの後のシャッワールの6日間", shawwal_hadith: "ラマダーンと6日の断食は永遠の断食のよう", upcoming: "今後", today_fasting: "今日", passed: "過去", gregorian_date: "西暦", hijri_date: "ヒジュラ暦", days_remaining: "残り{{days}}日", days_passed: "{{days}}日前", monthly: "月間", weekly: "週間", yearly: "年間" },
+  dates: { hijri: "H", gregorian: "AD", days: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"] },
+  settings: { title: "設定", language: "言語", theme: "テーマ", dark: "ダーク", light: "ライト", system: "システム", calculation: "計算方法", font_size: "文字サイズ", notifications: "通知" },
+  common: { loading: "読み込み中...", error: "エラーが発生しました", retry: "再試行", close: "閉じる", save: "保存", cancel: "キャンセル", done: "完了", search: "検索", share: "共有", copied: "コピーしました", copy: "コピー", of: "/", back: "戻る" },
+  hadith: { title: "ハディースと法規定", subtitle: "ハディース・法規定・学術見解百科", search_placeholder: "ハディース、法規定、キーワードを検索...", loading_data: "データを読み込み中...", no_results: "検索結果がありません", try_another_search: "別のキーワードで検索してください", cat_all: "すべて", cat_tafsir: "タフスィール", cat_creed: "信条", cat_fiqh: "法学", cat_hadith: "ハディース", cat_ethics: "道徳", cat_general: "一般" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

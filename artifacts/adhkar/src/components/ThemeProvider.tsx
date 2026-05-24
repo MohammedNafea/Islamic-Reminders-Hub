@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = "dark" | "light" | "system";
+type Theme = "dark" | "light" | "system" | "fajr" | "duha" | "maghrib" | "sahar" | "dynamic";
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -33,9 +33,19 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
-    root.classList.remove("light", "dark");
+    root.classList.remove("light", "dark", "theme-fajr", "theme-duha", "theme-maghrib", "theme-sahar");
 
-    if (theme === "system") {
+    let activeTheme = theme;
+
+    if (theme === "dynamic") {
+      const hour = new Date().getHours();
+      if (hour >= 4 && hour < 7) activeTheme = "fajr";
+      else if (hour >= 7 && hour < 17) activeTheme = "duha";
+      else if (hour >= 17 && hour < 19) activeTheme = "maghrib";
+      else if (hour >= 19 || hour < 4) activeTheme = "sahar";
+    }
+
+    if (activeTheme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
@@ -45,7 +55,14 @@ export function ThemeProvider({
       return;
     }
 
-    root.classList.add(theme);
+    if (["fajr", "duha", "maghrib", "sahar"].includes(activeTheme)) {
+      root.classList.add(`theme-${activeTheme}`);
+      // Also add dark/light base for shadcn components
+      if (activeTheme === "sahar") root.classList.add("dark");
+      else root.classList.add("light");
+    } else {
+      root.classList.add(activeTheme);
+    }
   }, [theme]);
 
   const value = {

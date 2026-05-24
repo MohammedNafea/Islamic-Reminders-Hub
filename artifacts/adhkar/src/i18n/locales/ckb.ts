@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "ناوەندی ئیسلامی", tagline: "هاوەڵی ڕۆحانیت ڕۆژانەت" },
+  nav: { home: "سەرەتا", adhkar: "ئەزکار", morning: "ئەزکاری بەیانی", evening: "ئەزکاری ئێوارە", both: "بەیانی و ئێوارە", sleep: "ئەزکاری خەو", prayer: "ئەزکاری نوێژ", ruqyah: "ڕوقیە", times: "کاتی نوێژ", fasting: "ڕۆژووی سوننە", tasbih: "تەسبیح", settings: "ڕێکخستنەکان", hadith: "حەدیس و فیقه", quran: "قورئان", qibla: "قیبلە", zakat: "زەکات", favorites: "دڵخوازەکان", search: "گەڕان" },
+  home: { greeting_morning: "بەیانیت باش", greeting_evening: "ئێوارەت باش", greeting_night: "شەوت باش", today: "ئەمڕۆ", progress: "پێشکەوتنی ئەمڕۆ", completed: "تەواو بوو", start: "دەستپێکردن" },
+  prayer: { fajr: "بەرەبەیان", sunrise: "هەڵهاتنی خۆر", dhuhr: "نیوەڕۆ", asr: "عەسر", maghrib: "مەغریب", isha: "عیشا", next: "نوێژی داهاتوو", remaining: "کاتی ماوە", location: "شوێنەکەت", location_required: "ڕێگەدان بە شوێن بدە", allow_location: "ڕێگەدان", enter_city: "شار بنووسە", calculation_method: "شێوازی ژمێریاری", methods: { MuslimWorldLeague: "لیگی جیهانی ئیسلامی", Egyptian: "بەڕێوەبەرایەتی میسر", Karachi: "زانکۆی کەراچی", UmmAlQura: "ئومولقورا", Dubai: "دوبەی", NorthAmerica: "ئەمریکای باکوور", Kuwait: "کوەیت", Qatar: "قەتەر", Singapore: "سینگاپور", Turkey: "تورکیا" }, last_third: "سێیەکی کۆتایی شەو", imsak: "ئیمساک" },
+  dhikr: { count: "ژمارە", times: "جار", source: "سەرچاوە", tap_to_count: "بۆ ژمارتن دابگرە", completed_msg: "تەواو بوو!", reset: "ڕیسێت", reset_all: "هەموو ڕیسێت بکە", morning_form: "فۆڕمی بەیانی", evening_form: "فۆڕمی ئێوارە", note: "تێبینی", benefit: "سوود" },
+  tasbih: { title: "تەسبیحی ئازاد", count: "ژمارەی ئێستا", target: "ئامانج", set_target: "ئامانج دابنێ", reset: "ڕیسێت", vibrate: "لەرزین", sound: "دەنگ", custom: "تایبەت", saved: "پاشەکەوت کرا" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "ڕۆژووی سوننە", white_days: "ڕۆژە سپییەکان", white_days_desc: "هەر مانگ ١٣, ١٤ و ١٥ ی کۆچی", white_days_hadith: "ڕۆژوو گرتنی ٣ ڕۆژ لە مانگ وەک ڕۆژووی هەمیشەییە", arafah: "ڕۆژی عەرەفە", arafah_desc: "٩ ی ذولحیجە", arafah_hadith: "ڕۆژووی عەرەفە گوناهی ساڵی پێشوو و داهاتوو دەسڕێتەوە", monday: "دووشەممە", monday_desc: "هەر هەفتە دووشەممە", monday_hadith: "ئەو ڕۆژەی لەدایک بووم و وەحی دابەزی", thursday: "پێنجشەممە", thursday_desc: "هەر هەفتە پێنجشەممە", thursday_hadith: "کردەوەکان دووشەممە و پێنجشەممە پێشکەش دەکرێن", shawwal: "٦ ڕۆژی شەوواڵ", shawwal_desc: "دوای جەژن ٦ ڕۆژ", shawwal_hadith: "ئەوەی ڕەمەزان و ٦ ڕۆژ ڕۆژوو بگرێت وەک ڕۆژووی هەمیشەییە", upcoming: "داهاتوو", today_fasting: "ئەمڕۆ", passed: "تێپەڕیو", gregorian_date: "زایینی", hijri_date: "کۆچی", days_remaining: "{{days}} ڕۆژ ماوە", days_passed: "پێش {{days}} ڕۆژ", monthly: "مانگانە", weekly: "هەفتانە", yearly: "ساڵانە" },
+  dates: { hijri: "ک", gregorian: "ز", days: ["یەکشەممە", "دووشەممە", "سێشەممە", "چوارشەممە", "پێنجشەممە", "هەینی", "شەممە"] },
+  settings: { title: "ڕێکخستنەکان", language: "زمان", theme: "ڕووکار", dark: "تاریک", light: "ڕووناک", system: "سیستەم", calculation: "شێوازی ژمێریاری", font_size: "قەبارەی نووسین", notifications: "ئاگاداری" },
+  common: { loading: "چاوەڕوان بە...", error: "هەڵەیەک ڕوویدا", retry: "دووبارە هەوڵبدە", close: "داخستن", save: "پاشەکەوت", cancel: "پاشگەزبوونەوە", done: "تەواو", search: "گەڕان", share: "هاوبەش", copied: "کۆپی کرا", copy: "کۆپی", of: "لە", back: "گەڕانەوە" },
+  hadith: { title: "حەدیس و فیقه", subtitle: "ئینسایکلۆپیدیای حەدیس و فیقه و بۆچوونە زانستییەکان", search_placeholder: "بگەڕێ بۆ حەدیس، فیقه یان کلیلەوشە...", loading_data: "زانیاری بار دەکرێت...", no_results: "ئەنجام نەدۆزرایەوە", try_another_search: "وشەیەکی تر تاقی بکەرەوە", cat_all: "هەموو", cat_tafsir: "تەفسیر", cat_creed: "عەقیدە", cat_fiqh: "فیقه", cat_hadith: "حەدیس", cat_ethics: "ئەخلاق", cat_general: "گشتی" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

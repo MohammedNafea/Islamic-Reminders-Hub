@@ -1,43 +1,82 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
 import { toHijri, formatHijriDate } from "@/lib/hijri";
-import { getPrayerTimesFromAPI, getPrayerTimes, getNextPrayer } from "@/lib/prayer-times";
-import { getDailyProgress, getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
-import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly } from "@/data/adhkar";
+import { getPrayerTimesFromAPI } from "@/lib/prayer-times";
+import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Link } from "wouter";
+import { isArabic, getTranslation } from "@/lib/content-i18n";
+import { fastingDays } from "@/data/fasting-days";
+import { useWiki } from "@/hooks/useWiki";
+import { TranslatedText } from "@/components/TranslatedText";
+import { logTasbihIncrement } from "@/lib/tracker";
+
+const QURAN_SURAHS = [
+  "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
+  "هود", "يوسف", "الرعد", "إبراهيم", "الحجر", "النحل", "الإسراء", "الكهف", "مريم", "طه",
+  "الأنبياء", "الحج", "المؤمنون", "النور", "الفرقان", "الشعراء", "النمل", "القصص", "العنكبوت", "الروم",
+  "لقمان", "السجدة", "الأحزاب", "سبأ", "فاطر", "يس", "الصافات", "ص", "الزمر", "غافر",
+  "فصلت", "الشورى", "الزخرف", "الدخان", "الجاثية", "الأحقاف", "محمد", "الفتح", "الحجرات", "ق",
+  "الذاريات", "الطور", "النجم", "القمر", "الرحمن", "الواقعة", "الحديد", "المجادلة", "الحشر", "الممتحنة",
+  "الصف", "الجمعة", "المنافقون", "التغابن", "الطلاق", "التحريم", "الملك", "القلم", "الحاقة", "المعارج",
+  "نوح", "الجن", "المزمل", "المدثر", "القيامة", "الإنسان", "المرسلات", "النبأ", "النازعات", "عبس",
+  "التكوير", "الانفطار", "المطففين", "الانشقاق", "البروج", "الطارق", "الأعلى", "الغاشية", "الفجر", "البلد",
+  "الشمس", "الليل", "الضحى", "الشرح", "التين", "العلق", "القدر", "البينة", "الزلزلة", "العادية",
+  "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
+  "المسد", "الإخلاص", "الفلق", "الناس"
+];
+
+function getSurahNumber(suraName: string | undefined): number {
+  if (!suraName) return 1;
+  const normalize = (name: string) => {
+    return name
+      .replace(/[\u064B-\u0652]/g, "")
+      .replace(/[إأآا]/g, "ا")
+      .replace(/ة/g, "ه")
+      .replace(/ى/g, "ي")
+      .replace(/[\s-_]+/g, "")
+      .trim();
+  };
+  const normalizedInput = normalize(suraName);
+  const index = QURAN_SURAHS.findIndex(name => normalize(name) === normalizedInput);
+  return index !== -1 ? index + 1 : 1;
+}
 
 export default function Home() {
   const { t, i18n } = useTranslation();
   const [date, setDate] = useState(new Date());
   const [hijri, setHijri] = useState(toHijri(new Date()));
-  const [nextPrayer, setNextPrayer] = useState<{ name: string; time: Date } | null>(null);
-  const [progress, setProgress] = useState({ morning: 0, evening: 0 });
   const [salawatCount, setSalawatCount] = useState(0);
   const vibrateRef = useRef<number>(0);
   const settings = getSettings();
+
+  const prevDayRef = useRef(date.getDate());
 
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date();
       setDate(now);
-      if (now.getDate() !== date.getDate()) {
+      if (now.getDate() !== prevDayRef.current) {
+        prevDayRef.current = now.getDate();
         setHijri(toHijri(now));
+        setSalawatCount(getTasbihCount("home_salawat", true));
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, [date]);
+  }, []);
 
   useEffect(() => {
-    setSalawatCount(getTasbihCount("home_salawat"));
+    setSalawatCount(getTasbihCount("home_salawat", true));
+  }, []);
 
+  useEffect(() => {
     async function fetchPrayerTimes() {
-      let lat = 21.4225;
-      let lng = 39.8262;
-      if (navigator.geolocation) {
+      let lat = settings.location?.lat ?? 21.4225;
+      let lng = settings.location?.lng ?? 39.8262;
+      if (!settings.location && navigator.geolocation) {
         try {
           const pos = await new Promise<GeolocationPosition>((res, rej) =>
             navigator.geolocation.getCurrentPosition(res, rej, { timeout: 5000 })
@@ -48,28 +87,17 @@ export default function Home() {
       }
       const method = settings.calculationMethod === "MuslimWorldLeague" ? 3
         : settings.calculationMethod === "Egyptian" ? 5 : 4;
-      const apiTimes = await getPrayerTimesFromAPI(lat, lng, date, method);
-      const times = apiTimes || getPrayerTimes(lat, lng, date);
-      setNextPrayer(getNextPrayer(times));
+      await getPrayerTimesFromAPI(lat, lng, new Date(), method);
     }
     fetchPrayerTimes();
-
-    const dp = getDailyProgress();
-    const morningList = [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarMorningOnly];
-    const eveningList = [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarEveningOnly];
-    const calcPct = (list: typeof morningList) => {
-      const total = list.reduce((s, d) => s + d.count, 0);
-      const done = list.reduce((s, d) => s + Math.min(dp[d.id] || 0, d.count), 0);
-      return total > 0 ? (done / total) * 100 : 0;
-    };
-    setProgress({ morning: calcPct(morningList), evening: calcPct(eveningList) });
-  }, []);
+  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng]);
 
   const handleSalawat = () => {
     const next = salawatCount + 1;
     setSalawatCount(next);
-    setTasbihCount("home_salawat", next);
-    if (settings.vibrate && navigator.vibrate) {
+    setTasbihCount("home_salawat", next, true);
+    logTasbihIncrement(1);
+    if (settings?.vibrate && navigator.vibrate) {
       const now = Date.now();
       if (now - vibrateRef.current > 80) {
         navigator.vibrate(15);
@@ -78,163 +106,454 @@ export default function Home() {
     }
   };
 
-  const hour = date.getHours();
+  // Hourly Content Logic — random per hour using seeded hash
+  const { data: wikiData } = useWiki();
+  const currentHour = date.getHours();
+
+  // Seeded random: same hour on same date = same result, different hour = different result
+  const hourlySeed = useMemo(() => {
+    const d = date;
+    return ((d.getFullYear() * 366 + d.getMonth() * 31 + d.getDate()) * 24 + currentHour) % 1000003;
+  }, [date, currentHour]);
+  
+  const hourlyRandom = React.useCallback((poolLength: number) => hourlySeed % poolLength, [hourlySeed]);
+
+  const dailyVerse = useMemo(() => {
+    const normalizeArabic = (text: string) => {
+      if (!text) return "";
+      return text
+        .replace(/[\u064B-\u0652]/g, "") // Remove Tashkeel (diacritics)
+        .replace(/[إأآا]/g, "ا")         // Normalize Alif
+        .replace(/ة/g, "ه")             // Normalize Teh Marbuta
+        .replace(/ى/g, "ي")             // Normalize Alif Maksura
+        .replace(/\s+/g, " ")           // Normalize whitespace
+        .trim();
+    };
+
+    // Standard pool with full metadata
+    const versePool = [1, 2, 3, 4, 5, 6, 7, 8];
+    const vId = versePool[hourlyRandom(versePool.length)];
+    
+    // Always fetch Arabic for matching purposes
+    const translationAr = i18n.getResourceBundle('ar', 'translation');
+    const allArVerses = (translationAr?.quran?.daily || {}) as Record<string, Record<string, string>>;
+    const localVerseAr = allArVerses[vId];
+    const localVerse = t(`quran.daily.${vId}`, { returnObjects: true }) as Record<string, string>;
+
+    // Priority logic
+    if (wikiData?.daily?.verse) {
+      const wikiText = wikiData.daily.verse.trim();
+      const normalizedWiki = normalizeArabic(wikiText);
+      
+      // 1. Try Wiki metadata — always keep Arabic, add translation
+      if (wikiData.daily.sura && wikiData.daily.verse_number) {
+        return {
+          arabicText: wikiText,
+          translatedText: !isArabic(i18n.language) ? (wikiData.daily.verse_en || null) : null,
+          text: wikiText,
+          sura: wikiData.daily.sura,
+          verse_number: wikiData.daily.verse_number,
+          id: "wiki"
+        };
+      }
+
+      // 2. Try matching against ALL local verses (in Arabic) to recover metadata
+      for (const [id, item] of Object.entries(allArVerses)) {
+        const arItem = item;
+        if (arItem && normalizeArabic(arItem.text) === normalizedWiki) {
+          // Found match! Use localized metadata
+          const localizedItem = t(`quran.daily.${id}`, { returnObjects: true }) as Record<string, string>;
+          return { ...localizedItem, id };
+        }
+      }
+    }
+
+    // Fallback to local pool which is guaranteed to have metadata
+    const fallback = localVerse && typeof localVerse === 'object' ? localVerse : localVerseAr;
+    const arabicFallback = localVerseAr || fallback;
+    const translatedVerseText = !isArabic(i18n.language) && fallback?.translation ? fallback.translation : null;
+    return { 
+      arabicText: arabicFallback?.text || fallback?.text || "فاصبر إن وعد الله حق",
+      translatedText: translatedVerseText,
+      text: arabicFallback?.text || fallback?.text || "فاصبر إن وعد الله حق", 
+      sura: fallback?.sura || "الروم", 
+      verse_number: fallback?.verse_number || "60", 
+      id: vId.toString() 
+    };
+  }, [t, wikiData, i18n, hourlyRandom]);
+
+
+
+  const upcomingFasting = useMemo(() => {
+    return fastingDays.find(d => {
+      if (d.type === 'weekly' && d.weekDay?.includes(date.getDay())) return true;
+      if (d.hijriMonth === hijri.month && (Array.isArray(d.hijriDay) ? d.hijriDay.includes(hijri.day) : d.hijriDay === hijri.day)) return true;
+      return false;
+    });
+  }, [date, hijri]);
+
   let greetingKey = "home.greeting_morning";
-  if (hour >= 12 && hour < 18) greetingKey = "home.greeting_evening";
-  else if (hour >= 18) greetingKey = "home.greeting_night";
+  if (currentHour >= 12 && currentHour < 18) greetingKey = "home.greeting_evening";
+  else if (currentHour >= 18) greetingKey = "home.greeting_night";
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
+    <div className="space-y-12 animate-in fade-in duration-500 max-w-3xl mx-auto pb-32">
       {/* Greeting + Date */}
-      <div className="flex flex-col items-center text-center space-y-3 pt-4">
-        <h1 className="text-3xl md:text-4xl font-heading text-primary">
-          {t(greetingKey)}
-        </h1>
-        <div className="bg-card px-6 py-3 rounded-2xl border border-border shadow-sm flex flex-col items-center gap-1">
-          <p className="text-xl font-serif text-foreground">{formatHijriDate(hijri, i18n.language)}</p>
-          <p className="text-sm text-muted-foreground">
-            {date.toLocaleDateString(i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+      <div className="flex flex-col items-center text-center space-y-4 pt-2">
+        <div className="space-y-1">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">
+            {t(greetingKey)}
+          </h1>
+          <p className="text-muted-foreground text-sm font-medium">
+            {wikiData?.daily?.inspiration ? (
+              <TranslatedText
+                text={wikiData.daily.inspiration}
+                keepArabic={false}
+                inline
+              />
+            ) : (
+              t("app.tagline")
+            )}
           </p>
+        </div>
+
+        <div className="bg-card/50 backdrop-blur-md px-8 py-4 rounded-[2rem] border border-primary/10 shadow-sm flex flex-col items-center gap-1.5 min-w-[280px]">
+          <p className="text-2xl font-serif font-bold text-foreground" dir="rtl">
+            {formatHijriDate(hijri, i18n.language)}
+          </p>
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+            <CalendarIcon className="w-4 h-4 opacity-70" />
+            <span>{date.toLocaleDateString(i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
+          </div>
         </div>
       </div>
 
-      {/* Salawat on the Prophet ﷺ */}
+      {/* Salawat on the Prophet ﷺ Card */}
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
       >
         <button
           onClick={handleSalawat}
-          className="w-full text-start group"
+          aria-label={t("home.salawat_subtitle")}
+          className="w-full text-start group relative"
         >
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 to-primary border-none text-primary-foreground p-5 shadow-md hover:shadow-lg transition-all active:scale-[0.99]">
-            <div className="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]" />
-            <div className="relative z-10 flex items-center justify-between gap-4">
+          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-primary-foreground p-6 shadow-xl hover:shadow-2xl transition-all active:scale-[0.98] border border-white/10">
+            <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+              <StarIcon className="w-24 h-24 rotate-12" />
+            </div>
+            <div className="relative z-10 flex items-center justify-between gap-6">
               <div className="flex-1 min-w-0">
-                <p className="dhikr-text text-2xl text-right text-primary-foreground leading-relaxed" dir="rtl">
+                <p className={cn("dhikr-text text-3xl text-white leading-tight drop-shadow-sm mb-2", i18n.language === 'ar' ? "text-right" : "text-left")} dir={i18n.language === 'ar' ? "rtl" : "ltr"}>
                   {t("home.salawat_banner")}
                 </p>
-                <p className="text-primary-foreground/70 text-sm mt-1">{t("home.salawat_subtitle")}</p>
+                <div className="flex items-center gap-2 text-white/70 text-sm">
+                  <p>{t("home.salawat_subtitle")}</p>
+                </div>
               </div>
-              <div className="shrink-0 text-center">
+              <div className="shrink-0 bg-white/20 backdrop-blur-md rounded-2xl p-4 min-w-[90px] text-center border border-white/20">
                 <AnimatePresence mode="popLayout">
                   <motion.span
                     key={salawatCount}
-                    initial={{ opacity: 0, scale: 0.6, y: 6 }}
+                    initial={{ opacity: 0, scale: 0.5, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 1.3, y: -6 }}
-                    className="block text-4xl font-bold tabular-nums"
+                    exit={{ opacity: 0, scale: 1.5, y: -10 }}
+                    className="block text-4xl font-bold tabular-nums text-white"
                   >
                     {salawatCount}
                   </motion.span>
                 </AnimatePresence>
-                <span className="text-primary-foreground/70 text-xs">{t("home.salawat_today")}</span>
+                <span className="text-white/60 text-[10px] uppercase tracking-widest font-bold">{t("home.salawat_today")}</span>
               </div>
             </div>
           </div>
         </button>
       </motion.div>
 
-      {/* Next Prayer */}
-      {nextPrayer && (
-        <Card className="bg-card border border-border overflow-hidden relative shadow-sm">
-          <CardContent className="p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-primary/10 rounded-full">
-                <ClockIcon className="w-5 h-5 text-primary" />
+      {/* Daily Verse Section */}
+      <div className="w-full">
+        <AnimatePresence mode="wait">
+          {dailyVerse && (
+            <Link href={`/quran?surah=${getSurahNumber(dailyVerse.sura)}&ayah=${dailyVerse.verse_number || 1}`}>
+              <motion.div
+                key="verse-wiki"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                whileHover={{ y: -5 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-card/40 backdrop-blur-sm border border-primary/5 rounded-3xl p-6 shadow-sm flex flex-col justify-between group w-full cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all text-start"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest">
+                      <BookOpen className="w-4 h-4" />
+                      {t("quran.verse_of_hour")}
+                    </div>
+                  </div>
+                  {/* Arabic original — always shown */}
+                  <p className="dhikr-text text-xl leading-relaxed text-foreground/90 text-right" dir="rtl">
+                    {dailyVerse.arabicText || dailyVerse.text}
+                  </p>
+                  {/* Translation — shown for non-Arabic languages */}
+                  {!isArabic(i18n.language) && dailyVerse.translatedText && (
+                    <p className="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3" dir="ltr">
+                      {dailyVerse.translatedText}
+                    </p>
+                  )}
+                </div>
+                <p className="text-xs text-primary/60 font-bold mt-4 text-right">
+                  {dailyVerse.sura && dailyVerse.sura !== "" 
+                    ? `${t(`quran.suras.${dailyVerse.sura}`, { defaultValue: dailyVerse.sura })}${dailyVerse.verse_number ? ` : ${dailyVerse.verse_number}` : ''}` 
+                    : t("nav.quran")}
+                </p>
+              </motion.div>
+            </Link>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Fasting Card */}
+      {upcomingFasting && (
+        <Card className="bg-emerald-500/10 border-emerald-500/20 overflow-hidden shadow-sm rounded-3xl">
+          <CardContent className="p-5 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-600">
+                <Clock className="w-6 h-6" />
               </div>
-              <div className="text-center sm:text-start">
-                <p className="text-muted-foreground text-xs font-medium">{t("prayer.next")}</p>
-                <p className="text-xl font-bold font-heading text-primary">{t(`prayer.${nextPrayer.name}`)}</p>
+              <div>
+                <p className="text-emerald-600/70 text-xs font-bold uppercase tracking-wider">{t("fasting.today_fasting")}</p>
+                <p className="text-lg font-bold text-emerald-700">{t(upcomingFasting.nameKey)}</p>
               </div>
             </div>
-            <div className="text-center sm:text-end">
-              <p className="text-muted-foreground text-xs font-medium">{t("prayer.remaining")}</p>
-              <p className="text-2xl font-bold font-sans tabular-nums tracking-tight text-foreground">
-                {getTimeRemaining(date, nextPrayer.time)}
-              </p>
-            </div>
+            <Link href="/fasting" className="bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-500/20 hover:scale-105 active:scale-95 transition-transform duration-200 block text-center">
+              {t("common.search")}
+            </Link>
           </CardContent>
         </Card>
       )}
 
-      {/* Morning / Evening Progress */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Link href="/morning">
-          <Card className="hover:border-amber-400/50 transition-colors cursor-pointer group h-full">
-            <CardContent className="p-5 flex flex-col h-full justify-between gap-5">
-              <div className="flex items-start justify-between">
-                <div className="p-2.5 bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 rounded-xl group-hover:scale-110 transition-transform">
-                  <Sun className="w-5 h-5" />
-                </div>
-                <div className="text-end">
-                  <h3 className="font-heading font-bold">{t("nav.morning")}</h3>
-                  <p className="text-xs text-muted-foreground">{t("home.progress")}</p>
-                </div>
-              </div>
-              <ProgressBar value={progress.morning} color="bg-amber-500" />
-            </CardContent>
-          </Card>
-        </Link>
+      {/* Adhkar Hub Grid */}
+      <div className="pt-2">
+        <h2 className="text-xl font-bold text-foreground mb-4 px-1">{t("nav.adhkar")}</h2>
+        <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <HubCard 
+            href="/morning"
+            titleKey="nav.morning"
+            Icon={Sun}
+            color="bg-amber-500"
+            description="home.morning_desc"
+          />
+          <HubCard 
+            href="/evening"
+            titleKey="nav.evening"
+            Icon={Moon}
+            color="bg-indigo-600"
+            description="home.evening_desc"
+          />
+          <HubCard 
+            href="/sleep"
+            titleKey="nav.sleep"
+            Icon={Bed}
+            color="bg-slate-800"
+            description="home.sleep_desc"
+          />
+          <HubCard 
+            href="/prayer"
+            titleKey="nav.prayer"
+            Icon={Clock}
+            color="bg-emerald-600"
+            description="home.prayer_desc"
+          />
+          <HubCard 
+            href="/ruqyah"
+            titleKey="nav.ruqyah"
+            Icon={Heart}
+            color="bg-teal-500"
+            description="adhkar_hub.ruqyah_desc"
+          />
+          <HubCard 
+            href="/morning-ruqyah"
+            titleKey="nav.merged_morning"
+            Icon={Shield}
+            color="bg-rose-500"
+            description="home.merged_morning_desc"
+          />
+          <HubCard 
+            href="/evening-ruqyah"
+            titleKey="nav.merged_evening"
+            Icon={Shield}
+            color="bg-fuchsia-600"
+            description="home.merged_evening_desc"
+          />
+          <HubCard 
+            href="/quran"
+            titleKey="nav.quran"
+            Icon={BookOpen}
+            color="bg-teal-600"
+            description="quran.subtitle"
+          />
+          <HubCard 
+            href="/fasting"
+            titleKey="nav.fasting"
+            Icon={Clock}
+            color="bg-orange-600"
+            description="fasting.white_days_desc"
+          />
+          <HubCard 
+            href="/sunan"
+            titleKey="nav.sunan"
+            Icon={StarIcon}
+            color="bg-amber-600"
+            description="home.sunan_desc"
+          />
+          <HubCard 
+            href="/daily-supplications"
+            titleKey="nav.daily_supplications"
+            Icon={Clock}
+            color="bg-rose-500"
+            description="home.daily_supplications_desc"
+          />
+        </div>
+      </div>
 
-        <Link href="/evening">
-          <Card className="hover:border-blue-400/50 transition-colors cursor-pointer group h-full">
-            <CardContent className="p-5 flex flex-col h-full justify-between gap-5">
-              <div className="flex items-start justify-between">
-                <div className="p-2.5 bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-xl group-hover:scale-110 transition-transform">
-                  <Moon className="w-5 h-5" />
+      {/* Download Mobile App Banner */}
+      <div className="pt-6 px-2">
+        <Link href="/download">
+          <Card className="cursor-pointer relative overflow-hidden border border-primary/10 bg-gradient-to-br from-primary/10 via-primary/5 to-background shadow-md rounded-[2rem] group hover:ring-2 hover:ring-primary/20 transition-all duration-300">
+            <CardContent className="p-6 relative z-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-start">
+                <div className="shrink-0 w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center">
+                  <Smartphone className="w-6 h-6" />
                 </div>
-                <div className="text-end">
-                  <h3 className="font-heading font-bold">{t("nav.evening")}</h3>
-                  <p className="text-xs text-muted-foreground">{t("home.progress")}</p>
+                <div className="space-y-1">
+                  <h3 className="font-bold text-lg leading-tight text-foreground">
+                    <TranslatedText
+                      text="تطبيق الهاتف المحمول"
+                      staticTranslation={i18n.language === 'ar' ? "تطبيق الهاتف المحمول" : "Download Mobile App"}
+                      keepArabic={false}
+                    />
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    <TranslatedText
+                      text="احمل وردك اليومي ومواقيت الصلاة في جيبك بدون إنترنت"
+                      staticTranslation={i18n.language === 'ar' ? "احمل وردك اليومي ومواقيت الصلاة في جيبك بدون إنترنت" : "Carry your daily remembrances and prayer times offline"}
+                      keepArabic={false}
+                    />
+                  </p>
                 </div>
               </div>
-              <ProgressBar value={progress.evening} color="bg-blue-500" />
+              <div className="bg-primary text-primary-foreground px-5 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
+                <TranslatedText
+                  text="تحميل الآن"
+                  staticTranslation={i18n.language === 'ar' ? "تحميل الآن" : "Download Now"}
+                  keepArabic={false}
+                />
+              </div>
             </CardContent>
           </Card>
         </Link>
+      </div>
+
+      {/* Dark Emerald & Gold About Us Card */}
+      <div className="pt-12 px-2 pb-16">
+        <Card className="relative overflow-hidden border border-emerald-500/20 bg-gradient-to-br from-[#0c2419] via-[#123122] to-[#081810] text-white shadow-xl rounded-[2rem] group">
+          <div className="absolute inset-0 opacity-10 pointer-events-none" 
+               style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+          <CardContent className="p-6 md:p-8 relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-3 text-center md:text-right flex-1">
+                <TranslatedText
+                  text="عن مركز الأذكار"
+                  staticTranslation={getTranslation(t, "settings.about_us_title", i18n.language) || undefined}
+                  keepArabic={false}
+                  arabicClassName="text-2xl md:text-3xl font-heading font-black text-amber-200 drop-shadow-sm text-center md:text-right"
+                  translationClassName="text-amber-200/90 leading-relaxed text-base md:text-lg font-heading font-black border-t-0 pt-0 mt-1 text-center md:text-right"
+                />
+                
+                <TranslatedText
+                  text="منصة متكاملة للأذكار اليومية والقرآن ومواقيت الصلاة، صُممت لتكون صدقة جارية تخدم المسلم في يومه وليله."
+                  staticTranslation={getTranslation(t, "settings.about_us_content", i18n.language) || undefined}
+                  keepArabic={false}
+                  arabicClassName="text-emerald-100/90 leading-relaxed text-sm md:text-base font-medium max-w-2xl text-center md:text-right block"
+                  translationClassName="text-emerald-100/80 leading-relaxed text-xs md:text-sm font-medium max-w-2xl text-center md:text-right block border-t border-white/10 pt-2.5 mt-2.5"
+                />
+              </div>
+              <div className="bg-[#c9a84c]/10 backdrop-blur-md rounded-2xl p-6 border border-[#c9a84c]/20 shadow-inner group-hover:scale-105 transition-transform duration-300">
+                <Heart className="w-12 h-12 md:w-14 md:h-14 text-[#c9a84c] fill-[#c9a84c]/50 animate-pulse" />
+              </div>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center md:justify-between gap-4">
+              <div className="flex gap-3 flex-wrap justify-center">
+                <div className="px-5 py-1.5 bg-[#c9a84c]/15 backdrop-blur-sm rounded-full border border-[#c9a84c]/20 flex flex-col items-center">
+                  <TranslatedText
+                    text="صدقة جارية"
+                    staticTranslation={getTranslation(t, "home.sadaqa_jariya", i18n.language) || undefined}
+                    keepArabic={false}
+                    arabicClassName="text-[9px] font-black uppercase tracking-widest text-amber-200/90 block text-center"
+                    translationClassName="text-[8px] font-bold text-amber-200/70 block text-center border-t-0 pt-0 mt-0.5"
+                  />
+                </div>
+                <div className="px-5 py-1.5 bg-[#c9a84c]/15 backdrop-blur-sm rounded-full border border-[#c9a84c]/20 flex flex-col items-center">
+                  <TranslatedText
+                    text="صُنع بحب لأمة الإسلام"
+                    staticTranslation={getTranslation(t, "home.made_with_love", i18n.language) || undefined}
+                    keepArabic={false}
+                    arabicClassName="text-[9px] font-black uppercase tracking-widest text-amber-200/90 block text-center"
+                    translationClassName="text-[8px] font-bold text-amber-200/70 block text-center border-t-0 pt-0 mt-0.5"
+                  />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 }
 
-function ProgressBar({ value, color }: { value: number; color: string }) {
-  const { t } = useTranslation();
-  return (
-    <div className="space-y-1.5">
-      <div className="flex justify-between text-xs">
-        <span className="text-muted-foreground tabular-nums">{Math.round(value)}%</span>
-        <span className={cn("font-medium", value === 100 ? "text-primary" : "text-muted-foreground")}>
-          {value === 100 ? t("home.completed") : t("home.start")}
-        </span>
-      </div>
-      <div className="h-2 bg-muted rounded-full overflow-hidden">
-        <motion.div
-          className={cn("h-full rounded-full", color)}
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
-      </div>
-    </div>
-  );
-}
+function HubCard({ href, titleKey, Icon, color, description }: {
+  href: string; titleKey: string; Icon: React.ComponentType<{ className?: string }>; color: string; description: string;
+}) {
+  const { t, i18n } = useTranslation();
+  const arabicTitle = t(titleKey, { lng: "ar" });
+  const arabicDescription = t(description, { lng: "ar" });
 
-function ClockIcon({ className }: { className?: string }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
+    <Link href={href} aria-label={t(titleKey)}>
+      <motion.div
+        whileHover={{ y: -5 }}
+        whileTap={{ scale: 0.98 }}
+        className="cursor-pointer"
+      >
+        <Card className="overflow-hidden border-none shadow-md h-full rounded-3xl bg-card hover:ring-2 hover:ring-primary/20 transition-all">
+          <CardContent className="p-5 flex flex-col gap-3 h-full">
+            <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg", color)}>
+              <Icon className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="font-bold text-lg leading-tight">
+                <TranslatedText
+                  text={arabicTitle}
+                  staticTranslation={getTranslation(t, titleKey, i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                <TranslatedText
+                  text={arabicDescription}
+                  staticTranslation={getTranslation(t, description, i18n.language) || undefined}
+                  keepArabic={false}
+                  inline
+                />
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </Link>
   );
-}
-
-function getTimeRemaining(now: Date, target: Date): string {
-  const diff = target.getTime() - now.getTime();
-  if (diff <= 0) return "00:00:00";
-  const h = Math.floor(diff / (1000 * 60 * 60));
-  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const s = Math.floor((diff % (1000 * 60)) / 1000);
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }

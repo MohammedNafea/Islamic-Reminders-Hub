@@ -1,9 +1,19 @@
+import { getSettings } from "./store";
+
 export interface HijriDate {
   year: number;
   month: number;
   day: number;
   monthName: string;
   monthNameEn: string;
+}
+
+function getHijriOffset(): number {
+  try {
+    return getSettings().hijriOffset ?? 0;
+  } catch {
+    return 0;
+  }
 }
 
 export const hijriMonthsAr = [
@@ -28,6 +38,8 @@ function parseArabicNum(s: string): number {
 }
 
 export function toHijri(date: Date): HijriDate {
+  const offset = getHijriOffset();
+  const adjustedDate = offset === 0 ? date : new Date(date.getTime() + offset * 24 * 60 * 60 * 1000);
   try {
     const formatter = new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura", {
       year: "numeric",
@@ -35,11 +47,11 @@ export function toHijri(date: Date): HijriDate {
       day: "numeric",
       numberingSystem: "latn",
     } as Intl.DateTimeFormatOptions);
-    const parts = formatter.formatToParts(date);
+    const parts = formatter.formatToParts(adjustedDate);
     const year = parseArabicNum(parts.find(p => p.type === "year")?.value ?? "0");
     const month = parseArabicNum(parts.find(p => p.type === "month")?.value ?? "0");
     const day = parseArabicNum(parts.find(p => p.type === "day")?.value ?? "0");
-    if (!year || !month || !day) return fallbackHijri(date);
+    if (!year || !month || !day) return fallbackHijri(adjustedDate);
     return {
       year,
       month,
@@ -48,7 +60,7 @@ export function toHijri(date: Date): HijriDate {
       monthNameEn: hijriMonthsEn[month - 1] ?? "",
     };
   } catch {
-    return fallbackHijri(date);
+    return fallbackHijri(adjustedDate);
   }
 }
 
@@ -85,7 +97,6 @@ function jdToHijri(jd: number): { year: number; month: number; day: number } {
 }
 
 export function formatHijriDate(h: HijriDate, lang = "ar"): string {
-  const dayName = lang === "ar" ? "" : "";
   if (lang === "ar") {
     return `${h.day} ${h.monthName} ${h.year}هـ`;
   }
@@ -122,5 +133,35 @@ export function hijriToGregorian(hYear: number, hMonth: number, hDay: number): D
   const llll = Math.floor(j / 11);
   const month = j + 2 - 12 * llll;
   const year = 100 * (n - 49) + i + llll;
-  return new Date(year, month - 1, day);
+  const baseDate = new Date(year, month - 1, day);
+  
+  const offset = getHijriOffset();
+  if (offset === 0) return baseDate;
+  return new Date(baseDate.getTime() - offset * 24 * 60 * 60 * 1000);
+}
+
+export function isFastingDay(h: HijriDate, g: Date): string | null {
+  // Arafah: 9 Dhul Hijjah
+  if (h.month === 12 && h.day === 9) return "arafah";
+  // Ashura: 10 Muharram
+  if (h.month === 1 && h.day === 10) return "ashura";
+  // Tasua: 9 Muharram
+  if (h.month === 1 && h.day === 9) return "tasua";
+  // White Days: 13, 14, 15 of every Hijri month
+  if (h.day >= 13 && h.day <= 15) return "white_days";
+  // Dhul Hijjah first 9 days
+  if (h.month === 12 && h.day >= 1 && h.day <= 9) return "dhul_hijjah";
+  // Shawwal 6 days (approximate for display)
+  if (h.month === 10 && h.day >= 2 && h.day <= 7) return "shawwal";
+  
+  // Monday/Thursday
+  const day = g.getDay();
+  if (day === 1) return "monday";
+  if (day === 4) return "thursday";
+  
+  return null;
+}
+
+export function isHijamaDay(h: HijriDate): boolean {
+  return h.day === 17 || h.day === 19 || h.day === 21;
 }

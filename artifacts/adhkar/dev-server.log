@@ -1,0 +1,7 @@
+
+> @workspace/adhkar@0.0.0 dev D:\Islamic-Reminders-Hub\artifacts\adhkar
+> vite --config vite.config.ts --host 0.0.0.0
+
+D:\Islamic-Reminders-Hub\artifacts\adhkar:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/adhkar@0.0.0 dev: `vite --config vite.config.ts --host 0.0.0.0`
+Exit status 1

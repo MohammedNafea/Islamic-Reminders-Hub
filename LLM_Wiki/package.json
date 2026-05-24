@@ -1,0 +1,32 @@
+{
+  "name": "@workspace/llm-wiki",
+  "version": "1.0.0",
+  "description": "MCP server and automation scripts for LLM Wiki knowledge base management",
+  "type": "module",
+  "main": "dist/mcp-wiki-server.js",
+  "scripts": {
+    "start": "node dist/mcp-wiki-server.js",
+    "dev": "tsx watch scripts/mcp-wiki-server.ts",
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "ingest": "node scripts/knowledge-pipeline.cjs",
+    "ingest:dry": "node scripts/knowledge-pipeline.cjs --dry-run",
+    "lint": "tsx scripts/wiki-linter.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "canvas": "^3.2.3",
+    "express": "^5",
+    "pdf-parse": "^2.4.5",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "^5.7.2"
+  }
+}

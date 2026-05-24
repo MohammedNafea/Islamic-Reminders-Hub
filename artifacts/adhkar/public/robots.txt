@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://islamic-reminders-hub.vercel.app/sitemap.xml

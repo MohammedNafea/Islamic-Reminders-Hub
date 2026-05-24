@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "Ислам орталығы", tagline: "Күнделікті рухани серігіңіз" },
+  nav: { home: "Басты бет", adhkar: "Азкарлар", morning: "Таңғы азкарлар", evening: "Кешкі азкарлар", both: "Таңғы және кешкі", sleep: "Ұйқы азкарлары", prayer: "Намаз азкарлары", ruqyah: "Руқия", times: "Намаз уақыттары", fasting: "Ораза күндері", tasbih: "Тасбих", settings: "Баптаулар", hadith: "Хадис және фатуалар", quran: "Құран", qibla: "Қибла", zakat: "Зекет", favorites: "Таңдаулылар", search: "Іздеу" },
+  home: { greeting_morning: "Қайырлы таң", greeting_evening: "Қайырлы кеш", greeting_night: "Қайырлы түн", today: "Бүгін", progress: "Бүгінгі ілгерілеу", completed: "аяқталды", start: "Бастау" },
+  prayer: { fajr: "Фажр", sunrise: "Күн шығу", dhuhr: "Зухр", asr: "Аср", maghrib: "Мағрыб", isha: "Иша", next: "Келесі намаз", remaining: "Қалған уақыт", location: "Сіздің орныңыз", location_required: "Орын рұқсатын беріңіз", allow_location: "Рұқсат беру", enter_city: "Қаланы енгізіңіз", calculation_method: "Есептеу әдісі", methods: { MuslimWorldLeague: "Мұсылман Әлем Лигасы", Egyptian: "Мысыр билігі", Karachi: "Карачи университеті", UmmAlQura: "Умм Аль-Кура", Dubai: "Дубай", NorthAmerica: "Солтүстік Америка", Kuwait: "Кувейт", Qatar: "Қатар", Singapore: "Сингапур", Turkey: "Түркия" }, last_third: "Түннің соңғы үштен бірі", imsak: "Имсак" },
+  dhikr: { count: "Сан", times: "рет", source: "Дереккөз", tap_to_count: "Санау үшін басыңыз", completed_msg: "Аяқталды!", reset: "Қалпына келтіру", reset_all: "Барлығын қалпына келтіру", morning_form: "Таңғы нысан", evening_form: "Кешкі нысан", note: "Ескерту", benefit: "Пайда" },
+  tasbih: { title: "Еркін тасбих", count: "Ағымдағы сан", target: "Мақсат", set_target: "Мақсат қою", reset: "Қалпына келтіру", vibrate: "Дірілдеу", sound: "Дыбыс", custom: "Жеке", saved: "Сақталды" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Сүннет ораза күндері", white_days: "Ақ күндер", white_days_desc: "Хижра бойынша ай сайын 13, 14, 15", white_days_hadith: "Ай сайын 3 күн ораза тұту мәңгілік ораза тұтқандай", arafah: "Арафа күні", arafah_desc: "Зулхижжа 9", arafah_hadith: "Арафа оразасы өткен және келер жылдың күнәсін кешіреді", monday: "Дүйсенбі", monday_desc: "Апта сайын дүйсенбі", monday_hadith: "Мен туылған және уахи түскен күн", thursday: "Бейсенбі", thursday_desc: "Апта сайын бейсенбі", thursday_hadith: "Амалдар дүйсенбі мен бейсенбі ұсынылады", shawwal: "Шәууәлдің 6 күні", shawwal_desc: "Айт мерекесінен кейін 6 күн", shawwal_hadith: "Рамазан мен 6 күн ораза тұтқан мәңгілік ораза тұтқандай", upcoming: "Алдағы", today_fasting: "Бүгін", passed: "Өткен", gregorian_date: "Милади", hijri_date: "Хижра", days_remaining: "{{days}} күн қалды", days_passed: "{{days}} күн бұрын", monthly: "Айлық", weekly: "Апталық", yearly: "Жылдық" },
+  dates: { hijri: "Х", gregorian: "М", days: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"] },
+  settings: { title: "Баптаулар", language: "Тіл", theme: "Тақырып", dark: "Қараңғы", light: "Жарық", system: "Жүйе", calculation: "Есептеу әдісі", font_size: "Қаріп өлшемі", notifications: "Хабарландырулар" },
+  common: { loading: "Жүктелуде...", error: "Қате орын алды", retry: "Қайталау", close: "Жабу", save: "Сақтау", cancel: "Болдырмау", done: "Дайын", search: "Іздеу", share: "Бөлісу", copied: "Көшірілді", copy: "Көшіру", of: "/", back: "Артқа" },
+  hadith: { title: "Хадис және фатуалар", subtitle: "Хадистер, фатуалар және ғылыми көзқарастар энциклопедиясы", search_placeholder: "Хадис, фатуа немесе кілт сөз іздеңіз...", loading_data: "Деректер жүктелуде...", no_results: "Нәтиже табылмады", try_another_search: "Басқа сөз іздеп көріңіз", cat_all: "Барлығы", cat_tafsir: "Тафсир", cat_creed: "Ақида", cat_fiqh: "Фиқх", cat_hadith: "Хадис", cat_ethics: "Адеп", cat_general: "Жалпы" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

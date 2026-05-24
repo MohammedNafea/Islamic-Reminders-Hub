@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "Cibiyar Musulunci", tagline: "Abokin Ruhaniyar Yau da Kullum" },
+  nav: { home: "Gida", adhkar: "Azkar", morning: "Azkarin Safe", evening: "Azkarin Yamma", both: "Safe da Yamma", sleep: "Azkarin Barci", prayer: "Azkarin Sallah", ruqyah: "Ruƙiyya", times: "Lokutan Sallah", fasting: "Ranakun Azumi", tasbih: "Tasbih", settings: "Saituna", hadith: "Hadisi da Hukunce-hukunce", quran: "Alƙur'ani", qibla: "Alƙibla", zakat: "Zakka", favorites: "Zaɓaɓɓu", search: "Bincike" },
+  home: { greeting_morning: "Barka da safe", greeting_evening: "Barka da yamma", greeting_night: "Barka da dare", today: "Yau", progress: "Ci gaban yau", completed: "an kammala", start: "Fara" },
+  prayer: { fajr: "Asuba", sunrise: "Fitowar rana", dhuhr: "Azahar", asr: "La'asar", maghrib: "Magariba", isha: "Isha'i", next: "Sallah mai zuwa", remaining: "Lokaci da ya rage", location: "Wurin ku", location_required: "A ba da izinin wuri", allow_location: "Ba da izini", enter_city: "Shigar da birni", calculation_method: "Hanyar lissafi", methods: { MuslimWorldLeague: "Ƙungiyar Duniyar Musulunci", Egyptian: "Hukumar Masar", Karachi: "Jami'ar Karachi", UmmAlQura: "Ummul Ƙura", Dubai: "Dubai", NorthAmerica: "Arewacin Amurka", Kuwait: "Kuwait", Qatar: "Qatar", Singapore: "Singapore", Turkey: "Turkiyya" }, last_third: "Kashi uku na ƙarshen dare", imsak: "Imsak" },
+  dhikr: { count: "Adadi", times: "sau", source: "Tushe", tap_to_count: "Taɓa don ƙidaya", completed_msg: "An kammala!", reset: "Sake saiti", reset_all: "Sake duka", morning_form: "Sigar safe", evening_form: "Sigar yamma", note: "Bayani", benefit: "Fa'ida" },
+  tasbih: { title: "'Yantaccen Tasbih", count: "Adadin yanzu", target: "Manufa", set_target: "Saita manufa", reset: "Sake saiti", vibrate: "Girgiza", sound: "Sauti", custom: "Na musamman", saved: "An ajiye" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Ranakun Azumin Sunnah", white_days: "Ranaku farare", white_days_desc: "13, 14 da 15 ga kowane wata na Hijira", white_days_hadith: "Azumin kwanaki 3 a kowane wata kamar azumin har abada", arafah: "Ranar Arafa", arafah_desc: "9 ga Zulhijja", arafah_hadith: "Azumin Arafa yana kaffara zunuban shekarar da ta gabata da mai zuwa", monday: "Litinin", monday_desc: "Kowace Litinin", monday_hadith: "Ranar da aka haife ni kuma aka saukar da wahayi", thursday: "Alhamis", thursday_desc: "Kowace Alhamis", thursday_hadith: "Ana gabatar da ayyuka ranar Litinin da Alhamis", shawwal: "Kwanaki 6 na Shawwal", shawwal_desc: "Kwanaki 6 bayan Sallah", shawwal_hadith: "Wanda ya yi azumin Ramadan da kwanaki 6 kamar ya yi azumi har abada", upcoming: "Mai zuwa", today_fasting: "Yau", passed: "Ya wuce", gregorian_date: "Miladi", hijri_date: "Hijira", days_remaining: "Kwanaki {{days}} suka rage", days_passed: "Kwanaki {{days}} da suka wuce", monthly: "Na wata", weekly: "Na mako", yearly: "Na shekara" },
+  dates: { hijri: "H", gregorian: "M", days: ["Lahadi", "Litinin", "Talata", "Laraba", "Alhamis", "Jumu'a", "Asabar"] },
+  settings: { title: "Saituna", language: "Harshe", theme: "Jigo", dark: "Duhu", light: "Haske", system: "Tsarin", calculation: "Hanyar lissafi", font_size: "Girman rubutu", notifications: "Sanarwa" },
+  common: { loading: "Ana lodawa...", error: "Kuskure ya faru", retry: "Sake gwadawa", close: "Rufe", save: "Ajiye", cancel: "Soke", done: "An gama", search: "Bincike", share: "Raba", copied: "An kwafi", copy: "Kwafi", of: "na", back: "Komawa" },
+  hadith: { title: "Hadisi da Hukunce-hukunce", subtitle: "Ƙunshiyar hadisai, hukunce-hukunce da ra'ayoyin kimiyya", search_placeholder: "Nemo hadisi, hukunci ko kalma...", loading_data: "Ana loda bayanan...", no_results: "Ba a sami sakamako ba", try_another_search: "Gwada wata kalma", cat_all: "Duka", cat_tafsir: "Tafsiri", cat_creed: "Aƙida", cat_fiqh: "Fiƙihu", cat_hadith: "Hadisi", cat_ethics: "Ahlaki", cat_general: "Gabaɗaya" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

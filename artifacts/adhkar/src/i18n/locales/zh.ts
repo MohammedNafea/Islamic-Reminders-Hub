@@ -1,12 +1,27 @@
-export default {
+﻿export default {
   app: { name: "伊斯兰赞念", tagline: "持续的慈善" },
   nav: { home: "首页", morning: "晨礼赞念", evening: "昏礼赞念", both: "早晚赞念", sleep: "睡前赞念", prayer: "礼拜赞念", ruqyah: "古兰治疗", times: "礼拜时间", fasting: "逊奈斋戒日", tasbih: "赞念计数" },
   home: { greeting_morning: "早上好", greeting_evening: "晚上好", greeting_night: "晚安", today: "今天", progress: "今日进度", completed: "已完成", start: "开始" },
   prayer: { fajr: "晨礼", sunrise: "日出", dhuhr: "晌礼", asr: "脯礼", maghrib: "昏礼", isha: "宵礼", next: "下一次礼拜", remaining: "剩余时间", location: "您的位置", location_required: "请允许访问您的位置", allow_location: "允许", enter_city: "输入城市", calculation_method: "计算方法", methods: { MuslimWorldLeague: "伊斯兰世界联盟", Egyptian: "埃及当局", Karachi: "卡拉奇大学", UmmAlQura: "乌姆古拉", Dubai: "迪拜", NorthAmerica: "北美", Kuwait: "科威特", Qatar: "卡塔尔", Singapore: "新加坡", Turkey: "土耳其" }, last_third: "后三分之一夜", imsak: "封斋时间" },
   dhikr: { count: "次数", times: "次", source: "来源", tap_to_count: "点击计数", completed_msg: "太棒了！赞念完成", reset: "重置", reset_all: "全部重置", morning_form: "晨间形式", evening_form: "晚间形式", note: "注意", benefit: "美德" },
   tasbih: { title: "自由赞念", count: "当前计数", target: "目标", set_target: "设置目标", reset: "重置", vibrate: "振动", sound: "声音", custom: "自定义", saved: "已保存" },
-  fasting: { title: "逊奈斋戒日", white_days: "白色日子", white_days_desc: "每个伊斯兰月的13、14和15日", white_days_hadith: "每月斋戒三天如同斋戒一生", arafah: "阿拉法特日", arafah_desc: "朝觉月9日", arafah_hadith: "斋戒阿拉法特日可赎去年和来年的罪孽", dhul_hijjah: "朝觉月前十天", dhul_hijjah_desc: "朝觉月1日至9日", dhul_hijjah_hadith: "没有比这十天更适合做善事的日子", ashura: "阿舒拉日", ashura_desc: "穆哈兰姆月10日", ashura_hadith: "斋戒阿舒拉日可赎去年的罪孽", tasua: "塔苏阿日", tasua_desc: "穆哈兰姆月9日", tasua_hadith: "如果我明年还在，我也要斋戒第9天", monday: "星期一", monday_desc: "每周一", monday_hadith: "那是我出生和天启降临的日子", thursday: "星期四", thursday_desc: "每周四", thursday_hadith: "善行在星期一和星期四呈献", shawwal: "斋月后六日", shawwal_desc: "开斋节后斋月六天", shawwal_hadith: "斋戒莱麦丹月后再斋戒六天，如同终生斋戒", shaban: "舍尔邦月", shaban_desc: "舍尔邦月的大部分", shaban_hadith: "这是人们疏忽的一个月", upcoming: "即将到来", today_fasting: "今天", passed: "已过", gregorian_date: "公历日期", hijri_date: "伊斯兰历日期", days_remaining: "剩余{{days}}天", days_passed: "{{days}}天前", monthly: "每月", weekly: "每周", yearly: "每年" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "逊奈斋戒日", white_days: "白色日子", white_days_desc: "每个伊斯兰月的13、14和15日", white_days_hadith: "每月斋戒三天如同斋戒一生", arafah: "阿拉法特日", arafah_desc: "朝觉月9日", arafah_hadith: "斋戒阿拉法特日可赎去年和来年的罪孽", dhul_hijjah: "朝觉月前十天", dhul_hijjah_desc: "朝觉月1日至9日", dhul_hijjah_hadith: "没有比这十天更适合做善事的日子", ashura: "阿舒拉日", ashura_desc: "穆哈兰姆月10日", ashura_hadith: "斋戒阿舒拉日可赎去年的罪孽", tasua: "塔苏阿日", tasua_desc: "穆哈兰姆月9日", tasua_hadith: "如果我明年还在，我也要斋戒第9天", monday: "星期一", monday_desc: "每周一", monday_hadith: "那是我出生和天启降临的日子", thursday: "星期四", thursday_desc: "每周四", thursday_hadith: "善行在星期一和星期四呈献", shawwal: "斋月后六日", shawwal_desc: "开斋节后斋月六天", shawwal_hadith: "斋戒莱麦丹月后再斋戒六天，如同终生斋戒", shaban: "舍尔邦月", shaban_desc: "舍尔邦月的大部分", shaban_hadith: "这是人们疏忽的一个月", upcoming: "即将到来", today_fasting: "今天", passed: "已过", gregorian_date: "公历日期", hijri_date: "伊斯兰历日期", days_remaining: "剩余{{days}}天", days_passed: "{{days}}天前", monthly: "每月", weekly: "每周", yearly: "每年" },
   dates: { hijri: "伊历", gregorian: "公元", days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"] },
   settings: { title: "设置", language: "语言", theme: "主题", dark: "深色", light: "浅色", system: "系统", calculation: "计算方法", font_size: "字体大小", notifications: "通知" },
   common: { loading: "加载中...", error: "发生错误", retry: "重试", close: "关闭", save: "保存", cancel: "取消", done: "完成", search: "搜索", share: "分享", copied: "已复制", copy: "复制", of: "共", back: "返回" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
 };

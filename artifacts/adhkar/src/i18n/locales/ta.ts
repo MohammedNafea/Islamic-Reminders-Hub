@@ -1,0 +1,28 @@
+﻿export default {
+  app: { name: "இஸ்லாமிக் ஹப்", tagline: "உங்கள் தினசரி ஆன்மீகத் தோழர்" },
+  nav: { home: "முகப்பு", adhkar: "அஸ்கார்", morning: "காலை அஸ்கார்", evening: "மாலை அஸ்கார்", both: "காலை & மாலை", sleep: "தூக்க அஸ்கார்", prayer: "தொழுகை அஸ்கார்", ruqyah: "ருக்யா", times: "தொழுகை நேரம்", fasting: "நோன்பு நாட்கள்", tasbih: "தஸ்பீஹ்", settings: "அமைப்புகள்", hadith: "ஹதீஸ் & ஃபிக்ஹ்", quran: "குர்ஆன்", qibla: "கிப்லா", zakat: "ஜகாத்", favorites: "பிடித்தவை", search: "தேடு" },
+  home: { greeting_morning: "காலை வணக்கம்", greeting_evening: "மாலை வணக்கம்", greeting_night: "இரவு வணக்கம்", today: "இன்று", progress: "இன்றைய முன்னேற்றம்", completed: "நிறைவு", start: "தொடங்கு" },
+  prayer: { fajr: "ஃபஜ்ர்", sunrise: "சூரிய உதயம்", dhuhr: "ளுஹ்ர்", asr: "அஸ்ர்", maghrib: "மக்ரிப்", isha: "இஷா", next: "அடுத்த தொழுகை", remaining: "மீதமுள்ள நேரம்", location: "உங்கள் இடம்", location_required: "இட அனுமதி வழங்கவும்", allow_location: "அனுமதி", enter_city: "நகரத்தை உள்ளிடவும்", calculation_method: "கணக்கீட்டு முறை", methods: { MuslimWorldLeague: "முஸ்லிம் உலக லீக்", Egyptian: "எகிப்திய அதிகாரம்", Karachi: "கராச்சி பல்கலைக்கழகம்", UmmAlQura: "உம்முல் குரா", Dubai: "துபாய்", NorthAmerica: "வட அமெரிக்கா", Kuwait: "குவைத்", Qatar: "கத்தார்", Singapore: "சிங்கப்பூர்", Turkey: "துருக்கி" }, last_third: "இரவின் கடைசி மூன்றில் ஒன்று", imsak: "இம்சாக்" },
+  dhikr: { count: "எண்ணிக்கை", times: "முறை", source: "ஆதாரம்", tap_to_count: "எண்ண தட்டவும்", completed_msg: "நிறைவு!", reset: "மீட்டமை", reset_all: "அனைத்தையும் மீட்டமை", morning_form: "காலை வடிவம்", evening_form: "மாலை வடிவம்", note: "குறிப்பு", benefit: "பயன்" },
+  tasbih: { title: "சுதந்திர தஸ்பீஹ்", count: "தற்போதைய எண்", target: "இலக்கு", set_target: "இலக்கு வை", reset: "மீட்டமை", vibrate: "அதிர்வு", sound: "ஒலி", custom: "தனிப்பயன்", saved: "சேமிக்கப்பட்டது" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "சுன்னா நோன்பு நாட்கள்", white_days: "வெள்ளை நாட்கள்", white_days_desc: "ஒவ்வொரு மாதமும் ஹிஜ்ரி 13, 14, 15", white_days_hadith: "ஒவ்வொரு மாதமும் 3 நாள் நோன்பு என்றும் நோன்பு போன்றது", arafah: "அரஃபா நாள்", arafah_desc: "துல்ஹிஜ்ஜா 9", arafah_hadith: "அரஃபா நோன்பு கடந்த மற்றும் வரும் ஆண்டின் பாவங்களை மன்னிக்கும்", monday: "திங்கள்", monday_desc: "ஒவ்வொரு திங்கள்", monday_hadith: "நான் பிறந்த மற்றும் வஹி இறங்கிய நாள்", thursday: "வியாழன்", thursday_desc: "ஒவ்வொரு வியாழன்", thursday_hadith: "செயல்கள் திங்கள் மற்றும் வியாழன் சமர்ப்பிக்கப்படுகின்றன", shawwal: "ஷவ்வாலின் 6 நாட்கள்", shawwal_desc: "பெருநாளுக்குப் பின் 6 நாட்கள்", shawwal_hadith: "ரமலான் மற்றும் 6 நாள் நோன்பு என்றும் நோன்பு போன்றது", upcoming: "வரவிருக்கும்", today_fasting: "இன்று", passed: "கடந்தது", gregorian_date: "கிரிகோரியன்", hijri_date: "ஹிஜ்ரி", days_remaining: "{{days}} நாட்கள் உள்ளன", days_passed: "{{days}} நாட்களுக்கு முன்", monthly: "மாதாந்திர", weekly: "வாராந்திர", yearly: "வருடாந்திர" },
+  dates: { hijri: "ஹி", gregorian: "கி", days: ["ஞாயிறு", "திங்கள்", "செவ்வாய்", "புதன்", "வியாழன்", "வெள்ளி", "சனி"] },
+  settings: { title: "அமைப்புகள்", language: "மொழி", theme: "தீம்", dark: "இருண்ட", light: "ஒளி", system: "சிஸ்டம்", calculation: "கணக்கீட்டு முறை", font_size: "எழுத்து அளவு", notifications: "அறிவிப்புகள்" },
+  common: { loading: "ஏற்றுகிறது...", error: "பிழை ஏற்பட்டது", retry: "மீண்டும் முயற்சி", close: "மூடு", save: "சேமி", cancel: "ரத்து", done: "முடிந்தது", search: "தேடு", share: "பகிர்", copied: "நகலெடுக்கப்பட்டது", copy: "நகலெடு", of: "/", back: "பின்செல்" },
+  hadith: { title: "ஹதீஸ் & ஃபிக்ஹ்", subtitle: "ஹதீஸ், ஃபிக்ஹ் மற்றும் அறிவியல் கருத்துக்கள் கலைக்களஞ்சியம்", search_placeholder: "ஹதீஸ், ஃபிக்ஹ் அல்லது சொல் தேடவும்...", loading_data: "தரவு ஏற்றுகிறது...", no_results: "முடிவுகள் இல்லை", try_another_search: "வேறு சொல்லை முயற்சிக்கவும்", cat_all: "அனைத்தும்", cat_tafsir: "தஃப்சீர்", cat_creed: "அகீதா", cat_fiqh: "ஃபிக்ஹ்", cat_hadith: "ஹதீஸ்", cat_ethics: "நெறிமுறை", cat_general: "பொது" },
+  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};

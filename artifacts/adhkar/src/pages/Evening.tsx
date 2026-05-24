@@ -3,7 +3,7 @@ import { DhikrList } from "@/components/DhikrList";
 import { adhkarMorningEvening, adhkarMorningVariant, adhkarEveningOnly } from "@/data/adhkar";
 
 export default function Evening() {
-  const { t } = useTranslation();
+  useTranslation();
   
   // Combine all evening adhkar
   const adhkar = [

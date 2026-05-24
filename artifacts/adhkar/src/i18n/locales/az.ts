@@ -1,0 +1,27 @@
+﻿export default {
+  app: { name: "İslam Mərkəzi", tagline: "Gündəlik Mənəvi Yoldaşınız" },
+  nav: { home: "Ana səhifə", adhkar: "Əzkarlar", morning: "Səhər əzkarları", evening: "Axşam əzkarları", both: "Səhər və Axşam", sleep: "Yuxu əzkarları", prayer: "Namaz əzkarları", ruqyah: "Rüqyə", times: "Namaz vaxtları", fasting: "Oruc günləri", tasbih: "Təsbih", settings: "Tənzimləmələr", hadith: "Hədis və Hökmlar", quran: "Quran", qibla: "Qiblə", zakat: "Zəkat", favorites: "Sevimlilər", search: "Axtar" },
+  home: { greeting_morning: "Sabahınız xeyir", greeting_evening: "Axşamınız xeyir", greeting_night: "Gecəniz xeyir", today: "Bu gün", progress: "Bugünkü irəliləyiş", completed: "tamamlandı", start: "Başla" },
+  prayer: { fajr: "Sübh", sunrise: "Gün çıxması", dhuhr: "Zöhr", asr: "Əsr", maghrib: "Məğrib", isha: "İşa", next: "Növbəti namaz", remaining: "Qalan vaxt", location: "Yeriniz", location_required: "Yer icazəsi verin", allow_location: "İcazə ver", enter_city: "Şəhər daxil edin", calculation_method: "Hesablama üsulu", methods: { MuslimWorldLeague: "Müsəlman Dünya Liqası", Egyptian: "Misir Rəsmiləri", Karachi: "Karaçi Universiteti", UmmAlQura: "Ümmül-Qura", Dubai: "Dubay", NorthAmerica: "Şimali Amerika", Kuwait: "Küveyt", Qatar: "Qətər", Singapore: "Sinqapur", Turkey: "Türkiyə" }, last_third: "Gecənin son üçdə biri", imsak: "İmsak" },
+  dhikr: { count: "Say", times: "dəfə", source: "Mənbə", tap_to_count: "Saymaq üçün toxunun", completed_msg: "Tamamlandı!", reset: "Sıfırla", reset_all: "Hamısını sıfırla", morning_form: "Səhər forması", evening_form: "Axşam forması", note: "Qeyd", benefit: "Fayda" },
+  tasbih: { title: "Sərbəst Təsbih", count: "Cari say", target: "Hədəf", set_target: "Hədəf qoy", reset: "Sıfırla", vibrate: "Titrəmə", sound: "Səs", custom: "Fərdi", saved: "Saxlanıldı" },
+  fasting: {
+    sources: {
+      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      arafah: "Narrated by Muslim",
+      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
+      ashura: "Narrated by Muslim from Abu Qatadah",
+      tasu_a: "Narrated by Muslim from Ibn Abbas",
+      monday: "Narrated by Muslim from Abu Qatadah",
+      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
+      shawwal_6: "Narrated by Muslim from Abu Ayyub",
+      shaban: "Narrated by Al-Bukhari and Muslim",
+    }, title: "Sünnə oruc günləri", white_days: "Ağ günlər", white_days_desc: "Hər ay Hicri 13, 14 və 15", white_days_hadith: "Hər ay 3 gün oruc tutmaq ömür boyu oruc tutmaq kimidir", arafah: "Ərəfə günü", arafah_desc: "Zülhiccə 9", arafah_hadith: "Ərəfə orucu keçmiş və gələn ilin günahlarını silir", monday: "Bazar ertəsi", monday_desc: "Hər həftə bazar ertəsi", monday_hadith: "Doğulduğum və vəhy endirilən gün", thursday: "Cümə axşamı", thursday_desc: "Hər həftə cümə axşamı", thursday_hadith: "Əməllər bazar ertəsi və cümə axşamı təqdim olunur", shawwal: "Şəvvalın 6 günü", shawwal_desc: "Bayramdan sonra 6 gün", shawwal_hadith: "Ramazan və 6 gün oruc tutan əbədi oruc tutmuş kimidir", upcoming: "Gələcək", today_fasting: "Bu gün", passed: "Keçmiş", gregorian_date: "Miladi", hijri_date: "Hicri", days_remaining: "{{days}} gün qalıb", days_passed: "{{days}} gün əvvəl", monthly: "Aylıq", weekly: "Həftəlik", yearly: "İllik" },
+  dates: { hijri: "H", gregorian: "M", days: ["Bazar", "Bazar ertəsi", "Çərşənbə axşamı", "Çərşənbə", "Cümə axşamı", "Cümə", "Şənbə"] },
+  settings: { title: "Tənzimləmələr", language: "Dil", theme: "Mövzu", dark: "Qaranlıq", light: "İşıqlı", system: "Sistem", calculation: "Hesablama üsulu", font_size: "Şrift ölçüsü", notifications: "Bildirişlər" },
+  common: { loading: "Yüklənir...", error: "Xəta baş verdi", retry: "Yenidən cəhd et", close: "Bağla", save: "Saxla", cancel: "Ləğv et", done: "Hazırdır", search: "Axtar", share: "Paylaş", copied: "Kopyalandı", copy: "Kopyala", of: "/", back: "Geri" },
+  hadith: { title: "Hədis və Hökmlar", subtitle: "Hədislər, hökmlar və elmi baxışlar ensiklopediyası", search_placeholder: "Hədis, hökm və ya açar söz axtar...", loading_data: "Məlumatlar yüklənir...", no_results: "Nəticə tapılmadı", try_another_search: "Başqa sözlərlə axtarın", cat_all: "Hamısı", cat_tafsir: "Təfsir", cat_creed: "Əqidə", cat_fiqh: "Fiqh", cat_hadith: "Hədis", cat_ethics: "Əxlaq", cat_general: "Ümumi" },  adhkar: { sources: {}, notes: {}, items: {} },
+  quran: { title: 'Quran', subtitle: 'Blessed verses', verse_of_hour: 'Verse of the Hour', meccan: 'Meccan', medinan: 'Medinan', last_read: 'Last Read', daily: {} },
+  salawat: { title: 'Salawat on Prophet', virtue: 'Virtues of Salawat' },
+  adhkar_hub: { title: 'Adhkar Hub', subtitle: 'Daily Remembrance & Protection', morning_desc: 'Morning protection and blessings', evening_desc: 'Evening peace and protection', sleep_desc: 'Prophetic Sunnah before sleep', prayer_desc: 'Remembrances after the prayer', ruqyah_desc: 'Healing and Protection from Quran', post_prayer: 'Post-Prayer Adhkar' },
+};
