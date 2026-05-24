@@ -280,7 +280,15 @@ export default {
       alhamdulillah_prayer_33: "All praise is for Allah",
       allahu_akbar_prayer_33: "Allah is the Greatest",
       salawat_100_prayer: "O Allah, send blessings and peace upon our Prophet Muhammad",
-      salawat_100: "O Allah, send blessings and peace upon our Prophet Muhammad"
+      salawat_100: "O Allah, send blessings and peace upon our Prophet Muhammad",
+      ruqyah_baqarah_intro: "Alif, Lam, Meem. This is the Book about which there is no doubt, a guidance for those conscious of Allah - Who believe in the unseen, establish prayer, and spend out of what We have provided for them, And who believe in what has been revealed to you, [O Muhammad], and what was revealed before you, and of the Hereafter they are certain [in faith]. Those are upon [right] guidance from their Lord, and it is those who are the successful.",
+      ruqyah_sihr_arafah: "And We inspired to Moses, \"Throw your staff,\" and at once it swallowed up what they were falsifying. So the truth was established, and abolished was what they were doing. And they were defeated there and returned debased. And the magicians fell down in prostration [to Allah]. They said, \"We believe in the Lord of the worlds, The Lord of Moses and Aaron.\"",
+      ruqyah_sihr_yunus: "And when they had thrown, Moses said, \"What you have brought is [only] magic. Indeed, Allah will expose its worthlessness. Indeed, Allah does not amend the work of corrupters. And Allah will establish the truth by His words, even if the criminals dislike it.\"",
+      ruqyah_sihr_taha: "And throw what is in your right hand; it will swallow up what they have crafted. What they have crafted is only the trick of a magician, and the magician will not succeed wherever he is.",
+      ruqyah_ain_qalam: "And indeed, those who disbelieve would almost make you slip with their eyes when they hear the message, and they say, \"Indeed, he is mad.\" But it is not except a reminder to the worlds.",
+      ruqyah_yabrik: "In the name of Allah He heals you, and from every illness He cures you, and from the evil of the envious when he envies, and from the evil of every possessor of an evil eye.",
+      ruqyah_faza_shayatin: "I seek refuge in the perfect words of Allah from His anger, His punishment, the evil of His servants, and from the evil suggestions of the devils and from their presence.",
+      ruqyah_khambash: "I seek refuge in the perfect words of Allah, which neither the righteous nor the wicked can transcend, from the evil of what He has created, of what He has scattered on Earth, and of what He has originated. And from the evil of what descends from the sky, and from the evil of what ascends into it. And from the evil of what is scattered in the Earth, and from the evil of what emerges from it. And from the evil of the trials of night and day, and from the evil of every night-visitor except one who brings good, O Entirely Merciful."
     }
   },
   dates: {
