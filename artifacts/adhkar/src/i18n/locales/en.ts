@@ -288,7 +288,10 @@ export default {
       ruqyah_ain_qalam: "And indeed, those who disbelieve would almost make you slip with their eyes when they hear the message, and they say, \"Indeed, he is mad.\" But it is not except a reminder to the worlds.",
       ruqyah_yabrik: "In the name of Allah He heals you, and from every illness He cures you, and from the evil of the envious when he envies, and from the evil of every possessor of an evil eye.",
       ruqyah_faza_shayatin: "I seek refuge in the perfect words of Allah from His anger, His punishment, the evil of His servants, and from the evil suggestions of the devils and from their presence.",
-      ruqyah_khambash: "I seek refuge in the perfect words of Allah, which neither the righteous nor the wicked can transcend, from the evil of what He has created, of what He has scattered on Earth, and of what He has originated. And from the evil of what descends from the sky, and from the evil of what ascends into it. And from the evil of what is scattered in the Earth, and from the evil of what emerges from it. And from the evil of the trials of night and day, and from the evil of every night-visitor except one who brings good, O Entirely Merciful."
+      ruqyah_khambash: "I seek refuge in the perfect words of Allah, which neither the righteous nor the wicked can transcend, from the evil of what He has created, of what He has scattered on Earth, and of what He has originated. And from the evil of what descends from the sky, and from the evil of what ascends into it. And from the evil of what is scattered in the Earth, and from the evil of what emerges from it. And from the evil of the trials of night and day, and from the evil of every night-visitor except one who brings good, O Entirely Merciful.",
+      ruqyah_jibril_self: "In the name of Allah I perform ruqyah on myself, from everything that harms me, from the evil of every soul or envious eye, Allah heals me, in the name of Allah I perform ruqyah on myself.",
+      ruqyah_khalaq: "I seek refuge in the perfect words of Allah from the evil of what He created.",
+      ruqyah_bismillah_protection: "In the name of Allah, with whose name nothing on earth or in heaven can cause harm, and He is the All-Hearing, the All-Knowing."
     }
   },
   dates: {
