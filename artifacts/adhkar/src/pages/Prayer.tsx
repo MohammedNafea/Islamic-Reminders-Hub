@@ -145,6 +145,16 @@ export default function Prayer() {
         </Card>
 
         <DhikrList adhkar={tasbih} titleKey="tasbih.modes_title" isEvening={false} compact />
+
+        {/* End of Tasbih Section Separator */}
+        <div className="flex items-center gap-3 pt-4">
+          <div className="h-px flex-1 bg-border" />
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Star className="w-4 h-4 text-primary/40 fill-primary/5" />
+            <span className="text-xs font-semibold text-muted-foreground">{t("tasbih.modes_end")}</span>
+          </div>
+          <div className="h-px flex-1 bg-border" />
+        </div>
       </div>
 
       {/* Post-Prayer Adhkar (Post-Tasbih) */}

@@ -437,7 +437,8 @@ export default {
     modes_1: "First Mode (33 Tasbih with completion): Say 'Subhan Allah' 33 times, 'Alhamdulillah' 33 times, and 'Allahu Akbar' 33 times, then complete the hundred by saying: 'La ilaha illa Allah alone, having no partner...'. Evidence: Hadith of Abu Hurayrah in Sahih Muslim.",
     modes_2: "Second Mode (33 Tasbih & 34 Takbeer): Say 'Subhan Allah' 33 times, 'Alhamdulillah' 33 times, and 'Allahu Akbar' 34 times. Evidence: Hadith of Ka'b bin 'Ujrah in Sahih Muslim.",
     modes_3: "Third Mode (10 times each): Say 'Subhan Allah' 10 times, 'Alhamdulillah' 10 times, and 'Allahu Akbar' 10 times. Evidence: Hadith of Abu Hurayrah in Sahih Al-Bukhari and Sahih Muslim.",
-    modes_4: "Fourth Mode (Quadruple 25 times): Say: 'Subhan Allah, Alhamdulillah, La ilaha illa Allah, Allahu Akbar' all together 25 times to reach a total of 100. Evidence: Hadith of Zayd bin Thabit in Sunan An-Nasa'i."
+    modes_4: "Fourth Mode (Quadruple 25 times): Say: 'Subhan Allah, Alhamdulillah, La ilaha illa Allah, Allahu Akbar' all together 25 times to reach a total of 100. Evidence: Hadith of Zayd bin Thabit in Sunan An-Nasa'i.",
+    modes_end: "End of Tasbih Modes"
   },
   common: {
     back: "Back",
