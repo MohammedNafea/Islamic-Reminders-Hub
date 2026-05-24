@@ -516,7 +516,7 @@ export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false
                   )}
                   onClick={() => handleTap(dhikr)}
                 >
-                  <CardContent className="p-6 space-y-6">
+                  <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                     <TranslatedText
                       text={arabicText}
                       staticTranslation={translatedText || undefined}
