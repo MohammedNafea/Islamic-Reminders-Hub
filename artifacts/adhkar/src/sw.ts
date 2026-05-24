@@ -11,6 +11,15 @@ declare const self: ServiceWorkerGlobalScope & typeof globalThis;
 // Cleanup outdated caches from older versions
 cleanupOutdatedCaches();
 
+// Force service worker to skip waiting and activate immediately
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
 // Precache all compiled assets (HTML, JS, CSS, PNG, MP3)
 precacheAndRoute(self.__WB_MANIFEST || []);
 
