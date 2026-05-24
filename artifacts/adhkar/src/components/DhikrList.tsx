@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
@@ -21,8 +21,30 @@ interface DhikrListProps {
   compact?: boolean;
 }
 
-export function DhikrList({ adhkar, titleKey, isEvening = false, compact = false }: DhikrListProps) {
+export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, compact = false }: DhikrListProps) {
   const { t, i18n } = useTranslation();
+
+  // Dynamically filter out duplicate dhikrs to prevent duplicates from showing in any section
+  const adhkar = useMemo(() => {
+    const seenIds = new Set<string>();
+    const seenTexts = new Set<string>();
+    
+    return rawAdhkar.filter(item => {
+      if (seenIds.has(item.id)) return false;
+      
+      const cleanText = item.arabic.replace(/[^\u0621-\u064A]/g, "");
+      // Allow short common phrases (e.g. "بِسْمِ اللَّهِ") to duplicate in different parts if needed
+      const isShortCommonPhrase = cleanText.length <= 15;
+      
+      if (seenTexts.has(cleanText) && !isShortCommonPhrase) return false;
+      
+      seenIds.add(item.id);
+      if (!isShortCommonPhrase) {
+        seenTexts.add(cleanText);
+      }
+      return true;
+    });
+  }, [rawAdhkar]);
   const [progress, setProgress] = useState<Record<string, number>>({});
   const { toggleFavorite, isFavorite } = useFavorites();
   const settings = getSettings();
