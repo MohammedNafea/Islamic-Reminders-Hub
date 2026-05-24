@@ -46,6 +46,8 @@ class AppLocalizations {
       'home_daily_inspiration': 'إلهام اليوم',
       'home_morning_desc': 'حصن المسلم وبركة الصباح',
       'home_evening_desc': 'طمأنينة المساء وحماية الذكر',
+      'home_morning_ruqyah_desc': 'حصن المسلم مع الرقية الشرعية للوقاية والتحصين',
+      'home_evening_ruqyah_desc': 'طمأنينة المساء مع الرقية الشرعية للحفظ والشفاء',
       'home_sleep_desc': 'سنن النبي ﷺ قبل النوم',
       'home_prayer_desc': 'الأذكار المشروعة بعد السلام',
 
@@ -150,6 +152,8 @@ class AppLocalizations {
       'home_daily_inspiration': 'Daily Inspiration',
       'home_morning_desc': 'Fortress of the Muslim & Morning Blessing',
       'home_evening_desc': 'Evening Tranquility & Remembrance Protection',
+      'home_morning_ruqyah_desc': 'Morning Adhkar merged with Ruqyah Shariah for protection',
+      'home_evening_ruqyah_desc': 'Evening Adhkar merged with Ruqyah Shariah for healing',
       'home_sleep_desc': 'Sunnah of the Prophet ﷺ before sleeping',
       'home_prayer_desc': 'Prescribed remembrances after peace',
 
@@ -254,6 +258,8 @@ class AppLocalizations {
       'home_daily_inspiration': 'ዕለታዊ አነሳሽ',
       'home_morning_desc': 'የጠዋት ጥበቃና በረከት',
       'home_evening_desc': 'የምሽት ሰላምና ጥበቃ',
+      'home_morning_ruqyah_desc': 'የጠዋት አዝካር ከሩቅያህ ጋር ለጥበቃ የተዋሃደ',
+      'home_evening_ruqyah_desc': 'የምሽት አዝካር ከሩቅያህ ጋር ለፈውስ የተዋሃደ',
       'home_sleep_desc': 'የነቢዩ ሱና ከእንቅልፍ በፊት',
       'home_prayer_desc': 'ከግዴታ ሶላት በኋላ አዝካር',
 
