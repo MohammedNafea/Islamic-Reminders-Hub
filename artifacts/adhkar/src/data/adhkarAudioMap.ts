@@ -865,5 +865,29 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   "great_days_sayyid_istighfar": {
     "type": "dureihim",
     "filename": "79"
+  },
+  "great_days_friday_hour": {
+    "type": "dureihim",
+    "filename": "84"
+  },
+  "great_days_night_third": {
+    "type": "dureihim",
+    "filename": "96"
+  },
+  "great_days_athan_iqamah": {
+    "type": "dureihim",
+    "filename": "84"
+  },
+  "great_days_sujood_dua": {
+    "type": "dureihim",
+    "filename": "47"
+  },
+  "great_days_breaking_fast": {
+    "type": "dureihim",
+    "filename": "115"
+  },
+  "great_days_suhoor_istighfar": {
+    "type": "dureihim",
+    "filename": "96"
   }
 };
