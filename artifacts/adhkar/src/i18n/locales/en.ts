@@ -408,7 +408,8 @@ export default {
       "الطلاق": "Al-Talaq",
       "إبراهيم": "Ibrahim"
     },
-    "tafsir_ibn_kathir": "Interpretation of Ibn Kathir",
+    "tafsir_ibn_kathir": "Tafsir Ibn Kathir",
+    "tafsir_tabari": "Tafsir Al-Tabari",
     "tafsir_saadi": "Interpretation of Al-Saadi"
   },
   "prayer": {

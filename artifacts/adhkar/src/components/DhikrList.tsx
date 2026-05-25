@@ -6,12 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Dhikr } from "@/data/adhkar";
 import { getDailyProgress, setDhikrCount, getSettings } from "@/lib/store";
-import { Check, Repeat, Volume2, Square, Heart, Play, SkipForward } from "lucide-react";
+import { Check, Repeat, Volume2, Square, Heart, Play, SkipForward, Copy, Image } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { isArabic, getTranslation } from "@/lib/content-i18n";
 import { logCategoryCompletion } from "@/lib/tracker";
 import { TranslatedText } from "@/components/TranslatedText";
 import { adhkarAudioMap } from "@/data/adhkarAudioMap";
+import { toast } from "@/hooks/use-toast";
+import { exportToImage } from "@/lib/image-share";
 
 
 interface DhikrListProps {
@@ -138,7 +140,29 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         return "Shuraym_128kbps";
       case "akhdar":
         return "Ibrahim_Akhdar_32kbps";
+      case "minshawi":
+      case "minshawi_muallim":
+        return "Minshawy_Murattal_128kbps";
+      case "minshawi_mujawwad":
+        return "Minshawy_Mujawwad_128kbps";
+      case "abdulbasit_murattal":
+      case "abdulbasit_warsh":
+        return "Abdul_Basit_Murattal_64kbps";
+      case "abdulbasit_mujawwad":
+        return "Abdul_Basit_Mujawwad_128kbps";
+      case "yasser_dosari":
+      case "muhammed_dossary":
+        return "Yasser_Ad-Dussary_128kbps";
+      case "ibrahim_dosari_hafs":
+      case "ibrahim_dosari_warsh":
+        return "Ibrahim_Al_Dossary_128kbps";
+      case "husary_mujawwad":
+        return "Husary_Mujawwad_128kbps";
       case "husary":
+      case "husary_muallim":
+      case "husary_warsh":
+      case "husary_qaloon":
+      case "husary_duri":
       default:
         return "Husary_128kbps";
     }
@@ -215,6 +239,13 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         vibrateRef.current = now;
       }
     }
+  };
+
+  const handleCopyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      description: i18n.language === "ar" ? "تم نسخ النص إلى الحافظة" : "Text copied to clipboard",
+    });
   };
 
   const handleReset = (id: string) => {
@@ -595,6 +626,33 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                           )}
                         >
                           <Heart className={cn("w-4 h-4", isFavorite(dhikr.id) && "fill-current")} />
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopyText(arabicText);
+                          }}
+                          className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
+                          title={t("common.copy", { defaultValue: "نسخ" })}
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            exportToImage(
+                              getTranslation(t, titleKey, i18n.language) || t(titleKey) || "ذكر",
+                              arabicText,
+                              dhikr.source,
+                              i18n.language
+                            );
+                          }}
+                          className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
+                          title={t("common.export_image", { defaultValue: "تصدير كصورة" })}
+                        >
+                          <Image className="w-4 h-4" />
                         </button>
 
                         {hasHumanAudio(dhikr.id) && (

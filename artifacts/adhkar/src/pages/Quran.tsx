@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Play, Pause, ChevronRight, Clock, BookOpen, Bookmark, BookmarkCheck, Copy, SkipForward, SkipBack, Volume2 } from "lucide-react";
+import { Search, Play, Pause, ChevronRight, Clock, BookOpen, Bookmark, BookmarkCheck, Copy, SkipForward, SkipBack, Volume2, Image } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -17,6 +17,7 @@ import { localDB } from "@/lib/db";
 import { useLocation } from "wouter";
 import { TranslatedText } from "@/components/TranslatedText";
 import { RECITERS } from "@/data/reciters";
+import { exportToImage } from "@/lib/image-share";
 
 
 const normalizeArabic = (text: string) => {
@@ -122,7 +123,16 @@ export default function Quran() {
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
   const [tafsirJalalayn, setTafsirJalalayn] = useState<Tafsir[]>([]);
   const [tafsirMuyassar, setTafsirMuyassar] = useState<Tafsir[]>([]);
-  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "both" | "none">("muyassar");
+  const [tafsirIbnKathir, setTafsirIbnKathir] = useState<Tafsir[]>([]);
+  const [tafsirTabari, setTafsirTabari] = useState<Tafsir[]>([]);
+  const [pageAyahTafsirs, setPageAyahTafsirs] = useState<{
+    muyassar: string;
+    jalalayn: string;
+    ibnKathir: string;
+    tabari: string;
+  } | null>(null);
+  const [pageAyahTafsirLoading, setPageAyahTafsirLoading] = useState(false);
+  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "none">("muyassar");
 
   // View modes
   const [viewMode, setViewMode] = useState<"list" | "pages">(() => {
@@ -183,6 +193,14 @@ export default function Quran() {
   useEffect(() => {
     audio.playbackRate = playbackSpeed;
   }, [playbackSpeed, audio]);
+
+  // Fallback if current qari does not support the active surah
+  useEffect(() => {
+    if (activeSurah && selectedQari.surahList && !selectedQari.surahList.includes(activeSurah)) {
+      setSelectedQariId("husary");
+      localStorage.setItem("quran_selected_qari", "husary");
+    }
+  }, [activeSurah, selectedQari, setSelectedQariId]);
 
   // Audio event listeners
   useEffect(() => {
@@ -362,6 +380,8 @@ export default function Quran() {
     setAyahs([]);
     setTafsirJalalayn([]);
     setTafsirMuyassar([]);
+    setTafsirIbnKathir([]);
+    setTafsirTabari([]);
     
     localDB.saveLastRead(number);
     setLastRead(number);
@@ -373,21 +393,51 @@ export default function Quran() {
     
     const fetches = [
       fetch(`https://api.alquran.cloud/v1/surah/${number}/${audioEdition}`).then(res => res.json()),
-      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()),
-      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`).then(res => res.json()),
-      fetch(`https://api.alquran.cloud/v1/surah/${number}/${translationEdition}`).then(res => res.json())
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/${translationEdition}`).then(res => res.json()),
+      fetch(`https://api.quran.com/api/v4/tafsirs/14/by_chapter/${number}`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.quran.com/api/v4/tafsirs/15/by_chapter/${number}`).then(res => res.json()).catch(() => null)
     ];
     
-    Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData]) => {
-      if (audioData?.data && jalalaynData?.data && muyassarData?.data && transData?.data) {
+    Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirData, tabariData]) => {
+      if (audioData?.data && transData?.data) {
+        const totalAyahs = audioData.data.ayahs.length;
         const enrichedAyahs = audioData.data.ayahs.map((a: any, i: number) => ({
           ...a,
-          translatedText: transData.data.ayahs[i].text,
+          translatedText: transData.data.ayahs[i]?.text || "",
           translationEdition
         }));
         setAyahs(enrichedAyahs);
-        setTafsirJalalayn(jalalaynData.data.ayahs || []);
-        setTafsirMuyassar(muyassarData.data.ayahs || []);
+        setTafsirJalalayn(jalalaynData?.data?.ayahs || []);
+        setTafsirMuyassar(muyassarData?.data?.ayahs || []);
+        
+        // Map Ibn Kathir Tafsir
+        const ibnKathirAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
+        if (ibnKathirData?.tafsirs) {
+          ibnKathirData.tafsirs.forEach((t: any) => {
+            const parts = t.verse_key.split(":");
+            const idx = parseInt(parts[1], 10) - 1;
+            if (idx >= 0 && idx < totalAyahs) {
+              ibnKathirAyahs[idx] = { text: t.text || "" };
+            }
+          });
+        }
+        setTafsirIbnKathir(ibnKathirAyahs);
+
+        // Map Al-Tabari Tafsir
+        const tabariAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
+        if (tabariData?.tafsirs) {
+          tabariData.tafsirs.forEach((t: any) => {
+            const parts = t.verse_key.split(":");
+            const idx = parseInt(parts[1], 10) - 1;
+            if (idx >= 0 && idx < totalAyahs) {
+              tabariAyahs[idx] = { text: t.text || "" };
+            }
+          });
+        }
+        setTafsirTabari(tabariAyahs);
+        
         setActiveSurah(number);
         
         audio.pause();
@@ -468,6 +518,44 @@ export default function Quran() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, viewMode, i18n.language, selectedQariId]);
+
+  // Fetch Tafsir on-demand for Page View ayah click
+  useEffect(() => {
+    if (!selectedPageAyah) {
+      setPageAyahTafsirs(null);
+      return;
+    }
+    
+    setPageAyahTafsirLoading(true);
+    const surahNum = selectedPageAyah.surah.number;
+    const ayahNum = selectedPageAyah.numberInSurah;
+    const globalAyahNum = selectedPageAyah.number;
+    
+    const fetches = [
+      // Muyassar from Alquran.cloud
+      fetch(`https://api.alquran.cloud/v1/ayah/${globalAyahNum}/ar.muyassar`).then(res => res.json()).catch(() => null),
+      // Jalalayn from Alquran.cloud
+      fetch(`https://api.alquran.cloud/v1/ayah/${globalAyahNum}/ar.jalalayn`).then(res => res.json()).catch(() => null),
+      // Ibn Kathir from Quran.com
+      fetch(`https://api.quran.com/api/v4/tafsirs/14/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
+      // Tabari from Quran.com
+      fetch(`https://api.quran.com/api/v4/tafsirs/15/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
+    ];
+    
+    Promise.all(fetches)
+      .then(([muyassarRes, jalalaynRes, ibnKathirRes, tabariRes]) => {
+        setPageAyahTafsirs({
+          muyassar: muyassarRes?.data?.text || "",
+          jalalayn: jalalaynRes?.data?.text || "",
+          ibnKathir: ibnKathirRes?.tafsir?.text || "",
+          tabari: tabariRes?.tafsir?.text || "",
+        });
+        setPageAyahTafsirLoading(false);
+      })
+      .catch(() => {
+        setPageAyahTafsirLoading(false);
+      });
+  }, [selectedPageAyah]);
 
   // Refetch if the reciter is changed while reading a Surah
   useEffect(() => {
@@ -769,40 +857,18 @@ export default function Quran() {
                 <Search className="w-4 h-4" />
               </Button>
               
-              <div className="flex gap-1.5 p-1 bg-muted/50 rounded-xl">
-                <Button 
-                  variant={selectedTafsir === "muyassar" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "muyassar" && "bg-white shadow-sm font-bold text-primary")}
-                  onClick={() => setSelectedTafsir("muyassar")}
-                >
-                  {t("quran.tafsir_muyassar")}
-                </Button>
-                <Button 
-                  variant={selectedTafsir === "jalalayn" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "jalalayn" && "bg-white shadow-sm font-bold text-primary")}
-                  onClick={() => setSelectedTafsir("jalalayn")}
-                >
-                  {t("quran.tafsir_jalalayn")}
-                </Button>
-                <Button 
-                  variant={selectedTafsir === "both" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "both" && "bg-white shadow-sm font-bold text-primary")}
-                  onClick={() => setSelectedTafsir("both")}
-                >
-                  {t("quran.tafsir_both", { defaultValue: "مقارنة" })}
-                </Button>
-                <Button 
-                  variant={selectedTafsir === "none" ? "secondary" : "ghost"} 
-                  size="sm" 
-                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "none" && "bg-white shadow-sm font-bold text-primary")}
-                  onClick={() => setSelectedTafsir("none")}
-                >
-                  {t("quran.hide_tafsir", { defaultValue: "إخفاء" })}
-                </Button>
-              </div>
+              <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
+                <SelectTrigger className="w-[125px] sm:w-[140px] h-8 rounded-xl border-primary/10 bg-white/50 text-[11px]">
+                  <SelectValue placeholder={t("quran.tafsir_muyassar")} />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl max-h-72">
+                  <SelectItem value="muyassar" className="text-[11px]">{t("quran.tafsir_muyassar")}</SelectItem>
+                  <SelectItem value="jalalayn" className="text-[11px]">{t("quran.tafsir_jalalayn")}</SelectItem>
+                  <SelectItem value="ibnkathir" className="text-[11px]">{t("quran.tafsir_ibn_kathir")}</SelectItem>
+                  <SelectItem value="tabari" className="text-[11px]">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</SelectItem>
+                  <SelectItem value="none" className="text-[11px]">{t("quran.hide_tafsir", { defaultValue: "إخفاء التفسير" })}</SelectItem>
+                </SelectContent>
+              </Select>
               {renderViewSwitcher()}
             </div>
           </div>
@@ -892,6 +958,39 @@ export default function Quran() {
                           >
                             <BookOpen className="w-5 h-5" />
                           </Button>
+                          <Button 
+                            size="icon" 
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
+                            onClick={() => {
+                              const cleanText = cleanBismillah(ayah.text);
+                              navigator.clipboard.writeText(cleanText);
+                              toast({
+                                description: i18n.language === "ar" ? "تم نسخ الآية إلى الحافظة" : "Ayah copied to clipboard",
+                              });
+                            }}
+                            title={t("common.copy", { defaultValue: "نسخ" })}
+                          >
+                            <Copy className="w-5 h-5" />
+                          </Button>
+                          <Button 
+                            size="icon" 
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
+                            onClick={() => {
+                              const cleanText = cleanBismillah(ayah.text);
+                              const surahTitle = i18n.language === "ar" ? currentSurah.name : currentSurah.englishName;
+                              exportToImage(
+                                `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${ayah.numberInSurah}`,
+                                cleanText,
+                                `${surahTitle} (${ayah.numberInSurah})`,
+                                i18n.language
+                              );
+                            }}
+                            title={t("common.export_image", { defaultValue: "تصدير كصورة" })}
+                          >
+                            <Image className="w-5 h-5" />
+                          </Button>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="h-[1px] w-8 bg-primary/20" />
@@ -916,7 +1015,7 @@ export default function Quran() {
                       
                       {selectedTafsir !== "none" && (
                         <div className="pt-6 mt-6 border-t border-primary/5 -mx-6 px-6 space-y-4">
-                          {(selectedTafsir === "muyassar" || selectedTafsir === "both") && tafsirMuyassar[ayah.numberInSurah - 1] && (
+                          {selectedTafsir === "muyassar" && tafsirMuyassar[ayah.numberInSurah - 1] && (
                             <div className="bg-amber-500/5 p-4 rounded-2xl text-right border border-amber-500/10" dir="rtl">
                               <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">
                                 {t("quran.tafsir_muyassar")}
@@ -928,7 +1027,7 @@ export default function Quran() {
                               />
                             </div>
                           )}
-                          {(selectedTafsir === "jalalayn" || selectedTafsir === "both") && tafsirJalalayn[ayah.numberInSurah - 1] && (
+                          {selectedTafsir === "jalalayn" && tafsirJalalayn[ayah.numberInSurah - 1] && (
                             <div className="bg-primary/5 p-4 rounded-2xl text-right border border-primary/10" dir="rtl">
                               <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">
                                 {t("quran.tafsir_jalalayn")}
@@ -937,6 +1036,28 @@ export default function Quran() {
                                 text={tafsirJalalayn[ayah.numberInSurah - 1].text}
                                 keepArabic={false}
                                 className="text-muted-foreground text-sm leading-relaxed"
+                              />
+                            </div>
+                          )}
+                          {selectedTafsir === "ibnkathir" && tafsirIbnKathir[ayah.numberInSurah - 1] && (
+                            <div className="bg-emerald-500/5 p-4 rounded-2xl text-right border border-emerald-500/10" dir="rtl">
+                              <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">
+                                {t("quran.tafsir_ibn_kathir")}
+                              </h4>
+                              <div
+                                dangerouslySetInnerHTML={{ __html: tafsirIbnKathir[ayah.numberInSurah - 1].text }}
+                                className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
+                              />
+                            </div>
+                          )}
+                          {selectedTafsir === "tabari" && tafsirTabari[ayah.numberInSurah - 1] && (
+                            <div className="bg-blue-500/5 p-4 rounded-2xl text-right border border-blue-500/10" dir="rtl">
+                              <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1.5">
+                                {t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}
+                              </h4>
+                              <div
+                                dangerouslySetInnerHTML={{ __html: tafsirTabari[ayah.numberInSurah - 1].text }}
+                                className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
                               />
                             </div>
                           )}
@@ -1092,13 +1213,33 @@ export default function Quran() {
                       />
                     </div>
                   )}
+
+                  {tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text && (
+                    <div className="border border-emerald-500/10 bg-emerald-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                      <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_ibn_kathir")}</h4>
+                      <div 
+                        dangerouslySetInnerHTML={{ __html: tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1].text }}
+                        className="text-sm text-foreground leading-relaxed quran-tafsir-html"
+                      />
+                    </div>
+                  )}
+
+                  {tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text && (
+                    <div className="border border-blue-500/10 bg-blue-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                      <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</h4>
+                      <div 
+                        dangerouslySetInnerHTML={{ __html: tafsirTabari[selectedTafsirAyah.numberInSurah - 1].text }}
+                        className="text-sm text-foreground leading-relaxed quran-tafsir-html"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
                   <Button
                     variant="outline"
                     onClick={() => {
-                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}`;
+                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير ابن كثير:\n${tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الطبري:\n${tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text || ""}`;
                       navigator.clipboard.writeText(textToCopy);
                       toast({
                         description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
@@ -1178,12 +1319,55 @@ export default function Quran() {
                   </div>
                 )}
 
-                {/* Tafsir Muyassar */}
-                {selectedPageAyah.tafsirText && (
-                  <div className="border border-amber-500/10 bg-amber-500/5 p-4 rounded-2xl text-right" dir="rtl">
-                    <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_muyassar")}</h4>
-                    <p className="text-sm text-amber-955/80 dark:text-amber-100 leading-relaxed font-sans">{selectedPageAyah.tafsirText}</p>
+                {/* Tafsirs section */}
+                {pageAyahTafsirLoading ? (
+                  <div className="flex flex-col items-center justify-center py-6 space-y-2">
+                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                    <p className="text-[10px] text-muted-foreground font-medium">جاري تحميل التفاسير...</p>
                   </div>
+                ) : pageAyahTafsirs ? (
+                  <div className="space-y-3 pt-2">
+                    {pageAyahTafsirs.muyassar && (
+                      <div className="border border-amber-500/10 bg-amber-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                        <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_muyassar")}</h4>
+                        <p className="text-sm text-amber-955/80 dark:text-amber-100 leading-relaxed font-sans">{pageAyahTafsirs.muyassar}</p>
+                      </div>
+                    )}
+
+                    {pageAyahTafsirs.jalalayn && (
+                      <div className="border border-primary/10 bg-primary/5 p-4 rounded-2xl text-right" dir="rtl">
+                        <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">{t("quran.tafsir_jalalayn")}</h4>
+                        <p className="text-sm text-foreground leading-relaxed font-sans">{pageAyahTafsirs.jalalayn}</p>
+                      </div>
+                    )}
+
+                    {pageAyahTafsirs.ibnKathir && (
+                      <div className="border border-emerald-500/10 bg-emerald-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                        <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_ibn_kathir")}</h4>
+                        <div 
+                          dangerouslySetInnerHTML={{ __html: pageAyahTafsirs.ibnKathir }}
+                          className="text-sm text-foreground leading-relaxed quran-tafsir-html"
+                        />
+                      </div>
+                    )}
+
+                    {pageAyahTafsirs.tabari && (
+                      <div className="border border-blue-500/10 bg-blue-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                        <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</h4>
+                        <div 
+                          dangerouslySetInnerHTML={{ __html: pageAyahTafsirs.tabari }}
+                          className="text-sm text-foreground leading-relaxed quran-tafsir-html"
+                        />
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  selectedPageAyah.tafsirText && (
+                    <div className="border border-amber-500/10 bg-amber-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                      <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_muyassar")}</h4>
+                      <p className="text-sm text-amber-955/80 dark:text-amber-100 leading-relaxed font-sans">{selectedPageAyah.tafsirText}</p>
+                    </div>
+                  )
                 )}
 
                 {/* Bottom actions */}
@@ -1215,7 +1399,7 @@ export default function Quran() {
                   <Button
                     variant="outline"
                     onClick={() => {
-                      const textToCopy = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${selectedPageAyah.tafsirText || ""}`;
+                      const textToCopy = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
                       navigator.clipboard.writeText(textToCopy);
                       toast({
                         description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
@@ -1308,8 +1492,8 @@ export default function Quran() {
                   <SelectTrigger className="w-[130px] sm:w-[150px] h-8 rounded-xl border-primary/10 bg-white/50 text-[11px]">
                     <SelectValue placeholder={t("quran.select_reciter", { defaultValue: "اختر القارئ" })} />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl">
-                    {RECITERS.map((q) => (
+                  <SelectContent className="rounded-xl max-h-72">
+                    {RECITERS.filter(q => !q.surahList || (activeSurah && q.surahList.includes(activeSurah))).map((q) => (
                       <SelectItem key={q.id} value={q.id} className="text-[11px]">
                         {i18n.language === "ar" ? q.name : q.englishName}
                       </SelectItem>

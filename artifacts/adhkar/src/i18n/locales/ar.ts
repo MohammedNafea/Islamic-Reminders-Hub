@@ -165,6 +165,7 @@ export default {
     tafsir_muyassar: "التفسير الميسر",
     tafsir_both: "مقارنة",
     tafsir_ibn_kathir: "تفسير ابن كثير",
+    tafsir_tabari: "تفسير الطبري",
     tafsir_saadi: "تفسير السعدي",
     verse_of_hour: "آية الساعة",
     meccan: "مكية",

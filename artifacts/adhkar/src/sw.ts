@@ -39,7 +39,7 @@ registerRoute(
 
 // Cache Quran API responses for offline-first reading
 registerRoute(
-  /^https:\/\/api\.alquran\.cloud\/v1\/.*/i,
+  /^https:\/\/(?:api\.alquran\.cloud\/v1|api\.quran\.com\/api\/v4)\/.*/i,
   new CacheFirst({
     cacheName: "quran-api-cache",
     plugins: [
@@ -47,7 +47,7 @@ registerRoute(
         statuses: [0, 200],
       }),
       new ExpirationPlugin({
-        maxEntries: 100,
+        maxEntries: 200,
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
       }),
     ],

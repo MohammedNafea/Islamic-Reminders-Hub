@@ -842,25 +842,13 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "91"
   },
-  "great_days_qadr": {
-    "type": "dureihim",
-    "filename": "121"
-  },
   "great_days_arafah": {
     "type": "dureihim",
-    "filename": "122"
-  },
-  "great_days_ashura": {
-    "type": "dureihim",
-    "filename": "115"
-  },
-  "great_days_dhul_hijjah": {
-    "type": "dureihim",
-    "filename": "125"
+    "filename": "93"
   },
   "great_days_friday": {
     "type": "dureihim",
-    "filename": "118"
+    "filename": "98"
   },
   "great_days_sayyid_istighfar": {
     "type": "dureihim",
