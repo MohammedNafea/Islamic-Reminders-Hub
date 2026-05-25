@@ -104,7 +104,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   usePrayerNotifications();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTo(0, 0);
+    document.body.scrollTo(0, 0);
   }, [location]);
 
 

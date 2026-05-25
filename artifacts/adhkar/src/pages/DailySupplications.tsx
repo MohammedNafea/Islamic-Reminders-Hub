@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -15,14 +15,15 @@ import {
   adhkarDailyLifeEvents,
   adhkarNature,
   adhkarOccasions,
-  adhkarImmunization
+  adhkarImmunization,
+  adhkarGreatDays
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
-import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun } from "lucide-react";
+import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 
-type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature";
+type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days";
 
 interface TabItem {
   id: TabId;
@@ -35,6 +36,13 @@ export default function DailySupplications() {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabId>("house_masjid");
 
+  // Scroll to top when active tab changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTo(0, 0);
+    document.body.scrollTo(0, 0);
+  }, [activeTab]);
+
   const tabs: TabItem[] = [
     { id: "house_masjid", labelAr: "البيت والمسجد", labelEn: "Home & Mosque", Icon: Home },
     { id: "clothes_wudu", labelAr: "اللباس، الخلاء والوضوء", labelEn: "Clothing, Restroom & Wudu", Icon: Shield },
@@ -42,7 +50,8 @@ export default function DailySupplications() {
     { id: "travel", labelAr: "السفر والتنقل", labelEn: "Travel & Commute", Icon: Compass },
     { id: "sleep_events", labelAr: "النوم واليقظة", labelEn: "Sleep & Waking", Icon: Moon },
     { id: "prayer_actions", labelAr: "أفعال الصلاة", labelEn: "Prayer Actions", Icon: BookOpen },
-    { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun }
+    { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun },
+    { id: "great_days", labelAr: "الأيام والليالي العظيمة", labelEn: "Virtuous Days & Nights", Icon: Star }
   ];
 
   // Get sleep-related waking/night events
@@ -71,6 +80,8 @@ export default function DailySupplications() {
         return adhkarPrayerActions;
       case "occasions_nature":
         return [...adhkarDailyLifeEvents, ...adhkarNature, ...adhkarOccasions, ...adhkarImmunization];
+      case "great_days":
+        return adhkarGreatDays;
       default:
         return [];
     }
@@ -91,6 +102,8 @@ export default function DailySupplications() {
       case "prayer_actions":
         return "nav.daily_supplications";
       case "occasions_nature":
+        return "nav.daily_supplications";
+      case "great_days":
         return "nav.daily_supplications";
       default:
         return "nav.daily_supplications";
