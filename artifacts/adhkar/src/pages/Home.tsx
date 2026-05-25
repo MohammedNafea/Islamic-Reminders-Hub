@@ -176,6 +176,7 @@ export default function Home() {
           translatedText: !isArabic(i18n.language) ? (wikiData.daily.verse_en || null) : null,
           text: wikiText,
           sura: wikiData.daily.sura,
+          arabicSura: wikiData.daily.sura,
           verse_number: wikiData.daily.verse_number,
           id: "wiki"
         };
@@ -187,7 +188,11 @@ export default function Home() {
         if (arItem && normalizeArabic(arItem.text) === normalizedWiki) {
           // Found match! Use localized metadata
           const localizedItem = t(`quran.daily.${id}`, { returnObjects: true }) as Record<string, string>;
-          return { ...localizedItem, id };
+          return { 
+            ...localizedItem, 
+            arabicSura: arItem.sura,
+            id 
+          };
         }
       }
     }
@@ -201,6 +206,7 @@ export default function Home() {
       translatedText: translatedVerseText,
       text: arabicFallback?.text || fallback?.text || "فاصبر إن وعد الله حق", 
       sura: fallback?.sura || "الروم", 
+      arabicSura: arabicFallback?.sura || "الروم",
       verse_number: fallback?.verse_number || "60", 
       id: vId.toString() 
     };
@@ -299,7 +305,7 @@ export default function Home() {
       <div className="w-full">
         <AnimatePresence mode="wait">
           {dailyVerse && (
-            <Link href={`/quran?surah=${getSurahNumber(dailyVerse.sura)}&ayah=${dailyVerse.verse_number || 1}`}>
+            <Link href={`/quran?surah=${getSurahNumber(dailyVerse.arabicSura || dailyVerse.sura)}&ayah=${dailyVerse.verse_number || 1}`}>
               <motion.div
                 key="verse-wiki"
                 initial={{ opacity: 0, y: 10 }}

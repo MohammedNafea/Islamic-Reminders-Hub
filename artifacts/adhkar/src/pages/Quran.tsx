@@ -477,8 +477,8 @@ export default function Quran() {
     if (!currentSurah) return null;
 
     return (
-      <div className="space-y-6 animate-in fade-in duration-500 pb-48 md:pb-36">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-16 md:top-4 z-20 shadow-sm">
+      <div className="space-y-6 animate-in fade-in duration-500 pb-80 md:pb-48">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
           <div className="flex items-center gap-4 flex-1">
             <Button variant="ghost" onClick={() => { audio.pause(); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
               <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
