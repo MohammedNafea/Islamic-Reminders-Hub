@@ -15,6 +15,7 @@ import { allAdhkar } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
 import { useLibraryContent } from "@/hooks/useLibraryContent";
 import type { LibraryContentItem } from "@/types/library";
+import { TranslatedText } from "@/components/TranslatedText";
 
 // Labels are resolved dynamically inside the component via t() calls
 const typeConfig = {
@@ -231,7 +232,7 @@ export default function SearchPage() {
                                       {categoryLabel}
                                     </span>
                                     <h3 className="text-xl font-bold text-foreground/90 font-heading">
-                                      {displayTitle}
+                                      <TranslatedText text={displayTitle} keepArabic={false} inline />
                                     </h3>
                                   </div>
                                   <button
@@ -245,7 +246,7 @@ export default function SearchPage() {
                                   className={cn("dhikr-text text-xl leading-relaxed text-foreground/80", i18n.language === 'ar' ? "text-right" : "text-left")}
                                   dir={i18n.language === 'ar' ? "rtl" : "ltr"}
                                 >
-                                  {item.text}
+                                  <TranslatedText text={item.text} keepArabic={false} />
                                 </div>
                               </div>
                             </div>
@@ -319,19 +320,19 @@ export default function SearchPage() {
                                 )}
                               </div>
                               <h3 className="font-bold text-base text-foreground truncate">
-                                {result.title}
+                                <TranslatedText text={result.title} keepArabic={false} inline />
                               </h3>
                               {result.author && (
-                                <p className="text-[11px] text-muted-foreground/80 font-medium" dir="rtl">
-                                  {t("search.author_source", { defaultValue: "المصدر" })}: {result.author}
-                                </p>
+                                <div className="text-[11px] text-muted-foreground/80 font-medium" dir="rtl">
+                                  {t("search.author_source", { defaultValue: "المصدر" })}: <TranslatedText text={result.author} keepArabic={false} inline />
+                                </div>
                               )}
-                              <p
+                              <div
                                 className="text-muted-foreground text-sm line-clamp-2 leading-relaxed"
                                 dir="rtl"
                               >
-                                {result.text}
-                              </p>
+                                <TranslatedText text={result.text} keepArabic={false} inline />
+                              </div>
                             </div>
                             <div className="flex items-center gap-2 self-center shrink-0">
                               <button

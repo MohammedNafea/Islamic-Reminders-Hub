@@ -1,15 +1,15 @@
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  adhkarHouse, 
-  adhkarMasjid, 
-  adhkarClothes, 
+import {
+  adhkarHouse,
+  adhkarMasjid,
+  adhkarClothes,
   adhkarRestroom,
-  adhkarWudu, 
-  adhkarAthan, 
-  adhkarFood, 
-  adhkarTravel, 
+  adhkarWudu,
+  adhkarAthan,
+  adhkarFood,
+  adhkarTravel,
   adhkarSleep,
   adhkarPrayerActions,
   adhkarDailyLifeEvents,
@@ -47,10 +47,10 @@ export default function DailySupplications() {
 
   // Get sleep-related waking/night events
   const sleepEvents = useMemo(() => {
-    return adhkarSleep.filter(d => 
-      d.id.startsWith("sleep_waking") || 
-      d.id.startsWith("sleep_faza") || 
-      d.id === "sleep_taqallub" || 
+    return adhkarSleep.filter(d =>
+      d.id.startsWith("sleep_waking") ||
+      d.id.startsWith("sleep_faza") ||
+      d.id === "sleep_taqallub" ||
       d.id === "sleep_bad_dream"
     );
   }, []);
@@ -124,17 +124,15 @@ export default function DailySupplications() {
         <div className="flex gap-2 bg-muted/30 p-1.5 rounded-2xl border border-border/40 min-w-max mx-auto">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
-            const tabLabel = i18n.language === "ar" ? tab.labelAr : tab.labelEn;
-            
+
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold select-none transition-all duration-300 ${
-                  isActive
+                className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold select-none transition-all duration-300 ${isActive
                     ? "text-primary-foreground shadow-sm"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
+                  }`}
               >
                 {isActive && (
                   <motion.div
@@ -145,7 +143,14 @@ export default function DailySupplications() {
                 )}
                 <span className="relative z-10 flex items-center gap-1.5">
                   <tab.Icon className="w-4 h-4 shrink-0" />
-                  <span>{tabLabel}</span>
+                  <span>
+                    <TranslatedText
+                      text={tab.labelAr}
+                      staticTranslation={i18n.language === "ar" ? tab.labelAr : tab.labelEn}
+                      keepArabic={false}
+                      inline
+                    />
+                  </span>
                 </span>
               </button>
             );
@@ -163,11 +168,11 @@ export default function DailySupplications() {
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25 }}
           >
-            <DhikrList 
-              adhkar={currentAdhkar} 
-              titleKey={currentTitleKey} 
-              isEvening={false} 
-              compact 
+            <DhikrList
+              adhkar={currentAdhkar}
+              titleKey={currentTitleKey}
+              isEvening={false}
+              compact
             />
           </motion.div>
         </AnimatePresence>

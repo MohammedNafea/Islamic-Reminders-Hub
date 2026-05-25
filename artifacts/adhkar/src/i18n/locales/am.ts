@@ -1,31 +1,859 @@
 export default {
-  app: { name: "ኢስላሚክ ሀብ", tagline: "ዕለታዊ መንፈሳዊ አጋርዎ" },
-  nav: { home: "መነሻ", adhkar: "አዝካር", morning: "የጠዋት አዝካር", evening: "የምሽት አዝካር", both: "ጠዋትና ምሽት", sleep: "የእንቅልፍ አዝካር", prayer: "የሶላት አዝካር", ruqyah: "ሩቅያ", times: "የሶላት ሰዓታት", fasting: "የፆም ቀናት", tasbih: "ተስቢሕ", settings: "ቅንብሮች", hadith: "ሐዲስና ፍቅህ", quran: "ቁርኣን", qibla: "ቂብላ", zakat: "ዘካት", favorites: "ተወዳጆች", search: "ፈልግ", merged_morning: "ጠዋት + ሩቅያ", merged_evening: "ምሽት + ሩቅያ" },
-  home: { greeting_morning: "መልካም ጠዋት", greeting_evening: "መልካም ምሽት", greeting_night: "መልካም ሌሊት", today: "ዛሬ", progress: "የዛሬ ግስጋሴ", completed: "ተጠናቋል", start: "ጀምር", salawat_banner: "አላህም ፀሎትና ሰላም በነቢያችን ሙሐመድ ላይ ይላክ", salawat_subtitle: "በነቢዩ ላይ ፀሎት ለማድረግ ይጫኑ", salawat_today: "የዛሬ ፀሎት", hadith_of_hour: "የሰዓቱ ሐዲስ", verse_of_hour: "የሰዓቱ አንቀጽ", morning_desc: "የጠዋት ጥበቃና በረከት", evening_desc: "የምሽት ሰላምና ጥበቃ", sleep_desc: "የነቢዩ ሱና ከእንቅልፍ በፊት", prayer_desc: "ከግዴታ ሶላት በኋላ አዝካር", merged_morning_desc: "የጠዋት አዝካር ከሩቅያ ጋር", merged_evening_desc: "የምሽት አዝካር ከሩቅያ ጋር", daily_inspiration: "ዕለታዊ አነሳሽ" },
-  zakat: { title: "የዘካት ማ0ሪያ", subtitle: "በዕለታዊ වርቅና ብር ዋጋ መሰረት ዘካትዎን በትክክል ያስሉ", assets_input: "ንብረትና ቁጠጠር", cash: "ጥሬ ገንዘብ", trade: "የንግд ንብረት", gold_weight: "የወርቅ ክብደት (ግራም - 24ኬ)", silver_weight: "የብር ክብደት (ግራም)", debts: "ዕዳዎች", nisab_info: "ስለ ኒሳብ:", nisab_desc: "ኒሳብ በ85ግ 24ኬ ወርቅ ዋጋ ይሰላል። ግምት ሲደርስና ሙሉ ጨረቃ ዓመት ሲያልፍ ዘካት 2.5% ይሆናል።", result_title: "የዘካት ማጠቃለያ", total_wealth: "ጠቅላላ ንብረት", amount_due: "የዘካት መጠን", eligible: "ዘካት ይሆናል", not_eligible: "ኒሳብ አላበበም", market_prices: "የአሁኑ የገበያ ዋጋዎች", gold_price: "የወርቅ ዋጋ (24ኬ)", silver_price: "የብር ዋጋ" },
-  search: { title: "የተቀናጀ ፍለጋ", subtitle: "ቁርኣን፣ አዝካርና ምሁራዊ ቤተ-መጻሕፍት ፍለጋ", placeholder: "ምን ፈልገው ነው?..." },
-  favorites: { subtitle: "የተቀምጡት አዝካርና ፍች ዝርዝር", empty: "እስካሁን ተወዳጆች የሉም", empty_desc: "አዝካር ወይም ፍች ሲያስቀምጡ እዚህ ይታያሉ" },
-  quran: { title: "ቅዱስ ቁርኣን", subtitle: "ከአላህ መጽሐፍ የተባረኩ አንቀጾች", tafsir_jalalayn: "ተፍሲር አል-ጃላላይን", tafsir_muyassar: "ተፍሲር አል-ሙያስር", verse_of_hour: "የሰዓቱ አንቀጽ", meccan: "መካዊ", medinan: "መዲናዊ", last_read: "መጨረሻ የተነበበ" },
-  prayer: { today_prayers: "የዛሬ ሶላቶች", calendar: "ወርሃዊ ቀን መቁጠሪያ", fajr: "ፈጅር", sunrise: "ፀሐይ መውጫ", dhuhr: "ዙሁር", asr: "ዐሥር", maghrib: "መግሪብ", isha: "ዒሻ", night_prayers: "የሌሊት ሶላቶችና ሱሁር", first_third: "የመጀመሪያ ሶስተኛ", midnight: "እኩው ሌሊት", suhoor: "የሱሁር ሰዓት", next: "ቀጣይ ሶላት", remaining: "ቀሪ ጊዜ", location: "አካባቢዎ", location_required: "የአካባቢ ፈቃድ ይስጡ", allow_location: "ፍቀድ", enter_city: "ከተማ ያስገቡ", calculation_method: "የስሌት ዘዴ", methods: { MuslimWorldLeague: "የሙስሊም ዓለም ሊግ", Egyptian: "የግብፅ ባለስልጣን", Karachi: "የካራቺ ዩኒቨርሲቲ", UmmAlQura: "ኡም አልቁራ", Dubai: "ዱባይ", NorthAmerica: "ሰሜን አሜሪካ", Kuwait: "ኩዌት", Qatar: "ቃታር", Singapore: "ሲንጋፖር", Turkey: "ቱርክ" }, imsak: "ኢምሳክ", qibla: { direction: "የቂብላ አቅጣጫ", degree: "ዲግሪ", request_permission: "ባለሙያውን ለማንቀሳቀስ የሴንሰር ፈቃድ ይስጡ", calibrating: "ባለሙያ በማስተካከል ላይ...", not_supported: "አሳሹ የአቅጣጫ ሴንሰር አይደግፍም", from_north: "ከሰሜን", subtitle: "በAR እይታ የሚሰራ ትክክለኛ ባለሙያ", guide: "የአጠቃቀም መመሪያ", camera_enable: "AR ካሜራ አንቃ", camera_disable: "ካሜራ አጥፋ" }, qibla_hint: "ሴንሰሩን ለማስተካከል ስልክዎን በዘመነ-8 አቅጣጫ ያንቀሳቅሱ። ቂብላ ለማየት የካሜራ ቁልፉን ይጠቀሙ።" },
-  adhkar_hub: { title: "የአዝካር ሀብ", subtitle: "ዕለታዊ ዝክርና ጥበቃ", morning_desc: "የጠዋት ጥበቃና በረከት", evening_desc: "የምሽት ሰላምና ጥበቃ", sleep_desc: "የነቢዩ ሱና ከእንቅልፍ በፊት", prayer_desc: "ከግዴታ ሶላት በኋላ ዝክር", ruqyah_desc: "ከቁርኣን ማገግመትና ጥበቃ", post_prayer: "ከሶላት በኋላ አዝካር" },
-  salawat: { title: "በነቢዩ ላይ ፀሎት", virtue: "የፀሎት ብጃዎች" },
-  dhikr: { count: "ቁጥር", times: "ጊዜ", source: "ምንጭ", tap_to_count: "ለመቁጠር ንካ", completed_msg: "ተጠናቋል!", reset: "Reset", reset_all: "ሁሉንም ዳግም ጀምር", morning_form: "የጠዋት ቅፅ", evening_form: "የምሽት ቅፅ", note: "ማስታወሻ", benefit: "ጥቅም" },
-  tasbih: { title: "ኤሌክትሮኒክ ተስቢሕ", count: "የአሁን ቁጥር", target: "ግብ", set_target: "ግብ ያዘጋጁ", reset: "ዳግም ጀምር", vibrate: "ንዝረት", sound: "ድምፅ", custom: "ብጁ", saved: "ተቀምጧል" },
-  fasting: {
-    sources: {
-      white_days: "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
-      arafah: "Narrated by Muslim",
-      dhul_hijjah_10: "Narrated by Ibn Majah and At-Tirmidhi",
-      ashura: "Narrated by Muslim from Abu Qatadah",
-      tasu_a: "Narrated by Muslim from Ibn Abbas",
-      monday: "Narrated by Muslim from Abu Qatadah",
-      thursday: "Narrated by At-Tirmidhi and Abu Dawood",
-      shawwal_6: "Narrated by Muslim from Abu Ayyub",
-      shaban: "Narrated by Al-Bukhari and Muslim",
-    }, title: "የሱንና ፆም ቀናት", white_days: "ነጭ ቀናት", white_days_desc: "በየወሩ ሂጅሪ 13, 14 እና 15", white_days_hadith: "በየወሩ 3 ቀን መፆም ለዘለዓለም እንደመፆም ነው", arafah: "የዐረፋ ቀን", arafah_desc: "ዙልሒጃ 9", arafah_hadith: "የዐረፋ ፆም ያለፈውንና የሚቀጥለውን ዓመት ኃጢአት ያስተስርያል", monday: "ሰኞ", monday_desc: "በየሳምንቱ ሰኞ", monday_hadith: "ተወልጄ ወሒ የወረደበት ቀን ነው", thursday: "ሐሙስ", thursday_desc: "በየሳምንቱ ሐሙስ", thursday_hadith: "ተግባራት ሰኞና ሐሙስ ይቀርባሉ", shawwal: "የሸዋል 6 ቀናት", shawwal_desc: "ከዒድ በኋላ 6 ቀናት", shawwal_hadith: "ረመዳንንና 6 ቀን ከፆመ ለዘለዓለም እንደፆመ ነው", upcoming: "የሚመጣ", today_fasting: "ዛሬ", passed: "ያለፈ", gregorian_date: "ግሪጎሪ", hijri_date: "ሂጅሪ", days_remaining: "{{days}} ቀናት ቀርተዋል", days_passed: "ከ{{days}} ቀናት በፊት", monthly: "ወርሃዊ", weekly: "ሳምንታዊ", yearly: "ዓመታዊ" },
-  dates: { today: "ዛሬ", hijri: "ሂ", gregorian: "ግ", days_short: ["እሑ", "ሰኞ", "ማክ", "ረቡ", "ሐሙ", "ዓር", "ቅዳ"], days: ["እሑድ", "ሰኞ", "ማክሰኞ", "ረቡዕ", "ሐሙስ", "ዓርብ", "ቅዳሜ"] },
-  settings: { title: "ቅንብሮች", language: "ቋንቋ", theme: "ገጽታ", dark: "ጨለማ", light: "ብርሃን", system: "ስርዓት", dynamic: "ተለዋዋጭ (ራስ-ሰር)", theme_fajr: "ፈጅር የድምቀት", theme_duha: "ዱሐ ብርሃን", theme_maghrib: "መግሪብ ሰላም", theme_sahar: "ሰሐር መንፈስ", calculation: "የስሌት ዘዴ", font_size: "የፊደል መጠን", font_sm: "ትንሽ", font_md: "መካከለኛ", font_lg: "ትልቅ", font_xl: "በጣም ትልቅ", notifications: "ማሳወቂያዎች", vibrate: "የንዝረት ግብረ መልስ", cloud_sync: "የደመና ምስማር", cloud_desc: "በሁሉም መሳሪያዎ አዝካርዎን ለማስማር ይግቡ", guest: "እንግዳ", sync_active: "ምስማር ንቁ", local_only: "የአካባቢ ብቻ", login: "ግባ", logout: "ውጣ", enter_email: "ኢሜልዎን ያስገቡ:", check_email: "የመግቢያ ማገጃ ተልኳል! ኢሜልዎን ይመልከቱ", about_us_title: "ስለ ኢስላሚክ ሀብ", about_us_content: "ለዕለታዊ ዝክር፣ ቁርኣንና የሶላት ሰዓት የተዋቀረ መድረክ። ለማህበረሰባችን የተከፋፈለ ሰዳቃ ለመሆን የተዘጋጀ።" },
-  admin: { library_title: "የቤተ-መጻሕፍት ማስተዳደሪያ", library_subtitle: "የተወስኑ ይዘቶችን ያስተዳድሩና ምድብ ማሰናጃ ያዘጋጁ", sync_button: "ምስማርና ትንተና ጀምር", processing: "በሂደት ላይ...", stats_items: "ጠቅላላ ዕቃዎች", stats_categories: "ንቁ ምድቦች", stats_last_updated: "መጨረሻ የተሻሻለ", update_data: "ውሂብ አዘምን", sync_desc: "ይህ ሂደት ከPDF የተወስኑ ጽሑፎችን ያስማራልና ምድብ አሰጣጥ ስልተች ይተገብራል።", category_dist: "የምድብ ስርጭት" },
-  common: { loading: "በመጫን ላይ...", error: "ስህተት ተከስቷል", retry: "ድገም", close: "ዝጋ", save: "አስቀምጥ", cancel: "ሰርዝ", done: "ተጠናቋል", search: "ፈልግ", share: "አጋራ", copied: "ተቀድቷል", copy: "ቅዳ", of: "ከ", back: "ተመለስ", ayahs: "አንቀጾች", more: "ተጨማሪ..." },
-  hadith: { title: "ሐዲስና ፍቅህ", subtitle: "የሐዲስ، ፍቅህና ሳይንሳዊ እይታዎች ኢንሳይክلوፒዲያ", search_placeholder: "ሐዲስ፣ ፍቅህ ወይም ቁلፍ ቃል ፈልግ...", loading_data: "መረጃ በመጫን ላይ...", no_results: "ውጤት አልተገኘም", try_another_search: "ሌላ ቃል ይሞክሩ", cat_all: "ሁሉም", cat_tafsir: "ተፍሲር", cat_creed: "ዐቂዳ", cat_fiqh: "ፍቅህ", cat_hadith: "ሐዲስ", cat_ethics: "ሥነ ምግባር", cat_general: "አጠቃላይ" },  adhkar: { sources: {}, notes: {}, items: {} },
+  "app": {
+    "name": "ኢስላሚክ ሀብ",
+    "tagline": "ዕለታዊ መንፈሳዊ አጋርዎ"
+  },
+  "nav": {
+    "home": "መነሻ",
+    "adhkar": "አዝካር",
+    "morning": "የጠዋት አዝካር",
+    "evening": "የምሽት አዝካር",
+    "both": "ጠዋትና ምሽት",
+    "sleep": "የእንቅልፍ አዝካር",
+    "prayer": "የሶላት አዝካር",
+    "ruqyah": "ሩቅያ",
+    "times": "የሶላት ሰዓታት",
+    "fasting": "የፆም ቀናት",
+    "tasbih": "ተስቢሕ",
+    "settings": "ቅንብሮች",
+    "hadith": "ሐዲስና ፍቅህ",
+    "quran": "ቁርኣን",
+    "qibla": "ቂብላ",
+    "zakat": "ዘካት",
+    "favorites": "ተወዳጆች",
+    "search": "ፈልግ",
+    "merged_morning": "ጠዋት + ሩቅያ",
+    "merged_evening": "ምሽት + ሩቅያ",
+    "download": "መተግበሪያውን ያውርዱ",
+    "masjid": "የመስጂድ ትዝታዎች",
+    "sunan": "የነብዩ ሱናዎች",
+    "house": "የቤት ውስጥ ትውስታዎች",
+    "tracker": "የቁርጠኝነት መንገድ",
+    "daily_supplications": "ዛሬ እና ዛሬ ማታ ትዝታዎች"
+  },
+  "home": {
+    "greeting_morning": "መልካም ጠዋት",
+    "greeting_evening": "መልካም ምሽት",
+    "greeting_night": "መልካም ሌሊት",
+    "today": "ዛሬ",
+    "progress": "የዛሬ ግስጋሴ",
+    "completed": "ተጠናቋል",
+    "start": "ጀምር",
+    "salawat_banner": "አላህም ፀሎትና ሰላም በነቢያችን ሙሐመድ ላይ ይላክ",
+    "salawat_subtitle": "በነቢዩ ላይ ፀሎት ለማድረግ ይጫኑ",
+    "salawat_today": "የዛሬ ፀሎት",
+    "hadith_of_hour": "የሰዓቱ ሐዲስ",
+    "verse_of_hour": "የሰዓቱ አንቀጽ",
+    "morning_desc": "የጠዋት ጥበቃና በረከት",
+    "evening_desc": "የምሽት ሰላምና ጥበቃ",
+    "sleep_desc": "የነቢዩ ሱና ከእንቅልፍ በፊት",
+    "prayer_desc": "ከግዴታ ሶላት በኋላ አዝካር",
+    "merged_morning_desc": "የጠዋት አዝካር ከሩቅያ ጋር",
+    "merged_evening_desc": "የምሽት አዝካር ከሩቅያ ጋር",
+    "daily_inspiration": "ዕለታዊ አነሳሽ",
+    "sunan_desc": "ሱናዎች፣ ደሞዞች፣ የኩፒንግ በጎነቶች እና ፍርዶቹ",
+    "daily_supplications_desc": "የልብስ፣ የውበት፣ የምግብ፣ የጉዞ እና የቤት ትውስታዎች",
+    "hub_prayer_desc": "ከግዴታ ሶላት በኋላ የሚደረጉ ትውስታዎች",
+    "sadaqa_jariya": "ቀጣይነት ያለው በጎ አድራጎት",
+    "made_with_love": "ለእስልምና ብሄር በፍቅር የተሰራ"
+  },
+  "zakat": {
+    "title": "የዘካት ማ0ሪያ",
+    "subtitle": "በዕለታዊ වርቅና ብር ዋጋ መሰረት ዘካትዎን በትክክል ያስሉ",
+    "assets_input": "ንብረትና ቁጠጠር",
+    "cash": "ጥሬ ገንዘብ",
+    "trade": "የንግд ንብረት",
+    "gold_weight": "የወርቅ ክብደት (ግራም - 24ኬ)",
+    "silver_weight": "የብር ክብደት (ግራም)",
+    "debts": "ዕዳዎች",
+    "nisab_info": "ስለ ኒሳብ:",
+    "nisab_desc": "ኒሳብ በ85ግ 24ኬ ወርቅ ዋጋ ይሰላል። ግምት ሲደርስና ሙሉ ጨረቃ ዓመት ሲያልፍ ዘካት 2.5% ይሆናል።",
+    "result_title": "የዘካት ማጠቃለያ",
+    "total_wealth": "ጠቅላላ ንብረት",
+    "amount_due": "የዘካት መጠን",
+    "eligible": "ዘካት ይሆናል",
+    "not_eligible": "ኒሳብ አላበበም",
+    "market_prices": "የአሁኑ የገበያ ዋጋዎች",
+    "gold_price": "የወርቅ ዋጋ (24ኬ)",
+    "silver_price": "የብር ዋጋ",
+    "hadiths_title": "ስለ ዘካህ መልካምነት እና ግዴታ ሀዲስ",
+    "sar": "የሳውዲ ሪያል",
+    "last_updated": "የመጨረሻው ዝመና፡ {{ጊዜ}}",
+    "live_prices": "የቀጥታ የወርቅ እና የብር ዋጋዎች (ራስ-ሰር ዝመና)",
+    "api_error": "ዋጋዎችን ማዘመን አልተሳካም፣ ነባሪ ዋጋዎች ጥቅም ላይ ውለዋል።",
+    "hadiths_subtitle": "የዘካ ግዴታ እና የተከለከሉትን ሰዎች ቅጣት በተመለከተ ትክክለኛ የነብዩ ሀዲሶች ስብስብ",
+    "per_gram": "በአንድ ግራም"
+  },
+  "search": {
+    "title": "የተቀናጀ ፍለጋ",
+    "subtitle": "ቁርኣን፣ አዝካርና ምሁራዊ ቤተ-መጻሕፍት ፍለጋ",
+    "placeholder": "ምን ፈልገው ነው?...",
+    "author_source": "ምንጭ",
+    "match_percent": "ግጥሚያ",
+    "smart_search_title": "በትርጉም ፈልግ (ብልጥ ፍለጋ 🤖)",
+    "smart_search_desc": "ከቃላት ቀጥተኛ ተዛማጅነት ይልቅ የአንቀጾችን ሐሳብ እና ዐውደ-ጽሑፍ ትርጉሙን ይመለከታል",
+    "library_label": "ላይብረሪ",
+    "no_results": "ምንም ተዛማጅ ውጤቶች አልተገኙም።",
+    "suggestions_hint": "ለመጀመር ምክሮች",
+    "try_other": "ሌሎች ቁልፍ ቃላትን ለመጠቀም ይሞክሩ",
+    "results_count": "ውጤት",
+    "hint_morning": "የጠዋት መታሰቢያ",
+    "hint_baqarah": "ሱረቱ አል-በቀራህ",
+    "hint_fasting": "የጾም አቅርቦቶች"
+  },
+  "favorites": {
+    "subtitle": "የተቀምጡት አዝካርና ፍች ዝርዝር",
+    "empty": "እስካሁን ተወዳጆች የሉም",
+    "empty_desc": "አዝካር ወይም ፍች ሲያስቀምጡ እዚህ ይታያሉ"
+  },
+  "quran": {
+    "title": "ቅዱስ ቁርኣን",
+    "subtitle": "ከአላህ መጽሐፍ የተባረኩ አንቀጾች",
+    "tafsir_jalalayn": "ተፍሲር አል-ጃላላይን",
+    "tafsir_muyassar": "ተፍሲር አል-ሙያስር",
+    "verse_of_hour": "የሰዓቱ አንቀጽ",
+    "meccan": "መካዊ",
+    "medinan": "መዲናዊ",
+    "last_read": "መጨረሻ የተነበበ",
+    "tafsir_both": "ንጽጽር",
+    "tafsir_ibn_kathir": "የኢብኑ ከሲር ተፍሲር",
+    "tafsir_saadi": "የአል-ሳዲ ትርጓሜ",
+    "daily": {
+      "1": {
+        "verse_number": "159",
+        "sura": "አል ኢምራን።",
+        "text": "ለእነርሱ ደግ የነበርክላቸው ከአላህ እዝነት የተነሳ ነው። ባለጌ እና ልበ ደንዳና ብትሆን ኖሮ ከዙሪያህ በተበተኑ ነበር። ለነርሱም ይቅር በላቸው፤ ምሕረትንም ለምናቸው፤ ከእነርሱም ጋር ተመካከሩ። በጉዳዩ ላይ፡- በወሰንክ ጊዜ በአላህ ላይ ታመን። አላህ በርሱ የሚታመኑትን ይወዳል።"
+      },
+      "2": {
+        "sura": "ታሃ",
+        "text": "እውነተኛው ንጉሥ እግዚአብሔርም እንዲሁ ከፍ ከፍ አለ። ቁርኣንም በእናንተ ላይ ከመፈጸሙ በፊት በቁርኣን አትቸኩል። «ጌታዬ ሆይ እውቀትን ጨምርልኝ» በላቸው።",
+        "verse_number": "114"
+      },
+      "3": {
+        "verse_number": "6",
+        "text": "ከችግር ጋር በእርግጥ ምቾት ይመጣል",
+        "sura": "ማብራሪያው"
+      },
+      "4": {
+        "text": "ታገስ የአላህ ቃል ኪዳን እውነት ነውና፤ የማያምኑም አያታልሉህ።",
+        "verse_number": "60",
+        "sura": "ሮም"
+      },
+      "5": {
+        "verse_number": "286",
+        "sura": "ላሟ",
+        "text": "እግዚአብሔር ነፍስን ከአቅሟ በላይ አይጫነውም። ለእርሷ የሠራችው ሥራ አላት፤ በእርሷም ላይ የሠራችው ሥራ አልለ። ጌታችን ሆይ ከረሳን ወይም ከተሳሳትን አትጠይቀን። ጌታችን ሆይ በነዚያ ከኛ በፊት በነበሩት ላይ እንደ ጫንክ አትጫንብን። ጌታችን ሆይ ልንሸከመው የማንችለውን ነገር አትከብደን። እና ይቅር በለን እና ይቅር በለን. ማረንም። አንተ ረዳታችን ነህና በከሓዲዎቹ ሕዝቦች ላይ እርዳን።"
+      },
+      "6": {
+        "verse_number": "69",
+        "sura": "ሸረሪት",
+        "text": "እነዚያም ለኛ የታገሉትን መንገዶቻችንን በእርግጥ እንመራቸዋለን። አላህም ከበጎ ሠሪዎች ጋር ነው።"
+      },
+      "7": {
+        "sura": "ፍቺ",
+        "text": "ከማይጠብቀው ቦታም ይሰጠዋል። በአላህም ላይ የተመካ እርሱ በቂው ነው። በእርግጥም እግዚአብሔር ዓላማውን ይፈጽማል። እግዚአብሔር ለሁሉ ነገር ዕድል ሰጥቶታል።",
+        "verse_number": "3"
+      },
+      "8": {
+        "verse_number": "7",
+        "sura": "ኢብራሂም",
+        "text": "ጌታችሁም ባለ ጊዜ (አስታውስ)፡- ብታመሰግኑም በእርግጥ እጨምርላችኋለሁ። ብትክዱም ቅጣቴ ብርቱ ነውና።"
+      }
+    },
+    "suras": {
+      "آل عمران": "አል ኢምራን።",
+      "البقرة": "ላሟ",
+      "الشرح": "ማብራሪያው",
+      "طه": "ታሃ",
+      "الروم": "ሮም",
+      "العنكبوت": "ሸረሪት",
+      "الطلاق": "ፍቺ",
+      "إبراهيم": "ኢብራሂም"
+    }
+  },
+  "prayer": {
+    "today_prayers": "የዛሬ ሶላቶች",
+    "calendar": "ወርሃዊ ቀን መቁጠሪያ",
+    "fajr": "ፈጅር",
+    "sunrise": "ፀሐይ መውጫ",
+    "dhuhr": "ዙሁር",
+    "asr": "ዐሥር",
+    "maghrib": "መግሪብ",
+    "isha": "ዒሻ",
+    "night_prayers": "የሌሊት ሶላቶችና ሱሁር",
+    "first_third": "የመጀመሪያ ሶስተኛ",
+    "midnight": "እኩው ሌሊት",
+    "suhoor": "የሱሁር ሰዓት",
+    "next": "ቀጣይ ሶላት",
+    "remaining": "ቀሪ ጊዜ",
+    "location": "አካባቢዎ",
+    "location_required": "የአካባቢ ፈቃድ ይስጡ",
+    "allow_location": "ፍቀድ",
+    "enter_city": "ከተማ ያስገቡ",
+    "calculation_method": "የስሌት ዘዴ",
+    "methods": {
+      "MuslimWorldLeague": "የሙስሊም ዓለም ሊግ",
+      "Egyptian": "የግብፅ ባለስልጣን",
+      "Karachi": "የካራቺ ዩኒቨርሲቲ",
+      "UmmAlQura": "ኡም አልቁራ",
+      "Dubai": "ዱባይ",
+      "NorthAmerica": "ሰሜን አሜሪካ",
+      "Kuwait": "ኩዌት",
+      "Qatar": "ቃታር",
+      "Singapore": "ሲንጋፖር",
+      "Turkey": "ቱርክ"
+    },
+    "imsak": "ኢምሳክ",
+    "qibla": {
+      "direction": "የቂብላ አቅጣጫ",
+      "degree": "ዲግሪ",
+      "request_permission": "ባለሙያውን ለማንቀሳቀስ የሴንሰር ፈቃድ ይስጡ",
+      "calibrating": "ባለሙያ በማስተካከል ላይ...",
+      "not_supported": "አሳሹ የአቅጣጫ ሴንሰር አይደግፍም",
+      "from_north": "ከሰሜን",
+      "subtitle": "በAR እይታ የሚሰራ ትክክለኛ ባለሙያ",
+      "guide": "የአጠቃቀም መመሪያ",
+      "camera_enable": "AR ካሜራ አንቃ",
+      "camera_disable": "ካሜራ አጥፋ",
+      "south": "ደቡብ",
+      "north": "ሰሜናዊው",
+      "east": "ምስራቅ",
+      "west": "ምዕራባዊው"
+    },
+    "qibla_hint": "ሴንሰሩን ለማስተካከል ስልክዎን በዘመነ-8 አቅጣጫ ያንቀሳቅሱ። ቂብላ ለማየት የካሜራ ቁልፉን ይጠቀሙ።",
+    "last_third": "የሌሊቱ ሶስተኛው (ተሀጁድ)"
+  },
+  "adhkar_hub": {
+    "title": "የአዝካር ሀብ",
+    "subtitle": "ዕለታዊ ዝክርና ጥበቃ",
+    "morning_desc": "የጠዋት ጥበቃና በረከት",
+    "evening_desc": "የምሽት ሰላምና ጥበቃ",
+    "sleep_desc": "የነቢዩ ሱና ከእንቅልፍ በፊት",
+    "prayer_desc": "ከግዴታ ሶላት በኋላ ዝክር",
+    "ruqyah_desc": "ከቁርኣን ማገግመትና ጥበቃ",
+    "post_prayer": "ከሶላት በኋላ አዝካር",
+    "house_desc": "ቤቱን የመግባት እና የመውጣት ትዝታዎች እና በውስጡ የመባረክ",
+    "masjid_desc": "መስጂድ የመግባት፣ የመግባት እና የመውጣት ትዝታዎች"
+  },
+  "salawat": {
+    "title": "በነቢዩ ላይ ፀሎት",
+    "virtue": "የፀሎት ብጃዎች"
+  },
+  "dhikr": {
+    "count": "ቁጥር",
+    "times": "ጊዜ",
+    "source": "ምንጭ",
+    "tap_to_count": "ለመቁጠር ንካ",
+    "completed_msg": "ተጠናቋል!",
+    "reset": "Reset",
+    "reset_all": "ሁሉንም ዳግም ጀምር",
+    "morning_form": "የጠዋት ቅፅ",
+    "evening_form": "የምሽት ቅፅ",
+    "note": "ማስታወሻ",
+    "benefit": "ጥቅም"
+  },
+  "tasbih": {
+    "title": "ኤሌክትሮኒክ ተስቢሕ",
+    "count": "የአሁን ቁጥር",
+    "target": "ግብ",
+    "set_target": "ግብ ያዘጋጁ",
+    "reset": "ዳግም ጀምር",
+    "vibrate": "ንዝረት",
+    "sound": "ድምፅ",
+    "custom": "ብጁ",
+    "saved": "ተቀምጧል",
+    "custom_dhikr": "ብጁ ወንድ",
+    "select_dhikr": "ወንድውን ምረጥ",
+    "fullscreen": "ሙሉ ማያ",
+    "tap_anywhere": "Tasbeeh ለማለት በስክሪኑ ላይ የትኛውም ቦታ ላይ ጠቅ ያድርጉ",
+    "daily_stats": "የዛሬው ስታቲስቲክስ",
+    "dhikr_name": "ወንዱ",
+    "lifetime_stats": "አጠቃላይ ስታቲስቲክስ",
+    "add_dhikr": "ወንድ ጨምር",
+    "custom_dhikr_placeholder": "ብጁ መጠቀስህን እዚህ ጻፍ...",
+    "dhikr_count": "ምስጋናዎች",
+    "modes_title": "ከጸሎት በኋላ የመክበር ሁኔታዎች",
+    "modes_1": "የመጀመርያው ጉዳይ (ተስቢህ 33 ከተጠናቀቀው ጋር)፡- 33 ጊዜ “ተስቢህ” ትላለህ፣ 33 ጊዜ አወድሰሃል፣ “አላሁ አክበር” 33 ጊዜ ስትል፣ ከዚያም መቶኛ “ከአላህ በስተቀር ሌላ አምላክ የለም፣ አጋር የሌለው...” በላቸው። ማስረጃው በአቡ ሁረይራ ረዲየሏሁ ዐንሁበት ሐዲስ በሰሒህ ሙስሊም።",
+    "modes_intro": "ከነቢዩ ሰለላሁ ዓለይሂ ወሰለም የተረጋገጠው ከተደነገገው ሶላት በኋላ አላህን ለማወደስ ​​በርካታ ባህሪያትና ሁኔታዎች እንዳሉ ነው። ሙስሊሙ ከነሱ የሚፈልገውን ይመርጣል እና ሁሉንም ሱናዎች ለመከተል በመካከላቸው ይለያያል።",
+    "modes_subtitle": "እያንዳንዱን ጸሎት ለማወደስ ​​የሚያስፈልጉ ሁኔታዎች ማብራሪያ፡-",
+    "modes_end": "የምስጋና ግዛቶች መጨረሻ",
+    "modes_2": "ሁለተኛው ጉዳይ (ተስቢህ 33 እና ተክቢር 34)፡ አንተ ተስቢህ 33፣ 33 አወድሰሃል፣ “አላሁ አክበር” ትላለህ 34. ማስረጃው በሶሒህ ሙስሊም ላይ የካእብ ቢን ዑጅራህ ረሒመሁላህ ሀዲስ ነው።",
+    "modes_3": "ሦስተኛው ጉዳይ (ተስቢህ፣ ሙገሳ እና ተክቢራ 10 ጊዜ)፡- አንተ ተስቢህ 10፣ ​​10 አወድሰሃል፣ ተክቢራም 10 ትላለህ። ማስረጃው የአቡ ሁረይራ ረዲየሏሁ ዐንሁድ ሀዲስ ነው በሶሒህ አል ቡኻሪና ሙስሊም።",
+    "modes_4": "አራተኛው ጉዳይ (ካሬ 25 ጊዜ)፡ አንተ፡ ክብር ለእግዚአብሔር ይሁን ምስጋናም ለእግዚአብሔር ይሁን፡ ከአላህ በቀር ሌላ አምላክ የለም፡ አላህም ታላቅ ነው ትላለህ። ድምሩ 100 እንዲሆን 25 ጊዜ ደጋግመህ ደግመህ ማስረጃው የዚድ ቢን ሳቢት ረሒመሁላህ ሀዲስ በሱነን አል ነሳኢ"
+  },
+  "fasting": {
+    "sources": {
+      "white_days": "Narrated by Abu Dawood, An-Nasa'i, and At-Tirmidhi",
+      "arafah": "Narrated by Muslim",
+      "dhul_hijjah_10": "Narrated by Ibn Majah and At-Tirmidhi",
+      "ashura": "Narrated by Muslim from Abu Qatadah",
+      "tasu_a": "Narrated by Muslim from Ibn Abbas",
+      "monday": "Narrated by Muslim from Abu Qatadah",
+      "thursday": "Narrated by At-Tirmidhi and Abu Dawood",
+      "shawwal_6": "Narrated by Muslim from Abu Ayyub",
+      "shaban": "Narrated by Al-Bukhari and Muslim"
+    },
+    "title": "የሱንና ፆም ቀናት",
+    "white_days": "ነጭ ቀናት",
+    "white_days_desc": "በየወሩ ሂጅሪ 13, 14 እና 15",
+    "white_days_hadith": "በየወሩ 3 ቀን መፆም ለዘለዓለም እንደመፆም ነው",
+    "arafah": "የዐረፋ ቀን",
+    "arafah_desc": "ዙልሒጃ 9",
+    "arafah_hadith": "የዐረፋ ፆም ያለፈውንና የሚቀጥለውን ዓመት ኃጢአት ያስተስርያል",
+    "monday": "ሰኞ",
+    "monday_desc": "በየሳምንቱ ሰኞ",
+    "monday_hadith": "ተወልጄ ወሒ የወረደበት ቀን ነው",
+    "thursday": "ሐሙስ",
+    "thursday_desc": "በየሳምንቱ ሐሙስ",
+    "thursday_hadith": "ተግባራት ሰኞና ሐሙስ ይቀርባሉ",
+    "shawwal": "የሸዋል 6 ቀናት",
+    "shawwal_desc": "ከዒድ በኋላ 6 ቀናት",
+    "shawwal_hadith": "ረመዳንንና 6 ቀን ከፆመ ለዘለዓለም እንደፆመ ነው",
+    "upcoming": "የሚመጣ",
+    "today_fasting": "ዛሬ",
+    "passed": "ያለፈ",
+    "gregorian_date": "ግሪጎሪ",
+    "hijri_date": "ሂጅሪ",
+    "days_remaining": "{{days}} ቀናት ቀርተዋል",
+    "days_passed": "ከ{{days}} ቀናት በፊት",
+    "monthly": "ወርሃዊ",
+    "weekly": "ሳምንታዊ",
+    "yearly": "ዓመታዊ",
+    "ashura_hadith": "የዐሹራን ቀን ፆም አላህ ያለፈውን አመት ምህረት እንዲያደርግልኝ ተስፋ አደርጋለሁ",
+    "dhul_hijjah_hadith": "ከእነዚህ አስር ቀናት የበለጠ መልካም ስራዎች በእግዚአብሔር ዘንድ የተወደዱባቸው ቀናት የሉም",
+    "tasua": "የአዲስ ዓመት ቀን",
+    "ashura_desc": "የሙሀረም አስረኛ",
+    "ashura": "የአሹራ ቀን",
+    "tasua_desc": "የሙሀረም ዘጠነኛው",
+    "tasua_hadith": "እስከሚቀጥለው ዓመት ብቆይ ዘጠነኛውን እጾማለሁ።",
+    "dhul_hijjah": "የዙልሂጃ አስሩ ቀናት",
+    "dhul_hijjah_desc": "የመልካም ስራ ቀናት በእግዚአብሔር ዘንድ የተወደዱ ናቸው።",
+    "shaban": "የሻባን ጾም",
+    "shaban_desc": "ነቢዩ ሰለላሁ ዐለይሂ ወሰለም አብዛኛውን የሻዕባን ይጾሙ ነበር።",
+    "shaban_hadith": "ነቢዩ ሰለላሁ ዐለይሂ ወሰለም ሻባንን በሙሉ ይጾሙ ነበር። ሻባንን ከትንሽ በስተቀር ይፆም ነበር።",
+    "early_reminder_title": "የሱሑር እና የጾም ጊዜ እየቀረበ ነው።",
+    "reminder_title": "ነገን እንድንጾም ማሳሰቢያ",
+    "reminder_body": "ማሳሰቢያ፡- ነገ የጾም ቀን ነው ({{ስም}})። እግዚአብሔር መታዘዝህን ይቀበል።",
+    "early_reminder_body": "ማሳሰቢያ፡- ነገ የጾም ቀን ነው ({{ስም}})። የንጋት ጸሎት ሊደረግ {{ሰዓታት}} ሰአታት ቀርተዋል።"
+  },
+  "dates": {
+    "today": "ዛሬ",
+    "hijri": "ሂ",
+    "gregorian": "ግ",
+    "days_short": [
+      "እሑ",
+      "ሰኞ",
+      "ማክ",
+      "ረቡ",
+      "ሐሙ",
+      "ዓር",
+      "ቅዳ"
+    ],
+    "days": [
+      "እሑድ",
+      "ሰኞ",
+      "ማክሰኞ",
+      "ረቡዕ",
+      "ሐሙስ",
+      "ዓርብ",
+      "ቅዳሜ"
+    ]
+  },
+  "settings": {
+    "title": "ቅንብሮች",
+    "language": "ቋንቋ",
+    "theme": "ገጽታ",
+    "dark": "ጨለማ",
+    "light": "ብርሃን",
+    "system": "ስርዓት",
+    "dynamic": "ተለዋዋጭ (ራስ-ሰር)",
+    "theme_fajr": "ፈጅር የድምቀት",
+    "theme_duha": "ዱሐ ብርሃን",
+    "theme_maghrib": "መግሪብ ሰላም",
+    "theme_sahar": "ሰሐር መንፈስ",
+    "calculation": "የስሌት ዘዴ",
+    "font_size": "የፊደል መጠን",
+    "font_sm": "ትንሽ",
+    "font_md": "መካከለኛ",
+    "font_lg": "ትልቅ",
+    "font_xl": "በጣም ትልቅ",
+    "notifications": "ማሳወቂያዎች",
+    "vibrate": "የንዝረት ግብረ መልስ",
+    "cloud_sync": "የደመና ምስማር",
+    "cloud_desc": "በሁሉም መሳሪያዎ አዝካርዎን ለማስማር ይግቡ",
+    "guest": "እንግዳ",
+    "sync_active": "ምስማር ንቁ",
+    "local_only": "የአካባቢ ብቻ",
+    "login": "ግባ",
+    "logout": "ውጣ",
+    "enter_email": "ኢሜልዎን ያስገቡ:",
+    "check_email": "የመግቢያ ማገጃ ተልኳል! ኢሜልዎን ይመልከቱ",
+    "about_us_title": "ስለ ኢስላሚክ ሀብ",
+    "about_us_content": "ለዕለታዊ ዝክር፣ ቁርኣንና የሶላት ሰዓት የተዋቀረ መድረክ። ለማህበረሰባችን የተከፋፈለ ሰዳቃ ለመሆን የተዘጋጀ።",
+    "notifications_prayers": "የጸሎት ጊዜያት ማንቂያዎች",
+    "notifications_athan": "ማስጠንቀቂያ ሲሰጥ አድሃን ድምፅ",
+    "test_sound": "የድምጽ ልምድ",
+    "notifications_athan_desc": "የአዛን ድምጽ ይምረጡ ወይም ያሰናክሉት",
+    "notifications_night": "የሌሊት ማስጠንቀቂያዎች እና ጎህ ሲቀድ ይቅርታ መጠየቅ",
+    "notifications_adhkar_sub": "የጠዋት እና ማታ የዚክር ማንቂያዎች (ከጠዋት እና ከሰአት በኋላ 15 ደቂቃዎች)",
+    "athan_azan2": "አዛን 2 (መካ)",
+    "athan_azan1": "አዛን 1 (አብዱል ባሲጥ)",
+    "athan_none": "ድምጽ የለም (ማንቂያ ብቻ)",
+    "notifications_early_desc": "የጸሎት ጊዜ ከመግባቱ በፊት የማንቂያውን ቆይታ ይምረጡ",
+    "notifications_early": "የቅድሚያ ማስጠንቀቂያ ከጸሎት ጥሪ በፊት",
+    "notifications_early_mins_two": "ሁለት ደቂቃዎች",
+    "notifications_early_mins_few": "{{count}} ደቂቃዎች",
+    "notifications_early_mins_one": "አንድ ደቂቃ",
+    "notifications_early_mins": "{{count}} ደቂቃዎች",
+    "notifications_early_off": "ቅድመ ማንቂያን አሰናክል",
+    "notifications_early_mins_many": "{{count}} ደቂቃዎች",
+    "notifications_early_mins_other": "{{count}} ደቂቃዎች",
+    "notifications_athan_type": "የጸሎት ዓይነት",
+    "notifications_athan_type_full": "ሙሉው የጸሎት ጥሪ",
+    "notifications_athan_type_desc": "ሙሉ አድሃን ወይም ተክቢርን መጫወት ጊዜው ሲጀምር ብቻ ነው።",
+    "notifications_fasting": "ስለ ፈቃደኝነት ጾም ማስጠንቀቂያ",
+    "notifications_suhoor_desc": "ከሰላት በፊት ሱሁርን ለመብላት ንቁ",
+    "notifications_fasting_desc": "ነገ የሱና የፆም ቀን ከሆነ ከመግሪብ ሰላት በኋላ ማስጠንቀቂያ",
+    "notifications_suhoor": "የሱሁር ማንቂያ",
+    "notifications_athan_type_takbeer": "አሳንስ ብቻ",
+    "notifications_fasting_hours_desc": "ጎህ ከማለዳ በፊት ስንት ሰአታት እንድትፆሙ እንድታስታውስ እንደምትፈልግ ምረጥ",
+    "notifications_fasting_hours": "ከማለዳ በፊት የማስታወሻ ጊዜ (በሰዓታት ውስጥ)",
+    "muezzin_daghiri": "የሶላት ጥሪ በሼክ ሀማድ አል ዳጋሪሪ",
+    "muezzin_madinah": "በቅዱስ መስጊድ ውስጥ የጸሎት ጥሪ",
+    "muezzin_makkah": "በተከበረው የመካ መስጊድ የጸሎት ጥሪ",
+    "notifications_suhoor_mins_desc": "ለሱሁር ለመንቃት ጎህ ከማለዳው ስንት ደቂቃዎች በፊት ይምረጡ",
+    "notifications_suhoor_mins_val": "ጎህ ከመቅደዱ በፊት {{count}} ደቂቃዎች",
+    "notifications_fasting_hours_off": "ያለ ተጨማሪ ማንቂያ (የሞሮኮ ማንቂያ ብቻ)",
+    "notifications_suhoor_mins": "የሱሁር ማንቂያ ሰዓት ጎህ ከመቅደዱ በፊት ነው።",
+    "notifications_fasting_hours_val": "ጎህ ከመቅደዱ በፊት {{count}} ሰዓቶች",
+    "hijri_offset": "የሂጅሪ አቆጣጠርን ማስተካከል",
+    "notifications_hijama": "የዋንጫ ቀን ማንቂያ",
+    "notifications_sunan_rawatib": "ደሞዝ ሱና ማንቂያ",
+    "notifications_hijama_desc": "ለመጠጣት የተመከሩትን ቀናት ማስታወሻ (17፣ 19፣ 21 በእያንዳንዱ ሂጅሪ ወር)",
+    "notifications_sunan_rawatib_desc": "ከግዴታ ሶላቶች ጋር የተቆራኙትን የሱና ሰላት ማሳሰቢያ",
+    "hijri_offset_minus_1": "የ1 ቀን መዘግየት (-1)",
+    "hijri_offset_zero": "ምንም ለውጥ የለም (0)",
+    "hijri_offset_minus_2": "2 ቀናት ዘግይተዋል (-2)",
+    "hijri_offset_plus_1": "1 ቀን ማስረከብ (+1)",
+    "hijri_offset_desc": "በሃገርዎ ካለው ህጋዊ የጨረቃ እይታ ጋር ለማዛመድ ወደ ፊት በመሄድ ወይም በማዘግየት የሂጅሪ ቀንን ማሻሻል።",
+    "hijri_offset_plus_2": "ከ 2 ቀናት በፊት (+2)"
+  },
+  "admin": {
+    "library_title": "የቤተ-መጻሕፍት ማስተዳደሪያ",
+    "library_subtitle": "የተወስኑ ይዘቶችን ያስተዳድሩና ምድብ ማሰናጃ ያዘጋጁ",
+    "sync_button": "ምስማርና ትንተና ጀምር",
+    "processing": "በሂደት ላይ...",
+    "stats_items": "ጠቅላላ ዕቃዎች",
+    "stats_categories": "ንቁ ምድቦች",
+    "stats_last_updated": "መጨረሻ የተሻሻለ",
+    "update_data": "ውሂብ አዘምን",
+    "sync_desc": "ይህ ሂደት ከPDF የተወስኑ ጽሑፎችን ያስማራልና ምድብ አሰጣጥ ስልተች ይተገብራል።",
+    "category_dist": "የምድብ ስርጭት"
+  },
+  "common": {
+    "loading": "በመጫን ላይ...",
+    "error": "ስህተት ተከስቷል",
+    "retry": "ድገም",
+    "close": "ዝጋ",
+    "save": "አስቀምጥ",
+    "cancel": "ሰርዝ",
+    "done": "ተጠናቋል",
+    "search": "ፈልግ",
+    "share": "አጋራ",
+    "copied": "ተቀድቷል",
+    "copy": "ቅዳ",
+    "of": "ከ",
+    "back": "ተመለስ",
+    "ayahs": "አንቀጾች",
+    "more": "ተጨማሪ...",
+    "list_view": "ዝርዝር ይመልከቱ",
+    "not_found_title": "ገጽ አልተገኘም።",
+    "view_more": "ተጨማሪ",
+    "grid_view": "የፍርግርግ እይታ",
+    "back_home": "ወደ ዋናው ገጽ ተመለስ",
+    "not_found_desc": "ይቅርታ፣ የምትፈልጉት ገጽ የለም ወይም ተንቀሳቅሷል።",
+    "completed": "ተጠናቀቀ",
+    "pending": "ጠጋኝ"
+  },
+  "hadith": {
+    "title": "ሐዲስና ፍቅህ",
+    "subtitle": "የሐዲስ، ፍቅህና ሳይንሳዊ እይታዎች ኢንሳይክلوፒዲያ",
+    "search_placeholder": "ሐዲስ፣ ፍቅህ ወይም ቁلፍ ቃል ፈልግ...",
+    "loading_data": "መረጃ በመጫን ላይ...",
+    "no_results": "ውጤት አልተገኘም",
+    "try_another_search": "ሌላ ቃል ይሞክሩ",
+    "cat_all": "ሁሉም",
+    "cat_tafsir": "ተፍሲር",
+    "cat_creed": "ዐቂዳ",
+    "cat_fiqh": "ፍቅህ",
+    "cat_hadith": "ሐዲስ",
+    "cat_ethics": "ሥነ ምግባር",
+    "cat_general": "አጠቃላይ",
+    "cat_library": "ላይብረሪ",
+    "cat_sira": "ትንቢታዊ የህይወት ታሪክ",
+    "cat_worship": "አምልኮ",
+    "cat_transactions": "ጉዳዮች",
+    "cat_family": "ቤተሰብ",
+    "library_title": "አጠቃላይ ቤተ-መጽሐፍት",
+    "library_search": "የወጡትን መጻሕፍት ፈልግ",
+    "source_label": "ምንጭ",
+    "library_no_results": "በመጻሕፍት ውስጥ ምንም ውጤቶች አልተገኙም።",
+    "needs_review": "ሳይንሳዊ ግምገማ ያስፈልገዋል",
+    "showing_results": "{{count}} ውጤቶችን በማሳየት ላይ",
+    "loading_library": "ቤተ-መጽሐፍትን በመጫን ላይ...",
+    "benefits_label": "ጥቅሞች",
+    "items": {
+      "water_sea": {
+        "bookTitle": "የሕግ ድንጋጌዎች",
+        "text": "አንድ ሰው ወደ የአላህ መልእክተኛ ሰለላሁ ዓለይሂ ወሰለም መጣና፡- የአላህ መልእክተኛ ሆይ በባህር ላይ እየተጓዝን ነውና ከእኛ ጋር ትንሽ ውሃ ይዘናል። በሱ ውዱእ ​​ካደረግን እንጠማለን። በባህር ውሃ ውዱእ ማድረግ አለብን? የአላህ መልእክተኛ ሰለላሁ ዓለይሂ ወሰለም እንዲህ ብለዋል፡- (ውሃው ንፁህ ነው፣ የሞተ ስጋውም የተፈቀደ ነው)።"
+      },
+      "nabidh_wudu": {
+        "bookTitle": "የሕግ ድንጋጌዎች",
+        "text": "ከአብደላህ ቢን መስዑድ (ረዲየላሁ ዐንሁ) እንዳስተላለፉት ነብዩ ሰለላሁ ዐለይሂ ወሰለም በጂንኑ ሌሊት እንዲህ ብለውታል፡- (መድኃኒትህ ውስጥ ያለው ምንድን ነው?) እንዲህ አሉት፡- ወይን። እንዲህ አለ፡- (ጥሩ ተምርና ንፁህ ውሃ) በርሱም ውዱእ አደረገ።"
+      },
+      "dog_licking": {
+        "bookTitle": "የሕግ ድንጋጌዎች",
+        "text": "የአላህ መልእክተኛ ሰለላሁ ዓለይሂ ወሰለም እንዲህ ብለዋል፡- (ውሻ የአንዳችሁን ዕቃ በላሰ ጊዜ ሰባት ጊዜ በቆሻሻ ያጥበው)።"
+      },
+      "ghina_mizan_1": {
+        "bookTitle": "ህጋዊ ውሳኔዎች",
+        "text": "በዘፈንና በመዝናኛ መሳሪያዎች ክልከላ ላይ ከቁርኣን፣ ከሱና እና ከሶሓባዎች አባባል ሰፊ ማስረጃዎች አሉ።"
+      },
+      "tafsir_bayan_1": {
+        "bookTitle": "የቁርኣን ድንጋጌዎች ምርመራ እና ማብራሪያ",
+        "text": "በፍርዱ አንቀፆች ውስጥ ያለው መሰረታዊ መርሆ የአምልኮ ተግባራትን እና ግብይቶችን የሚያጠቃልሉ መሆናቸው ነው, እና እነሱን ከሌላው አንፃር ብቻ መገደብ አይፈቀድም."
+      },
+      "hijab_shar_1": {
+        "bookTitle": "ህጋዊ ውሳኔዎች",
+        "text": "ሂጃብ በቁርአን፣ በሱና እና በሀገሪቱ ቀደምት መሪዎች ስምምነት የተቋቋመ ህጋዊ ግዴታ ነው።"
+      },
+      "khurasaniyah_1": {
+        "bookTitle": "የአስተምህሮው ማብራሪያ",
+        "text": "የሃይማኖት መገኛ እግዚአብሔር በጌትነቱ፣ በመለኮቱ፣ በስሙና በባህሪው አንድነቱ ነው።"
+      },
+      "ikhtilat_1": {
+        "bookTitle": "ህጋዊ ውሳኔዎች",
+        "text": "የተከለከለው ድብልቅ ወደ ፈተና፣ መገለል ወይም አካላዊ ንክኪ የሚመራ ነው።"
+      },
+      "sifat_salat_1": {
+        "bookTitle": "የጸሎት ህጎች",
+        "text": "ሶላት ከሸሃዳ ቀጥሎ ሁለተኛው የእስልምና ምሰሶ ሲሆን ነብዩ صلى الله عليه وسلم እንደሰገዱት መስገድ አለበት።"
+      },
+      "manhajiyah_1": {
+        "bookTitle": "ስልታዊ ዳኝነት",
+        "text": "ዳኝነት የሸሪዓ ህግ ማስረጃዎችን በትክክል መረዳት ሲሆን ትክክለኛው አካሄድ ደግሞ ራዕይን መከተል ነው።"
+      },
+      "tahjeel_1": {
+        "text": "የሐዲሥ መመረቅ ሐዲሱን ከመጀመሪያዎቹ ምንጮቹ ጋር በማያያዝ የዲግሪውን ደረጃ በማብራራት የተገለፀ ነው።",
+        "bookTitle": "የሀዲሶች ምረቃ"
+      },
+      "aqliyah_liberal_1": {
+        "text": "ሊበራሊዝም በራዕይ ጽሑፎች ላይ ምክንያትንና ስሜትን በማስቀደም ላይ የተመሰረተ አካሄድ ነው።",
+        "bookTitle": "አእምሯዊ ጥናቶች"
+      },
+      "azam_allah_1": {
+        "bookTitle": "የእምነት ጉዳዮች",
+        "text": "እግዚአብሔርን ማክበር የእምነት መሰረት ሲሆን እግዚአብሔርን ወይም ሃይማኖቱን መሳደብ ከሃይማኖት የሚያወጣ ስድብ ነው።"
+      },
+      "nawaqid_islam_1": {
+        "bookTitle": "የእስልምናን ተቃርኖ የሚያብራራ ሚዲያ",
+        "text": "አስሩ የእስልምና ጥፋቶች፡- አላህን በማምለክ ሽርክን፣ ሙሽሪኮችን የማይክድ፣ ከነብዩ (ሶ.ዐ.ወ) አካሄድ ውጭ ሌላ ነገር ፍፁም ነው ብሎ የሚያምን፣ መልእክተኛው ያመጡትን ማንኛውንም ነገር የሚጠላ፣ በአላህ ዲን ነገር ላይ የሚያፌዝ፣ አስማት፣ ለሙሽሪኮች ታማኝ መሆን፣ አንዳንድ ሰዎች ከሸሪዓ ሃይማኖት ሊያፈነግጡ ይችላሉ ብሎ የሚያምን ነው።"
+      },
+      "nawaqid_islam_2": {
+        "bookTitle": "የእስልምናን ተቃርኖ የሚያብራራ ሚዲያ",
+        "text": "እንደ ሙናፊቅ ያሉ ጥቃቅን ሽርክ አንዱን ከሀይማኖት አያወጣም ነገር ግን ከከባድ ወንጀሎች አንዱ ነው። ነብዩ (ሶ.ዐ.ወ) እንዲህ አሉ፡- (ከእናንተ በጣም የምፈራው ትንሽ ሽርክ ነው) ስለዚህ ስለሱ ተጠይቀው፡ (ሙናፊቅ) አሉ።"
+      },
+      "nawaqid_islam_3": {
+        "bookTitle": "የእስልምናን ተቃርኖ የሚያብራራ ሚዲያ",
+        "text": "በአላህ፣ በተአምራቱ ወይም በመልእክተኛው ላይ መሳለቂያ መሳደብ ነው፣ በስምምነት መሰረት ከሀይማኖት የሚያወጣ ስድብ ነው፣ ምንም እንኳን በዋዛ ቢደረግም።"
+      },
+      "tawhid_kalima_1": {
+        "bookTitle": "በአንድ አምላክ ቃል ላይ የቃሉ አንድነት",
+        "text": "አንድ አምላክ የሚለው ቃል የሃይማኖት መነሻና የሃይማኖት መሠረት ሲሆን ትርጉሙም ከእግዚአብሔር በቀር ሌላ አምላክ የለም የሚል ነው። መካድ እና ማረጋገጫን ያጠቃልላል።"
+      },
+      "aqliyah_2": {
+        "bookTitle": "የሊበራል አስተሳሰብ ትችት።",
+        "text": "በጣም አደገኛ ከሆኑ የአስተምህሮ ወጥመዶች አንዱ ምክንያት ከትክክለኛው ስርጭት ጋር ይጋጫል የሚለው አባባል ነው። እውነታው ግን ግልጽ የሆነ ምክንያት ትክክለኛውን ስርጭት ፈጽሞ አይቃወምም."
+      },
+      "ulama_mithaq_1": {
+        "text": "አላህም ለሰዎች ግልጽ አድርገው እንዳይደብቁት ከእውቀት ሰዎች ጋር ቃል ኪዳን አደረገ። ሊቃውንት ሃይማኖትን በማስተላለፍ የነቢያት ወራሾች ናቸው።",
+        "bookTitle": "ምሁራን እና ቻርተሩ"
+      },
+      "ghina_mizan_2": {
+        "bookTitle": "በሸሪዓ ህግ መሰረት የዘፈን ውሳኔ",
+        "text": "በዘፈን መከልከል ላይ የተደረሰው ስምምነት አቡ ሀኒፋ፣ ማሊክ እና አህመድን ጨምሮ የሰለፎች ኢማሞች ቡድን ነው።"
+      },
+      "ghina_mizan_3": {
+        "bookTitle": "በሸሪዓ ህግ መሰረት የዘፈን ውሳኔ",
+        "text": "ኢብኑ መስዑድ (ረዲየላሁ ዐንሁም) አላህ በተናገረው ቃል ላይ እንዲህ ብለዋል {ከሰዎችም መካከል ስራ ፈት ወሬ የሚገዛ አለ}፡- ዘፋኝነት ነው። ኢብኑ አባስ እንዲህ ብለዋል፡- ዘፈን ለዝሙት ሩቅያ ነው።"
+      },
+      "ghina_mizan_4": {
+        "bookTitle": "በሸሪዓ ህግ መሰረት የዘፈን ውሳኔ",
+        "text": "እንደ የሙዚቃ መሳሪያዎች ያሉ የመዝናኛ መሳሪያዎች በሰርግ ላይ ከከበሮ በስተቀር በስምምነት የተከለከሉ ናቸው. ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (ከሀገሬ መካከል ሙቀትን፣ ሐርን፣ ወይንን፣ የሙዚቃ መሳሪያዎችን መፍቀድን የሚያስቡ ሰዎች ይኖራሉ)።"
+      },
+      "ghina_muhadhar_2": {
+        "bookTitle": "የመዝሙር ደንብ ላይ ትምህርት",
+        "text": "በሰርግ ላይ ያለው አታሞ ከክልከላው ነፃ ነው። ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (በተፈቀደው እና በተከለከለው መካከል ያለው ልዩነት በትዳር ወቅት በድምፅ እና በዳፍ ይለያል)።"
+      },
+      "ghina_muhadhar_1": {
+        "bookTitle": "የመዝሙር ደንብ ላይ ትምህርት",
+        "text": "አራቱ ኢማሞች የዘፈንን ብይን በተመለከተ ተለያዩ ነገርግን በጣም ትክክለኛው አስተያየቶች በግልፅ ማስረጃ እና በቀደምት መሪዎች ስምምነት የተከለከለ ነው የሚለው ነው።"
+      },
+      "ikhtilat_2": {
+        "bookTitle": "ማደባለቅ፣ ማረም፣ ሪፖርት ማድረግ እና አስተያየት መስጠት",
+        "text": "ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (አንድ ወንድ ከሴት ጋር ብቻውን አይደለም በመካከላቸው ያለው ሶስተኛ አካል ሰይጣን ካልሆነ በስተቀር)። የሸሪዓ ህግ ወደ የተከለከለው መቀላቀል ምክንያት የሆነውን ማንኛውንም ሰበብ አግዷል።"
+      },
+      "ikhtilat_3": {
+        "bookTitle": "ማደባለቅ፣ ማረም፣ ሪፖርት ማድረግ እና አስተያየት መስጠት",
+        "text": "ለመደባለቅ ከሚያስፈልጉት ዋና ዋና ምክንያቶች መካከል አንዱ አላስፈላጊ የማስዋብ እና የመቀላቀል ማሳያ ነው። ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (ከሴቴ የበለጠ ለወንዶች የሚጎዳ ፈተና ከኋላዬ አልተውኩም)።"
+      },
+      "nikah_1": {
+        "bookTitle": "የቤተሰብ ዳኝነት",
+        "text": "ትዳር የተባረከ አመት ነው። ሁኔታዎቹ፡- ሞግዚት፣ ምስክሮች፣ ጥሎሽ እና ከህግ እንቅፋት ነጻ ናቸው።"
+      },
+      "nikah_2": {
+        "bookTitle": "የቤተሰብ ዳኝነት",
+        "text": "የትዳር ጓደኞች መብቶች የጋራ ናቸው. ኃያሉ አላህ እንዲህ ብሏል፡- {ለነሱም በነሱ ላይ ካለው ምክንያታዊነት ጋር ተመሳሳይ ነው።} ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (ከናንተ ውስጥ በላጩ ለቤተሰቦቹ በላጭ ነው።)"
+      },
+      "talaq_1": {
+        "bookTitle": "የቤተሰብ ዳኝነት",
+        "text": "ፍቺ በእግዚአብሔር ዘንድ በጣም የተጠላ ነገር ነው። ሱና እሷን ባልነካበት የንፅህና ወቅት አንድ ጊዜ መፍታት ነው።"
+      },
+      "nudhur_1": {
+        "bookTitle": "የመሐላ እና የስእለት ድንጋጌዎች",
+        "text": "ነብዩ ሰለላሁ ዐለይሂ ወሰለም እንዲህ ብለዋል፡- (ስእለት አትስገዱ፡ ስእለት ከአላህ ውሳኔ ምንም ነገር አያስወግድም ይልቁንም ከክፉ ሰው የተወሰደ ነው)።"
+      },
+      "aiman_1": {
+        "bookTitle": "የመሐላ እና የስእለት ድንጋጌዎች",
+        "text": "መሐላ ለመሐላ የሚያስተሰርይበት ጊዜ፡- አሥር ድሆችን መመገብ፣ማልበስ ወይም ባሪያን ነፃ ማውጣት። ገንዘብ የሌለው ሰው ሦስት ቀን መጾም አለበት።"
+      },
+      "atimah_1": {
+        "bookTitle": "ስለ ምግቦች እና መስዋዕቶች ህጎች",
+        "text": "ምግብን በተመለከተ መሠረታዊው መርህ የተፈቀዱ ናቸው, እና መስዋዕትነት በህጋዊ እርድ እና ስም ካልሆነ በስተቀር አይፈቀድም."
+      },
+      "janazah_2": {
+        "bookTitle": "የቀብር ሥነ ሥርዓቶች",
+        "text": "የቀብር ሶላት የብቃት ግዴታ ሲሆን አራት ተክቢራዎችን ያቀፈ ነው፡- አል-ፋቲሐ፣ የነቢዩ ሰለላሁ ዐለይሂ ወሰለም፣ ሙታን ዱዓ እና ሰላምታ።"
+      },
+      "janazah_1": {
+        "bookTitle": "የቀብር ሥነ ሥርዓቶች",
+        "text": "ነብዩ (ሶ.ዐ.ወ) እንዲህ አሉ፡- (ሙታኖቻችሁን ከአላህ በስተቀር ሌላ አምላክ እንደሌለ አስተምሯቸው)። ሙታን መዘጋጀት አለባቸው: መታጠብ, መሸፈን, መጸለይ እና መቀበር."
+      },
+      "atimah_2": {
+        "bookTitle": "በምግብ እና መጠጦች ላይ ህጎች",
+        "text": "ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- (እያንዳንዱ አስካሪ መጠጥ ነው፣ አልኮሆልም ሁሉ ክልክል ነው)። በከፍተኛ መጠን የሚያሰክር ምንም ይሁን ምን ትንሽ መጠኑ የተከለከለ ነው።"
+      },
+      "zakah_1": {
+        "text": "የእስልምና ሶስተኛው ምሰሶ የሆነው ዘካ 85 ግራም ከደረሰ በወርቅ ላይ፣ በብር 595 ግራም በ2.5% መጠን ላይ ግዴታ ነው።",
+        "bookTitle": "የዘካህ ምልአተ ጉባኤ"
+      },
+      "buyu_1": {
+        "text": "እግዚአብሔር አራጣን ፈጽሞ ይከለክላል እና የሚበሉትን በጦርነት ያስፈራራቸዋል. ከተከለከሉት ሽያጮች መካከል የማታለል ሽያጭ፣ ሕገወጥ ዕቃዎች ሽያጭ እና በብቸኝነት የሚጠቀሱ ናቸው።",
+        "bookTitle": "የፋይናንሺያል ግብይቶች ዳኝነት"
+      },
+      "tahjeel_3": {
+        "bookTitle": "ዘመናዊ ጥናቶች",
+        "text": "ደካማው ሐዲሥ በብዙሃኑ ዘንድ ብያኔ ላይ አይውልም ነገር ግን በሁኔታዎች በበጎ ሥራ ​​መሥራት የተፈቀደ ነው።"
+      },
+      "tahjeel_2": {
+        "bookTitle": "ዘመናዊ ጥናቶች",
+        "text": "ሐዲሱን (ድርጊት በዓላማ ላይ የተመሰረተ ነው) ቡኻሪ እና ሙስሊም ዘግበውታል እና አል-ሻፊዒይ እንዲህ ብለዋል፡- በሰባ የፊቅህ ምዕራፎች ውስጥ ተካትቷል።"
+      },
+      "zawaid_abi_dawud_1": {
+        "bookTitle": "የሱና ሀዲሶች",
+        "text": "የሱነን ኪታብ ከሀዲሥ ኪታቦች አንዱና ዋነኛው ነው። ፍርዱን በሚመለከቱ ሀዲሶች ላይ ብቻ የተገደበ ሲሆን ዝም ያለው ሁሉ ትክክል ነው።"
+      },
+      "zawaid_abi_dawud_2": {
+        "bookTitle": "የሱና ሀዲሶች",
+        "text": "የምክንያት ሳይንስ ከሀዲስ ትክክለኛ ሳይንሶች አንዱ ሲሆን ሀዲስን የሚተች ሰው ድብቅ መንስኤዎችን የሚያውቅበት ሳይንስ ነው።"
+      },
+      "ilal_tahara_1": {
+        "text": "በጣም የሚገመተው አስተያየት በተጠቀመ ውሃ ውዱእ ማድረግ የተፈቀደ ነው ፣ ምክንያቱም ክልከላው በቂ ማስረጃ ባለመኖሩ ነው።",
+        "bookTitle": "ስለ ንፅህና የሐዲሶች ማብራሪያ"
+      },
+      "ilal_tahara_2": {
+        "bookTitle": "ስለ ንፅህና የሐዲሶች ማብራሪያ",
+        "text": "ካልሲ ላይ መጥረግ በሱና ተረጋግጧል። ለአንድ ነዋሪ አንድ ቀን እና አንድ ሌሊት ይቆያል፣ ለመንገደኛ ሶስት ቀን ነው።"
+      },
+      "jami_uloom_1": {
+        "text": "ጠቃሚ እውቀት በልብ ውስጥ የተቀመጠው እና በአካላት የሚሠራ ነው. ሰው እግዚአብሔርን መፍራት በቂ እውቀት ነው።",
+        "bookTitle": "የጃሚ አል-ኡሉም ወ አል-ሂቃም ማጠቃለያ"
+      },
+      "jami_uloom_2": {
+        "bookTitle": "የጃሚ አል-ኡሉም ወ አል-ሂቃም ማጠቃለያ",
+        "text": "ነብዩ (ሶ.ዐ.ወ) እንዲህ ብለዋል፡- ((እውቀትን በመሻት መንገድ የተከተለ አላህ በርሷ የጀነት መንገድን ያቃልልለታል)።"
+      },
+      "adhkar_sabah_2": {
+        "bookTitle": "ጥዋት እና ማታ ትውስታዎች",
+        "text": "መቶ ጊዜ የአላህ ጥራት ይገባው እና ምስጋና ይገባው የሚል ሰው በቂያማ ቀን ካመጣው ነገር የተሻለ አይመጣም።"
+      },
+      "adhkar_sabah_1": {
+        "bookTitle": "ጥዋት እና ማታ ትውስታዎች",
+        "text": "የጠዋት መታሰቢያ፡- (ተነሥተናል መንግሥቱም የአላህ ነው)፣ እና አያት አል-ኩርሲይ እና ሱረቱ አል-ኢኽላስን እና አል-ሙአውውደታይን ማንበብ።"
+      },
+      "adhkar_masaa_1": {
+        "bookTitle": "ጥዋት እና ማታ ትውስታዎች",
+        "text": "የምሽት መታሰቢያ፡- (ከፈጠረው ክፉ ነገር ፍጹም በሆነው የአላህ ቃል እጠበቃለሁ)፣ እና አል-ካፊሩንን፣ አል-ኢኽላስን እና አል-ሙአውውደታይንን ማንበብ።"
+      },
+      "adhkar_nawm_1": {
+        "bookTitle": "የእንቅልፍ ትውስታ",
+        "text": "የመኝታ ትዝታዎች፡- በቅንነት መንፋት እና ሁለቱ ሙአውውዳታይን ፣ አያት አል-ኩርሲን መቅራት እና በቀኝ በኩል መተኛት።"
+      },
+      "adhkar_salat_1": {
+        "bookTitle": "የጸሎት ትዝታዎች",
+        "text": "ከጸሎት በኋላ የሚደረጉ ትውስታዎች፡- ይቅርታን መጠየቅ ሦስት ጊዜ ከዚያም ማመስገን፣ ማመስገን እና ሰላሳ ሦስት ጊዜ ማወደስ።"
+      },
+      "ruqyah_1": {
+        "text": "የሩቅያህ አንቀጾች፡- አል-ፋቲሃ፣ አያት አል-ኩርሲ፣ ኸተም አል-በቀራህ፣ አል-ኢኽላስ፣ አል-ፈላቅ እና አል-ናስ።",
+        "bookTitle": "ሩቅያ ከቁርኣን እና ሱና"
+      },
+      "ruqyah_2": {
+        "bookTitle": "ሩቅያ ከቁርኣን እና ሱና",
+        "text": "የሩቅያ ዱዓዎች፡- (በአላህ ስም ሩቅያህን ከሚጎዳህ ነገር ሁሉ ከማንኛውም ነፍስ ወይም የምቀኝነት ዓይን ክፋት አደርግልሃለሁ። አላህ ይፈውስህ።)"
+      },
+      "resalah_azkar_1": {
+        "text": "ነብዩ ሰለላሁ ዐለይሂ ወሰለም፡- (ሙፍራዶን ቀድመው ነበር) አሉ፡- ሙፍራዱን ምንድን ናቸው? (አላህን ብዙ ጊዜ የሚያወሱ ወንዶችና ሴቶች) አላቸው።",
+        "bookTitle": "የልመና እና የፍርድ ማጠቃለያ"
+      }
+    }
+  },
+  "adhkar": {
+    "sources": {
+      "متفق عليه": "ተስማማ",
+      "أثر صحيح": "እውነተኛ ውጤት",
+      "حديث صحيح": "ትክክለኛ ሀዲስ",
+      "رواه البخاري": "አል ቡኻሪ ዘግበውታል።",
+      "رواه مسلم": "ሙስሊም ዘግበውታል።",
+      "رواه أبو داود والترمذي": "አቡ ዳውድ እና ቲርሚዚ ዘግበውታል።"
+    },
+    "notes": {
+      "sayyid_istighfar": "የይቅርታ መምህር",
+      "muawwidhat_thrice": "3 ጊዜ አንብብ (አል-ኢኽላስ፣ አል-ፋላቅ፣ አል-ናስ)"
+    },
+    "items": {},
+    "tags": {
+      "المياه": "ውሃ",
+      "البحر": "ባሕሩ",
+      "النبيذ": "ወይን",
+      "الطهارة": "ንጽህና",
+      "الأسانيد": "የማስተላለፊያ ሰንሰለቶች",
+      "الكلب": "ውሻ",
+      "تفسير": "ማብራሪያ",
+      "أحكام": "አቅርቦቶች",
+      "النجاسات": "ቆሻሻዎች",
+      "التطهير": "ማጽዳት",
+      "المرأة": "ሴት",
+      "الحجاب": "ሂጃብ",
+      "عبادات": "አምልኮ",
+      "الغناء": "መዘመር",
+      "المعازف": "የሙዚቃ መሳሪያዎች",
+      "الصلاة": "ጸሎቱ",
+      "السلف": "ቀዳሚ",
+      "عقيدة": "ዶክትሪን",
+      "الاختلاط": "ማህበራዊ ማድረግ",
+      "توحيد": "ውህደት",
+      "حديث": "አደጋ",
+      "تخريج": "ምረቃ",
+      "منهجية": "ዘዴ",
+      "طلب العلم": "እውቀት መፈለግ",
+      "فقه": "የሕግ ትምህርት",
+      "فكر": "ለማሰብ",
+      "تعظيم الله": "እግዚአብሔርን ማመስገን",
+      "ليبرالية": "ሊበራሊዝም"
+    }
+  },
+  "tracker": {
+    "days": "ቀናት",
+    "subtitle": "ለዚክር ያለዎትን የእለት ቁርጠኝነት ይከተሉ እና መንፈሳዊ ልማዶችዎን ይገንቡ",
+    "title": "የቁርጠኝነት እና የአምልኮ መንገድ",
+    "streak_label": "ተከታታይ የቁርጠኝነት ቀናት",
+    "streak_active": "ለመቀጠል ዕለታዊ ሮዝዎን ይቀጥሉ!",
+    "last_7_days": "የአምልኮ እንቅስቃሴ ባለፉት 7 ቀናት ውስጥ",
+    "total_adhkar": "ጠቅላላ ዚክር የተነበበ",
+    "total_tasbih": "ጠቅላላ ምስጋናዎች",
+    "streak_start": "ቁርጠኝነትዎን ለመጀመር ንባብዎን ወይም ምስጋናዎን ዛሬ ይጀምሩ!",
+    "legend_tasbih": "ማመስገን",
+    "tasbiha": "ማመስገን",
+    "badges": "የዎርድፕረስ ስኬቶች ዛሬ",
+    "legend_adhkar": "የተነበቡ ልመናዎች",
+    "lists": "ትዝታዎች",
+    "sleep_badge": "የእንቅልፍ ትውስታ",
+    "morning_badge": "የጠዋት መታሰቢያ",
+    "evening_desc": "ሌሊትህን አላህን በማውሳት ጠብቅ",
+    "evening_badge": "የምሽት ትውስታዎች",
+    "morning_desc": "ቀንዎን በማስታወስ ያጠናክሩ",
+    "salawat_progress_label": "ዕለታዊ እድገት",
+    "sleep_desc": "ቀንህን በቁጥር እና በትዝታ ጨርስ",
+    "salawat_desc": "አሏህ ሆይ በነብያችን ሙሀመድ ({{ } ጊዜ ) ላይ ሰላም እና ሰላምን አውርድ",
+    "salawat_badge": "ሶላት በነብዩ ሰለላሁ አለይሂ ወሰለም ላይ ይሁን"
+  },
+  "quran_audio": {
+    "reciter": "አንባቢ",
+    "next_ayah": "ቀጣይ ቁጥር",
+    "prev_ayah": "የቀደመው ቁጥር",
+    "autoplay": "የጥቅሶችን በራስ ሰር መልሶ ማጫወት",
+    "autoscroll": "ራስ-ሰር ስርጭት ከንባብ ጋር",
+    "audio_error": "ኦዲዮን በመጫን ላይ ስህተት ተከስቷል።",
+    "playback_speed": "የአሠራር ፍጥነት",
+    "last_read_ayah": "የመጨረሻው ጥቅስ ተነቧል",
+    "surah_mode": "ሙሉውን ሱራ አጫውት።",
+    "playing_surah": "ሱራው እየተጫወተ ነው።",
+    "ayah_mode": "ጥቅስ በቁጥር ምንባብ"
+  },
+  "khatmah": {
+    "subtitle": "ቅዱስ ቁርኣንን በመረጡት ጊዜ ለማጠናቀቅ እቅድ ያውጡ",
+    "target_days": "የዒላማ ቆይታ (በቀናት ውስጥ)",
+    "pages_per_day": "{{ገጽ}} ገጽ በቀን",
+    "daily_target": "ዕለታዊ ጽጌረዳዎች ያስፈልጋሉ።",
+    "title": "የማኅተም ገበታ",
+    "current_page": "አሁን ያለህበት ገጽ",
+    "progress": "የአሁኑን ማህተም ያቅርቡ",
+    "new_plan": "አዲስ የቴምብር እቅድ ይፍጠሩ",
+    "ayahs_per_day": "{{ayahs}} ቁጥር በየቀኑ",
+    "save_plan": "እቅዱን ያስቀምጡ",
+    "complete_title": "የተባረከ መደምደሚያ!",
+    "days_left": "{{ቀናት}} ቀናት ቀርተዋል።",
+    "reset": "እቅድ ዳግም አስጀምር",
+    "status": "የማኅተም ሁኔታ",
+    "complete_desc": "በጸጋው በጎ ሥራ ​​የተፈጸመ አምላክ የተመሰገነ ይሁን። 🎉 የቅዱስ ቁርኣንን ፍፃሜ ጨርሰሃል",
+    "behind": "{{days}} ከመርሃግብር ቀናት በኋላ",
+    "on_track": "በጣም ጥሩ እየሄድክ ነው!",
+    "pages_read": "ገጾች ይነበባሉ",
+    "juz_read": "ሊነበቡ የሚችሉ ክፍሎች"
+  },
+  "download": {
+    "title": "የስልኩን መተግበሪያ ያውርዱ",
+    "pwa_btn": "መተግበሪያውን አሁን ይጫኑ",
+    "pwa_title": "የቀጥታ የድር መተግበሪያ (PWA)",
+    "pwa_installed": "መተግበሪያው አስቀድሞ በመሣሪያዎ ላይ ተጭኗል",
+    "pwa_desc": "በአሳሹ ውስጥ በቀጥታ እና በፍጥነት መጫን ፣ ልክ እንደ ቤተኛ መተግበሪያ ሙሉ በሙሉ ይሰራል ፣ ትንሽ ቦታ ይወስዳል እና የመተግበሪያ መደብር አያስፈልገውም።",
+    "subtitle": "ከመስመር ውጭ ስራ እና በይነተገናኝ የአዛን እና የሱብሃ ማንቂያዎችን በመደገፍ እለታዊ የሃሳን እና የፀሎት ጊዜያችሁን በያላችሁበት በኪስዎ ይያዙ።",
+    "android_btn": "በቀጥታ የኤፒኬ ፋይል ያውርዱ",
+    "android_steps": "ለአንድሮይድ የመጫኛ ደረጃዎች፡-",
+    "android_title": "አንድሮይድ መተግበሪያ",
+    "android_step_1": "ከላይ ያለውን አዝራር ጠቅ በማድረግ የኤፒኬ ፋይሉን ያውርዱ።",
+    "android_desc": "የቀጥታ ኤፒኬ ፋይሉን ያውርዱ እና በማንኛውም አንድሮይድ ስልክ ላይ በቀላሉ ይጫኑት።",
+    "ios_title": "የ iPhone መተግበሪያ (አይኦኤስ)",
+    "android_step_3": "'ጫን'ን ተጫን እና በመነሻ ስክሪን ላይ ባለው መተግበሪያ ተደሰት።",
+    "ios_desc": "ልክ እንደ እውነተኛ መተግበሪያ በ Safari አሳሽ በኩል መተግበሪያውን በእርስዎ iPhone ላይ መጫን ይችላሉ።",
+    "android_step_2": "ማውረዱ ከተጠናቀቀ በኋላ ፋይሉን ይክፈቱ። ስልኩ ካልታወቁ ምንጮች መጫንን እንዲፈቅዱ ሊጠይቅዎት ይችላል (ፍቃድ ይስጡት)።",
+    "ios_steps": "ለ iPhone የመጫኛ ደረጃዎች (በሳፋሪ አሳሽ)",
+    "ios_step_1": "ይህንን ጣቢያ በስልክዎ ላይ ባለው ነባሪ የSafari አሳሽ ይክፈቱ።",
+    "ios_step_4": "ከላይ ጥግ ላይ ያለውን 'አክል' ን ጠቅ ያድርጉ እና በስልክዎ ላይ እንደ የመተግበሪያ አዶ ይታያል።",
+    "ios_step_2": "ከታች ባለው የመሳሪያ አሞሌ ውስጥ የማጋራት ቁልፍን ጠቅ ያድርጉ።",
+    "features_title": "ለስልክ የአዝካር መተግበሪያ ባህሪዎች",
+    "ios_step_3": "ከምናሌው ውስጥ 'ወደ መነሻ ማያ ገጽ አክል' ን ይምረጡ።",
+    "feature_haptic": "ሃፕቲክ ግብረመልስ",
+    "feature_offline": "ያለ በይነመረብ ሙሉ በሙሉ ይስሩ",
+    "feature_notifications": "ትክክለኛ ማንቂያዎች እና የጸሎት ጥሪ",
+    "feature_haptic_desc": "ስልኩን ሳያዩ በቀላሉ ለመቁጠር መታ ሲያደርጉ ታስቢህን በብርሃን ንዝረት ይንኩ።",
+    "feature_offline_desc": "ሁሉም ትውስታዎች፣ ቅዱስ ቁርኣን እና የጸሎት ጊዜያት የአውታረ መረብ ግንኙነት ሳያስፈልጋቸው ይሰራሉ።",
+    "feature_notifications_desc": "ምንም እንኳን ማመልከቻው ቢዘጋም በየቀኑ የዚክር ማንቂያዎችን እና በጸሎት ጊዜ የጸሎት ጥሪን ያግኙ።",
+    "feature_design_desc": "የቀለም ቀስቶች እና የጨለማ/የብርሃን እይታ ዓይኖችዎን በጨለማ እና በማለዳ ይጠብቁ።",
+    "feature_design": "ምቹ የዓይን ንድፍ"
+  },
+  "hijama": {
+    "reminder_body": "ነገ የሂጅሪ ወር {{ቀን}} ነው፣ እና ለነቢይነት ዋንጫ ከሚመከሩት ቀናት አንዱ ነው።",
+    "reminder_title": "የማጠራቀሚያ ቀናት ማስታወሻ"
+  }
 };

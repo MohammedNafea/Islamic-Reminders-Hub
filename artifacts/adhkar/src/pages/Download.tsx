@@ -348,6 +348,108 @@ export default function DownloadPage() {
 
       </div>
 
+      {/* Android PWA Notification Optimization Card */}
+      <Card className="border border-border bg-card/60 backdrop-blur-sm shadow-md rounded-[2rem] overflow-hidden">
+        <CardHeader className="p-8 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center">
+              <BellRing className="w-6 h-6 animate-pulse" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-bold font-heading text-foreground">
+                <TranslatedText
+                  text="تفعيل وتحسين تنبيهات التطبيق 24 ساعة (بدون انقطاع)"
+                  staticTranslation={i18n.language === "ar" ? "تفعيل وتحسين تنبيهات التطبيق 24 ساعة (بدون انقطاع)" : "Enable and Optimize 24-Hour Offline App Notifications"}
+                  keepArabic={false}
+                />
+              </CardTitle>
+              <p className="text-muted-foreground text-xs leading-relaxed mt-1">
+                <TranslatedText
+                  text="إليك الخطوات اللازمة لضمان عمل تنبيهات مواقيت الصلاة والأذكار وصيام النوافل في الخلفية وبدون اتصال بالإنترنت."
+                  staticTranslation={i18n.language === "ar" ? "إليك الخطوات اللازمة لضمان عمل تنبيهات مواقيت الصلاة والأذكار وصيام النوافل في الخلفية وبدون اتصال بالإنترنت." : "Steps to ensure prayer times, adhkar, and fasting reminders work offline and in the background."}
+                  keepArabic={false}
+                />
+              </p>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-8 pt-0 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-muted/40 p-5 rounded-2xl border border-border/50 space-y-3">
+              <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                <TranslatedText
+                  text="1. تثبيت التطبيق كـ PWA أولاً"
+                  staticTranslation={i18n.language === "ar" ? "1. تثبيت التطبيق كـ PWA أولاً" : "1. Install the App as PWA"}
+                  keepArabic={false}
+                />
+              </h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                <TranslatedText
+                  text="تأكد من تثبيت الموقع كـ PWA عبر متصفح Google Chrome أو Samsung Internet من خلال الضغط على زر التثبيت بالأعلى ليعمل كـ تطبيق مستقل."
+                  staticTranslation={i18n.language === "ar" ? "تأكد من تثبيت الموقع كـ PWA عبر متصفح Google Chrome أو Samsung Internet من خلال الضغط على زر التثبيت بالأعلى ليعمل كـ تطبيق مستقل." : "Ensure the website is installed as a PWA using Chrome or Samsung Internet for standalone background services."}
+                  keepArabic={false}
+                />
+              </p>
+            </div>
+            
+            <div className="bg-muted/40 p-5 rounded-2xl border border-border/50 space-y-3">
+              <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                <TranslatedText
+                  text="2. تعديل إعدادات البطارية (غير مقيد)"
+                  staticTranslation={i18n.language === "ar" ? "2. تعديل إعدادات البطارية (غير مقيد)" : "2. Battery Optimization (Unrestricted)"}
+                  keepArabic={false}
+                />
+              </h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                <TranslatedText
+                  text="افتح إعدادات الهاتف > التطبيقات > اختر تطبيق 'Islamic Hub' > البطارية > اختر 'غير مقيد' (Unrestricted). هذا يسمح للنظام بإطلاق التنبيهات في وقتها حتى لو كان التطبيق مغلقاً تماماً."
+                  staticTranslation={i18n.language === "ar" ? "افتح إعدادات الهاتف > التطبيقات > اختر تطبيق 'Islamic Hub' > البطارية > اختر 'غير مقيد' (Unrestricted). هذا يسمح للنظام بإطلاق التنبيهات في وقتها حتى لو كان التطبيق مغلقاً تماماً." : "Go to Settings > Apps > Islamic Hub > Battery > set to 'Unrestricted' so Android doesn't kill the background notification services."}
+                  keepArabic={false}
+                />
+              </p>
+            </div>
+
+            <div className="bg-muted/40 p-5 rounded-2xl border border-border/50 space-y-3">
+              <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                <TranslatedText
+                  text="3. تفعيل أذونات الإشعارات"
+                  staticTranslation={i18n.language === "ar" ? "3. تفعيل أذونات الإشعارات" : "3. Notification Permissions"}
+                  keepArabic={false}
+                />
+              </h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                <TranslatedText
+                  text="تأكد من منح التطبيق إذن إرسال الإشعارات عند فتحه لأول مرة، وتفعيل خيار التنبيهات من داخل إعدادات التطبيق لضمان جدولة مواعيد الأذان والأذكار محلياً."
+                  staticTranslation={i18n.language === "ar" ? "تأكد من منح التطبيق إذن إرسال الإشعارات عند فتحه لأول مرة، وتفعيل خيار التنبيهات من داخل إعدادات التطبيق لضمان جدولة مواعيد الأذان والأذكار محلياً." : "Enable notification permissions when prompted and activate notification settings inside the app to schedule reminders locally."}
+                  keepArabic={false}
+                />
+              </p>
+            </div>
+
+            <div className="bg-muted/40 p-5 rounded-2xl border border-border/50 space-y-3">
+              <h4 className="text-sm font-bold text-primary flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary" />
+                <TranslatedText
+                  text="4. العمل بالكامل بدون إنترنت (Offline)"
+                  staticTranslation={i18n.language === "ar" ? "4. العمل بالكامل بدون إنترنت (Offline)" : "4. Complete Offline Functionality"}
+                  keepArabic={false}
+                />
+              </h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                <TranslatedText
+                  text="يتم حساب جميع مواقيت الصلاة وأوقات الصيام وتنبيهات الأذكار محلياً على جهازك بالاعتماد على إحداثيات موقعك الجغرافي المسجلة، وبالتالي ستعمل الإشعارات بدقة كاملة على مدار 24 ساعة حتى مع انقطاع الإنترنت التام."
+                  staticTranslation={i18n.language === "ar" ? "يتم حساب جميع مواقيت الصلاة وأوقات الصيام وتنبيهات الأذكار محلياً على جهازك بالاعتماد على إحداثيات موقعك الجغرافي المسجلة، وبالتالي ستعمل الإشعارات بدقة كاملة على مدار 24 ساعة حتى مع انقطاع الإنترنت التام." : "All prayer times, fasting schedules, and reminders are calculated locally on your device based on geographic coordinates. Notifications will work without internet."}
+                  keepArabic={false}
+                />
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Application Features Section */}
       <div className="space-y-6 pt-6">
         <h3 className="text-xl font-bold text-foreground mb-4 px-1">

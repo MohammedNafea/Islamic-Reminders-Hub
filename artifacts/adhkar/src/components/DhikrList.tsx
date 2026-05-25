@@ -134,6 +134,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         return "Ghamadi_40kbps";
       case "fares":
         return "Fares_Abbad_64kbps";
+      case "shuraim":
+        return "Shuraym_128kbps";
       case "husary":
       default:
         return "Husary_128kbps";
@@ -174,24 +176,17 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
     });
   };
 
-  const playTTS = (text: string, onEnd: () => void, onError: () => void) => {
-    window.speechSynthesis.cancel();
-    window.dispatchEvent(new CustomEvent("stop-all-audio", { detail: { sender: "dhikr-list" } }));
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "ar-SA";
-    utterance.rate = 0.9;
-    
-    utterance.onend = () => {
-      onEnd();
-    };
-    
-    utterance.onerror = () => {
-      onError();
-    };
-    
-    window.speechSynthesis.speak(utterance);
-  };
+  const hasHumanAudio = useCallback((id: string): boolean => {
+    const config = adhkarAudioMap[id];
+    if (!config) return false;
+    if (config.type === "quran") {
+      return !!(config.surah && config.ayahs && config.ayahs.length > 0);
+    }
+    if (config.type === "dureihim") {
+      return !!config.filename;
+    }
+    return false;
+  }, []);
 
   const handleTap = (dhikr: Dhikr) => {
     // If autoplay is running, stop it first to prevent confusion
@@ -237,6 +232,17 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
     }
 
     const dhikr = adhkar[index];
+
+    // If no human audio, skip this dhikr in the playlist sequence
+    if (!hasHumanAudio(dhikr.id)) {
+      let nextIdx = index + 1;
+      while (nextIdx < adhkar.length && (progressRef.current[adhkar[nextIdx].id] || 0) >= adhkar[nextIdx].count) {
+        nextIdx++;
+      }
+      playDhikrAtIndex(nextIdx, 0);
+      return;
+    }
+
     const currentCount = progressRef.current[dhikr.id] || 0;
 
     // If already fully completed, skip to the next
@@ -261,7 +267,6 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
       }
     }, 100);
 
-    const arabicText = isEvening && dhikr.eveningVariant ? dhikr.eveningVariant : dhikr.arabic;
     const audioConfig = adhkarAudioMap[dhikr.id];
 
     // Helper for incrementing progress and transitioning
@@ -291,13 +296,6 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
       }
     };
 
-    // Helper for playing TTS fallback
-    const playTTSFallback = () => {
-      playTTS(arabicText, handleProgressIncrement, () => {
-        handleProgressIncrement();
-      });
-    };
-
     if (audioConfig) {
       if (audioConfig.type === "quran" && audioConfig.surah && audioConfig.ayahs && audioConfig.ayahs.length > 0) {
         if (ayahIndex < audioConfig.ayahs.length) {
@@ -317,8 +315,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
               handleProgressIncrement();
             }
           }, (err) => {
-            console.error("Audio playback error, falling back to TTS", err);
-            playTTSFallback();
+            console.error("Audio playback error", err);
+            handleProgressIncrement();
           });
         } else {
           handleProgressIncrement();
@@ -328,61 +326,61 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         playAudioFile(url, () => {
           handleProgressIncrement();
         }, (err) => {
-          console.error("Audio playback error, falling back to TTS", err);
-          playTTSFallback();
+          console.error("Audio playback error", err);
+          handleProgressIncrement();
         });
       } else {
-        playTTSFallback();
+        handleProgressIncrement();
       }
     } else {
-      playTTSFallback();
+      handleProgressIncrement();
     }
   };
 
   const startPlaylist = () => {
-    // Find first incomplete dhikr, or start from index 0
-    let firstIncompleteIndex = adhkar.findIndex(d => (progress[d.id] || 0) < d.count);
+    // Find first incomplete dhikr that has human audio
+    let firstIncompleteIndex = adhkar.findIndex(d => (progress[d.id] || 0) < d.count && hasHumanAudio(d.id));
     if (firstIncompleteIndex === -1) {
-      // All completed, reset all progress in this view and start from 0
+      // If all completed or none found, reset all progress in this view and start from first item that has human audio
       const resetProgress = { ...progress };
       adhkar.forEach(d => {
         resetProgress[d.id] = 0;
         setDhikrCount(d.id, 0);
       });
       setProgress(resetProgress);
-      firstIncompleteIndex = 0;
+      firstIncompleteIndex = adhkar.findIndex(d => hasHumanAudio(d.id));
     }
-    playDhikrAtIndex(firstIncompleteIndex, 0);
+    if (firstIncompleteIndex !== -1) {
+      playDhikrAtIndex(firstIncompleteIndex, 0);
+    }
   };
 
-  const speak = (id: string, text: string) => {
+  const speak = (id: string, _text: string) => {
     if (isPlayingAll) {
       stopPlaylist();
     }
 
     if (speakingId === id && !isPlayingAll) {
-      window.speechSynthesis.cancel();
       cleanupAudio();
       setSpeakingId(null);
       return;
     }
 
-    window.speechSynthesis.cancel();
     cleanupAudio();
+
+    if (!hasHumanAudio(id)) {
+      return;
+    }
 
     setSpeakingId(id);
 
     const dhikr = adhkar.find(d => d.id === id);
     if (!dhikr) {
-      playTTS(text, () => setSpeakingId(null), () => setSpeakingId(null));
+      setSpeakingId(null);
       return;
     }
 
     const audioConfig = adhkarAudioMap[id];
-    
-    const playTTSPreviewFallback = () => {
-      playTTS(text, () => setSpeakingId(null), () => setSpeakingId(null));
-    };
 
     if (audioConfig) {
       if (audioConfig.type === "quran" && audioConfig.surah && audioConfig.ayahs && audioConfig.ayahs.length > 0) {
@@ -403,8 +401,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
           playAudioFile(url, () => {
             playAyahSequence(ayahIndex + 1);
           }, (err) => {
-            console.error("Single play audio error, falling back to TTS", err);
-            playTTSPreviewFallback();
+            console.error("Single play audio error", err);
+            setSpeakingId(null);
           });
         };
         playAyahSequence(0);
@@ -413,14 +411,14 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         playAudioFile(url, () => {
           setSpeakingId(null);
         }, (err) => {
-          console.error("Single play audio error, falling back to TTS", err);
-          playTTSPreviewFallback();
+          console.error("Single play audio error", err);
+          setSpeakingId(null);
         });
       } else {
-        playTTSPreviewFallback();
+        setSpeakingId(null);
       }
     } else {
-      playTTSPreviewFallback();
+      setSpeakingId(null);
     }
   };
 
@@ -597,20 +595,22 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                           <Heart className={cn("w-4 h-4", isFavorite(dhikr.id) && "fill-current")} />
                         </button>
 
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            speak(dhikr.id, arabicText);
-                          }}
-                          className={cn(
-                            "p-2 rounded-full transition-colors",
-                            speakingId === dhikr.id 
-                              ? "bg-primary/20 text-primary animate-pulse" 
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                          )}
-                        >
-                          {speakingId === dhikr.id ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
-                        </button>
+                        {hasHumanAudio(dhikr.id) && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              speak(dhikr.id, arabicText);
+                            }}
+                            className={cn(
+                              "p-2 rounded-full transition-colors",
+                              speakingId === dhikr.id 
+                                ? "bg-primary/20 text-primary animate-pulse" 
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                            )}
+                          >
+                            {speakingId === dhikr.id ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                          </button>
+                        )}
                         
                         <div className={cn(
                           "flex items-center justify-center gap-2 rounded-full px-4 py-2 font-medium transition-colors",

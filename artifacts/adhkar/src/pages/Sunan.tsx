@@ -97,9 +97,7 @@ export default function Sunan() {
   const getNextCuppingMessage = () => {
     const day = hijri.day;
     if (isCuppingDay) {
-      return i18n.language === "ar" 
-        ? `اليوم هو يوم ${day} من الشهر الهجري، وهو من الأيام المستحبة للحجامة!`
-        : `Today is the ${day}th of the Hijri month, which is a recommended day for Hijamah!`;
+      return `اليوم هو يوم ${day} من الشهر الهجري، وهو من الأيام المستحبة للحجامة!`;
     }
 
     let nextDay = 17;
@@ -118,11 +116,7 @@ export default function Sunan() {
 
     const diff = inNextMonth ? (30 - day + nextDay) : (nextDay - day);
 
-    if (i18n.language === "ar") {
-      return `متبقي ${diff} ${diff === 1 ? "يوم" : diff === 2 ? "يومان" : "أيام"} على يوم الحجامة المستحب القادم (${nextDay} ${inNextMonth ? "من الشهر القادم" : "من الشهر الحالي"}).`;
-    } else {
-      return `${diff} ${diff === 1 ? "day" : "days"} left until the next recommended Hijamah day (${nextDay} ${inNextMonth ? "of next month" : "of this month"}).`;
-    }
+    return `متبقي ${diff} ${diff === 1 ? "يوم" : diff === 2 ? "يومان" : "أيام"} على يوم الحجامة المستحب القادم (${nextDay} ${inNextMonth ? "من الشهر القادم" : "من الشهر الحالي"}).`;
   };
 
   return (
@@ -157,7 +151,12 @@ export default function Sunan() {
             <CardTitle className="text-lg font-heading font-bold text-foreground flex items-center gap-2">
               <Star className="w-5 h-5 text-primary fill-primary/10" />
               <span>
-                {i18n.language === "ar" ? "مُتتبع السنن الرواتب اليومية" : "Daily Sunan Rawatib Tracker"}
+                <TranslatedText
+                  text="مُتتبع السنن الرواتب اليومية"
+                  staticTranslation={i18n.language === "ar" ? "مُتتبع السنن الرواتب اليومية" : "Daily Sunan Rawatib Tracker"}
+                  keepArabic={false}
+                  inline
+                />
               </span>
             </CardTitle>
             <Button
@@ -176,7 +175,12 @@ export default function Sunan() {
           <div className="space-y-2">
             <div className="flex justify-between items-center text-xs">
               <span className="text-muted-foreground">
-                {i18n.language === "ar" ? "ركعات السنن الرواتب المنجزة" : "Completed Sunan Rak'ahs"}
+                <TranslatedText
+                  text="ركعات السنن الرواتب المنجزة"
+                  staticTranslation={i18n.language === "ar" ? "ركعات السنن الرواتب المنجزة" : "Completed Sunan Rak'ahs"}
+                  keepArabic={false}
+                  inline
+                />
               </span>
               <span className="font-bold text-primary tabular-nums">
                 {completedRakhas} / 12
@@ -208,17 +212,17 @@ export default function Sunan() {
                 >
                   <div className="space-y-0.5">
                     <span className="font-semibold text-sm block text-foreground">
-                      {item.label}
+                      <TranslatedText text={item.label} keepArabic={false} inline />
                     </span>
                     <span className="text-[11px] text-muted-foreground block">
-                      {item.labelSub}
+                      <TranslatedText text={item.labelSub} keepArabic={false} inline />
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
                       active ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
                     }`}>
-                      {item.count} ركعات
+                      <TranslatedText text={`${item.count} ركعات`} keepArabic={false} inline />
                     </span>
                     <Checkbox
                       id={item.key}
@@ -237,15 +241,24 @@ export default function Sunan() {
             <h4 className="text-xs font-bold text-primary flex items-center gap-1.5">
               <Star className="w-3.5 h-3.5 fill-primary/10" />
               <span>
-                {i18n.language === "ar" ? "فضل المحافظة على السنن الرواتب" : "Virtue of Sunan al-Rawatib"}
+                <TranslatedText
+                  text="فضل المحافظة على السنن الرواتب"
+                  staticTranslation={i18n.language === "ar" ? "فضل المحافظة على السنن الرواتب" : "Virtue of Sunan al-Rawatib"}
+                  keepArabic={false}
+                  inline
+                />
               </span>
             </h4>
-            <p className="text-xs text-foreground/90 leading-relaxed font-serif text-right" dir="rtl">
-              "مَنْ صَلَّى فِي يَوْمٍ وَلَيْلَةٍ ثِنْتَيْ عَشْرَةَ رَكْعَةً بُنِيَ لَهُ بَيْتٌ فِي الْجَنَّةِ: أَرْبَعًا قَبْلَ الظُّهْرِ، وَرَكْعَتَيْنِ بَعْدَهَا، وَرَكْعَتَيْنِ بَعْدَ الْمَغْرِبِ، وَرَكْعَتَيْنِ بَعْدَ الْعِشَاءِ، وَرَكْعَتَيْنِ قَبْلَ صَلَاةِ الْغَدَاةِ."
-            </p>
-            <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
-              رواه مسلم والترمذي والنسائي عن أم حبيبة رضي الله عنها، وهو حديث صحيح
-            </p>
+            <TranslatedText
+              text='"مَنْ صَلَّى فِي يَوْمٍ وَلَيْلَةٍ ثِنْتَيْ عَشْرَةَ رَكْعَةً بُنِيَ لَهُ بَيْتٌ فِي الْجَنَّةِ: أَرْبَعًا قَبْلَ الظُّهْرِ، وَرَكْعَتَيْنِ بَعْدَهَا، وَرَكْعَتَيْنِ بَعْدَ الْمَغْرِبِ، وَرَكْعَتَيْنِ بَعْدَ الْعِشَاءِ، وَرَكْعَتَيْنِ قَبْلَ صَلَاةِ الْغَدَاةِ."'
+              keepArabic={true}
+              arabicClassName="text-xs text-foreground/90 leading-relaxed font-serif text-right"
+            />
+            <TranslatedText
+              text="رواه مسلم والترمذي والنسائي عن أم حبيبة رضي الله عنها، وهو حديث صحيح"
+              keepArabic={false}
+              className="text-[10px] text-muted-foreground text-right"
+            />
           </div>
         </CardContent>
       </Card>
@@ -259,7 +272,12 @@ export default function Sunan() {
           <CardTitle className="text-lg font-heading font-bold text-foreground flex items-center gap-2">
             <Calendar className="w-5 h-5 text-primary fill-primary/10" />
             <span>
-              {i18n.language === "ar" ? "فضل وأيام الحجامة المستحبة" : "Virtues & Days of Hijamah"}
+              <TranslatedText
+                text="فضل وأيام الحجامة المستحبة"
+                staticTranslation={i18n.language === "ar" ? "فضل وأيام الحجامة المستحبة" : "Virtues & Days of Hijamah"}
+                keepArabic={false}
+                inline
+              />
             </span>
           </CardTitle>
         </CardHeader>
@@ -285,16 +303,21 @@ export default function Sunan() {
               </div>
               <div className="space-y-0.5">
                 <span className="text-xs text-muted-foreground block">
-                  {i18n.language === "ar" ? "التاريخ الهجري اليوم" : "Today's Hijri Date"}
+                  <TranslatedText
+                    text="التاريخ الهجري اليوم"
+                    staticTranslation={i18n.language === "ar" ? "التاريخ الهجري اليوم" : "Today's Hijri Date"}
+                    keepArabic={false}
+                    inline
+                  />
                 </span>
                 <span className="font-bold text-sm tracking-wide">
                   {formatHijriDate(hijri, i18n.language)}
                 </span>
               </div>
             </div>
-            <p className="text-xs font-semibold leading-relaxed border-t border-border/40 pt-3">
-              {getNextCuppingMessage()}
-            </p>
+            <div className="text-xs font-semibold leading-relaxed border-t border-border/40 pt-3">
+              <TranslatedText text={getNextCuppingMessage()} keepArabic={false} inline />
+            </div>
           </div>
 
           {/* Hijamah Ahadith List */}
@@ -302,7 +325,12 @@ export default function Sunan() {
             <h4 className="text-xs font-bold text-primary flex items-center gap-1.5 px-1">
               <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
               <span>
-                {i18n.language === "ar" ? "الأحاديث الواردة في فضل الحجامة" : "Hadiths on the Virtues of Hijamah"}
+                <TranslatedText
+                  text="الأحاديث الواردة في فضل الحجامة"
+                  staticTranslation={i18n.language === "ar" ? "الأحاديث الواردة في فضل الحجامة" : "Hadiths on the Virtues of Hijamah"}
+                  keepArabic={false}
+                  inline
+                />
               </span>
             </h4>
 
@@ -322,12 +350,16 @@ export default function Sunan() {
                 },
               ].map((hadith, index) => (
                 <div key={index} className="p-4 bg-muted/20 border border-border/20 rounded-2xl space-y-2">
-                  <p className="text-sm font-medium leading-relaxed font-serif text-right text-foreground/90" dir="rtl">
-                    {hadith.text}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
-                    {hadith.source}
-                  </p>
+                  <TranslatedText
+                    text={hadith.text}
+                    keepArabic={true}
+                    arabicClassName="text-sm font-medium leading-relaxed font-serif text-right text-foreground/99"
+                  />
+                  <TranslatedText
+                    text={hadith.source}
+                    keepArabic={false}
+                    className="text-[10px] text-muted-foreground text-right"
+                  />
                 </div>
               ))}
             </div>
@@ -338,12 +370,19 @@ export default function Sunan() {
             <h4 className="text-xs font-bold text-primary flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>
-                {i18n.language === "ar" ? "أوقات الحجامة المستحبة" : "Recommended Hijamah Timing"}
+                <TranslatedText
+                  text="أوقات الحجامة المستحبة"
+                  staticTranslation={i18n.language === "ar" ? "أوقات الحجامة المستحبة" : "Recommended Hijamah Timing"}
+                  keepArabic={false}
+                  inline
+                />
               </span>
             </h4>
-            <p className="text-xs text-foreground/80 leading-relaxed text-right" dir="rtl">
-              المستحب في الحجامة العلاجية والوقائية أن تكون في الأيام الفردية من النصف الثاني من الشهر الهجري، وأفضلها هي الأيام: **17، 19، 21** من الشهر الهجري، لما ورد عن النبي ﷺ أن الحجامة فيها تكون أبلغ في النفع والشفاء بإذن الله تعالى.
-            </p>
+            <TranslatedText
+              text="المستحب في الحجامة العلاجية والوقائية أن تكون في الأيام الفردية من النصف الثاني من الشهر الهجري، وأفضلها هي الأيام: 17، 19، 21 من الشهر الهجري، لما ورد عن النبي ﷺ أن الحجامة فيها تكون أبلغ في النفع والشفاء بإذن الله تعالى."
+              keepArabic={false}
+              className="text-xs text-foreground/80 leading-relaxed text-right"
+            />
           </div>
         </CardContent>
       </Card>
@@ -357,16 +396,24 @@ export default function Sunan() {
           <CardTitle className="text-lg font-heading font-bold text-foreground flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-primary fill-primary/10" />
             <span>
-              {i18n.language === "ar" ? "السنن النبوية المهجورة" : "Forgotten Prophetic Sunnahs"}
+              <TranslatedText
+                text="السنن النبوية المهجورة"
+                staticTranslation={i18n.language === "ar" ? "السنن النبوية المهجورة" : "Forgotten Prophetic Sunnahs"}
+                keepArabic={false}
+                inline
+              />
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6 space-y-6">
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {i18n.language === "ar"
-              ? "سنن وثوابت ثبتت عن النبي ﷺ هجرها كثير من الناس في حياتهم اليومية، وفي إحيائها أجر عظيم ونيل لمحبة الله ورسوله."
-              : "Prophetic Sunnahs established from the Prophet ﷺ that many have neglected in daily life. Reviving them brings great reward."}
-          </p>
+          <div className="text-xs text-muted-foreground leading-relaxed">
+            <TranslatedText
+              text="سنن وثوابت ثبتت عن النبي ﷺ هجرها كثير من الناس في حياتهم اليومية، وفي إحيائها أجر عظيم ونيل لمحبة الله ورسوله."
+              staticTranslation={i18n.language === "ar" ? "سنن وثوابت ثبتت عن النبي ﷺ هجرها كثير من الناس في حياتهم اليومية، وفي إحيائها أجر عظيم ونيل لمحبة الله ورسوله." : "Prophetic Sunnahs established from the Prophet ﷺ that many have neglected in daily life. Reviving them brings great reward."}
+              keepArabic={false}
+              inline
+            />
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {adhkarSunanMahjora.map((sunnah) => (
@@ -377,31 +424,45 @@ export default function Sunan() {
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-primary/15 text-primary">
-                      {i18n.language === "ar" ? "سنة نبوية" : "Sunnah"}
+                      <TranslatedText
+                        text="سنة نبوية"
+                        staticTranslation={i18n.language === "ar" ? "سنة نبوية" : "Sunnah"}
+                        keepArabic={false}
+                        inline
+                      />
                     </span>
                     {sunnah.count > 1 && (
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-700 dark:text-amber-300">
-                        {sunnah.count} {i18n.language === "ar" ? "مرات" : "times"}
+                        {sunnah.count} <TranslatedText text="مرات" staticTranslation={i18n.language === "ar" ? "مرات" : "times"} keepArabic={false} inline />
                       </span>
                     )}
                   </div>
-                  <p className="text-sm font-semibold leading-relaxed font-serif text-right text-foreground/95" dir="rtl">
-                    {sunnah.arabic}
-                  </p>
+                  <TranslatedText
+                    text={sunnah.arabic}
+                    keepArabic={true}
+                    arabicClassName="text-sm font-semibold leading-relaxed font-serif text-right text-foreground/95"
+                  />
                 </div>
                 
                 <div className="space-y-2 border-t border-border/20 pt-2.5">
                   {sunnah.note && (
                     <div className="text-xs text-foreground/80 leading-relaxed bg-background/50 p-2.5 rounded-xl text-right" dir="rtl">
                       <span className="font-semibold text-primary block text-[10px] mb-0.5">
-                        {i18n.language === "ar" ? "متى وكيف تقال/تفعل:" : "When & How to say/do:"}
+                        <TranslatedText
+                          text="متى وكيف تقال/تفعل:"
+                          staticTranslation={i18n.language === "ar" ? "متى وكيف تقال/تفعل:" : "When & How to say/do:"}
+                          keepArabic={false}
+                          inline
+                        />
                       </span>
-                      {sunnah.note}
+                      <TranslatedText text={sunnah.note} keepArabic={false} inline />
                     </div>
                   )}
-                  <p className="text-[10px] text-muted-foreground text-right" dir="rtl">
-                    {sunnah.source}
-                  </p>
+                  <TranslatedText
+                    text={sunnah.source}
+                    keepArabic={false}
+                    className="text-[10px] text-muted-foreground text-right block"
+                  />
                 </div>
               </div>
             ))}

@@ -29,6 +29,21 @@ const QURAN_SURAHS = [
   "المسد", "الإخلاص", "الفلق", "الناس"
 ];
 
+const QURAN_SURAHS_EN = [
+  "Al-Fatihah", "Al-Baqarah", "Ali 'Imran", "An-Nisa'", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus",
+  "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra'", "Al-Kahf", "Maryam", "Taha",
+  "Al-Anbiya'", "Al-Hajj", "Al-Mu'minun", "An-Nur", "Al-Furqan", "Ash-Shu'ara'", "An-Naml", "Al-Qasas", "Al-'Ankabut", "Ar-Rum",
+  "Luqman", "As-Sajdah", "Al-Ahzab", "Saba'", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir",
+  "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf",
+  "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", "Al-Hashr", "Al-Mumtahanah",
+  "As-Saff", "Al-Jumu'ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij",
+  "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba'", "An-Nazi'at", "'Abasa",
+  "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad",
+  "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-'Alaq", "Al-Qadr", "Al-Bayyinah", "Az-Zalzalah", "Al-'Adiyat",
+  "Al-Qari'ah", "At-Takathur", "Al-'Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma'un", "Al-Kauthar", "Al-Kafirun", "An-Nasr",
+  "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
+];
+
 function getSurahNumber(suraName: string | undefined): number {
   if (!suraName) return 1;
   const normalize = (name: string) => {
@@ -37,12 +52,21 @@ function getSurahNumber(suraName: string | undefined): number {
       .replace(/[إأآا]/g, "ا")
       .replace(/ة/g, "ه")
       .replace(/ى/g, "ي")
-      .replace(/[\s-_]+/g, "")
+      .replace(/[\s\-_']+/g, "")
+      .toLowerCase()
       .trim();
   };
   const normalizedInput = normalize(suraName);
-  const index = QURAN_SURAHS.findIndex(name => normalize(name) === normalizedInput);
-  return index !== -1 ? index + 1 : 1;
+  
+  // Try Arabic first
+  const arIndex = QURAN_SURAHS.findIndex(name => normalize(name) === normalizedInput);
+  if (arIndex !== -1) return arIndex + 1;
+  
+  // Try English
+  const enIndex = QURAN_SURAHS_EN.findIndex(name => normalize(name) === normalizedInput);
+  if (enIndex !== -1) return enIndex + 1;
+  
+  return 1;
 }
 
 export default function Home() {
@@ -297,10 +321,14 @@ export default function Home() {
                     {dailyVerse.arabicText || dailyVerse.text}
                   </p>
                   {/* Translation — shown for non-Arabic languages */}
-                  {!isArabic(i18n.language) && dailyVerse.translatedText && (
-                    <p className="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3" dir="ltr">
-                      {dailyVerse.translatedText}
-                    </p>
+                  {!isArabic(i18n.language) && (
+                    <TranslatedText
+                      text={dailyVerse.arabicText || dailyVerse.text || ""}
+                      staticTranslation={dailyVerse.translatedText || undefined}
+                      keepArabic={false}
+                      translationClassName="text-muted-foreground text-base leading-relaxed text-left border-t border-border/30 pt-3 mt-3"
+                      className="border-t border-border/30 pt-3 mt-3"
+                    />
                   )}
                 </div>
                 <p className="text-xs text-primary/60 font-bold mt-4 text-right">

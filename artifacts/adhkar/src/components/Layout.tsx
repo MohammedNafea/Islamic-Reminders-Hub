@@ -63,12 +63,22 @@ function SidebarLink({ href, Icon, labelKey, isActive, onClick }: {
 }) {
   const { t, i18n } = useTranslation();
   return (
-    <Link href={href} onClick={onClick} aria-label={t(labelKey)} className={cn(
-      "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm",
-      isActive
-        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
-        : "hover:bg-muted/60 text-foreground/80 hover:text-foreground"
-    )}>
+    <Link 
+      href={href} 
+      onClick={() => {
+        if (onClick) onClick();
+        if (isActive) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }} 
+      aria-label={t(labelKey)} 
+      className={cn(
+        "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm",
+        isActive
+          ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+          : "hover:bg-muted/60 text-foreground/80 hover:text-foreground"
+      )}
+    >
       <Icon className={cn("h-4 w-4 shrink-0", isActive ? "text-primary-foreground" : "text-muted-foreground")} />
       <span>
         <TranslatedText
@@ -95,19 +105,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-
-    const timer = setTimeout(() => {
-      const scrollHeight = Math.max(
-        document.documentElement.scrollHeight,
-        document.body.scrollHeight,
-        document.documentElement.clientHeight
-      );
-      // Smoothly scroll to 50% (middle) of the page
-      const targetScroll = scrollHeight * 0.5;
-      window.scrollTo({ top: targetScroll, behavior: "smooth" });
-    }, 600);
-
-    return () => clearTimeout(timer);
   }, [location]);
 
 
@@ -299,6 +296,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Link
               key={href}
               href={href}
+              onClick={() => {
+                if (active) {
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              }}
               aria-label={t(labelKey)}
               className={cn(
                 "flex flex-col items-center justify-center py-2.5 px-2 flex-1 min-h-[56px] transition-all",

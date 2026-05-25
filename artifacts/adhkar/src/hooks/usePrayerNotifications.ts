@@ -211,29 +211,56 @@ export function usePrayerNotifications() {
       if (settings.notificationsFasting) {
         const maghribMs = times.maghrib.getTime();
         const fastingCheckMs = maghribMs + 15 * 60 * 1000;
+
+        const checkAndShowFasting = (targetDate: Date, tag: string) => {
+          const targetHijri = toHijri(targetDate);
+          const fastingType = isFastingDay(targetHijri, targetDate);
+          
+          if (fastingType) {
+            const dateStr = targetDate.toDateString();
+            const notifiedKey = `notified_fasting_${dateStr}`;
+            if (localStorage.getItem(notifiedKey) === "true") return;
+
+            const title = t("fasting.reminder_title", { defaultValue: "تذكير بصيام الغد" });
+            const fastingName = t(`fasting.${fastingType}`, { defaultValue: fastingType });
+            const body = t("fasting.reminder_body", { 
+              defaultValue: `تذكير: غداً هو يوم صيام ({{name}}). تقبل الله طاعتكم.`,
+              name: fastingName 
+            }).replace("{{name}}", fastingName);
+            
+            NotificationManager.showNotification(title, {
+              body,
+              icon: "/icon-192.png",
+              badge: "/favicon.png",
+              tag,
+            });
+            localStorage.setItem(notifiedKey, "true");
+          }
+        };
+
+        // If today's reminder time is in the future, schedule it
         if (fastingCheckMs > now) {
           const id = setTimeout(() => {
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            const tomorrowHijri = toHijri(tomorrow);
-            const fastingType = isFastingDay(tomorrowHijri, tomorrow);
-            
-            if (fastingType) {
-              const title = t("fasting.reminder_title", { defaultValue: "تذكير بصيام الغد" });
-              const fastingName = t(`fasting.${fastingType}`, { defaultValue: fastingType });
-              const body = t("fasting.reminder_body", { 
-                defaultValue: `تذكير: غداً هو يوم صيام ({{name}}). تقبل الله طاعتكم.`,
-                name: fastingName 
-              }).replace("{{name}}", fastingName);
-              
-              NotificationManager.showNotification(title, {
-                body,
-                icon: "/icon-192.png",
-                badge: "/favicon.png",
-                tag: "fasting-tomorrow",
-              });
-            }
+            checkAndShowFasting(tomorrow, "fasting-tomorrow");
           }, fastingCheckMs - now);
+          timeoutsRef.current.push(id);
+        } else {
+          // If already past Maghrib today, check and show immediately for tomorrow's fast
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          checkAndShowFasting(tomorrow, "fasting-tomorrow-immediate");
+        }
+
+        // Also schedule a check for tomorrow's Maghrib to support continuous page view
+        const tomorrowFastingCheckMs = fastingCheckMs + 24 * 60 * 60 * 1000;
+        if (tomorrowFastingCheckMs > now) {
+          const id = setTimeout(() => {
+            const dayAfterTomorrow = new Date();
+            dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+            checkAndShowFasting(dayAfterTomorrow, "fasting-tomorrow-continuous");
+          }, tomorrowFastingCheckMs - now);
           timeoutsRef.current.push(id);
         }
 
