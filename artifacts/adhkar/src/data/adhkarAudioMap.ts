@@ -726,33 +726,9 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "174"
   },
-  "occasion_laylat_al_qadr": {
-    "type": "dureihim",
-    "filename": "84"
-  },
   "occasion_arafah_best_dhikr": {
     "type": "dureihim",
-    "filename": "77"
-  },
-  "occasion_arafah_ali_dua": {
-    "type": "dureihim",
-    "filename": "84"
-  },
-  "occasion_laylat_al_qadr_dua_maghfirah": {
-    "type": "dureihim",
-    "filename": "84"
-  },
-  "occasion_laylat_al_qadr_tahajjud": {
-    "type": "dureihim",
-    "filename": "84"
-  },
-  "occasion_arafah_tahlil_takbeer": {
-    "type": "dureihim",
-    "filename": "93"
-  },
-  "occasion_arafah_dua_anbiya": {
-    "type": "dureihim",
-    "filename": "84"
+    "filename": "237"
   },
   "protection_children_family": {
     "type": "dureihim",
@@ -844,7 +820,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_arafah": {
     "type": "dureihim",
-    "filename": "93"
+    "filename": "237"
   },
   "great_days_friday": {
     "type": "dureihim",
@@ -856,15 +832,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_friday_hour": {
     "type": "dureihim",
-    "filename": "84"
+    "filename": "64"
   },
   "great_days_night_third": {
     "type": "dureihim",
-    "filename": "96"
-  },
-  "great_days_athan_iqamah": {
-    "type": "dureihim",
-    "filename": "84"
+    "filename": "250"
   },
   "great_days_sujood_dua": {
     "type": "dureihim",
@@ -872,7 +844,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_breaking_fast": {
     "type": "dureihim",
-    "filename": "115"
+    "filename": "176"
   },
   "great_days_suhoor_istighfar": {
     "type": "dureihim",

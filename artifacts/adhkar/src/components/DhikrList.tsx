@@ -6,14 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import type { Dhikr } from "@/data/adhkar";
 import { getDailyProgress, setDhikrCount, getSettings } from "@/lib/store";
-import { Check, Repeat, Volume2, Square, Heart, Play, SkipForward, Copy, Image } from "lucide-react";
+import { Check, Repeat, Volume2, Square, Heart, Play, SkipForward, Copy, Image, Share2 } from "lucide-react";
 import { useFavorites } from "@/hooks/useFavorites";
 import { isArabic, getTranslation } from "@/lib/content-i18n";
 import { logCategoryCompletion } from "@/lib/tracker";
 import { TranslatedText } from "@/components/TranslatedText";
 import { adhkarAudioMap } from "@/data/adhkarAudioMap";
 import { toast } from "@/hooks/use-toast";
-import { exportToImage } from "@/lib/image-share";
+import { exportToImage, shareText } from "@/lib/image-share";
 
 
 interface DhikrListProps {
@@ -646,13 +646,30 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                               getTranslation(t, titleKey, i18n.language) || t(titleKey) || "ذكر",
                               arabicText,
                               dhikr.source,
-                              i18n.language
+                              i18n.language,
+                              dhikr.note || undefined
                             );
                           }}
                           className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
                           title={t("common.export_image", { defaultValue: "تصدير كصورة" })}
                         >
                           <Image className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            shareText(
+                              getTranslation(t, titleKey, i18n.language) || t(titleKey) || "ذكر",
+                              arabicText,
+                              dhikr.source,
+                              i18n.language
+                            );
+                          }}
+                          className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
+                          title={i18n.language === "ar" ? "مشاركة" : "Share"}
+                        >
+                          <Share2 className="w-4 h-4" />
                         </button>
 
                         {hasHumanAudio(dhikr.id) && (
