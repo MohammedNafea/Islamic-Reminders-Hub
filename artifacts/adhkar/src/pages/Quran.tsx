@@ -1,3 +1,4 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -70,6 +71,17 @@ interface Ayah {
   numberInSurah: number;
   translatedText?: string;
   translationEdition?: string;
+  juz: number;
+  page: number;
+  surah: {
+    number: number;
+    name: string;
+    englishName: string;
+    englishNameTranslation: string;
+    numberOfAyahs: number;
+    revelationType: string;
+  };
+  tafsirText?: string;
 }
 
 interface Tafsir {
@@ -83,6 +95,23 @@ interface QuranBookmark {
   text: string;
 }
 
+const SURAH_START_PAGES = [
+  0,
+  1, 2, 50, 77, 106, 128, 151, 177, 187, 208, // 1-10
+  221, 235, 249, 255, 262, 267, 282, 293, 305, 312, // 11-20
+  322, 332, 342, 350, 359, 367, 377, 385, 396, 404, // 21-30
+  411, 415, 418, 428, 434, 440, 446, 453, 458, 467, // 31-40
+  477, 483, 489, 496, 499, 502, 507, 511, 515, 518, // 41-50
+  520, 523, 526, 528, 531, 534, 537, 542, 545, 549, // 51-60
+  551, 553, 554, 556, 558, 560, 562, 564, 566, 568, // 61-70
+  570, 572, 574, 575, 577, 578, 580, 582, 583, 585, // 71-80
+  586, 587, 587, 589, 590, 591, 591, 592, 593, 594, // 81-90
+  595, 595, 596, 596, 597, 597, 598, 598, 599, 599, // 91-100
+  600, 600, 601, 601, 601, 602, 602, 602, 603, 603, // 101-110
+  603, 604, 604, 604 // 111-114
+];
+
+
 export default function Quran() {
   const { t, i18n } = useTranslation();
   const rtl = isRTL(i18n.language);
@@ -94,6 +123,22 @@ export default function Quran() {
   const [tafsirJalalayn, setTafsirJalalayn] = useState<Tafsir[]>([]);
   const [tafsirMuyassar, setTafsirMuyassar] = useState<Tafsir[]>([]);
   const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "both" | "none">("muyassar");
+
+  // View modes
+  const [viewMode, setViewMode] = useState<"list" | "pages">(() => {
+    return (localStorage.getItem("quran_view_mode") as "list" | "pages") || "list";
+  });
+  const [currentPage, setCurrentPage] = useState<number>(() => {
+    return parseInt(localStorage.getItem("quran_current_page") || "1", 10);
+  });
+  const [pageAyahs, setPageAyahs] = useState<Ayah[]>([]);
+  const [pageLoading, setPageLoading] = useState(false);
+  const playNextPageFirstAyahRef = useRef(false);
+  const playLastPageFirstAyahRef = useRef(false);
+
+  // Selected ayah in page view
+  const [selectedPageAyah, setSelectedPageAyah] = useState<Ayah | null>(null);
+  const [selectedPageAyahIndex, setSelectedPageAyahIndex] = useState<number | null>(null);
 
   // Audio state
   const [selectedQariId, setSelectedQariId] = useState<string>(() => {
@@ -124,6 +169,15 @@ export default function Quran() {
   const surahParam = queryParams.get("surah") || queryParams.get("sura");
   const ayahParam = queryParams.get("ayah") || queryParams.get("verse");
   const [scrollToAyahNum, setScrollToAyahNum] = useState<number | null>(null);
+
+  // Save viewMode & page preferences
+  useEffect(() => {
+    localStorage.setItem("quran_view_mode", viewMode);
+  }, [viewMode]);
+
+  useEffect(() => {
+    localStorage.setItem("quran_current_page", String(currentPage));
+  }, [currentPage]);
 
   // Sync playback speed
   useEffect(() => {
@@ -169,7 +223,7 @@ export default function Quran() {
     };
   }, [audio]);
 
-  // Audio ended listener
+  // Audio ended listener with seamless page-turning
   useEffect(() => {
     const handleEnded = () => {
       if (selectedQari.type === "ayah" && activeAyahIndex !== null) {
@@ -178,6 +232,9 @@ export default function Quran() {
           setActiveAyahIndex(nextIndex);
           audio.src = ayahs[nextIndex].audio;
           audio.play().catch(err => console.log("Autoplay blocked", err));
+        } else if (autoplay && viewMode === "pages" && currentPage < 604) {
+          playNextPageFirstAyahRef.current = true;
+          setCurrentPage(prev => prev + 1);
         } else {
           setIsPlaying(false);
           setActiveAyahIndex(null);
@@ -192,7 +249,7 @@ export default function Quran() {
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [audio, selectedQari, activeAyahIndex, autoplay, ayahs]);
+  }, [audio, selectedQari, activeAyahIndex, autoplay, ayahs, viewMode, currentPage]);
 
   const getSurahAudioUrl = (reciter: typeof selectedQari, surahNumber: number) => {
     const padded = String(surahNumber).padStart(3, "0");
@@ -241,6 +298,9 @@ export default function Quran() {
         audio.src = ayahs[nextIndex].audio;
         audio.play().catch(err => console.log("Play failed", err));
         setIsPlaying(true);
+      } else if (viewMode === "pages" && currentPage < 604) {
+        playNextPageFirstAyahRef.current = true;
+        setCurrentPage(prev => prev + 1);
       }
     } else {
       audio.currentTime = Math.min(audio.currentTime + 10, duration);
@@ -255,6 +315,9 @@ export default function Quran() {
         audio.src = ayahs[prevIndex].audio;
         audio.play().catch(err => console.log("Play failed", err));
         setIsPlaying(true);
+      } else if (viewMode === "pages" && currentPage > 1) {
+        setCurrentPage(prev => prev - 1);
+        playLastPageFirstAyahRef.current = true;
       }
     } else {
       audio.currentTime = Math.max(audio.currentTime - 10, 0);
@@ -263,7 +326,7 @@ export default function Quran() {
 
   // Auto scroll to active ayah card
   useEffect(() => {
-    if (selectedQari.type === "ayah" && activeAyahIndex !== null && autoScroll) {
+    if (selectedQari.type === "ayah" && activeAyahIndex !== null && autoScroll && viewMode === "list") {
       const activeAyah = ayahs[activeAyahIndex];
       if (activeAyah) {
         const el = ayahRefs.current[activeAyah.numberInSurah];
@@ -272,7 +335,7 @@ export default function Quran() {
         }
       }
     }
-  }, [activeAyahIndex, autoScroll, selectedQari, ayahs]);
+  }, [activeAyahIndex, autoScroll, selectedQari, ayahs, viewMode]);
 
   useEffect(() => {
     const stored = localDB.getLastRead(null);
@@ -303,15 +366,11 @@ export default function Quran() {
     localDB.saveLastRead(number);
     setLastRead(number);
     
-    // Determine translation edition based on current language
     const translationEdition = getQuranEditionForLanguage(i18n.language) || "en.sahih";
-    
-    // Fallback to husary if selected reciter is Surah-based, so we get valid ayah audio and text
     const audioEdition = selectedQari.type === "ayah" && selectedQari.audioEditionId 
       ? selectedQari.audioEditionId 
       : "ar.husary";
     
-    // Fetch audio, Jalalayn, Muyassar, and language-specific Translation
     const fetches = [
       fetch(`https://api.alquran.cloud/v1/surah/${number}/${audioEdition}`).then(res => res.json()),
       fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()),
@@ -321,7 +380,7 @@ export default function Quran() {
     
     Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData]) => {
       if (audioData?.data && jalalaynData?.data && muyassarData?.data && transData?.data) {
-        const enrichedAyahs = audioData.data.ayahs.map((a: Ayah, i: number) => ({
+        const enrichedAyahs = audioData.data.ayahs.map((a: any, i: number) => ({
           ...a,
           translatedText: transData.data.ayahs[i].text,
           translationEdition
@@ -331,7 +390,6 @@ export default function Quran() {
         setTafsirMuyassar(muyassarData.data.ayahs || []);
         setActiveSurah(number);
         
-        // Reset player states
         audio.pause();
         setIsPlaying(false);
         setCurrentTime(0);
@@ -343,9 +401,77 @@ export default function Quran() {
     }).catch(() => setLoading(false));
   };
 
+  // Fetch page data for page-by-page view
+  const fetchPageData = (pageNumber: number) => {
+    setPageLoading(true);
+    const translationEdition = getQuranEditionForLanguage(i18n.language) || "en.sahih";
+    
+    const fetches = [
+      fetch(`https://api.alquran.cloud/v1/page/${pageNumber}/quran-uthmani`).then(res => res.json()),
+      fetch(`https://api.alquran.cloud/v1/page/${pageNumber}/${translationEdition}`).then(res => res.json()),
+      fetch(`https://api.alquran.cloud/v1/page/${pageNumber}/ar.muyassar`).then(res => res.json())
+    ];
+
+    Promise.all(fetches)
+      .then(([uthmaniData, transData, tafsirData]) => {
+        if (uthmaniData?.data?.ayahs) {
+          const rawAyahs = uthmaniData.data.ayahs;
+          const transTexts = transData?.data?.ayahs?.map((a: any) => a.text) || [];
+          const tafsirTexts = tafsirData?.data?.ayahs?.map((a: any) => a.text) || [];
+          
+          const audioEdition = selectedQari.type === "ayah" && selectedQari.audioEditionId 
+            ? selectedQari.audioEditionId 
+            : "ar.husary";
+            
+          const enriched = rawAyahs.map((ayah: any, i: number) => ({
+            ...ayah,
+            audio: `https://cdn.alquran.cloud/media/audio/ayah/${audioEdition}/${ayah.number}`,
+            translatedText: transTexts[i] || "",
+            tafsirText: tafsirTexts[i] || "",
+            translationEdition
+          }));
+          
+          setPageAyahs(enriched);
+          setAyahs(enriched);
+          
+          if (rawAyahs.length > 0) {
+            setActiveSurah(rawAyahs[0].surah.number);
+          }
+
+          if (playNextPageFirstAyahRef.current) {
+            playNextPageFirstAyahRef.current = false;
+            setActiveAyahIndex(0);
+            audio.src = enriched[0].audio;
+            audio.play().catch(err => console.log("Play failed", err));
+            setIsPlaying(true);
+          } else if (playLastPageFirstAyahRef.current) {
+            playLastPageFirstAyahRef.current = false;
+            const lastIdx = enriched.length - 1;
+            setActiveAyahIndex(lastIdx);
+            audio.src = enriched[lastIdx].audio;
+            audio.play().catch(err => console.log("Play failed", err));
+            setIsPlaying(true);
+          }
+        }
+        setPageLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch page data:", err);
+        setPageLoading(false);
+      });
+  };
+
+  // Fetch page data if viewMode is page
+  useEffect(() => {
+    if (viewMode === "pages") {
+      fetchPageData(currentPage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, viewMode, i18n.language, selectedQariId]);
+
   // Refetch if the reciter is changed while reading a Surah
   useEffect(() => {
-    if (activeSurah !== null) {
+    if (activeSurah !== null && viewMode === "list") {
       fetchSurahAyahs(activeSurah);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -366,10 +492,14 @@ export default function Quran() {
         }
       }
       if (surahNum && surahNum >= 1 && surahNum <= 114) {
-        fetchSurahAyahs(surahNum);
+        if (viewMode === "pages") {
+          setCurrentPage(SURAH_START_PAGES[surahNum]);
+        } else {
+          fetchSurahAyahs(surahNum);
+        }
       }
     } else {
-      if (activeSurah !== null) {
+      if (activeSurah !== null && viewMode === "list") {
         audio.pause();
         setActiveSurah(null);
         setAyahs([]);
@@ -392,7 +522,7 @@ export default function Quran() {
   }, [ayahParam]);
 
   useEffect(() => {
-    if (!loading && ayahs.length > 0 && scrollToAyahNum !== null) {
+    if (!loading && ayahs.length > 0 && scrollToAyahNum !== null && viewMode === "list") {
       const el = ayahRefs.current[scrollToAyahNum];
       if (el) {
         const timer = setTimeout(() => {
@@ -407,7 +537,7 @@ export default function Quran() {
         return () => clearTimeout(timer);
       }
     }
-  }, [loading, ayahs, scrollToAyahNum]);
+  }, [loading, ayahs, scrollToAyahNum, viewMode]);
 
   const playAyah = (ayah: Ayah, index: number) => {
     if (selectedQari.type === "ayah") {
@@ -430,7 +560,7 @@ export default function Quran() {
         setPlayingSingleAyahId(null);
       } else {
         audio.pause();
-        audio.src = ayah.audio; // Mahmoud Khalil Al-Husary
+        audio.src = ayah.audio;
         audio.play().catch(err => console.log("Play failed", err));
         setPlayingSingleAyahId(ayah.number);
         setIsPlaying(true);
@@ -438,6 +568,10 @@ export default function Quran() {
     }
   };
 
+  const handlePageAyahClick = (ayah: Ayah, index: number) => {
+    setSelectedPageAyah(ayah);
+    setSelectedPageAyahIndex(index);
+  };
 
   const toggleBookmark = (ayah: Ayah, surah: Surah) => {
     const isBookmarked = bookmarks.some(b => b.surahNumber === surah.number && b.ayahNumber === ayah.numberInSurah);
@@ -462,6 +596,14 @@ export default function Quran() {
     localDB.saveBookmarks(newBookmarks);
   };
 
+  const handleSurahClick = (number: number) => {
+    if (viewMode === "pages") {
+      setCurrentPage(SURAH_START_PAGES[number]);
+    } else {
+      fetchSurahAyahs(number);
+    }
+  };
+
   const normalizedQuery = normalizeArabic(searchQuery);
   const filteredSurahs = surahs.filter(s => {
     if (!searchQuery.trim()) return true;
@@ -472,185 +614,427 @@ export default function Quran() {
            s.englishNameTranslation.toLowerCase().includes(queryLower);
   });
 
+  const renderViewSwitcher = () => (
+    <div className="flex justify-center gap-2 p-1 bg-muted/40 rounded-2xl w-full max-w-[280px] mx-auto border border-primary/5">
+      <Button
+        variant={viewMode === "list" ? "secondary" : "ghost"}
+        size="sm"
+        className={cn(
+          "rounded-xl flex-1 text-xs h-9 transition-all duration-300",
+          viewMode === "list" && "bg-white shadow-sm font-bold text-primary"
+        )}
+        onClick={() => setViewMode("list")}
+      >
+        {t("quran.list_view", { defaultValue: "عرض الآيات" })}
+      </Button>
+      <Button
+        variant={viewMode === "pages" ? "secondary" : "ghost"}
+        size="sm"
+        className={cn(
+          "rounded-xl flex-1 text-xs h-9 transition-all duration-300",
+          viewMode === "pages" && "bg-white shadow-sm font-bold text-primary"
+        )}
+        onClick={() => {
+          setViewMode("pages");
+          if (activeSurah !== null) {
+            setCurrentPage(SURAH_START_PAGES[activeSurah]);
+          }
+        }}
+      >
+        {t("quran.page_view", { defaultValue: "صفحات المصحف" })}
+      </Button>
+    </div>
+  );
+
+  const renderPageContent = () => {
+    const elements: React.ReactNode[] = [];
+    let currentSurahNumber: number | null = null;
+    let currentGroup: Ayah[] = [];
+
+    const renderSurahBlock = (surahNum: number, ayahsInSurah: Ayah[]) => {
+      const firstAyah = ayahsInSurah[0];
+      const surahInfo = firstAyah.surah;
+      const isNewSurah = firstAyah.numberInSurah === 1;
+
+      return (
+        <div key={`surah-block-${surahNum}`} className="space-y-4 mb-6">
+          {isNewSurah && (
+            <div className="my-6 text-center select-none">
+              {/* Surah Header Frame */}
+              <div className="relative inline-flex items-center justify-center px-12 py-3 border-2 border-double border-amber-600/30 rounded-xl bg-amber-50/50 shadow-sm min-w-[280px]">
+                <div className="absolute left-3 right-3 top-1 bottom-1 border border-dashed border-amber-600/20 rounded-lg pointer-events-none" />
+                <span className="text-xl font-bold font-heading text-amber-900 dark:text-amber-500">
+                  {i18n.language === 'ar' ? surahInfo.name : surahInfo.englishName}
+                </span>
+              </div>
+              {/* Bismillah */}
+              {surahNum !== 1 && surahNum !== 9 && (
+                <div className="mt-4 text-center">
+                  <p className="dhikr-text text-2xl text-primary opacity-80">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                </div>
+              )}
+            </div>
+          )}
+          
+          {/* Ayahs text container */}
+          <p className="quran-page-text text-2xl md:text-3xl leading-[2.2] md:leading-[2.5] text-amber-950 dark:text-amber-100 font-serif text-justify animate-fade-in" dir="rtl" style={{ textJustify: 'inter-word' }}>
+            {ayahsInSurah.map((ayah) => {
+              const index = pageAyahs.findIndex(a => a.number === ayah.number);
+              const isAyahPlaying = 
+                (selectedQari.type === "ayah" && activeAyahIndex === index && isPlaying) ||
+                (selectedQari.type === "surah" && playingSingleAyahId === ayah.number && isPlaying);
+              const isSelected = selectedPageAyah?.number === ayah.number;
+              
+              return (
+                <span
+                  key={ayah.number}
+                  className={cn(
+                    "cursor-pointer hover:bg-amber-500/10 rounded px-1.5 py-0.5 transition-all duration-200 inline",
+                    isAyahPlaying && "bg-amber-500/20 ring-1 ring-amber-500/40 font-bold",
+                    isSelected && "bg-amber-500/10 border-b-2 border-amber-500/40",
+                  )}
+                  onClick={() => handlePageAyahClick(ayah, index)}
+                >
+                  {cleanBismillah(ayah.text)}
+                  {/* Gold Ayah number end circle */}
+                  <span className="inline-flex items-center justify-center mx-2 w-7 h-7 rounded-full border border-amber-600/30 text-[11px] font-bold text-amber-800 dark:text-amber-400 font-mono select-none bg-amber-50/50 dark:bg-amber-950/50 align-middle">
+                    {ayah.numberInSurah}
+                  </span>
+                </span>
+              );
+            })}
+          </p>
+        </div>
+      );
+    };
+
+    // Group pageAyahs by surah
+    pageAyahs.forEach((ayah) => {
+      if (currentSurahNumber === null) {
+        currentSurahNumber = ayah.surah.number;
+        currentGroup.push(ayah);
+      } else if (ayah.surah.number === currentSurahNumber) {
+        if (ayah.numberInSurah === 1) {
+          elements.push(renderSurahBlock(currentSurahNumber, currentGroup));
+          currentSurahNumber = ayah.surah.number;
+          currentGroup = [ayah];
+        } else {
+          currentGroup.push(ayah);
+        }
+      } else {
+        elements.push(renderSurahBlock(currentSurahNumber, currentGroup));
+        currentSurahNumber = ayah.surah.number;
+        currentGroup = [ayah];
+      }
+    });
+
+    if (currentGroup.length > 0 && currentSurahNumber !== null) {
+      elements.push(renderSurahBlock(currentSurahNumber, currentGroup));
+    }
+
+    return elements;
+  };
+
   if (activeSurah && ayahs.length > 0) {
     const currentSurah = surahs.find(s => s.number === activeSurah);
     if (!currentSurah) return null;
 
     return (
       <div className="space-y-6 animate-in fade-in duration-500 pb-80 md:pb-48">
-        <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
-          <div className="flex items-center gap-4 flex-1">
-            <Button variant="ghost" onClick={() => { audio.pause(); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
-              <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
-            </Button>
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold font-heading text-primary">{i18n.language === 'ar' ? currentSurah?.name : currentSurah?.englishName}</h2>
-              <div className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-                <span>{currentSurah?.numberOfAyahs} {t("common.ayahs")}</span>
-                <span className="w-1 h-1 bg-muted-foreground/30 rounded-full" />
-                <span>{currentSurah?.revelationType === "Meccan" ? t("quran.meccan") : t("quran.medinan")}</span>
+        {/* Header */}
+        {viewMode === "list" ? (
+          <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
+            <div className="flex items-center gap-4 flex-1">
+              <Button variant="ghost" onClick={() => { audio.pause(); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
+                <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
+              </Button>
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold font-heading text-primary">{i18n.language === 'ar' ? currentSurah?.name : currentSurah?.englishName}</h2>
+                <div className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+                  <span>{currentSurah?.numberOfAyahs} {t("common.ayahs")}</span>
+                  <span className="w-1 h-1 bg-muted-foreground/30 rounded-full" />
+                  <span>{currentSurah?.revelationType === "Meccan" ? t("quran.meccan") : t("quran.medinan")}</span>
+                </div>
               </div>
             </div>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full w-10 h-10 border-primary/10 hover:bg-primary/5 text-primary bg-white shadow-sm"
-              onClick={() => setIsSearchOpen(true)}
-              title={t("quran.search_in_surah", { defaultValue: "البحث في السورة" })}
-            >
-              <Search className="w-4 h-4" />
-            </Button>
             
-            <div className="flex gap-1.5 p-1 bg-muted/50 rounded-xl">
-              <Button 
-                variant={selectedTafsir === "muyassar" ? "secondary" : "ghost"} 
-                size="sm" 
-                className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "muyassar" && "bg-white shadow-sm font-bold text-primary")}
-                onClick={() => setSelectedTafsir("muyassar")}
+            <div className="flex items-center gap-2 justify-between md:justify-end">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full w-10 h-10 border-primary/10 hover:bg-primary/5 text-primary bg-white shadow-sm"
+                onClick={() => setIsSearchOpen(true)}
+                title={t("quran.search_in_surah", { defaultValue: "البحث في السورة" })}
               >
-                {t("quran.tafsir_muyassar")}
+                <Search className="w-4 h-4" />
               </Button>
-              <Button 
-                variant={selectedTafsir === "jalalayn" ? "secondary" : "ghost"} 
-                size="sm" 
-                className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "jalalayn" && "bg-white shadow-sm font-bold text-primary")}
-                onClick={() => setSelectedTafsir("jalalayn")}
-              >
-                {t("quran.tafsir_jalalayn")}
-              </Button>
-              <Button 
-                variant={selectedTafsir === "both" ? "secondary" : "ghost"} 
-                size="sm" 
-                className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "both" && "bg-white shadow-sm font-bold text-primary")}
-                onClick={() => setSelectedTafsir("both")}
-              >
-                {t("quran.tafsir_both", { defaultValue: "مقارنة" })}
-              </Button>
-              <Button 
-                variant={selectedTafsir === "none" ? "secondary" : "ghost"} 
-                size="sm" 
-                className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "none" && "bg-white shadow-sm font-bold text-primary")}
-                onClick={() => setSelectedTafsir("none")}
-              >
-                {t("quran.hide_tafsir", { defaultValue: "إخفاء" })}
-              </Button>
+              
+              <div className="flex gap-1.5 p-1 bg-muted/50 rounded-xl">
+                <Button 
+                  variant={selectedTafsir === "muyassar" ? "secondary" : "ghost"} 
+                  size="sm" 
+                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "muyassar" && "bg-white shadow-sm font-bold text-primary")}
+                  onClick={() => setSelectedTafsir("muyassar")}
+                >
+                  {t("quran.tafsir_muyassar")}
+                </Button>
+                <Button 
+                  variant={selectedTafsir === "jalalayn" ? "secondary" : "ghost"} 
+                  size="sm" 
+                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "jalalayn" && "bg-white shadow-sm font-bold text-primary")}
+                  onClick={() => setSelectedTafsir("jalalayn")}
+                >
+                  {t("quran.tafsir_jalalayn")}
+                </Button>
+                <Button 
+                  variant={selectedTafsir === "both" ? "secondary" : "ghost"} 
+                  size="sm" 
+                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "both" && "bg-white shadow-sm font-bold text-primary")}
+                  onClick={() => setSelectedTafsir("both")}
+                >
+                  {t("quran.tafsir_both", { defaultValue: "مقارنة" })}
+                </Button>
+                <Button 
+                  variant={selectedTafsir === "none" ? "secondary" : "ghost"} 
+                  size="sm" 
+                  className={cn("rounded-lg text-[10px] h-8 px-2.5", selectedTafsir === "none" && "bg-white shadow-sm font-bold text-primary")}
+                  onClick={() => setSelectedTafsir("none")}
+                >
+                  {t("quran.hide_tafsir", { defaultValue: "إخفاء" })}
+                </Button>
+              </div>
+              {renderViewSwitcher()}
             </div>
           </div>
-        </div>
-
-        {/* Bismillah for non-Fatiha/Tawbah */}
-        {activeSurah !== 1 && activeSurah !== 9 && (
-          <div className="text-center py-8">
-            <p className="dhikr-text text-3xl text-primary opacity-80">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        ) : (
+          <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
+            <div className="flex items-center gap-4 flex-1">
+              <Button variant="ghost" onClick={() => { audio.pause(); setViewMode("list"); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
+                <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
+              </Button>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-bold font-heading text-primary">
+                    {t("quran.page", { defaultValue: "صفحة" })} {currentPage}
+                  </h2>
+                  {pageAyahs.length > 0 && (
+                    <span className="text-xs text-muted-foreground bg-primary/5 px-2.5 py-1 rounded-full font-medium">
+                      {t("quran.juz", { defaultValue: "الجزء" })} {pageAyahs[0].juz}
+                    </span>
+                  )}
+                </div>
+                <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-0.5">
+                  {Array.from(new Set(pageAyahs.map(a => i18n.language === 'ar' ? a.surah.name : a.surah.englishName))).join(" / ")}
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-4 justify-between md:justify-end">
+              {renderViewSwitcher()}
+            </div>
           </div>
         )}
 
-        <div className="space-y-4">
-          {ayahs.map((ayah, index) => {
-            const isAyahPlaying = 
-              (selectedQari.type === "ayah" && activeAyahIndex === index && isPlaying) ||
-              (selectedQari.type === "surah" && playingSingleAyahId === ayah.number && isPlaying);
-            return (
-              <Card 
-                key={ayah.number} 
-                ref={el => { ayahRefs.current[ayah.numberInSurah] = el; }}
-                className={cn(
-                  "border-none shadow-sm transition-all duration-300 rounded-[2rem] overflow-hidden",
-                  isAyahPlaying ? "bg-primary/5 ring-1 ring-primary/20 shadow-md scale-[1.01]" : "bg-card/60 backdrop-blur-sm"
-                )}
-              >
-                <CardContent className="p-6 md:p-8 space-y-6">
-                  <div className="flex justify-between items-center">
-                    <div className="flex gap-2">
-                      <Button 
-                        size="icon" 
-                        variant={isAyahPlaying ? "default" : "secondary"} 
-                        className={cn("rounded-full w-12 h-12 shadow-sm transition-all", isAyahPlaying ? "bg-primary text-white" : "bg-white hover:bg-primary/5 text-primary")}
-                        onClick={() => playAyah(ayah, index)}
-                      >
-                        {isAyahPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
-                      </Button>
-                      <Button 
-                        size="icon" 
-                        variant="secondary"
-                        className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
-                        onClick={() => toggleBookmark(ayah, currentSurah)}
-                        title={t("quran.bookmark", { defaultValue: "حفظ علامة" })}
-                      >
-                      {bookmarks.some(b => b.surahNumber === currentSurah.number && b.ayahNumber === ayah.numberInSurah) ? (
-                        <BookmarkCheck className="w-5 h-5 text-emerald-600" />
-                      ) : (
-                        <Bookmark className="w-5 h-5" />
+        {/* Content */}
+        {viewMode === "list" ? (
+          <>
+            {/* Bismillah for non-Fatiha/Tawbah */}
+            {activeSurah !== 1 && activeSurah !== 9 && (
+              <div className="text-center py-8">
+                <p className="dhikr-text text-3xl text-primary opacity-80">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {ayahs.map((ayah, index) => {
+                const isAyahPlaying = 
+                  (selectedQari.type === "ayah" && activeAyahIndex === index && isPlaying) ||
+                  (selectedQari.type === "surah" && playingSingleAyahId === ayah.number && isPlaying);
+                return (
+                  <Card 
+                    key={ayah.number} 
+                    ref={el => { ayahRefs.current[ayah.numberInSurah] = el; }}
+                    className={cn(
+                      "border-none shadow-sm transition-all duration-300 rounded-[2rem] overflow-hidden",
+                      isAyahPlaying ? "bg-primary/5 ring-1 ring-primary/20 shadow-md scale-[1.01]" : "bg-card/60 backdrop-blur-sm"
+                    )}
+                  >
+                    <CardContent className="p-6 md:p-8 space-y-6">
+                      <div className="flex justify-between items-center">
+                        <div className="flex gap-2">
+                          <Button 
+                            size="icon" 
+                            variant={isAyahPlaying ? "default" : "secondary"} 
+                            className={cn("rounded-full w-12 h-12 shadow-sm transition-all", isAyahPlaying ? "bg-primary text-white" : "bg-white hover:bg-primary/5 text-primary")}
+                            onClick={() => playAyah(ayah, index)}
+                          >
+                            {isAyahPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                          </Button>
+                          <Button 
+                            size="icon" 
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
+                            onClick={() => toggleBookmark(ayah, currentSurah)}
+                            title={t("quran.bookmark", { defaultValue: "حفظ علامة" })}
+                          >
+                            {bookmarks.some(b => b.surahNumber === currentSurah.number && b.ayahNumber === ayah.numberInSurah) ? (
+                              <BookmarkCheck className="w-5 h-5 text-emerald-600" />
+                            ) : (
+                              <Bookmark className="w-5 h-5" />
+                            )}
+                          </Button>
+                          <Button 
+                            size="icon" 
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
+                            onClick={() => setSelectedTafsirAyah(ayah)}
+                            title={t("quran.view_tafsir", { defaultValue: "عرض التفسير والتدبر" })}
+                          >
+                            <BookOpen className="w-5 h-5" />
+                          </Button>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="h-[1px] w-8 bg-primary/20" />
+                          <span className="text-primary font-black text-xs tabular-nums bg-primary/10 px-3 py-1 rounded-full">
+                            {ayah.numberInSurah}
+                          </span>
+                        </div>
+                      </div>
+                      {/* Arabic original — always shown */}
+                      <p className="dhikr-text text-4xl leading-[1.8] md:leading-[2] text-foreground font-medium text-right" dir="rtl">
+                        {ayah.text ? cleanBismillah(ayah.text) : ""}
+                      </p>
+                      {/* Translation — shown for non-Arabic languages */}
+                      {!isArabic(i18n.language) && ayah.translatedText && (
+                        <p 
+                          className={cn("text-muted-foreground text-lg leading-relaxed border-t border-border/30 pt-4", isRTL(i18n.language) ? "text-right" : "text-left")} 
+                          dir={getTextDirection(i18n.language)}
+                        >
+                          {ayah.translatedText}
+                        </p>
                       )}
-                    </Button>
-                    <Button 
-                      size="icon" 
-                      variant="secondary"
-                      className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
-                      onClick={() => setSelectedTafsirAyah(ayah)}
-                      title={t("quran.view_tafsir", { defaultValue: "عرض التفسير والتدبر" })}
-                    >
-                      <BookOpen className="w-5 h-5" />
-                    </Button>
+                      
+                      {selectedTafsir !== "none" && (
+                        <div className="pt-6 mt-6 border-t border-primary/5 -mx-6 px-6 space-y-4">
+                          {(selectedTafsir === "muyassar" || selectedTafsir === "both") && tafsirMuyassar[ayah.numberInSurah - 1] && (
+                            <div className="bg-amber-500/5 p-4 rounded-2xl text-right border border-amber-500/10" dir="rtl">
+                              <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">
+                                {t("quran.tafsir_muyassar")}
+                              </h4>
+                              <TranslatedText
+                                text={tafsirMuyassar[ayah.numberInSurah - 1].text}
+                                keepArabic={false}
+                                className="text-muted-foreground text-sm leading-relaxed"
+                              />
+                            </div>
+                          )}
+                          {(selectedTafsir === "jalalayn" || selectedTafsir === "both") && tafsirJalalayn[ayah.numberInSurah - 1] && (
+                            <div className="bg-primary/5 p-4 rounded-2xl text-right border border-primary/10" dir="rtl">
+                              <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">
+                                {t("quran.tafsir_jalalayn")}
+                              </h4>
+                              <TranslatedText
+                                text={tafsirJalalayn[ayah.numberInSurah - 1].text}
+                                keepArabic={false}
+                                className="text-muted-foreground text-sm leading-relaxed"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <div className="max-w-2xl mx-auto space-y-6">
+            {/* Page Navigation Controls - Top */}
+            <div className="flex items-center justify-between gap-4 bg-card/50 p-3 rounded-2xl border border-primary/5 backdrop-blur-sm">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="gap-1 text-xs rounded-xl"
+              >
+                <ChevronRight className={cn("w-4 h-4", i18n.language === 'ar' ? "rotate-180" : "")} />
+                <span>{t("common.prev", { defaultValue: "السابق" })}</span>
+              </Button>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-muted-foreground font-medium">{t("quran.page", { defaultValue: "الصفحة" })}</span>
+                <input 
+                  type="number" 
+                  min={1} 
+                  max={604} 
+                  value={currentPage} 
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (val >= 1 && val <= 604) setCurrentPage(val);
+                  }}
+                  className="w-16 h-8 text-center text-xs border border-primary/10 rounded-xl bg-white dark:bg-card focus:outline-none focus:ring-1 focus:ring-primary font-bold"
+                />
+                <span className="text-xs text-muted-foreground font-medium">/ 604</span>
+              </div>
+
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => currentPage < 604 && setCurrentPage(currentPage + 1)}
+                disabled={currentPage === 604}
+                className="gap-1 text-xs rounded-xl"
+              >
+                <span>{t("common.next", { defaultValue: "التالي" })}</span>
+                <ChevronRight className={cn("w-4 h-4", i18n.language === 'ar' ? "" : "rotate-180")} />
+              </Button>
+            </div>
+
+            {/* Actual Quran Page paper */}
+            <Card className="border-none shadow-lg bg-[#fbf9f4] dark:bg-[#111413] rounded-[2.5rem] overflow-hidden relative border-8 border-double border-amber-900/10 dark:border-amber-500/10">
+              <CardContent className="p-6 md:p-10 space-y-6 min-h-[500px]">
+                {pageLoading ? (
+                  <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+                    <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                    <p className="text-sm text-amber-900/60 dark:text-amber-500/60 font-medium">
+                      {t("common.loading", { defaultValue: "جاري تحميل الصفحة..." })}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="h-[1px] w-8 bg-primary/20" />
-                    <span className="text-primary font-black text-xs tabular-nums bg-primary/10 px-3 py-1 rounded-full">
-                      {ayah.numberInSurah}
-                    </span>
-                  </div>
-                </div>
-                {/* Arabic original — always shown */}
-                <p className="dhikr-text text-4xl leading-[1.8] md:leading-[2] text-foreground font-medium text-right" dir="rtl">
-                  {ayah.text ? cleanBismillah(ayah.text) : ""}
-                </p>
-                {/* Translation — shown for non-Arabic languages */}
-                 {!isArabic(i18n.language) && ayah.translatedText && (
-                   <p 
-                     className={cn("text-muted-foreground text-lg leading-relaxed border-t border-border/30 pt-4", isRTL(i18n.language) ? "text-right" : "text-left")} 
-                     dir={getTextDirection(i18n.language)}
-                   >
-                     {ayah.translatedText}
-                   </p>
-                 )}
-                
-                {selectedTafsir !== "none" && (
-                  <div className="pt-6 mt-6 border-t border-primary/5 -mx-6 px-6 space-y-4">
-                    {(selectedTafsir === "muyassar" || selectedTafsir === "both") && tafsirMuyassar[ayah.numberInSurah - 1] && (
-                      <div className="bg-amber-500/5 p-4 rounded-2xl text-right border border-amber-500/10" dir="rtl">
-                        <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">
-                          {t("quran.tafsir_muyassar")}
-                        </h4>
-                        <TranslatedText
-                          text={tafsirMuyassar[ayah.numberInSurah - 1].text}
-                          keepArabic={false}
-                          className="text-muted-foreground text-sm leading-relaxed"
-                        />
+                ) : (
+                  <div className="space-y-4">
+                    {renderPageContent()}
+                    
+                    {/* Bottom page number indicator (Quran style) */}
+                    <div className="pt-8 flex justify-center">
+                      <div className="relative inline-flex items-center justify-center w-12 h-12 border border-amber-600/20 rounded-full bg-amber-50/30 select-none">
+                        <span className="text-xs font-bold text-amber-900/70 dark:text-amber-400/70 font-mono">{currentPage}</span>
                       </div>
-                    )}
-                    {(selectedTafsir === "jalalayn" || selectedTafsir === "both") && tafsirJalalayn[ayah.numberInSurah - 1] && (
-                      <div className="bg-primary/5 p-4 rounded-2xl text-right border border-primary/10" dir="rtl">
-                        <h4 className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1.5">
-                          {t("quran.tafsir_jalalayn")}
-                        </h4>
-                        <TranslatedText
-                          text={tafsirJalalayn[ayah.numberInSurah - 1].text}
-                          keepArabic={false}
-                          className="text-muted-foreground text-sm leading-relaxed"
-                        />
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )}
               </CardContent>
             </Card>
-          );
-        })}
-      </div>
 
+            {/* Page Slider control */}
+            <div className="bg-card/50 p-4 rounded-3xl border border-primary/5 backdrop-blur-sm space-y-2">
+              <div className="flex justify-between text-[10px] text-muted-foreground font-bold">
+                <span>{t("quran.page", { defaultValue: "صفحة" })} 1</span>
+                <span>{t("quran.page", { defaultValue: "صفحة" })} 604</span>
+              </div>
+              <input 
+                type="range" 
+                min={1} 
+                max={604} 
+                value={currentPage} 
+                onChange={(e) => setCurrentPage(parseInt(e.target.value, 10))}
+                className="w-full h-1.5 bg-primary/10 rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Dialogs and shared layouts */}
         <QuranSearch
           isOpen={isSearchOpen}
           onClose={() => setIsSearchOpen(false)}
@@ -731,10 +1115,126 @@ export default function Quran() {
           </Dialog>
         )}
 
+        {/* Dialog for Selected Page Ayah (in Page View) */}
+        {selectedPageAyah && (
+          <Dialog open={true} onOpenChange={() => setSelectedPageAyah(null)}>
+            <DialogContent className="max-w-xl rounded-[2rem] p-6 gap-4 bg-card/95 backdrop-blur-md border-primary/10 max-h-[85vh] overflow-y-auto">
+              <DialogHeader className="text-start border-b border-primary/5 pb-3">
+                <DialogTitle className="text-xl font-bold font-heading text-primary flex items-center justify-between">
+                  <span>
+                    {i18n.language === 'ar' ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName} — {t("quran.ayah", { defaultValue: "آية" })} {selectedPageAyah.numberInSurah}
+                  </span>
+                  <span className="text-xs text-muted-foreground bg-primary/5 px-2.5 py-1 rounded-full font-medium">
+                    {t("quran.page", { defaultValue: "صفحة" })} {selectedPageAyah.page}
+                  </span>
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="space-y-4 pt-2">
+                {/* Arabic text */}
+                <div className="bg-amber-500/5 p-5 rounded-2xl text-center border border-amber-500/10" dir="rtl">
+                  <p className="dhikr-text text-3xl leading-[1.8] text-amber-955 dark:text-amber-100 font-medium select-all">
+                    {cleanBismillah(selectedPageAyah.text)}
+                  </p>
+                </div>
+
+                {/* Play control for this specific ayah */}
+                <div className="flex justify-center py-2">
+                  <Button
+                    onClick={() => {
+                      if (selectedPageAyahIndex !== null) {
+                        playAyah(selectedPageAyah, selectedPageAyahIndex);
+                      }
+                    }}
+                    className="rounded-full px-6 py-5 gap-2 bg-primary text-white hover:bg-primary/95 shadow-md text-sm font-medium"
+                  >
+                    {((selectedQari.type === "ayah" && activeAyahIndex === selectedPageAyahIndex && isPlaying) ||
+                      (selectedQari.type === "surah" && playingSingleAyahId === selectedPageAyah.number && isPlaying)) ? (
+                      <>
+                        <Pause className="w-4 h-4" />
+                        <span>{t("common.pause", { defaultValue: "إيقاف مؤقت" })}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 ml-0.5" />
+                        <span>{t("common.play", { defaultValue: "سماع الآية" })}</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Translation */}
+                {selectedPageAyah.translatedText && !isArabic(i18n.language) && (
+                  <div 
+                    className={cn("bg-muted/30 p-4 rounded-2xl", isRTL(i18n.language) ? "text-right" : "text-left")} 
+                    dir={getTextDirection(i18n.language)}
+                  >
+                    <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-1.5">
+                      {t("quran.translation", { defaultValue: "الترجمة" })}
+                    </h4>
+                    <p className="text-sm text-foreground leading-relaxed">
+                      {selectedPageAyah.translatedText}
+                    </p>
+                  </div>
+                )}
+
+                {/* Tafsir Muyassar */}
+                {selectedPageAyah.tafsirText && (
+                  <div className="border border-amber-500/10 bg-amber-500/5 p-4 rounded-2xl text-right" dir="rtl">
+                    <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_muyassar")}</h4>
+                    <p className="text-sm text-amber-955/80 dark:text-amber-100 leading-relaxed font-sans">{selectedPageAyah.tafsirText}</p>
+                  </div>
+                )}
+
+                {/* Bottom actions */}
+                <div className="flex justify-end gap-2 pt-2 border-t border-primary/5">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const currentSurahObj = surahs.find(s => s.number === selectedPageAyah.surah.number) || {
+                        number: selectedPageAyah.surah.number,
+                        name: selectedPageAyah.surah.name
+                      };
+                      toggleBookmark(selectedPageAyah, currentSurahObj as Surah);
+                    }}
+                    className="rounded-xl gap-2 text-xs"
+                  >
+                    {bookmarks.some(b => b.surahNumber === selectedPageAyah.surah.number && b.ayahNumber === selectedPageAyah.numberInSurah) ? (
+                      <>
+                        <BookmarkCheck className="w-4 h-4 text-emerald-600" />
+                        <span>{t("quran.bookmarked", { defaultValue: "محفوظة" })}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Bookmark className="w-4 h-4" />
+                        <span>{t("quran.bookmark", { defaultValue: "حفظ علامة" })}</span>
+                      </>
+                    )}
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const textToCopy = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${selectedPageAyah.tafsirText || ""}`;
+                      navigator.clipboard.writeText(textToCopy);
+                      toast({
+                        description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
+                      });
+                    }}
+                    className="rounded-xl gap-2 text-xs"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>{t("common.copy", { defaultValue: "نسخ الآية" })}</span>
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+
         {/* Floating bottom audio player */}
         <div className={cn(
           "fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-4 right-4 z-40 bg-card/90 backdrop-blur-md border border-primary/10 rounded-[2.5rem] shadow-xl p-4 md:p-5 flex flex-col gap-3 animate-in slide-in-from-bottom duration-300",
-          // On desktop, center relative to the main content area (accounting for the 64-width sidebar)
           rtl 
             ? "md:left-[calc(50%-8rem)] md:right-auto md:-translate-x-1/2 md:w-[calc(100vw-16rem-2rem)] md:max-w-3xl"
             : "md:left-[calc(50%+8rem)] md:right-auto md:-translate-x-1/2 md:w-[calc(100vw-16rem-2rem)] md:max-w-3xl"
@@ -840,7 +1340,7 @@ export default function Quran() {
             </div>
           </div>
 
-          {/* Configuration Switches Row (only for ayah-by-ayah mode) */}
+          {/* Configuration Switches Row */}
           {selectedQari.type === "ayah" && (
             <div className="flex items-center justify-center md:justify-end gap-6 pt-2 border-t border-primary/5">
               <div className="flex items-center gap-2">
@@ -895,6 +1395,7 @@ export default function Quran() {
       <div className="text-center space-y-3 pt-6">
         <h2 className="text-4xl font-heading font-bold text-primary">{t("nav.quran")}</h2>
         <p className="text-muted-foreground text-lg">{t("quran.subtitle")}</p>
+        <div className="pt-2">{renderViewSwitcher()}</div>
       </div>
 
       <div className="relative group max-w-xl mx-auto">
@@ -914,7 +1415,7 @@ export default function Quran() {
           className="max-w-xl mx-auto"
         >
           <Card 
-            onClick={() => fetchSurahAyahs(lastRead)}
+            onClick={() => handleSurahClick(lastRead)}
             className="cursor-pointer border-none shadow-md bg-primary text-primary-foreground overflow-hidden relative group"
           >
             <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none group-hover:scale-110 transition-transform">
@@ -994,7 +1495,7 @@ export default function Quran() {
               key={surah.number}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => fetchSurahAyahs(surah.number)}
+              onClick={() => handleSurahClick(surah.number)}
               className="cursor-pointer"
             >
               <Card className="border-none shadow-sm bg-card/60 backdrop-blur-sm hover:bg-primary/5 transition-all group overflow-hidden h-full">

@@ -17,6 +17,21 @@ export const RECITERS: Reciter[] = [
     surahBaseUrl: "https://server13.mp3quran.net/husr/",
   },
   {
+    id: "husary_warsh",
+    name: "محمود خليل الحصري (ورش عن نافع)",
+    englishName: "Mahmoud Khalil Al-Husary (Warsh)",
+    type: "surah",
+    surahBaseUrl: "https://server13.mp3quran.net/husr/Rewayat-Warsh-A-n-Nafi/",
+  },
+  {
+    id: "akhdar",
+    name: "إبراهيم الأخضر",
+    englishName: "Ibrahim Al-Akhdar",
+    type: "ayah",
+    audioEditionId: "ar.ibrahimakhbar",
+    surahBaseUrl: "https://server6.mp3quran.net/akdr/",
+  },
+  {
     id: "ghamdi",
     name: "سعد الغامدي",
     englishName: "Saad Al-Ghamdi",
@@ -49,8 +64,8 @@ export const RECITERS: Reciter[] = [
   },
   {
     id: "okasha",
-    name: "عكاشه كميني",
-    englishName: "Okasha Kameny",
+    name: "عكاشة كميني (البزي عن ابن كثير)",
+    englishName: "Okasha Kameny (Al-Bizi)",
     type: "surah",
     surahBaseUrl: "https://server16.mp3quran.net/okasha/Rewayat-Albizi-A-n-Ibn-Katheer/",
   },

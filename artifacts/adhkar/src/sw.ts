@@ -68,6 +68,23 @@ registerRoute(
   })
 );
 
+// Cache Quran and Adhkar audio files for offline listening
+registerRoute(
+  /.*(?:everyayah\.com|raw\.githubusercontent\.com\/rn0x\/Adhkar-json|mp3quran\.net).*\.(?:mp3|wav)/i,
+  new CacheFirst({
+    cacheName: "audio-cache",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 150,
+        maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
+      }),
+    ],
+  })
+);
+
 // Handle notification click to open or focus the app window
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();

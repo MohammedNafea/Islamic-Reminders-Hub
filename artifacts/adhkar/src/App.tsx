@@ -78,6 +78,8 @@ function Router() {
   );
 }
 
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -87,6 +89,7 @@ function App() {
             <Router />
           </WouterRouter>
           <Toaster />
+          <PWAInstallPrompt />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>

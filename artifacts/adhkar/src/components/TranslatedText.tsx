@@ -84,8 +84,7 @@ export function TranslatedText({
     return (
       <TextTag
         className={cn(
-          isDhikrText ? "dhikr-text" : "font-sans text-foreground",
-          "text-right",
+          isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
           arabicClassName,
           className
         )}
@@ -103,8 +102,7 @@ export function TranslatedText({
         <ContainerTag className={cn("space-y-2", className)}>
           <TextTag
             className={cn(
-              isDhikrText ? "dhikr-text" : "font-sans text-foreground",
-              "text-right",
+              isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
               arabicClassName
             )}
             dir="rtl"
@@ -114,7 +112,7 @@ export function TranslatedText({
           <Skeleton
             className={cn(
               "h-4 w-3/4 mt-2",
-              isTargetRTL ? "ml-auto" : "mr-auto",
+              isDhikrText ? "mx-auto" : (isTargetRTL ? "ml-auto" : "mr-auto"),
               translationClassName
             )}
           />
@@ -140,8 +138,8 @@ export function TranslatedText({
         {/* Arabic original on top */}
         <TextTag
           className={cn(
-            isDhikrText ? "dhikr-text" : "font-sans text-foreground",
-            "text-right leading-relaxed",
+            isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
+            "leading-relaxed",
             arabicClassName
           )}
           dir="rtl"
@@ -153,7 +151,7 @@ export function TranslatedText({
           <TextTag
             className={cn(
               "text-muted-foreground text-base leading-relaxed border-t border-border/30 pt-3 mt-3",
-              alignClass,
+              isDhikrText ? "text-center w-full block" : alignClass,
               translationClassName
             )}
             dir={dir}

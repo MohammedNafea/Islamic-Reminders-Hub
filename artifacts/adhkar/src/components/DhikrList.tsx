@@ -136,6 +136,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         return "Fares_Abbad_64kbps";
       case "shuraim":
         return "Shuraym_128kbps";
+      case "akhdar":
+        return "Ibrahim_Akhdar_32kbps";
       case "husary":
       default:
         return "Husary_128kbps";

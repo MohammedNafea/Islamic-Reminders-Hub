@@ -204,6 +204,21 @@
     word-break: break-word;
     overflow-wrap: break-word;
   }
+  .quran-page-text {
+    font-family: "Amiri", "Noto Naskh Arabic", Georgia, serif;
+    font-size: 1.65rem;
+    line-height: 2.5;
+    text-align: justify;
+    text-align-last: center;
+    direction: rtl;
+    text-shadow: 0 0.5px 0.5px rgba(0,0,0,0.02);
+  }
+  @media (max-width: 768px) {
+    .quran-page-text {
+      font-size: 1.3rem;
+      line-height: 2.2;
+    }
+  }
   
   /* Custom scaling for Arabic language root sizes to align with English layout balance while maintaining legibility */
   html[lang="ar"].text-sm {
