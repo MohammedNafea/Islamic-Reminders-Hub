@@ -214,7 +214,6 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
       286
     ]
   },
-
   "afia_body_hearing_sight": {
     "type": "dureihim",
     "filename": "82"
@@ -1981,5 +1980,629 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   "ya_hayyu": {
     "type": "dureihim",
     "filename": "88"
-  }
+  },
+  "dhikr_missing_75": {
+    "type": "dureihim",
+    "filename": "75"
+  },
+  "dhikr_missing_76": {
+    "type": "dureihim",
+    "filename": "76"
+  },
+  "dhikr_missing_77": {
+    "type": "dureihim",
+    "filename": "77"
+  },
+  "dhikr_missing_78": {
+    "type": "dureihim",
+    "filename": "78"
+  },
+  "dhikr_missing_80": {
+    "type": "dureihim",
+    "filename": "80"
+  },
+  "dhikr_missing_81": {
+    "type": "dureihim",
+    "filename": "81"
+  },
+  "dhikr_missing_82": {
+    "type": "dureihim",
+    "filename": "82"
+  },
+  "dhikr_missing_83": {
+    "type": "dureihim",
+    "filename": "83"
+  },
+  "dhikr_missing_84": {
+    "type": "dureihim",
+    "filename": "84"
+  },
+  "dhikr_missing_86": {
+    "type": "dureihim",
+    "filename": "86"
+  },
+  "dhikr_missing_87": {
+    "type": "dureihim",
+    "filename": "87"
+  },
+  "dhikr_missing_88": {
+    "type": "dureihim",
+    "filename": "88"
+  },
+  "dhikr_missing_91": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_92": {
+    "type": "dureihim",
+    "filename": "92"
+  },
+  "dhikr_missing_93": {
+    "type": "dureihim",
+    "filename": "93"
+  },
+  "dhikr_missing_94": {
+    "type": "dureihim",
+    "filename": "94"
+  },
+  "dhikr_missing_95": {
+    "type": "dureihim",
+    "filename": "95"
+  },
+  "dhikr_missing_96": {
+    "type": "dureihim",
+    "filename": "96"
+  },
+  "dhikr_missing_97": {
+    "type": "dureihim",
+    "filename": "97"
+  },
+  "dhikr_missing_98": {
+    "type": "dureihim",
+    "filename": "98"
+  },
+  "dhikr_missing_99": {
+    "type": "dureihim",
+    "filename": "99"
+  },
+  "dhikr_missing_100": {
+    "type": "dureihim",
+    "filename": "100"
+  },
+  "dhikr_missing_101": {
+    "type": "dureihim",
+    "filename": "101"
+  },
+  "dhikr_missing_102": {
+    "type": "dureihim",
+    "filename": "102"
+  },
+  "dhikr_missing_103": {
+    "type": "dureihim",
+    "filename": "103"
+  },
+  "dhikr_missing_104": {
+    "type": "dureihim",
+    "filename": "104"
+  },
+  "dhikr_missing_105": {
+    "type": "dureihim",
+    "filename": "105"
+  },
+  "dhikr_missing_106": {
+    "type": "dureihim",
+    "filename": "106"
+  },
+  "dhikr_missing_107": {
+    "type": "dureihim",
+    "filename": "107"
+  },
+  "dhikr_missing_108": {
+    "type": "dureihim",
+    "filename": "108"
+  },
+  "dhikr_missing_109": {
+    "type": "dureihim",
+    "filename": "109"
+  },
+  "dhikr_missing_110": {
+    "type": "dureihim",
+    "filename": "110"
+  },
+  "dhikr_missing_111": {
+    "type": "dureihim",
+    "filename": "111"
+  },
+  "dhikr_missing_1": {
+    "type": "dureihim",
+    "filename": "1"
+  },
+  "dhikr_missing_2": {
+    "type": "dureihim",
+    "filename": "2"
+  },
+  "dhikr_missing_3": {
+    "type": "dureihim",
+    "filename": "3"
+  },
+  "dhikr_missing_4": {
+    "type": "dureihim",
+    "filename": "4"
+  },
+  "dhikr_missing_10": {
+    "type": "dureihim",
+    "filename": "10"
+  },
+  "dhikr_missing_13": {
+    "type": "dureihim",
+    "filename": "13"
+  },
+  "dhikr_missing_14": {
+    "type": "dureihim",
+    "filename": "14"
+  },
+  "dhikr_missing_15": {
+    "type": "dureihim",
+    "filename": "15"
+  },
+  "dhikr_missing_16": {
+    "type": "dureihim",
+    "filename": "16"
+  },
+  "dhikr_missing_17": {
+    "type": "dureihim",
+    "filename": "17"
+  },
+  "dhikr_missing_18": {
+    "type": "dureihim",
+    "filename": "18"
+  },
+  "dhikr_missing_20": {
+    "type": "dureihim",
+    "filename": "20"
+  },
+  "dhikr_missing_21": {
+    "type": "dureihim",
+    "filename": "21"
+  },
+  "dhikr_missing_23": {
+    "type": "dureihim",
+    "filename": "23"
+  },
+  "dhikr_missing_25": {
+    "type": "dureihim",
+    "filename": "25"
+  },
+  "dhikr_missing_5": {
+    "type": "dureihim",
+    "filename": "5"
+  },
+  "dhikr_missing_6": {
+    "type": "dureihim",
+    "filename": "6"
+  },
+  "dhikr_missing_7": {
+    "type": "dureihim",
+    "filename": "7"
+  },
+  "dhikr_missing_8": {
+    "type": "dureihim",
+    "filename": "8"
+  },
+  "dhikr_missing_27": {
+    "type": "dureihim",
+    "filename": "27"
+  },
+  "dhikr_missing_28": {
+    "type": "dureihim",
+    "filename": "28"
+  },
+  "dhikr_missing_29": {
+    "type": "dureihim",
+    "filename": "29"
+  },
+  "dhikr_missing_30": {
+    "type": "dureihim",
+    "filename": "30"
+  },
+  "dhikr_missing_31": {
+    "type": "dureihim",
+    "filename": "31"
+  },
+  "dhikr_missing_32": {
+    "type": "dureihim",
+    "filename": "32"
+  },
+  "dhikr_missing_33": {
+    "type": "dureihim",
+    "filename": "33"
+  },
+  "dhikr_missing_34": {
+    "type": "dureihim",
+    "filename": "34"
+  },
+  "dhikr_missing_35": {
+    "type": "dureihim",
+    "filename": "35"
+  },
+  "dhikr_missing_36": {
+    "type": "dureihim",
+    "filename": "36"
+  },
+  "dhikr_missing_37": {
+    "type": "dureihim",
+    "filename": "37"
+  },
+  "dhikr_missing_38": {
+    "type": "dureihim",
+    "filename": "38"
+  },
+  "dhikr_missing_39": {
+    "type": "dureihim",
+    "filename": "39"
+  },
+  "dhikr_missing_40": {
+    "type": "dureihim",
+    "filename": "40"
+  },
+  "dhikr_missing_42": {
+    "type": "dureihim",
+    "filename": "42"
+  },
+  "dhikr_missing_43": {
+    "type": "dureihim",
+    "filename": "43"
+  },
+  "dhikr_missing_44": {
+    "type": "dureihim",
+    "filename": "44"
+  },
+  "dhikr_missing_46": {
+    "type": "dureihim",
+    "filename": "46"
+  },
+  "dhikr_missing_48": {
+    "type": "dureihim",
+    "filename": "48"
+  },
+  "dhikr_missing_49": {
+    "type": "dureihim",
+    "filename": "49"
+  },
+  "dhikr_missing_50": {
+    "type": "dureihim",
+    "filename": "50"
+  },
+  "dhikr_missing_52": {
+    "type": "dureihim",
+    "filename": "52"
+  },
+  "dhikr_missing_53": {
+    "type": "dureihim",
+    "filename": "53"
+  },
+  "dhikr_missing_55": {
+    "type": "dureihim",
+    "filename": "55"
+  },
+  "dhikr_missing_56": {
+    "type": "dureihim",
+    "filename": "56"
+  },
+  "dhikr_missing_57": {
+    "type": "dureihim",
+    "filename": "57"
+  },
+  "dhikr_missing_58": {
+    "type": "dureihim",
+    "filename": "58"
+  },
+  "dhikr_missing_59": {
+    "type": "dureihim",
+    "filename": "59"
+  },
+  "dhikr_missing_60": {
+    "type": "dureihim",
+    "filename": "60"
+  },
+  "dhikr_missing_61": {
+    "type": "dureihim",
+    "filename": "61"
+  },
+  "dhikr_missing_62": {
+    "type": "dureihim",
+    "filename": "62"
+  },
+  "dhikr_missing_63": {
+    "type": "dureihim",
+    "filename": "63"
+  },
+  "dhikr_missing_64": {
+    "type": "dureihim",
+    "filename": "64"
+  },
+  "dhikr_missing_65": {
+    "type": "dureihim",
+    "filename": "65"
+  },
+  "dhikr_missing_67": {
+    "type": "dureihim",
+    "filename": "67"
+  },
+  "dhikr_missing_68": {
+    "type": "dureihim",
+    "filename": "68"
+  },
+  "dhikr_missing_69": {
+    "type": "dureihim",
+    "filename": "69"
+  },
+  "dhikr_missing_70": {
+    "type": "dureihim",
+    "filename": "70"
+  },
+  "dhikr_missing_72": {
+    "type": "dureihim",
+    "filename": "72"
+  },
+  "dhikr_missing_73": {
+    "type": "dureihim",
+    "filename": "73"
+  },
+  "dhikr_missing_112": {
+    "type": "dureihim",
+    "filename": "112"
+  },
+  "dhikr_missing_113": {
+    "type": "dureihim",
+    "filename": "113"
+  },
+  "dhikr_missing_116": {
+    "type": "dureihim",
+    "filename": "116"
+  },
+  "dhikr_missing_118": {
+    "type": "dureihim",
+    "filename": "118"
+  },
+  "dhikr_missing_121": {
+    "type": "dureihim",
+    "filename": "121"
+  },
+  "dhikr_missing_122": {
+    "type": "dureihim",
+    "filename": "122"
+  },
+  "dhikr_missing_130": {
+    "type": "dureihim",
+    "filename": "130"
+  },
+  "dhikr_missing_134": {
+    "type": "dureihim",
+    "filename": "134"
+  },
+  "dhikr_missing_137": {
+    "type": "dureihim",
+    "filename": "137"
+  },
+  "dhikr_missing_138": {
+    "type": "dureihim",
+    "filename": "138"
+  },
+  "dhikr_missing_147": {
+    "type": "dureihim",
+    "filename": "147"
+  },
+  "dhikr_missing_148": {
+    "type": "dureihim",
+    "filename": "148"
+  },
+  "dhikr_missing_151": {
+    "type": "dureihim",
+    "filename": "151"
+  },
+  "dhikr_missing_152": {
+    "type": "dureihim",
+    "filename": "152"
+  },
+  "dhikr_missing_ar_7esn_AlMoslem_by_Doors_053": {
+    "type": "dureihim",
+    "filename": "ar_7esn_AlMoslem_by_Doors_053"
+  },
+  "dhikr_missing_162": {
+    "type": "dureihim",
+    "filename": "162"
+  },
+  "dhikr_missing_163": {
+    "type": "dureihim",
+    "filename": "163"
+  },
+  "dhikr_missing_167": {
+    "type": "dureihim",
+    "filename": "167"
+  },
+  "dhikr_missing_168": {
+    "type": "dureihim",
+    "filename": "168"
+  },
+  "dhikr_missing_172": {
+    "type": "dureihim",
+    "filename": "172"
+  },
+  "dhikr_missing_173": {
+    "type": "dureihim",
+    "filename": "173"
+  },
+  "dhikr_missing_175": {
+    "type": "dureihim",
+    "filename": "175"
+  },
+  "dhikr_missing_176": {
+    "type": "dureihim",
+    "filename": "176"
+  },
+  "dhikr_missing_178": {
+    "type": "dureihim",
+    "filename": "178"
+  },
+  "dhikr_missing_179": {
+    "type": "dureihim",
+    "filename": "179"
+  },
+  "dhikr_missing_180": {
+    "type": "dureihim",
+    "filename": "180"
+  },
+  "dhikr_missing_181": {
+    "type": "dureihim",
+    "filename": "181"
+  },
+  "dhikr_missing_182": {
+    "type": "dureihim",
+    "filename": "182"
+  },
+  "dhikr_missing_183": {
+    "type": "dureihim",
+    "filename": "183"
+  },
+  "dhikr_missing_184": {
+    "type": "dureihim",
+    "filename": "184"
+  },
+  "dhikr_missing_188": {
+    "type": "dureihim",
+    "filename": "188"
+  },
+  "dhikr_missing_189": {
+    "type": "dureihim",
+    "filename": "189"
+  },
+  "dhikr_missing_190": {
+    "type": "dureihim",
+    "filename": "190"
+  },
+  "dhikr_missing_192": {
+    "type": "dureihim",
+    "filename": "192"
+  },
+  "dhikr_missing_193": {
+    "type": "dureihim",
+    "filename": "193"
+  },
+  "dhikr_missing_194": {
+    "type": "dureihim",
+    "filename": "194"
+  },
+  "dhikr_missing_196": {
+    "type": "dureihim",
+    "filename": "196"
+  },
+  "dhikr_missing_206": {
+    "type": "dureihim",
+    "filename": "206"
+  },
+  "dhikr_missing_207": {
+    "type": "dureihim",
+    "filename": "207"
+  },
+  "dhikr_missing_209": {
+    "type": "dureihim",
+    "filename": "209"
+  },
+  "dhikr_missing_211": {
+    "type": "dureihim",
+    "filename": "211"
+  },
+  "dhikr_missing_212": {
+    "type": "dureihim",
+    "filename": "212"
+  },
+  "dhikr_missing_213": {
+    "type": "dureihim",
+    "filename": "213"
+  },
+  "dhikr_missing_215": {
+    "type": "dureihim",
+    "filename": "215"
+  },
+  "dhikr_missing_216": {
+    "type": "dureihim",
+    "filename": "216"
+  },
+  "dhikr_missing_217": {
+    "type": "dureihim",
+    "filename": "217"
+  },
+  "dhikr_missing_218": {
+    "type": "dureihim",
+    "filename": "218"
+  },
+  "dhikr_missing_221": {
+    "type": "dureihim",
+    "filename": "221"
+  },
+  "dhikr_missing_236": {
+    "type": "dureihim",
+    "filename": "236"
+  },
+  "dhikr_missing_237": {
+    "type": "dureihim",
+    "filename": "237"
+  },
+  "dhikr_missing_243": {
+    "type": "dureihim",
+    "filename": "243"
+  },
+  "dhikr_missing_245": {
+    "type": "dureihim",
+    "filename": "245"
+  },
+  "dhikr_missing_246": {
+    "type": "dureihim",
+    "filename": "246"
+  },
+  "dhikr_missing_248": {
+    "type": "dureihim",
+    "filename": "248"
+  },
+  "dhikr_missing_250": {
+    "type": "dureihim",
+    "filename": "250"
+  },
+  "dhikr_missing_254": {
+    "type": "dureihim",
+    "filename": "254"
+  },
+  "dhikr_missing_255": {
+    "type": "dureihim",
+    "filename": "255"
+  },
+  "dhikr_missing_256": {
+    "type": "dureihim",
+    "filename": "256"
+  },
+  "dhikr_missing_257": {
+    "type": "dureihim",
+    "filename": "257"
+  },
+  "dhikr_missing_259": {
+    "type": "dureihim",
+    "filename": "259"
+  },
+  "dhikr_missing_261": {
+    "type": "dureihim",
+    "filename": "261"
+  },
+  "dhikr_missing_262": {
+    "type": "dureihim",
+    "filename": "262"
+  },
+  "dhikr_missing_264": {
+    "type": "dureihim",
+    "filename": "264"
+  },
+  "dhikr_missing_265": {
+    "type": "dureihim",
+    "filename": "265"
+  },
 };

@@ -34,7 +34,10 @@ export default {
     "distress_illness": "Distress & Illness",
     "arafah_hajj": "Arafah Day & Hajj",
     "quran_duas": "Quranic Duas",
-    "prophetic_duas": "Prophetic Duas"
+    "prophetic_duas": "Prophetic Duas",
+    "daily_life": "Social & Daily Life",
+    "nature": "Nature & Cosmology",
+    "occasions": "Eid & Special Occasions"
   },
   "search": {
     "title": "Unified Search",

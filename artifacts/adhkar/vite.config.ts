@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { VitePWA } from "vite-plugin-pwa";
+import legacy from "@vitejs/plugin-legacy";
 
 const port = Number(process.env.PORT) || 5000;
 const basePath = process.env.BASE_PATH || "/";
@@ -12,6 +13,11 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    legacy({
+      targets: ["defaults", "not IE 11", "Android >= 5", "Chrome >= 50", "safari >= 10"],
+      renderLegacyChunks: true,
+      modernPolyfills: true,
+    }),
     VitePWA({
       strategies: "injectManifest",
       srcDir: "src",
@@ -19,7 +25,7 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.png", "apple-touch-icon.png", "icon-512.png", "data/library_content.json", "data/adhkar.ts"],
       injectManifest: {
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff2,mp3}"],
       },
       manifest: {

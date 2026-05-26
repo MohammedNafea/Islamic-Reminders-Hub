@@ -19,7 +19,7 @@
     <!-- Request ignore battery optimizations to keep alerts active -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
     <application
-        android:label="adhkar_app"
+        android:label="@string/app_name"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

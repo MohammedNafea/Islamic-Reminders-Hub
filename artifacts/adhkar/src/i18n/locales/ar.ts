@@ -34,7 +34,10 @@ export default {
     "distress_illness": "الكرب والمرض والاستجابة",
     "arafah_hajj": "يوم عرفة والحج",
     "quran_duas": "الأدعية من القرآن الكريم",
-    "prophetic_duas": "الأدعية النبوية"
+    "prophetic_duas": "الأدعية النبوية",
+    "daily_life": "المعاملات والحياة اليومية",
+    "nature": "الظواهر الطبيعية والكونية",
+    "occasions": "الأعياد والمناسبات"
   },
   "favorites": {
     "subtitle": "قائمة الأذكار والأحكام التي قمت بحفظها",
