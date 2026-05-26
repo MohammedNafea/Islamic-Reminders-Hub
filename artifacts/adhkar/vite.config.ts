@@ -62,6 +62,8 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
+    target: ["es2015", "chrome60", "firefox60", "safari11", "edge18", "ios11"],
+    cssTarget: ["chrome60", "firefox60", "safari11", "edge18", "ios11"],
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
     chunkSizeWarningLimit: 1000,

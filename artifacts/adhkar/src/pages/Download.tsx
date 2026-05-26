@@ -8,7 +8,7 @@ import { TranslatedText } from "@/components/TranslatedText";
 import { 
   Smartphone, Download, Share2, PlusSquare, 
   WifiOff, BellRing, Sparkles, CheckCircle2, Activity,
-  BookOpen, Compass, Heart, Settings, BookMarked, Landmark, Home
+  BookOpen, Compass, BookMarked, Home
 } from "lucide-react";
 
 export default function DownloadPage() {

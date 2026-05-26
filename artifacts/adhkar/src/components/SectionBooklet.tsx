@@ -6,7 +6,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { TranslatedText } from "@/components/TranslatedText";
 import { 
-  BookOpen, ChevronLeft, ChevronRight, HelpCircle, Sparkles, BookMarked 
+  BookOpen, ChevronLeft, ChevronRight, Sparkles, BookMarked 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
