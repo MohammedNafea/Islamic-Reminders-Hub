@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Coins, Banknote, ShoppingBag, Calculator, Info, AlertCircle, CheckCircle2, BookOpen, RefreshCw, WifiOff } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, safeFormatTime, safeFormatNumber } from "@/lib/utils";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 import { localDB } from "@/lib/db";
@@ -485,7 +485,7 @@ export default function ZakatCalculator() {
                   <span>
                     {i18n.language === "ar" ? "آخر تحديث مباشر: " : "Last Live Update: "}
                     <span className="font-semibold tabular-nums">
-                      {new Date(prices.updatedAt).toLocaleTimeString(i18n.language, { hour: '2-digit', minute: '2-digit' })}
+                      {safeFormatTime(new Date(prices.updatedAt), i18n.language, { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </span>
                 </div>
@@ -519,7 +519,7 @@ export default function ZakatCalculator() {
                   />
                 </p>
                 <h3 className="text-3xl font-bold tabular-nums">
-                  {totalAssets.toLocaleString()} <span className="text-xl font-medium">{currencySymbol}</span>
+                  {safeFormatNumber(totalAssets, i18n.language)} <span className="text-xl font-medium">{currencySymbol}</span>
                 </h3>
               </div>
 
@@ -537,7 +537,7 @@ export default function ZakatCalculator() {
                   "text-5xl font-black tabular-nums",
                   !isEligible && "text-muted-foreground"
                 )}>
-                  {zakatAmount.toLocaleString()} <span className="text-2xl font-bold">{currencySymbol}</span>
+                  {safeFormatNumber(zakatAmount, i18n.language)} <span className="text-2xl font-bold">{currencySymbol}</span>
                 </h3>
               </div>
 

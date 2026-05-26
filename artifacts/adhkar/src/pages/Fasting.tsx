@@ -6,6 +6,7 @@ import { useMemo } from "react";
 import { Calendar, Clock, Info } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
+import { cn, safeFormatDate } from "@/lib/utils";
 
 export default function Fasting() {
   const { t, i18n } = useTranslation();
@@ -125,7 +126,7 @@ export default function Fasting() {
                   <div className="flex flex-col md:flex-row gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10">
                     <div className="flex items-center gap-3 text-sm font-bold text-primary">
                       <Calendar className="w-5 h-5 opacity-60" />
-                      <span>{day.nextDate.toLocaleDateString(i18n.language, { weekday: 'long', day: 'numeric', month: 'long' })}</span>
+                      <span>{safeFormatDate(day.nextDate, i18n.language, { weekday: 'long', day: 'numeric', month: 'long' })}</span>
                     </div>
                     <div className="hidden md:block w-px h-4 bg-primary/20" />
                     <div className="flex items-center gap-3 text-sm font-bold text-muted-foreground">
@@ -165,5 +166,3 @@ export default function Fasting() {
     </div>
   );
 }
-
-import { cn } from "@/lib/utils";

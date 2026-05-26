@@ -165,13 +165,14 @@ export default function DailySupplications() {
             inline
           />
         </h2>
-        <p className="text-muted-foreground text-sm">
+        <div className="text-muted-foreground text-sm text-center">
           <TranslatedText
             text="أدعية المسلم وأذكاره اليومية في مختلف أحواله ومواقفه"
             staticTranslation={i18n.language === "ar" ? "أدعية المسلم وأذكاره اليومية في مختلف أحواله ومواقفه" : "A Muslim's daily supplications for all events and occasions"}
             keepArabic={false}
+            inline
           />
-        </p>
+        </div>
       </div>
 
       {/* Tabs list (Horizontal scroll on mobile) */}

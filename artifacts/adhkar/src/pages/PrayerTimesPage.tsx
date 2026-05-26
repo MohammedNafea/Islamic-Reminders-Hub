@@ -6,7 +6,7 @@ import { toHijri, formatHijriDate, isFastingDay, isHijamaDay } from "@/lib/hijri
 import { getSettings, saveSettings } from "@/lib/store";
 import { MapPin, RefreshCw, ChevronLeft, ChevronRight, Info, Calendar as CalendarIcon, Clock, Music, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, safeFormatDate } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { QiblaCompass } from "@/components/QiblaCompass";
@@ -144,7 +144,7 @@ export default function PrayerTimesPage() {
               </p>
               <p className="text-3xl font-serif font-bold drop-shadow-sm">{formatHijriDate(todayHijri, i18n.language)}</p>
               <p className="text-primary-foreground/90 text-sm font-medium mt-1">
-                {today.toLocaleDateString(i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                {safeFormatDate(today, i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
               </p>
             </div>
             {city && (
@@ -323,7 +323,7 @@ export default function PrayerTimesPage() {
               </Button>
               <div className="text-center">
                 <p className="font-heading font-bold text-lg text-primary">
-                  {calDate.toLocaleDateString(i18n.language, { month: "long", year: "numeric" })}
+                  {safeFormatDate(calDate, i18n.language, { month: "long", year: "numeric" })}
                 </p>
               </div>
               <Button variant="ghost" size="icon" onClick={() => setCalDate(new Date(year, month + 1))} className="rounded-xl">
@@ -497,7 +497,7 @@ export default function PrayerTimesPage() {
                                   )}
                                 </span>
                                 <span className="text-[10px] text-muted-foreground">
-                                  {day} {d.toLocaleDateString(i18n.language, { month: 'short', weekday: 'long' })}
+                                  {day} {safeFormatDate(d, i18n.language, { month: 'short', weekday: 'long' })}
                                 </span>
                               </div>
                             </td>
@@ -648,7 +648,7 @@ export default function PrayerTimesPage() {
         <DialogContent className="rounded-3xl max-w-[340px] border-none shadow-2xl">
           <DialogHeader>
             <DialogTitle className="text-center font-heading text-xl text-primary">
-              {selectedDay?.toLocaleDateString(i18n.language, { weekday: 'long' })}
+              {safeFormatDate(selectedDay, i18n.language, { weekday: 'long' })}
             </DialogTitle>
           </DialogHeader>
           {selectedDay && (() => {
@@ -680,7 +680,7 @@ export default function PrayerTimesPage() {
                       />
                     </p>
                     <p className="font-bold text-lg">{selectedDay.getDate()}</p>
-                    <p className="text-[11px] font-medium text-muted-foreground">{selectedDay.toLocaleDateString(i18n.language, { month: 'long', year: 'numeric' })}</p>
+                    <p className="text-[11px] font-medium text-muted-foreground">{safeFormatDate(selectedDay, i18n.language, { month: 'long', year: 'numeric' })}</p>
                   </div>
                 </div>
 

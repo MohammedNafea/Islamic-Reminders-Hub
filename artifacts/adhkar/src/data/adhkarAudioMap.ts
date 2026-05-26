@@ -7,6 +7,88 @@ export interface AdhkarAudioConfig {
 }
 
 export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
+  "quran_dua_sidq": {
+    "type": "quran",
+    "surah": 17,
+    "ayahs": [
+      80
+    ]
+  },
+  "quran_dua_ilman": {
+    "type": "quran",
+    "surah": 20,
+    "ayahs": [
+      114
+    ]
+  },
+  "quran_dua_rabbana_taqabbal": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      127,
+      128
+    ]
+  },
+  "quran_dua_shifa": {
+    "type": "quran",
+    "surah": 21,
+    "ayahs": [
+      83
+    ]
+  },
+  "quran_dua_hukman": {
+    "type": "quran",
+    "surah": 26,
+    "ayahs": [
+      83,
+      84,
+      85
+    ]
+  },
+  "quran_dua_tawakul": {
+    "type": "quran",
+    "surah": 10,
+    "ayahs": [
+      85,
+      86
+    ]
+  },
+  "quran_dua_maghfirah": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      147
+    ]
+  },
+  "quran_dua_rahmah_parents": {
+    "type": "quran",
+    "surah": 17,
+    "ayahs": [
+      24
+    ]
+  },
+  "quran_dua_yusuf_tawafa": {
+    "type": "quran",
+    "surah": 12,
+    "ayahs": [
+      101
+    ]
+  },
+  "quran_dua_rabbana_atmam": {
+    "type": "quran",
+    "surah": 66,
+    "ayahs": [
+      8
+    ]
+  },
+  "quran_dua_la_tuakhizna": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      286
+    ]
+  },
+
   "afia_body_hearing_sight": {
     "type": "dureihim",
     "filename": "82"

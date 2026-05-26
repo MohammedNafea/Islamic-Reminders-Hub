@@ -100,6 +100,16 @@ export default function TrackerDashboard() {
     setKhatmahPlan(null);
   };
 
+  const getKhatmahDaysElapsed = () => {
+    if (!khatmahPlan || !khatmahPlan.startDate) return 0;
+    const start = new Date(khatmahPlan.startDate);
+    if (isNaN(start.getTime())) return 0;
+    return Math.max(0, Math.floor((Date.now() - start.getTime()) / (1000 * 60 * 60 * 24)));
+  };
+
+  const daysElapsed = getKhatmahDaysElapsed();
+  const daysLeft = khatmahPlan ? Math.max(0, khatmahPlan.targetDays - daysElapsed) : 0;
+
   return (
     <div className="animate-in fade-in duration-500 space-y-6 max-w-xl mx-auto pb-12">
       <div className="text-center space-y-2 pt-4">
@@ -282,8 +292,8 @@ export default function TrackerDashboard() {
                   </span>
                   <span>
                     {t("khatmah.days_left", { 
-                      days: Math.max(0, khatmahPlan.targetDays - Math.max(0, Math.floor((Date.now() - new Date(khatmahPlan.startDate).getTime()) / (1000 * 60 * 60 * 24)))), 
-                      defaultValue: `متبقي ${Math.max(0, khatmahPlan.targetDays - Math.max(0, Math.floor((Date.now() - new Date(khatmahPlan.startDate).getTime()) / (1000 * 60 * 60 * 24))))} يوم` 
+                      days: daysLeft, 
+                      defaultValue: `متبقي ${daysLeft} يوم` 
                     })}
                   </span>
                 </div>
@@ -291,7 +301,6 @@ export default function TrackerDashboard() {
 
               {/* Status Alert */}
               {(() => {
-                const daysElapsed = Math.max(0, Math.floor((Date.now() - new Date(khatmahPlan.startDate).getTime()) / (1000 * 60 * 60 * 24)));
                 const expectedPage = Math.min(604, Math.floor(daysElapsed * (604 / khatmahPlan.targetDays)));
                 const isOnTrack = khatmahPlan.currentPage >= expectedPage;
                 const behindDays = Math.ceil((expectedPage - khatmahPlan.currentPage) / (604 / khatmahPlan.targetDays));

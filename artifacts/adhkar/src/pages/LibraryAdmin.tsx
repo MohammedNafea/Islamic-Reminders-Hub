@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, FileText, Database, CheckCircle2, AlertCircle, Play } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, safeFormatDate, safeFormatTime } from "@/lib/utils";
 
 export default function LibraryAdmin() {
   const { t } = useTranslation();
@@ -26,7 +26,7 @@ export default function LibraryAdmin() {
         setStats({
           itemCount: data.length,
           categories,
-          lastUpdated: new Date().toLocaleString('ar-EG')
+          lastUpdated: safeFormatDate(new Date(), 'ar-EG', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })
         });
       });
   }, []);
@@ -106,7 +106,7 @@ export default function LibraryAdmin() {
             <div className="bg-black/90 rounded-xl p-4 font-mono text-[10px] text-emerald-400 min-h-[120px] shadow-inner border border-white/5">
               {logs.map((log, i) => (
                 <div key={i} className="flex gap-2">
-                  <span className="opacity-40">[{new Date().toLocaleTimeString()}]</span>
+                  <span className="opacity-40">[{safeFormatTime(new Date(), 'en')}]</span>
                   <span>{log}</span>
                 </div>
               ))}

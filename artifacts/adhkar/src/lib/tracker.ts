@@ -1,4 +1,5 @@
 import { localDB } from "./db";
+import { safeFormatDate } from "./utils";
 
 export interface CompletionRecord {
   date: string; // YYYY-MM-DD
@@ -104,7 +105,7 @@ export function getLast7DaysStats(lang = "ar") {
     const record = data[key];
     
     // Format date label (e.g. Day name in Arabic or other languages)
-    const label = d.toLocaleDateString(lang === "ar" ? "ar-SA" : lang, { weekday: "short" });
+    const label = safeFormatDate(d, lang === "ar" ? "ar-SA" : lang, { weekday: "short" });
     
     stats.push({
       date: key,

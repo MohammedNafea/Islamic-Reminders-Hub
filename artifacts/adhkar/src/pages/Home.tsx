@@ -6,7 +6,7 @@ import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone, HeartPulse } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn, safeFormatDate } from "@/lib/utils";
 import { Link } from "wouter";
 import { isArabic, getTranslation } from "@/lib/content-i18n";
 import { fastingDays } from "@/data/fasting-days";
@@ -253,7 +253,7 @@ export default function Home() {
           </p>
           <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
             <CalendarIcon className="w-4 h-4 opacity-70" />
-            <span>{date.toLocaleDateString(i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
+            <span>{safeFormatDate(date, i18n.language, { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</span>
           </div>
         </div>
       </div>
@@ -584,7 +584,7 @@ function HubCard({ href, titleKey, Icon, color, description }: {
                   inline
                 />
               </h3>
-              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+              <p className="text-xs text-muted-foreground mt-1">
                 <TranslatedText
                   text={arabicDescription}
                   staticTranslation={getTranslation(t, description, i18n.language) || undefined}
