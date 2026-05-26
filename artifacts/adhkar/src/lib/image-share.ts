@@ -1,6 +1,209 @@
 import { toast } from "@/hooks/use-toast";
+import * as allAdhkar from "@/data/adhkar";
+import { translateText } from "./google-translate";
 
 const SITE_URL = "https://adhkar.thedarkgalaxy.com";
+
+/**
+ * Helper to determine if a language is RTL
+ */
+const isRtlLang = (lang: string): boolean => {
+  const rtlLangs = ["ar", "fa", "ur", "he", "ckb", "ps", "yi"];
+  return rtlLangs.includes(lang.split("-")[0].toLowerCase());
+};
+
+/**
+ * Resolves main category and subcategory based on dhikrId or fallback titles
+ */
+export function resolveDhikrGroupInfo(
+  dhikrId: string | undefined,
+  title: string,
+  language: string
+): { category: string; subcategory: string } {
+  if (!dhikrId) {
+    return {
+      category: language === "ar" ? "القرآن الكريم" : "The Holy Quran",
+      subcategory: title,
+    };
+  }
+
+  // Find which array contains the ID
+  let arrayName = "";
+  for (const [key, value] of Object.entries(allAdhkar)) {
+    if (Array.isArray(value)) {
+      if (value.some((item: any) => item.id === dhikrId)) {
+        arrayName = key;
+        break;
+      }
+    }
+  }
+
+  const mappings: Record<string, { catAr: string; catEn: string; subAr: string; subEn: string }> = {
+    adhkarMorningEvening: {
+      catAr: "أذكار الصباح والمساء",
+      catEn: "Morning & Evening Remembrances",
+      subAr: "التحصين اليومي",
+      subEn: "Daily Protection",
+    },
+    adhkarMorningOnly: {
+      catAr: "أذكار الصباح والمساء",
+      catEn: "Morning & Evening Remembrances",
+      subAr: "أذكار الصباح",
+      subEn: "Morning Remembrances",
+    },
+    adhkarEveningOnly: {
+      catAr: "أذكار الصباح والمساء",
+      catEn: "Morning & Evening Remembrances",
+      subAr: "أذكار المساء",
+      subEn: "Evening Remembrances",
+    },
+    adhkarMorningVariant: {
+      catAr: "أذكار الصباح والمساء",
+      catEn: "Morning & Evening Remembrances",
+      subAr: "أذكار الصباح",
+      subEn: "Morning Remembrances",
+    },
+    adhkarSleep: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "أذكار النوم والاستيقاظ",
+      subEn: "Sleep & Waking",
+    },
+    adhkarHouse: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "دخول وخروج البيت",
+      subEn: "Entering & Leaving Home",
+    },
+    adhkarMasjid: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "المسجد",
+      subEn: "Mosque",
+    },
+    adhkarClothes: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "اللباس",
+      subEn: "Clothing",
+    },
+    adhkarRestroom: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الخلاء",
+      subEn: "Restroom",
+    },
+    adhkarWudu: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الوضوء",
+      subEn: "Wudu",
+    },
+    adhkarAthan: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الأذان",
+      subEn: "Athan",
+    },
+    adhkarFood: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الأكل والشرب",
+      subEn: "Food & Drink",
+    },
+    adhkarTravel: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "السفر والتنقل",
+      subEn: "Travel & Commute",
+    },
+    adhkarPrayerActions: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "أفعال الصلاة",
+      subEn: "Prayer Actions",
+    },
+    adhkarDailyLifeEvents: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "أحداث الحياة اليومية",
+      subEn: "Daily Life Events",
+    },
+    adhkarNature: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الظواهر الطبيعية",
+      subEn: "Nature & Weather",
+    },
+    adhkarOccasions: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "المناسبات",
+      subEn: "Occasions",
+    },
+    adhkarImmunization: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "التحصين والوقاية",
+      subEn: "Protection & Immunization",
+    },
+    adhkarGreatDays: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الأيام والليالي العظيمة",
+      subEn: "Virtuous Days & Nights",
+    },
+    adhkarDistressAndIllness: {
+      catAr: "أذكار اليوم والليلة",
+      catEn: "Daily Supplications",
+      subAr: "الكرب والمرض والاستجابة",
+      subEn: "Distress, Illness & Answered Prayers",
+    },
+    adhkarArafahHajj: {
+      catAr: "يوم عرفة والحج",
+      catEn: "Day of Arafah & Hajj",
+      subAr: "أدعية الحج وعرفة",
+      subEn: "Hajj & Arafah Supplications",
+    },
+    adhkarRuqyah: {
+      catAr: "الرقية الشرعية",
+      catEn: "Ruqyah",
+      subAr: "التحصين والعلاج",
+      subEn: "Protection & Cure",
+    },
+    adhkarPrayer: {
+      catAr: "أذكار الصلاة",
+      catEn: "Prayer Supplications",
+      subAr: "أذكار بعد الصلاة",
+      subEn: "Supplications After Prayer",
+    },
+  };
+
+  const info = mappings[arrayName] || {
+    catAr: "الأذكار والأدعية",
+    catEn: "Supplications & Remembrances",
+    subAr: title,
+    subEn: title,
+  };
+
+  return {
+    category: language === "ar" ? info.catAr : info.catEn,
+    subcategory: language === "ar" ? info.subAr : info.subEn,
+  };
+}
+
+/**
+ * Loads a QR image from API
+ */
+const loadQrImage = (url: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => resolve(img);
+    img.onerror = (e) => reject(e);
+    img.src = url;
+  });
+};
 
 /**
  * Wraps text to fit within maxWidth using canvas context for measuring.
@@ -39,19 +242,15 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
 
 /**
  * Generates a beautiful card image containing Quranic verses or Adhkar text
- * and triggers a client-side browser download.
- * @param title - Category title (e.g., أذكار الصباح)
- * @param text - Main Arabic text
- * @param source - Source reference (hadith attribution)
- * @param language - UI language
- * @param note - Optional note/timing (متى وأين تقال)
+ * and triggers a client-side browser download or sharing.
  */
 export const exportToImage = async (
   title: string,
   text: string,
   source: string = "",
   language: string = "ar",
-  note?: string
+  note?: string,
+  dhikrId?: string
 ) => {
   try {
     const canvas = document.createElement("canvas");
@@ -62,52 +261,96 @@ export const exportToImage = async (
     const padding = 80;
     const maxWidth = canvasWidth - padding * 2;
 
+    // Resolve Category and Subcategory
+    const info = resolveDhikrGroupInfo(dhikrId, title, language);
+    let resolvedCategory = info.category;
+    let resolvedSubcategory = info.subcategory;
+
+    // Translate UI elements dynamically if language is non-Arabic and non-English
+    if (language !== "ar" && language !== "en") {
+      resolvedCategory = await translateText(resolvedCategory, language);
+      resolvedSubcategory = await translateText(resolvedSubcategory, language);
+    }
+
+    // Dynamic translations for note & source if language is not Arabic
+    let resolvedNote = note;
+    let resolvedSource = source;
+    if (language !== "ar") {
+      if (note) resolvedNote = await translateText(note, language);
+      if (source) resolvedSource = await translateText(source, language);
+    }
+
+    // Load QR Code dynamically
+    const pageUrl = SITE_URL + window.location.pathname + window.location.search;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(pageUrl)}`;
+    let qrImg: HTMLImageElement | null = null;
+    let hasQr = false;
+    try {
+      qrImg = await loadQrImage(qrUrl);
+      hasQr = true;
+    } catch (e) {
+      console.warn("Failed to load QR image for sharing card:", e);
+    }
+
+    // Motivational & Charity text
+    const rawMotivation = "لا تنسَ مشاركته مع غيرك لتعم الفائدة. 🕌✨";
+    const rawSadaqa = "صدقة جارية";
+    const motivationText = language === "ar" ? rawMotivation : await translateText(rawMotivation, language);
+    const sadaqaText = language === "ar" ? rawSadaqa : await translateText(rawSadaqa, language);
+
     // Fonts — larger sizes for high resolution canvas
     const arabicFont = "400 42px 'Amiri', 'Traditional Arabic', 'Tajawal', serif";
-    const titleFont = "bold 32px 'Tajawal', sans-serif";
+    const translationFont = "400 28px 'Tajawal', sans-serif";
     const noteFont = "italic 24px 'Tajawal', sans-serif";
     const sourceFont = "italic 26px 'Tajawal', sans-serif";
-    const watermarkFont = "18px 'Tajawal', sans-serif";
 
-    // Measure text
+    // Measure text lines
     ctx.font = arabicFont;
-    const lines = wrapText(ctx, text, maxWidth);
+    const arabicLines = wrapText(ctx, text, maxWidth);
 
-    // Measure note lines
+    let translationLines: string[] = [];
+    if (language !== "ar") {
+      ctx.font = translationFont;
+      const translatedMainText = await translateText(text, language);
+      translationLines = wrapText(ctx, translatedMainText, maxWidth);
+    }
+
     let noteLines: string[] = [];
-    if (note) {
+    if (resolvedNote) {
       ctx.font = noteFont;
-      noteLines = wrapText(ctx, note, maxWidth - 30);
+      noteLines = wrapText(ctx, resolvedNote, maxWidth - 30);
     }
 
-    // Measure source lines
     let sourceLines: string[] = [];
-    if (source) {
+    if (resolvedSource) {
       ctx.font = sourceFont;
-      sourceLines = wrapText(ctx, source, maxWidth - 30);
+      sourceLines = wrapText(ctx, resolvedSource, maxWidth - 30);
     }
 
-    // Layout
+    // Layout math
     const lineHeight = 70;
+    const transLineHeight = 44;
     const noteLineHeight = 38;
     const sourceLineHeight = 38;
 
-    const titleSectionH = 100;
+    const titleSectionH = 140; // Spacing for category + subcategory
     const noteSectionH = noteLines.length > 0 ? noteLines.length * noteLineHeight + 40 : 0;
-    const textSectionH = lines.length * lineHeight + 30;
+    const arabicTextSectionH = arabicLines.length * lineHeight + 30;
+    const transTextSectionH = translationLines.length > 0 ? translationLines.length * transLineHeight + 40 : 0;
     const sourceSectionH = sourceLines.length > 0 ? sourceLines.length * sourceLineHeight + 65 : 0;
-    const watermarkH = 65;
+    const footerSectionH = 160;
 
     const canvasHeight =
       padding +
       titleSectionH +
       (noteSectionH > 0 ? noteSectionH + 15 : 0) +
-      textSectionH +
+      arabicTextSectionH +
+      (transTextSectionH > 0 ? transTextSectionH + 15 : 0) +
       (sourceSectionH > 0 ? sourceSectionH : 0) +
-      watermarkH +
+      footerSectionH +
       padding;
 
-    const dpr = 2; // Scale factor for high resolution crisp image exports
+    const dpr = 2; // high definition scale factor
     canvas.width = canvasWidth * dpr;
     canvas.height = canvasHeight * dpr;
 
@@ -115,7 +358,7 @@ export const exportToImage = async (
     ctx2.scale(dpr, dpr);
     ctx2.textBaseline = "middle";
 
-    // Background gradient
+    // Background gradient (Luxurious dark emerald green)
     const gradient = ctx2.createLinearGradient(0, 0, 0, canvasHeight);
     gradient.addColorStop(0, "#0b5345");
     gradient.addColorStop(0.5, "#064e3b");
@@ -133,23 +376,29 @@ export const exportToImage = async (
     ctx2.lineWidth = 2;
     ctx2.strokeRect(34, 34, canvasWidth - 68, canvasHeight - 68);
 
-    // Title
+    // Draw Main Category
     let cursorY = padding + 28;
-    ctx2.fillStyle = "#f59e0b";
-    ctx2.font = titleFont;
+    ctx2.fillStyle = "rgba(245, 158, 11, 0.7)";
+    ctx2.font = "bold 22px 'Tajawal', sans-serif";
     ctx2.textAlign = "center";
-    ctx2.fillText(title, canvasWidth / 2, cursorY);
+    ctx2.fillText(resolvedCategory.toUpperCase(), canvasWidth / 2, cursorY);
+
+    // Draw Subcategory (Prominent)
+    cursorY += 40;
+    ctx2.fillStyle = "#f59e0b";
+    ctx2.font = "bold 38px 'Tajawal', sans-serif";
+    ctx2.fillText(resolvedSubcategory, canvasWidth / 2, cursorY);
 
     // Decorative line under title
-    cursorY += 28;
+    cursorY += 34;
     ctx2.beginPath();
-    ctx2.moveTo(canvasWidth / 2 - 150, cursorY);
-    ctx2.lineTo(canvasWidth / 2 + 150, cursorY);
-    ctx2.strokeStyle = "rgba(245, 158, 11, 0.5)";
+    ctx2.moveTo(canvasWidth / 2 - 180, cursorY);
+    ctx2.lineTo(canvasWidth / 2 + 180, cursorY);
+    ctx2.strokeStyle = "rgba(245, 158, 11, 0.4)";
     ctx2.lineWidth = 2;
     ctx2.stroke();
 
-    // Diamond
+    // Diamond symbol
     ctx2.fillStyle = "#f59e0b";
     ctx2.beginPath();
     ctx2.moveTo(canvasWidth / 2, cursorY - 7);
@@ -159,17 +408,15 @@ export const exportToImage = async (
     ctx2.closePath();
     ctx2.fill();
 
-    cursorY += 40;
+    cursorY += 45;
 
     // Note/timing section (متى وأين تقال)
     if (noteLines.length > 0) {
-      // Note background pill
       const noteBgH = noteLines.length * noteLineHeight + 16;
       const noteBgY = cursorY - 8;
       ctx2.fillStyle = "rgba(245, 158, 11, 0.08)";
       ctx2.strokeStyle = "rgba(245, 158, 11, 0.2)";
       ctx2.lineWidth = 1;
-      // Rounded rect
       const rx = 12;
       const bx = padding - 10;
       const bw = canvasWidth - 2 * (padding - 10);
@@ -204,18 +451,31 @@ export const exportToImage = async (
     ctx2.font = arabicFont;
     ctx2.textAlign = "center";
 
-    for (const line of lines) {
+    for (const line of arabicLines) {
       if (line !== "") {
         ctx2.fillText(line, canvasWidth / 2, cursorY + lineHeight / 2);
       }
       cursorY += lineHeight;
     }
 
+    // Translation text (if non-Arabic)
+    if (translationLines.length > 0) {
+      cursorY += 15;
+      ctx2.fillStyle = "rgba(255, 255, 255, 0.85)";
+      ctx2.font = translationFont;
+      ctx2.textAlign = "center";
+      for (const line of translationLines) {
+        if (line !== "") {
+          ctx2.fillText(line, canvasWidth / 2, cursorY + transLineHeight / 2);
+        }
+        cursorY += transLineHeight;
+      }
+    }
+
     // Source / Reference
     if (sourceLines.length > 0) {
       cursorY += 26;
 
-      // Separator line
       ctx2.beginPath();
       ctx2.moveTo(canvasWidth / 2 - 250, cursorY);
       ctx2.lineTo(canvasWidth / 2 + 250, cursorY);
@@ -224,7 +484,7 @@ export const exportToImage = async (
       ctx2.stroke();
 
       cursorY += 30;
-      ctx2.fillStyle = "rgba(255, 255, 255, 0.75)";
+      ctx2.fillStyle = "rgba(255, 255, 255, 0.7)";
       ctx2.font = sourceFont;
       ctx2.textAlign = "center";
       for (const srcLine of sourceLines) {
@@ -235,12 +495,63 @@ export const exportToImage = async (
       }
     }
 
-    // Watermark / branding
-    cursorY = canvasHeight - watermarkH / 2 - 12;
-    ctx2.fillStyle = "rgba(245, 158, 11, 0.35)";
-    ctx2.font = watermarkFont;
-    ctx2.textAlign = "center";
-    ctx2.fillText(`🌙 Islamic Reminders Hub • واذكر  |  ${SITE_URL}`, canvasWidth / 2, cursorY);
+    // Draw Footer Section
+    let footerY = canvasHeight - padding - footerSectionH + 15;
+
+    // Divider line
+    ctx2.beginPath();
+    ctx2.moveTo(padding, footerY);
+    ctx2.lineTo(canvasWidth - padding, footerY);
+    ctx2.strokeStyle = "rgba(245, 158, 11, 0.25)";
+    ctx2.lineWidth = 1;
+    ctx2.stroke();
+
+    const isRtl = isRtlLang(language);
+    const qrSize = 110;
+    const qrBoxSize = qrSize + 16;
+    const qrY = footerY + 25;
+
+    let textX: number;
+    let qrX: number;
+    let textAlign: CanvasTextAlign;
+
+    if (isRtl) {
+      qrX = padding + 10;
+      textX = canvasWidth - padding - 10;
+      textAlign = "right";
+    } else {
+      qrX = canvasWidth - padding - qrSize - 10;
+      textX = padding + 10;
+      textAlign = "left";
+    }
+
+    if (hasQr && qrImg) {
+      // Draw white quiet zone around QR code
+      ctx2.fillStyle = "#ffffff";
+      ctx2.fillRect(qrX - 8, qrY - 8, qrBoxSize, qrBoxSize);
+      ctx2.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+    }
+
+    // Draw brand, url and motivation text next to QR code
+    ctx2.textAlign = textAlign;
+    
+    // Motivation line
+    ctx2.fillStyle = "#ffffff";
+    ctx2.font = "bold 22px 'Tajawal', sans-serif";
+    ctx2.fillText(motivationText, hasQr ? (isRtl ? textX : textX) : canvasWidth / 2, footerY + 50);
+
+    // Sadaqa and URL line
+    ctx2.fillStyle = "rgba(255, 255, 255, 0.7)";
+    ctx2.font = "18px 'Tajawal', sans-serif";
+    ctx2.fillText(
+      `🌙 ${sadaqaText}  •  ${SITE_URL.replace("https://", "")}`,
+      hasQr ? (isRtl ? textX : textX) : canvasWidth / 2,
+      footerY + 90
+    );
+
+    if (!hasQr) {
+      ctx2.textAlign = "center";
+    }
 
     // Convert canvas to blob for sharing
     const dataUrl = canvas.toDataURL("image/png");
@@ -250,14 +561,30 @@ export const exportToImage = async (
     // Try Web Share API for mobile/native sharing
     if (navigator.share && navigator.canShare) {
       try {
-        // Convert data URL to blob
         const response = await fetch(dataUrl);
         const blob = await response.blob();
         const file = new File([blob], fileName, { type: "image/png" });
 
+        // Build caption text
+        const captionText = [
+          `🕌 *${resolvedCategory}*`,
+          `✨ *${resolvedSubcategory}*`,
+          "",
+          text,
+          "",
+          resolvedSource ? `📚 ${resolvedSource}` : "",
+          "",
+          `🎁 ${sadaqaText}`,
+          `💬 ${motivationText}`,
+          `🔗 ${pageUrl}`,
+        ]
+          .filter((line, i, arr) => (line === "" && arr[i - 1] === "" ? false : true))
+          .join("\n")
+          .trim();
+
         const shareData: ShareData = {
-          title: title || "ذكر من واذكر",
-          text: `${text.slice(0, 200)}\n\n${source ? source + "\n\n" : ""}${SITE_URL}`,
+          title: resolvedSubcategory,
+          text: captionText,
           files: [file],
         };
 
@@ -269,12 +596,10 @@ export const exportToImage = async (
           return;
         }
       } catch (shareError) {
-        // User cancelled or share failed, fall through to download
         if ((shareError as Error).name !== "AbortError") {
           console.warn("Share with image failed, falling back to download:", shareError);
         } else {
-          // User cancelled - no toast needed
-          return;
+          return; // user cancelled
         }
       }
     }
@@ -304,31 +629,51 @@ export const shareText = async (
   title: string,
   text: string,
   source: string = "",
-  language: string = "ar"
+  language: string = "ar",
+  dhikrId?: string
 ) => {
+  const info = resolveDhikrGroupInfo(dhikrId, title, language);
+  let resolvedCategory = info.category;
+  let resolvedSubcategory = info.subcategory;
+
+  let mainText = text;
+  let srcText = source;
+  let motivation = "لا تنسَ مشاركته مع غيرك لتعم الفائدة. 🕌✨";
+  let sadaqa = "صدقة جارية";
+
+  if (language !== "ar") {
+    resolvedCategory = await translateText(resolvedCategory, language);
+    resolvedSubcategory = await translateText(resolvedSubcategory, language);
+    mainText = await translateText(text, language);
+    srcText = source ? await translateText(source, language) : "";
+    motivation = await translateText(motivation, language);
+    sadaqa = await translateText(sadaqa, language);
+  }
+
+  const currentUrl = SITE_URL + window.location.pathname + window.location.search;
+
   const shareBody = [
-    title ? `✨ ${title}` : "",
+    `🕌 *${resolvedCategory}*`,
+    `✨ *${resolvedSubcategory}*`,
     "",
-    text,
+    mainText,
     "",
-    source ? `📚 ${source}` : "",
+    srcText ? `📚 ${srcText}` : "",
     "",
-    `🔗 ${SITE_URL}`,
+    `🎁 ${sadaqa}`,
+    `💬 ${motivation}`,
+    `🔗 ${currentUrl}`,
   ]
-    .filter((line, i, arr) => {
-      // Remove consecutive empty lines
-      if (line === "" && arr[i - 1] === "") return false;
-      return true;
-    })
+    .filter((line, i, arr) => (line === "" && arr[i - 1] === "" ? false : true))
     .join("\n")
     .trim();
 
   if (navigator.share) {
     try {
       await navigator.share({
-        title: title || "ذكر من واذكر",
+        title: resolvedSubcategory,
         text: shareBody,
-        url: SITE_URL,
+        url: currentUrl,
       });
       return;
     } catch (err) {
@@ -344,6 +689,66 @@ export const shareText = async (
       description: language === "ar" ? "تم نسخ الذكر إلى الحافظة" : "Dhikr copied to clipboard",
     });
   } catch {
+    toast({
+      variant: "destructive",
+      description: language === "ar" ? "فشل النسخ" : "Copy failed",
+    });
+  }
+};
+
+/**
+ * Copy formatted and translated dhikr text to clipboard
+ */
+export const copyDhikrText = async (
+  title: string,
+  text: string,
+  source: string = "",
+  language: string = "ar",
+  dhikrId?: string
+) => {
+  try {
+    const info = resolveDhikrGroupInfo(dhikrId, title, language);
+    let resolvedCategory = info.category;
+    let resolvedSubcategory = info.subcategory;
+
+    let mainText = text;
+    let srcText = source;
+    let motivation = "لا تنسَ مشاركته مع غيرك لتعم الفائدة. 🕌✨";
+    let sadaqa = "صدقة جارية";
+
+    if (language !== "ar") {
+      resolvedCategory = await translateText(resolvedCategory, language);
+      resolvedSubcategory = await translateText(resolvedSubcategory, language);
+      mainText = await translateText(text, language);
+      srcText = source ? await translateText(source, language) : "";
+      motivation = await translateText(motivation, language);
+      sadaqa = await translateText(sadaqa, language);
+    }
+
+    const currentUrl = SITE_URL + window.location.pathname + window.location.search;
+
+    const shareBody = [
+      `🕌 ${resolvedCategory}`,
+      `✨ ${resolvedSubcategory}`,
+      "",
+      mainText,
+      "",
+      srcText ? `📚 ${srcText}` : "",
+      "",
+      `🎁 ${sadaqa}`,
+      `💬 ${motivation}`,
+      `🔗 ${currentUrl}`,
+    ]
+      .filter((line, i, arr) => (line === "" && arr[i - 1] === "" ? false : true))
+      .join("\n")
+      .trim();
+
+    await navigator.clipboard.writeText(shareBody);
+    toast({
+      description: language === "ar" ? "تم النسخ بنجاح" : "Copied successfully",
+    });
+  } catch (error) {
+    console.error("Copy failed:", error);
     toast({
       variant: "destructive",
       description: language === "ar" ? "فشل النسخ" : "Copy failed",

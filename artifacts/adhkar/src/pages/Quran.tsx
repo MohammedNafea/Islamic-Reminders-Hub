@@ -17,7 +17,7 @@ import { localDB } from "@/lib/db";
 import { useLocation } from "wouter";
 import { TranslatedText } from "@/components/TranslatedText";
 import { RECITERS } from "@/data/reciters";
-import { exportToImage, shareText } from "@/lib/image-share";
+import { exportToImage, shareText, copyDhikrText } from "@/lib/image-share";
 
 
 const normalizeArabic = (text: string) => {
@@ -962,12 +962,16 @@ export default function Quran() {
                             size="icon" 
                             variant="secondary"
                             className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
-                            onClick={() => {
+                            onClick={async () => {
                               const cleanText = cleanBismillah(ayah.text);
-                              navigator.clipboard.writeText(cleanText);
-                              toast({
-                                description: i18n.language === "ar" ? "تم نسخ الآية إلى الحافظة" : "Ayah copied to clipboard",
-                              });
+                              const surahTitle = i18n.language === "ar" ? currentSurah.name : currentSurah.englishName;
+                              const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${ayah.numberInSurah}`;
+                              await copyDhikrText(
+                                source,
+                                cleanText,
+                                source,
+                                i18n.language
+                              );
                             }}
                             title={t("common.copy", { defaultValue: "نسخ" })}
                           >
@@ -1426,11 +1430,16 @@ export default function Quran() {
                   
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      navigator.clipboard.writeText(selectedPageAyah.text);
-                      toast({
-                        description: t("quran.ayah_copied", { defaultValue: "تم نسخ الآية الكريمة" }),
-                      });
+                    onClick={async () => {
+                      const cleanText = cleanBismillah(selectedPageAyah.text);
+                      const surahTitle = i18n.language === "ar" ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName;
+                      const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${selectedPageAyah.numberInSurah}`;
+                      await copyDhikrText(
+                        source,
+                        cleanText,
+                        source,
+                        i18n.language
+                      );
                     }}
                     className="rounded-xl gap-2 text-xs"
                   >
@@ -1440,12 +1449,23 @@ export default function Quran() {
 
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      const textToCopy = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
-                      navigator.clipboard.writeText(textToCopy);
-                      toast({
-                        description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
-                      });
+                    onClick={async () => {
+                      const cleanText = cleanBismillah(selectedPageAyah.text);
+                      const surahTitle = i18n.language === "ar" ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName;
+                      const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${selectedPageAyah.numberInSurah}`;
+                      const rawTafsir = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
+                      let finalTafsirText = rawTafsir;
+                      if (i18n.language !== "ar") {
+                        const translatedTafsir = await translateText(pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || "", i18n.language);
+                        const translatedAyah = await translateText(cleanText, i18n.language);
+                        finalTafsirText = `${surahTitle} (${selectedPageAyah.numberInSurah})\n\nAyah (Arabic): ${selectedPageAyah.text}\n\nAyah (Translation): ${translatedAyah}\n\nTafsir / Meaning:\n${translatedTafsir}`;
+                      }
+                      await copyDhikrText(
+                        source,
+                        finalTafsirText,
+                        source,
+                        i18n.language
+                      );
                     }}
                     className="rounded-xl gap-2 text-xs"
                   >

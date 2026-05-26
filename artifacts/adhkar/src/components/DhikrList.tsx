@@ -13,7 +13,7 @@ import { logCategoryCompletion } from "@/lib/tracker";
 import { TranslatedText } from "@/components/TranslatedText";
 import { adhkarAudioMap } from "@/data/adhkarAudioMap";
 import { toast } from "@/hooks/use-toast";
-import { exportToImage, shareText } from "@/lib/image-share";
+import { exportToImage, shareText, copyDhikrText } from "@/lib/image-share";
 
 
 interface DhikrListProps {
@@ -631,7 +631,13 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleCopyText(arabicText);
+                            copyDhikrText(
+                              getTranslation(t, titleKey, i18n.language) || t(titleKey) || "ذكر",
+                              arabicText,
+                              dhikr.source,
+                              i18n.language,
+                              dhikr.id
+                            );
                           }}
                           className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
                           title={t("common.copy", { defaultValue: "نسخ" })}
@@ -647,7 +653,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                               arabicText,
                               dhikr.source,
                               i18n.language,
-                              dhikr.note || undefined
+                              dhikr.note || undefined,
+                              dhikr.id
                             );
                           }}
                           className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"
@@ -663,7 +670,8 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                               getTranslation(t, titleKey, i18n.language) || t(titleKey) || "ذكر",
                               arabicText,
                               dhikr.source,
-                              i18n.language
+                              i18n.language,
+                              dhikr.id
                             );
                           }}
                           className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted transition-colors"

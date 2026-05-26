@@ -449,13 +449,7 @@ export default function Home() {
             color="bg-rose-500"
             description="home.daily_supplications_desc"
           />
-          <HubCard 
-            href="/daily-supplications?tab=distress_illness"
-            titleKey="nav.distress_illness"
-            Icon={HeartPulse}
-            color="bg-red-600"
-            description="home.distress_illness_desc"
-          />
+
           <HubCard 
             href="/arafah-hajj"
             titleKey="nav.arafah_hajj"
