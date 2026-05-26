@@ -1,4 +1,4 @@
-// Auto-generated locale file for Norwegian (no)
+// Auto-generated locale file for no
 export default {
   "app": {
     "name": "Islamsk nav",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Daglige supplikasjoner",
     "distress_illness": "Nød og sykdom",
     "arafah_hajj": "Arafah-dagen og Hajj",
-    "quran_duas": "Koraniske Duas"
+    "quran_duas": "Koraniske Duas",
+    "prophetic_duas": "Profetiske Duas"
   },
   "search": {
     "title": "Unified Search",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar for å gå inn og ut av huset",
     "masjid_desc": "Adhkar for å gå inn, forlate og gå til moskeen",
     "distress_illness_desc": "Bøner for nød, angst, sorg, sykdom og besvarte bønner",
-    "arafah_hajj_desc": "Bønn, Talbiyah og minnesmerker for Arafah-dagen og Hajj-pilegrimsreisen"
+    "arafah_hajj_desc": "Bønn, Talbiyah og minnesmerker for Arafah-dagen og Hajj-pilegrimsreisen",
+    "quran_duas_desc": "Bønn og bønner nevnt i den hellige Koranen",
+    "prophetic_duas_desc": "Autentiske bønner fortalt fra profeten ﷺ"
   },
   "dhikr": {
     "count": "Telle",

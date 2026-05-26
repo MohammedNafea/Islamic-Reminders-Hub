@@ -7,7 +7,8 @@ import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 import { 
   Smartphone, Download, Share2, PlusSquare, 
-  WifiOff, BellRing, Sparkles, CheckCircle2, Activity
+  WifiOff, BellRing, Sparkles, CheckCircle2, Activity,
+  BookOpen, Compass, Heart, Settings, BookMarked, Landmark, Home
 } from "lucide-react";
 
 export default function DownloadPage() {
@@ -491,6 +492,175 @@ export default function DownloadPage() {
               </motion.div>
             );
           })}
+        </div>
+      </div>
+
+      {/* Comprehensive Manual Section */}
+      <div className="space-y-8 pt-8 border-t border-border/60">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
+            <BookMarked className="w-3.5 h-3.5" />
+            <TranslatedText
+              text="دليل الاستخدام المفصل"
+              staticTranslation={i18n.language === "ar" ? "دليل الاستخدام المفصل" : "Comprehensive User Manual"}
+              keepArabic={false}
+            />
+          </div>
+          <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+            <TranslatedText
+              text="كيفية استخدام موقع وتطبيق مركز الأذكار"
+              staticTranslation={i18n.language === "ar" ? "كيفية استخدام موقع وتطبيق مركز الأذكار" : "How to Use the Islamic Reminders Hub App & Site"}
+              keepArabic={false}
+            />
+          </h3>
+          <p className="text-muted-foreground text-sm max-w-xl mx-auto leading-relaxed">
+            <TranslatedText
+              text="شرح تفصيلي لكافة مميزات التطبيق والأقسام المختلفة لمساعدتك في تحقيق أقصى استفادة روحية."
+              staticTranslation={i18n.language === "ar" ? "شرح تفصيلي لكافة مميزات التطبيق والأقسام المختلفة لمساعدتك في تحقيق أقصى استفادة روحية." : "Detailed explanation of all app features and sections to help you maximize your spiritual routine."}
+              keepArabic={false}
+            />
+          </p>
+        </div>
+
+        {/* Manual Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 1: Home Page */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <Home className="w-5 h-5 text-emerald-600" />
+                <TranslatedText text="الصفحة الرئيسية" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="تعد الصفحة الرئيسية لوحة التحكم الروحية الخاصة بك، حيث تعرض:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="مواقيت الصلاة الحالية والقادمة ونسبة التقدم في صلواتك اليومية." keepArabic={false} /></li>
+                <li><TranslatedText text="حديث الساعة وآية الساعة المتجددة تلقائياً كل ساعة لتدبر كلام الله وسنة نبيه." keepArabic={false} /></li>
+                <li><TranslatedText text="الصلوات على النبي صلى الله عليه وسلم، حيث يمكنك الصلاة عليه وتسجيل أعداد صلواتك اليومية." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Card 2: Adhkar Hub */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <BookOpen className="w-5 h-5 text-teal-600" />
+                <TranslatedText text="مركز الأذكار والأدعية" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="يضم هذا القسم أذكار حصن المسلم والأدعية القرآنية والنبوية مرتبة وموثقة:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="أذكار الصباح والمساء، أذكار النوم، الصلوات، أذكار المسجد والمنزل، وأدعية الكرب." keepArabic={false} /></li>
+                <li><TranslatedText text="تشغيل تلاوات صوتية بشرية واضحة ونقية لكل ذكر لمساعدتك على الحفظ والتدبر." keepArabic={false} /></li>
+                <li><TranslatedText text="ترجمة فورية للأذكار والأدعية إلى 70 لغة مع إمكانية إضافة أي ذكر للمفضلة." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Card 3: Holy Quran */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <BookOpen className="w-5 h-5 text-amber-600" />
+                <TranslatedText text="المصحف الشريف" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="مصحف كامل بالرسم العثماني للقراءة والاستماع التفاعلي:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="القراءة وتكبير الخط وتغيير التفسير (الجلالين، الميسر، السعدي، ابن كثير)." keepArabic={false} /></li>
+                <li><TranslatedText text="الاستماع بصوت أكثر من 10 قراء مشاهير مع إمكانية تكرار الآية لتحفيظ القرآن." keepArabic={false} /></li>
+                <li><TranslatedText text="البحث الذكي بالمعنى أو البحث الحرفي في الآيات وتراجم المعاني لـ 70 لغة." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Card 4: Compass & Prayer Times */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <Compass className="w-5 h-5 text-sky-600" />
+                <TranslatedText text="مواقيت الصلاة والقبلة" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="حساب المواقيت الدقيقة وتحديد اتجاه الكعبة من أي مكان في العالم:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="حساب أوقات الصلاة والثلث الأخير من الليل والسحر محلياً بالكامل وبدون إنترنت." keepArabic={false} /></li>
+                <li><TranslatedText text="بوصلة تفاعلية ثلاثية الأبعاد (3D) مدعومة بكاميرا الواقع المعزز (AR) لرؤية القبلة في محيطك." keepArabic={false} /></li>
+                <li><TranslatedText text="دعم طرق الحساب المختلفة مثل أم القرى، رابطة العالم الإسلامي، وغيرها." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Card 5: Electronic Tasbih */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <Activity className="w-5 h-5 text-rose-600" />
+                <TranslatedText text="المسبحة الإلكترونية" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="أداة تفاعلية متطورة للتسبيح والاستغفار:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="النقر في أي مكان على الشاشة لزيادة العداد لتسهيل الاستخدام أثناء الحركة." keepArabic={false} /></li>
+                <li><TranslatedText text="تغيير الذكر الحالي، وإمكانية إضافة أذكار مخصصة وتحديد هدف التكرار (33، 99، 100)." keepArabic={false} /></li>
+                <li><TranslatedText text="حفظ إحصائيات يومية وتراكمية لكل ذكر مع دعم الاهتزاز والتنبيه عند اكتمال الهدف." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
+
+          {/* Card 6: Worship Tracker */}
+          <Card className="border border-border/60 bg-card/40 backdrop-blur-sm rounded-[2rem] overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg font-bold flex items-center gap-2 text-primary font-heading">
+                <Activity className="w-5 h-5 text-indigo-600" />
+                <TranslatedText text="مسار الالتزام والعبادات" keepArabic={false} />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-xs text-muted-foreground space-y-2 leading-relaxed">
+              <p>
+                <TranslatedText
+                  text="لوحة متابعة سرية وخاصة جداً لتقييم وردك اليومي:"
+                  keepArabic={false}
+                />
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li><TranslatedText text="تسجيل أداء الصلوات الخمس في وقتها، جماعة، والسنن الرواتب، وقيام الليل." keepArabic={false} /></li>
+                <li><TranslatedText text="تتبع ورد القرآن اليومي، وأذكار الصباح والمساء، وصوم النوافل." keepArabic={false} /></li>
+                <li><TranslatedText text="إحصائيات أسبوعية ورسومات بيانية لمدى التزامك لبناء عادات روحية راسخة." keepArabic={false} /></li>
+              </ul>
+            </CardContent>
+          </Card>
         </div>
       </div>
 

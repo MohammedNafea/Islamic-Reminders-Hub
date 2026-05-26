@@ -1,4 +1,4 @@
-// Auto-generated locale file for Filipino (fil)
+// Auto-generated locale file for fil
 export default {
   "app": {
     "name": "Islamic Hub",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Pang-araw-araw na Pagsusumamo",
     "distress_illness": "Kapighatian at Sakit",
     "arafah_hajj": "Araw ng Arafah at Hajj",
-    "quran_duas": "Quranic Duas"
+    "quran_duas": "Quranic Duas",
+    "prophetic_duas": "Propetikong Duas"
   },
   "search": {
     "title": "Pinag-isang Paghahanap",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar para sa pagpasok at paglabas ng bahay",
     "masjid_desc": "Adhkar para sa pagpasok, pag-alis, at pagpunta sa mosque",
     "distress_illness_desc": "Mga pagsusumamo para sa pagkabalisa, pagkabalisa, kalungkutan, sakit, at sagot na mga panalangin",
-    "arafah_hajj_desc": "Mga pagsusumamo, Talbiyah, at mga alaala para sa Araw ng Arafah at Hajj na paglalakbay"
+    "arafah_hajj_desc": "Mga pagsusumamo, Talbiyah, at mga alaala para sa Araw ng Arafah at Hajj na paglalakbay",
+    "quran_duas_desc": "Mga pagsusumamo at panalangin na binanggit sa Banal na Quran",
+    "prophetic_duas_desc": "Ang mga tunay na pagsusumamo ay isinalaysay mula sa Propeta ﷺ"
   },
   "dhikr": {
     "count": "Bilangin",

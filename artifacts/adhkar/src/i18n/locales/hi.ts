@@ -1,3 +1,4 @@
+// Auto-generated locale file for hi
 export default {
   "app": {
     "name": "इस्लामी अज़कार",
@@ -30,7 +31,8 @@ export default {
     "merged_evening": "शाम और रुक्याह",
     "merged_morning": "सुबह और रुक्याह",
     "daily_supplications": "आज और आज रात के लिए यादें",
-    "quran_duas": "कुरआनी दुआएं"
+    "quran_duas": "कुरआनी दुआएं",
+    "prophetic_duas": "भविष्यवाणी दुआ"
   },
   "home": {
     "greeting_morning": "सुप्रभात",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "घर में प्रवेश करने और छोड़ने और उसमें आशीर्वाद देने के लिए स्मरण",
-    "masjid_desc": "मस्जिद में जाने, प्रवेश करने और छोड़ने की यादें"
+    "masjid_desc": "मस्जिद में जाने, प्रवेश करने और छोड़ने की यादें",
+    "quran_duas_desc": "पवित्र कुरान में उल्लिखित प्रार्थनाएँ और प्रार्थनाएँ",
+    "prophetic_duas_desc": "पैगंबर ﷺ से सुनाई गई प्रामाणिक दुआएँ"
   },
   "favorites": {
     "subtitle": "धिक्कार और नियमों की एक सूची जो आपने याद कर ली है",

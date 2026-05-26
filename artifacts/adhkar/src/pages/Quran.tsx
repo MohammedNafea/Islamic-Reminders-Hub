@@ -19,6 +19,8 @@ import { TranslatedText } from "@/components/TranslatedText";
 import { RECITERS } from "@/data/reciters";
 import { exportToImage, shareText, copyDhikrText } from "@/lib/image-share";
 import { translateText } from "@/lib/google-translate";
+import { SectionBooklet } from "@/components/SectionBooklet";
+
 
 
 const normalizeArabic = (text: string) => {
@@ -1676,8 +1678,11 @@ export default function Quran() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-4xl mx-auto pb-12">
-      <div className="text-center space-y-3 pt-6">
-        <h2 className="text-4xl font-heading font-bold text-primary">{t("nav.quran")}</h2>
+      <div className="text-center space-y-3 pt-6 flex flex-col items-center">
+        <div className="flex items-center justify-center gap-3">
+          <h2 className="text-4xl font-heading font-bold text-primary">{t("nav.quran")}</h2>
+          <SectionBooklet sectionId="quran" />
+        </div>
         <p className="text-muted-foreground text-lg">{t("quran.subtitle")}</p>
         <div className="pt-2">{renderViewSwitcher()}</div>
       </div>

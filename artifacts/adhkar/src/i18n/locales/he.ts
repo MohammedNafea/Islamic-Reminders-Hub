@@ -1,4 +1,4 @@
-// Auto-generated locale file for Hebrew (he)
+// Auto-generated locale file for he
 export default {
   "app": {
     "name": "מרכז איסלאמי",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "תחנונים יומיומיים",
     "distress_illness": "מצוקה ומחלה",
     "arafah_hajj": "יום ערפה וחאג'",
-    "quran_duas": "דואס קוראני"
+    "quran_duas": "דואס קוראני",
+    "prophetic_duas": "דואס נבואי"
   },
   "search": {
     "title": "חיפוש מאוחד",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "אדחקר לכניסה ויציאה מהבית",
     "masjid_desc": "אדקאר לכניסה, יציאה ויציאה למסגד",
     "distress_illness_desc": "תחנונים למצוקה, חרדה, אבל, מחלה ונענות לתפילות",
-    "arafah_hajj_desc": "תחנונים, טלביה וזכרון ליום ערפה וחאג'"
+    "arafah_hajj_desc": "תחנונים, טלביה וזכרון ליום ערפה וחאג'",
+    "quran_duas_desc": "תחנונים ותפילות המוזכרות בקוראן הקדוש",
+    "prophetic_duas_desc": "Authentic supplications narrated from the Prophet ﷺ"
   },
   "dhikr": {
     "count": "לִסְפּוֹר",

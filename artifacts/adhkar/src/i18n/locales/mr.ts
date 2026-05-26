@@ -1,3 +1,4 @@
+// Auto-generated locale file for mr
 export default {
   "app": {
     "name": "इस्लामिक हब",
@@ -30,7 +31,8 @@ export default {
     "download": "अर्ज डाउनलोड करा",
     "daily_supplications": "आजच्या आणि आजच्या रात्रीच्या आठवणी",
     "quran_duas": "कुराणातील दुआ",
-    "sunan": "पैगंबर च्या Sunnahs"
+    "sunan": "पैगंबर च्या Sunnahs",
+    "prophetic_duas": "भविष्यसूचक दुआ"
   },
   "home": {
     "greeting_morning": "सुप्रभात",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "मशिदीत जाणे, प्रवेश करणे आणि बाहेर पडणे यासाठीच्या आठवणी",
-    "house_desc": "घरात प्रवेश करणे आणि बाहेर पडणे आणि त्यामध्ये आशीर्वाद देण्याची आठवण"
+    "house_desc": "घरात प्रवेश करणे आणि बाहेर पडणे आणि त्यामध्ये आशीर्वाद देण्याची आठवण",
+    "quran_duas_desc": "पवित्र कुराण मध्ये उल्लेख केलेल्या विनंत्या आणि प्रार्थना",
+    "prophetic_duas_desc": "प्रेषित (स) कडून वर्णन केलेल्या प्रामाणिक विनंत्या"
   },
   "favorites": {
     "empty": "अद्याप कोणतेही आवडते नाहीत",

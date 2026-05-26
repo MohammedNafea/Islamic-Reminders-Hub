@@ -42,6 +42,18 @@ Future<void> _requestInitialPermissions() async {
     if (overlayStatus.isDenied) {
       await Permission.systemAlertWindow.request();
     }
+
+    // Request exact alarm permission (for Android 12+ prayer/adhkar schedule)
+    final alarmStatus = await Permission.scheduleExactAlarm.status;
+    if (alarmStatus.isDenied) {
+      await Permission.scheduleExactAlarm.request();
+    }
+
+    // Request battery optimizations ignore permission
+    final batteryStatus = await Permission.ignoreBatteryOptimizations.status;
+    if (batteryStatus.isDenied) {
+      await Permission.ignoreBatteryOptimizations.request();
+    }
   } catch (_) {
     // Silently handle if permissions are not available on this platform
   }
@@ -72,11 +84,9 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('ar', ''),
-              Locale('en', ''),
-              Locale('am', ''),
-            ],
+            supportedLocales: AppLocalizations.supportedLanguages.map(
+              (lang) => Locale(lang.code, ''),
+            ).toList(),
             localeResolutionCallback: (locale, supportedLocales) {
               for (var supportedLocale in supportedLocales) {
                 if (supportedLocale.languageCode == locale?.languageCode) {

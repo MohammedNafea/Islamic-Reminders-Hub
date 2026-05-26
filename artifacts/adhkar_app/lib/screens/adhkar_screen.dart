@@ -131,63 +131,45 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
   }
 
   String _getCategoryTitle(String key, AppLocalizations localizations) {
+    String localizationKey;
+    if (key == 'morning_ruqyah') {
+      localizationKey = 'nav_merged_morning';
+    } else if (key == 'evening_ruqyah') {
+      localizationKey = 'nav_merged_evening';
+    } else {
+      localizationKey = 'nav_$key';
+    }
+
+    final translated = localizations.translate(localizationKey);
+    if (translated != localizationKey) {
+      return translated;
+    }
+
     switch (key) {
       case 'morning':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار الصباح'
-            : (localizations.locale.languageCode == 'en' ? 'Morning Adhkar' : 'የጠዋት አዝካር');
+        return 'أذكار الصباح';
       case 'evening':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار المساء'
-            : (localizations.locale.languageCode == 'en' ? 'Evening Adhkar' : 'የምሽት አዝካር');
-      case 'morning_ruqyah':
-        return localizations.locale.languageCode == 'ar'
-            ? 'الصباح والرقية'
-            : (localizations.locale.languageCode == 'en' ? 'Morning + Ruqyah' : 'የጠዋት + ሩቅያህ');
-      case 'evening_ruqyah':
-        return localizations.locale.languageCode == 'ar'
-            ? 'المساء والرقية'
-            : (localizations.locale.languageCode == 'en' ? 'Evening + Ruqyah' : 'የምሽት + ሩቅያህ');
+        return 'أذكار المساء';
       case 'sleep':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار النوم'
-            : (localizations.locale.languageCode == 'en' ? 'Sleep Adhkar' : 'የእንቅልፍ አዝካር');
+        return 'أذكار النوم';
       case 'prayer':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار بعد الصلاة'
-            : (localizations.locale.languageCode == 'en' ? 'Post-Prayer Adhkar' : 'ከሶላት በኋላ አዝካር');
+        return 'أذكار بعد الصلاة';
       case 'ruqyah':
-        return localizations.locale.languageCode == 'ar'
-            ? 'الرقى الشرعية'
-            : (localizations.locale.languageCode == 'en' ? 'Ruqyah' : 'ሩቅያህ');
+        return 'الرقى الشرعية';
       case 'salawat':
-        return localizations.locale.languageCode == 'ar'
-            ? 'الصلوات والأدعية'
-            : (localizations.locale.languageCode == 'en' ? 'Salawat & Duas' : 'ሰለዋትና ዱዓዎች');
+        return 'الصلوات والأدعية';
       case 'house':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار المنزل'
-            : (localizations.locale.languageCode == 'en' ? 'House Adhkar' : 'የቤት አዝካር');
+        return 'أذكار المنزل';
       case 'masjid':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أذكار المسجد'
-            : (localizations.locale.languageCode == 'en' ? 'Masjid Adhkar' : 'የመስጊድ አዝካር');
+        return 'أذكار المسجد';
       case 'distress_illness':
-        return localizations.locale.languageCode == 'ar'
-            ? 'أدعية الكرب والمرض والاستجابة'
-            : (localizations.locale.languageCode == 'en' ? 'Distress & Illness' : 'የጭንቀትና ህመም ዱዓዎች');
+        return 'أدعية الكرب والمرض والاستجابة';
       case 'arafah_hajj':
-        return localizations.locale.languageCode == 'ar'
-            ? 'يوم عرفة والحج'
-            : (localizations.locale.languageCode == 'en' ? 'Arafah Day & Hajj' : 'የዓረፋ ቀንና ሐጅ');
+        return 'يوم عرفة والحج';
       case 'quran_duas':
-        return localizations.locale.languageCode == 'ar'
-            ? 'الأدعية من القرآن الكريم'
-            : (localizations.locale.languageCode == 'en' ? 'Quranic Duas' : 'ከቁርኣን ቅዱስ ዱዓዎች');
-      case 'favorites':
-        return localizations.translate('nav_favorites');
+        return 'الأدعية من القرآن الكريم';
       default:
-        return '';
+        return key;
     }
   }
 

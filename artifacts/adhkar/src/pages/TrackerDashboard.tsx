@@ -12,6 +12,7 @@ import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getTasbihCount, getDailyProgress } from "@/lib/store";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 interface KhatmahPlan {
   targetDays: number;
@@ -113,15 +114,18 @@ export default function TrackerDashboard() {
   return (
     <div className="animate-in fade-in duration-500 space-y-6 max-w-xl mx-auto pb-12">
       <div className="text-center space-y-2 pt-4">
-        <h2 className="text-3xl font-heading font-bold text-primary flex items-center justify-center gap-2">
-          <Sparkles className="w-6 h-6 text-amber-500 fill-amber-500" />
-          <TranslatedText
-            text="مسار الالتزام والعبادات"
-            staticTranslation={getTranslation(t, "tracker.title", i18n.language) || undefined}
-            keepArabic={false}
-            inline
-          />
-        </h2>
+        <div className="flex items-center justify-center gap-2">
+          <h2 className="text-3xl font-heading font-bold text-primary flex items-center gap-2">
+            <Sparkles className="w-6 h-6 text-amber-500 fill-amber-500" />
+            <TranslatedText
+              text="مسار الالتزام والعبادات"
+              staticTranslation={getTranslation(t, "tracker.title", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </h2>
+          <SectionBooklet sectionId="tracker" />
+        </div>
         <p className="text-muted-foreground text-sm">
           <TranslatedText
             text="تابع التزامك اليومي بالأذكار وبناء عاداتك الروحية"

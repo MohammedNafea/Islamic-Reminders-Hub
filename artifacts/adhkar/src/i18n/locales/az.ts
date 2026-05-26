@@ -1,3 +1,4 @@
+// Auto-generated locale file for az
 export default {
   "app": {
     "name": "İslam Mərkəzi",
@@ -30,7 +31,8 @@ export default {
     "download": "Proqramı yükləyin",
     "sunan": "Peyğəmbərin sünnələri",
     "daily_supplications": "Bu gün və axşam üçün xatirələr",
-    "quran_duas": "Qurandan Dualar"
+    "quran_duas": "Qurandan Dualar",
+    "prophetic_duas": "Peyğəmbər duaları"
   },
   "home": {
     "greeting_morning": "Sabahınız xeyir",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Evə girib-çıxmağın zikrləri və orada xeyir-dua",
-    "masjid_desc": "Məscidə getmək, girmək və çıxmaqla bağlı xatırlamalar"
+    "masjid_desc": "Məscidə getmək, girmək və çıxmaqla bağlı xatırlamalar",
+    "quran_duas_desc": "Qurani-Kərimdə qeyd olunan dualar və dualar",
+    "prophetic_duas_desc": "Peyğəmbərdən (s) nəql edilən səhih dualar"
   },
   "favorites": {
     "empty": "Hələ favorit yoxdur",

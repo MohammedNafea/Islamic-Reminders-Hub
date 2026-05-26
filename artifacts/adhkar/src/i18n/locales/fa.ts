@@ -1,3 +1,4 @@
+// Auto-generated locale file for fa
 export default {
   "app": {
     "name": "اذکار اسلامی",
@@ -30,7 +31,8 @@ export default {
     "tracker": "مسیر تعهد",
     "sunan": "سنت های پیامبر",
     "daily_supplications": "خاطرات امروز و امشب",
-    "quran_duas": "دعاهای قرآنی"
+    "quran_duas": "دعاهای قرآنی",
+    "prophetic_duas": "دعای نبوی"
   },
   "home": {
     "greeting_morning": "صبح بخیر",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "ذکرهای رفتن و ورود و خروج از مسجد",
-    "house_desc": "ذکرهای ورود و خروج از خانه و برکت در آن"
+    "house_desc": "ذکرهای ورود و خروج از خانه و برکت در آن",
+    "quran_duas_desc": "ادعیه و دعاهایی که در قرآن کریم آمده است",
+    "prophetic_duas_desc": "دعاهای صحیح از پیامبر اکرم صلی الله علیه و آله و سلم نقل شده است"
   },
   "search": {
     "title": "جستجوی جامع",

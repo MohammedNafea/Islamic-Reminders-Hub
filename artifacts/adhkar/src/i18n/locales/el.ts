@@ -1,4 +1,4 @@
-// Auto-generated locale file for Greek (el)
+// Auto-generated locale file for el
 export default {
   "app": {
     "name": "Ισλαμικό Κόμβο",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Καθημερινές Παρακλήσεις",
     "distress_illness": "Δυσφορία & Ασθένεια",
     "arafah_hajj": "Ημέρα Arafah & Χατζ",
-    "quran_duas": "Κορανικό Duas"
+    "quran_duas": "Κορανικό Duas",
+    "prophetic_duas": "Προφητικός Δουάς"
   },
   "search": {
     "title": "Ενοποιημένη αναζήτηση",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar για είσοδο και έξοδο από το σπίτι",
     "masjid_desc": "Adhkar για είσοδο, έξοδο και μετάβαση στο τζαμί",
     "distress_illness_desc": "Παρακλήσεις για στενοχώρια, άγχος, θλίψη, ασθένεια και απαντημένες προσευχές",
-    "arafah_hajj_desc": "Παρακλήσεις, Talbiyah και αναμνήσεις για την Ημέρα της Αραφά και το προσκύνημα Χατζ"
+    "arafah_hajj_desc": "Παρακλήσεις, Talbiyah και αναμνήσεις για την Ημέρα της Αραφά και το προσκύνημα Χατζ",
+    "quran_duas_desc": "Παρακλήσεις και προσευχές που αναφέρονται στο Ιερό Κοράνι",
+    "prophetic_duas_desc": "Αυθεντικές ικεσίες που διηγούνται από τον Προφήτη ﷺ"
   },
   "dhikr": {
     "count": "Κόμης",

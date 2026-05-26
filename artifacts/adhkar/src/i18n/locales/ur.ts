@@ -1,3 +1,4 @@
+// Auto-generated locale file for ur
 export default {
   "app": {
     "name": "اسلامی اذکار",
@@ -30,7 +31,8 @@ export default {
     "tracker": "عزم کا راستہ",
     "merged_evening": "شام اور رقیہ",
     "daily_supplications": "آج اور آج کی رات کی یادیں۔",
-    "quran_duas": "قرآنی دعائیں"
+    "quran_duas": "قرآنی دعائیں",
+    "prophetic_duas": "نبوی دعائیں"
   },
   "home": {
     "greeting_morning": "صبح بخیر",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "گھر میں داخل ہونے اور نکلنے کی یاد اور اس میں برکت",
-    "masjid_desc": "مسجد جانے، داخل ہونے اور نکلنے کی یاد"
+    "masjid_desc": "مسجد جانے، داخل ہونے اور نکلنے کی یاد",
+    "quran_duas_desc": "دعائیں اور دعائیں جو قرآن پاک میں مذکور ہیں۔",
+    "prophetic_duas_desc": "رسول اللہ صلی اللہ علیہ وسلم سے منقول مستند دعائیں"
   },
   "search": {
     "title": "جامع تلاش",

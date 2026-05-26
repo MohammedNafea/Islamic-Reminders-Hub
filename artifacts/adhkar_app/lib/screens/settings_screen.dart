@@ -94,41 +94,61 @@ class SettingsScreen extends StatelessWidget {
     SettingsProvider settings,
     AppLocalizations localizations,
   ) {
-    final languages = [
-      {'code': 'ar', 'name': 'العربية'},
-      {'code': 'en', 'name': 'English'},
-      {'code': 'am', 'name': 'አማርኛ'},
-    ];
+    final currentLang = AppLocalizations.supportedLanguages.firstWhere(
+      (l) => l.code == settings.languageCode,
+      orElse: () => AppLocalizations.supportedLanguages.first,
+    );
 
     return Card(
-      child: Column(
-        children: languages.map((lang) {
-          final isSelected = settings.languageCode == lang['code'];
-          return Column(
-            children: [
-              ListTile(
-                title: Text(
-                  lang['name']!,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                trailing: isSelected
-                    ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
-                    : const Icon(Icons.circle_outlined),
-                onTap: () {
-                  settings.setLanguage(lang['code']!);
-                },
-              ),
-              if (lang != languages.last)
-                Divider(
-                  height: 1,
-                  indent: 16,
-                  endIndent: 16,
-                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
-                ),
-            ],
-          );
-        }).toList(),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.15),
+        ),
       ),
+      child: ListTile(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        leading: Text(
+          currentLang.flag,
+          style: const TextStyle(fontSize: 24),
+        ),
+        title: Text(
+          localizations.translate('settings_language'),
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(
+          currentLang.nativeName,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        onTap: () {
+          _showLanguageSelectorBottomSheet(context, settings, localizations);
+        },
+      ),
+    );
+  }
+
+  void _showLanguageSelectorBottomSheet(
+    BuildContext context,
+    SettingsProvider settings,
+    AppLocalizations localizations,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return _LanguageSelectorWidget(
+          settings: settings,
+          localizations: localizations,
+        );
+      },
     );
   }
 
@@ -467,6 +487,122 @@ class SettingsScreen extends StatelessWidget {
         content: Text(msg),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK')),
+        ],
+      ),
+    );
+  }
+}
+
+class _LanguageSelectorWidget extends StatefulWidget {
+  final SettingsProvider settings;
+  final AppLocalizations localizations;
+
+  const _LanguageSelectorWidget({
+    required this.settings,
+    required this.localizations,
+  });
+
+  @override
+  State<_LanguageSelectorWidget> createState() => _LanguageSelectorWidgetState();
+}
+
+class _LanguageSelectorWidgetState extends State<_LanguageSelectorWidget> {
+  String _searchQuery = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final searchPlaceholder = widget.localizations.locale.languageCode == 'ar' ? 'بحث عن لغة...' : 'Search language...';
+    final title = widget.localizations.translate('settings_language');
+
+    final filteredLangs = AppLocalizations.supportedLanguages.where((lang) {
+      final query = _searchQuery.toLowerCase();
+      return lang.name.toLowerCase().contains(query) ||
+             lang.nativeName.toLowerCase().contains(query) ||
+             lang.code.toLowerCase().contains(query);
+    }).toList();
+
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.75,
+      padding: EdgeInsets.only(
+        top: 16,
+        left: 16,
+        right: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            decoration: InputDecoration(
+              hintText: searchPlaceholder,
+              prefixIcon: const Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.symmetric(vertical: 0),
+            ),
+            onChanged: (val) {
+              setState(() {
+                _searchQuery = val;
+              });
+            },
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredLangs.length,
+              itemBuilder: (context, index) {
+                final lang = filteredLangs[index];
+                final isSelected = widget.settings.languageCode == lang.code;
+                return Column(
+                  children: [
+                    ListTile(
+                      leading: Text(
+                        lang.flag,
+                        style: const TextStyle(fontSize: 24),
+                      ),
+                      title: Text(
+                        lang.nativeName,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      subtitle: Text(lang.name),
+                      trailing: isSelected
+                          ? Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary)
+                          : const Icon(Icons.circle_outlined),
+                      onTap: () {
+                        widget.settings.setLanguage(lang.code);
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Divider(
+                      height: 1,
+                      indent: 16,
+                      endIndent: 16,
+                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.1),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

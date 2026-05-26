@@ -1,3 +1,4 @@
+// Auto-generated locale file for it
 export default {
   "app": {
     "name": "Adhkar Islamici",
@@ -30,7 +31,8 @@ export default {
     "merged_evening": "Sera e ruqyah",
     "sunan": "Sunnah del Profeta",
     "daily_supplications": "Ricordi per oggi e stasera",
-    "quran_duas": "Suppliche Coraniche"
+    "quran_duas": "Suppliche Coraniche",
+    "prophetic_duas": "Duas profetico"
   },
   "home": {
     "greeting_morning": "Buongiorno",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Ricordi per entrare e uscire di casa e benedizione in essa",
-    "masjid_desc": "Ricordi per l'andata, l'entrata e l'uscita dalla moschea"
+    "masjid_desc": "Ricordi per l'andata, l'entrata e l'uscita dalla moschea",
+    "quran_duas_desc": "Supplicazioni e preghiere menzionate nel Sacro Corano",
+    "prophetic_duas_desc": "Autentiche suppliche narrate dal Profeta ﷺ"
   },
   "search": {
     "title": "Ricerca completa",

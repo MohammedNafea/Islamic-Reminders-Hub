@@ -12,6 +12,7 @@ import { TranslatedText } from "@/components/TranslatedText";
 import { useLibraryContent } from "@/hooks/useLibraryContent";
 import type { LibraryContentItem } from "@/types/library";
 import Fuse from "fuse.js";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 const categoryIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   tafsir: BookOpen,
@@ -117,9 +118,12 @@ export default function HadithRulings() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-8 max-w-4xl mx-auto pb-12">
       <div className="text-center space-y-3 pt-6">
-        <h2 className="text-4xl font-heading font-bold text-primary tracking-tight">
-          {t("hadith.title")}
-        </h2>
+        <div className="flex items-center justify-center gap-2">
+          <h2 className="text-4xl font-heading font-bold text-primary tracking-tight">
+            {t("hadith.title")}
+          </h2>
+          <SectionBooklet sectionId="hadith" />
+        </div>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
           {t("hadith.subtitle")}
         </p>

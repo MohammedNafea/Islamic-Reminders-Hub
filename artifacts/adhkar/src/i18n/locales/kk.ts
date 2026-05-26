@@ -1,3 +1,4 @@
+// Auto-generated locale file for kk
 export default {
   "app": {
     "name": "Ислам орталығы",
@@ -30,7 +31,8 @@ export default {
     "daily_supplications": "Бүгінгі және бүгінгі кештен естеліктер",
     "quran_duas": "Құрандық дұғалар",
     "download": "Қолданбаны жүктеп алыңыз",
-    "sunan": "Пайғамбардың сүннеттері"
+    "sunan": "Пайғамбардың сүннеттері",
+    "prophetic_duas": "Пайғамбарлық дұғалар"
   },
   "home": {
     "greeting_morning": "Қайырлы таң",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "Мешітке бару, кіру және шығу кезіндегі естеліктер",
-    "house_desc": "Үйге кіріп-шығу кезіндегі естеліктер және онда бата"
+    "house_desc": "Үйге кіріп-шығу кезіндегі естеліктер және онда бата",
+    "quran_duas_desc": "Құран Кәрімде айтылған дұғалар мен дұғалар",
+    "prophetic_duas_desc": "Пайғамбардан (ﷺ) жеткен сахих дұғалар"
   },
   "favorites": {
     "empty": "Таңдаулылар әлі жоқ",

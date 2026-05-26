@@ -1,4 +1,4 @@
-// Auto-generated locale file for Thai (th)
+// Auto-generated locale file for th
 export default {
   "app": {
     "name": "ศูนย์กลางอิสลาม",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "คำวิงวอนรายวัน",
     "distress_illness": "ความทุกข์ทรมานและการเจ็บป่วย",
     "arafah_hajj": "วันอารอฟะห์และฮัจญ์",
-    "quran_duas": "กุรอาน Duas"
+    "quran_duas": "กุรอาน Duas",
+    "prophetic_duas": "Duas ทำนาย"
   },
   "search": {
     "title": "การค้นหาแบบครบวงจร",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar สำหรับเข้าและออกจากบ้าน",
     "masjid_desc": "Adhkar สำหรับการเข้าออกและไปมัสยิด",
     "distress_illness_desc": "คำวิงวอนสำหรับความทุกข์ ความวิตกกังวล ความโศกเศร้า ความเจ็บป่วย และคำตอบคำอธิษฐาน",
-    "arafah_hajj_desc": "คำวิงวอน ตัลบียาห์ และการรำลึกถึงวันอารอฟะฮ์และพิธีฮัจญ์"
+    "arafah_hajj_desc": "คำวิงวอน ตัลบียาห์ และการรำลึกถึงวันอารอฟะฮ์และพิธีฮัจญ์",
+    "quran_duas_desc": "คำวิงวอนและคำอธิษฐานที่กล่าวถึงในอัลกุรอาน",
+    "prophetic_duas_desc": "คำวิงวอนที่แท้จริงเล่าจากท่านศาสดาﷺ"
   },
   "dhikr": {
     "count": "นับ",

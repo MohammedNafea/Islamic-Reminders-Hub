@@ -1,4 +1,4 @@
-// Auto-generated locale file for Danish (da)
+// Auto-generated locale file for da
 export default {
   "app": {
     "name": "Islamisk Hub",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Daglige Supplikationer",
     "distress_illness": "Nød og sygdom",
     "arafah_hajj": "Arafah-dag og Hajj",
-    "quran_duas": "Koraniske Duas"
+    "quran_duas": "Koraniske Duas",
+    "prophetic_duas": "Profetiske Duas"
   },
   "search": {
     "title": "Samlet søgning",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar for at komme ind og ud af huset",
     "masjid_desc": "Adhkar for at komme ind, forlade og gå til moskeen",
     "distress_illness_desc": "Anmodninger om nød, angst, sorg, sygdom og besvarede bønner",
-    "arafah_hajj_desc": "Bønner, Talbiyah og erindringer for Arafah-dagen og Hajj-pilgrimsfærden"
+    "arafah_hajj_desc": "Bønner, Talbiyah og erindringer for Arafah-dagen og Hajj-pilgrimsfærden",
+    "quran_duas_desc": "Bønner og bønner nævnt i den hellige Koran",
+    "prophetic_duas_desc": "Autentiske bønner fortalt fra profeten ﷺ"
   },
   "dhikr": {
     "count": "Tælle",

@@ -1,3 +1,4 @@
+// Auto-generated locale file for sv
 export default {
   "app": {
     "name": "Islamiska Adhkar",
@@ -30,7 +31,8 @@ export default {
     "download": "Ladda ner applikationen",
     "merged_morning": "Morgon och ruqyah",
     "daily_supplications": "Minnen för idag och ikväll",
-    "quran_duas": "Koraniska Böner"
+    "quran_duas": "Koraniska Böner",
+    "prophetic_duas": "Profetiska Duas"
   },
   "home": {
     "greeting_morning": "God morgon",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Påminnelse om att gå in och lämna huset och välsignelse däri",
-    "masjid_desc": "Minnen för att gå, gå in och lämna moskén"
+    "masjid_desc": "Minnen för att gå, gå in och lämna moskén",
+    "quran_duas_desc": "Böner och böner som nämns i den heliga Koranen",
+    "prophetic_duas_desc": "Autentiska bön berättade från profeten ﷺ"
   },
   "favorites": {
     "subtitle": "En lista över dhikr och domar som du har memorerat",

@@ -1,3 +1,4 @@
+// Auto-generated locale file for nl
 export default {
   "app": {
     "name": "Islamitische Adhkar",
@@ -30,7 +31,8 @@ export default {
     "merged_evening": "Avond en ruqya",
     "merged_morning": "Ochtend en ruqya",
     "daily_supplications": "Herinneringen voor vandaag en vanavond",
-    "quran_duas": "Koranische Smeekbeden"
+    "quran_duas": "Koranische Smeekbeden",
+    "prophetic_duas": "Profetische Dua's"
   },
   "home": {
     "greeting_morning": "Goedemorgen",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Herinneringen voor het binnenkomen en verlaten van het huis en de zegen daarin",
-    "masjid_desc": "Herinneringen voor het gaan, betreden en verlaten van de moskee"
+    "masjid_desc": "Herinneringen voor het gaan, betreden en verlaten van de moskee",
+    "quran_duas_desc": "Smeekbeden en gebeden genoemd in de Heilige Koran",
+    "prophetic_duas_desc": "Authentieke smeekbeden overgeleverd van de Profeet (ﷺ)."
   },
   "favorites": {
     "empty_desc": "Begin met het toevoegen van de dhikr of uitspraken die u interesseren om hier te verschijnen",

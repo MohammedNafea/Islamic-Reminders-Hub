@@ -1,3 +1,4 @@
+// Auto-generated locale file for bs
 export default {
   "app": {
     "name": "Islamski Zikrovi",
@@ -30,7 +31,8 @@ export default {
     "download": "Preuzmite aplikaciju",
     "sunan": "Sunneti Poslanika",
     "daily_supplications": "Sećanja za danas i večeras",
-    "quran_duas": "Dove iz Kur'ana"
+    "quran_duas": "Dove iz Kur'ana",
+    "prophetic_duas": "Prophetic Duas"
   },
   "home": {
     "greeting_morning": "Dobro jutro",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Sjećanja na ulazak i izlazak iz kuće i blagoslov u njoj",
-    "masjid_desc": "Sjećanja na odlazak, ulazak i izlazak iz džamije"
+    "masjid_desc": "Sjećanja na odlazak, ulazak i izlazak iz džamije",
+    "quran_duas_desc": "Dove i dove koje se spominju u Časnom Kur'anu",
+    "prophetic_duas_desc": "Vjerodostojne dove prenesene od Poslanika, sallallahu alejhi ve sellem"
   },
   "favorites": {
     "empty": "Još nema favorita",

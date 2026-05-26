@@ -1,3 +1,4 @@
+// Auto-generated locale file for sw
 export default {
   "app": {
     "name": "Adhkar za Kiislamu",
@@ -30,7 +31,8 @@ export default {
     "daily_supplications": "Kumbukumbu za leo na usiku wa leo",
     "quran_duas": "Dua za Qur'ani",
     "sunan": "Sunnah za Mtume",
-    "download": "Pakua programu"
+    "download": "Pakua programu",
+    "prophetic_duas": "Dua za Kinabii"
   },
   "home": {
     "greeting_morning": "Habari za asubuhi",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Mawaidha ya kuingia na kutoka ndani ya nyumba na baraka ndani yake",
-    "masjid_desc": "Mawaidha ya kwenda, kuingia na kutoka msikitini"
+    "masjid_desc": "Mawaidha ya kwenda, kuingia na kutoka msikitini",
+    "quran_duas_desc": "Dua na maombi yaliyotajwa ndani ya Quran Tukufu",
+    "prophetic_duas_desc": "Dua zilizo sahihi kutoka kwa Mtume ﷺ"
   },
   "favorites": {
     "empty": "Bado hakuna vipendwa",

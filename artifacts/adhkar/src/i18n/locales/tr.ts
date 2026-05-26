@@ -1,3 +1,4 @@
+// Auto-generated locale file for tr
 export default {
   "app": {
     "name": "İslami Zikirler",
@@ -30,7 +31,8 @@ export default {
     "tracker": "Taahhüt yolu",
     "sunan": "Peygamberimizin Sünnetleri",
     "daily_supplications": "Bugün ve bu gece için hatıralar",
-    "quran_duas": "Kur'an Duaları"
+    "quran_duas": "Kur'an Duaları",
+    "prophetic_duas": "Peygamberlik Duaları"
   },
   "home": {
     "greeting_morning": "Günaydın",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Eve girme, çıkma ve oradaki nimetler ile ilgili zikirler",
-    "masjid_desc": "Camiye giriş, giriş ve çıkışla ilgili hatırlatmalar"
+    "masjid_desc": "Camiye giriş, giriş ve çıkışla ilgili hatırlatmalar",
+    "quran_duas_desc": "Kur'an-ı Kerim'de geçen dualar ve dualar",
+    "prophetic_duas_desc": "Peygamber Efendimiz'den rivayet edilen sahih dualar"
   },
   "favorites": {
     "empty": "Henüz favori yok",

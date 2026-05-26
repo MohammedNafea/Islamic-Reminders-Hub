@@ -1,4 +1,4 @@
-// Auto-generated locale file for Kannada (kn)
+// Auto-generated locale file for kn
 export default {
   "app": {
     "name": "ಇಸ್ಲಾಮಿಕ್ ಹಬ್",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "ದೈನಂದಿನ ಪ್ರಾರ್ಥನೆಗಳು",
     "distress_illness": "ತೊಂದರೆ ಮತ್ತು ಅನಾರೋಗ್ಯ",
     "arafah_hajj": "ಅರಾಫಾ ದಿನ ಮತ್ತು ಹಜ್",
-    "quran_duas": "ಕುರಾನ್ ದುವಾಸ್"
+    "quran_duas": "ಕುರಾನ್ ದುವಾಸ್",
+    "prophetic_duas": "ಪ್ರವಾದಿ ದುವಾಸ್"
   },
   "search": {
     "title": "ಏಕೀಕೃತ ಹುಡುಕಾಟ",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "ಮನೆ ಪ್ರವೇಶಿಸಲು ಮತ್ತು ಹೊರಹೋಗಲು ಅಧ್ಕರ್",
     "masjid_desc": "ಮಸೀದಿಗೆ ಪ್ರವೇಶಿಸಲು, ಹೊರಡಲು ಮತ್ತು ಹೋಗುವುದಕ್ಕೆ ಅಧ್ಕರ್",
     "distress_illness_desc": "ಸಂಕಟ, ಆತಂಕ, ದುಃಖ, ಅನಾರೋಗ್ಯ, ಮತ್ತು ಉತ್ತರಿಸಿದ ಪ್ರಾರ್ಥನೆಗಳಿಗೆ ಪ್ರಾರ್ಥನೆಗಳು",
-    "arafah_hajj_desc": "ಪ್ರಾರ್ಥನೆಗಳು, ತಲ್ಬಿಯಾ ಮತ್ತು ಅರಾಫಾ ದಿನ ಮತ್ತು ಹಜ್ ಯಾತ್ರೆಯ ಸ್ಮರಣೆಗಳು"
+    "arafah_hajj_desc": "ಪ್ರಾರ್ಥನೆಗಳು, ತಲ್ಬಿಯಾ ಮತ್ತು ಅರಾಫಾ ದಿನ ಮತ್ತು ಹಜ್ ಯಾತ್ರೆಯ ಸ್ಮರಣೆಗಳು",
+    "quran_duas_desc": "ಪವಿತ್ರ ಕುರಾನ್‌ನಲ್ಲಿ ಉಲ್ಲೇಖಿಸಲಾದ ಪ್ರಾರ್ಥನೆಗಳು ಮತ್ತು ಪ್ರಾರ್ಥನೆಗಳು",
+    "prophetic_duas_desc": "ಪ್ರವಾದಿ ﷺ ರಿಂದ ನಿರೂಪಿಸಲ್ಪಟ್ಟ ಅಧಿಕೃತ ಪ್ರಾರ್ಥನೆಗಳು"
   },
   "dhikr": {
     "count": "ಎಣಿಸಿ",

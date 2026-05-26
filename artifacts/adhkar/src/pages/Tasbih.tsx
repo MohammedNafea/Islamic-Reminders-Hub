@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 const TARGETS = [33, 99, 100, 500, 1000];
 
@@ -255,14 +256,17 @@ export default function Tasbih() {
           <div className="space-y-6 flex-1 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex justify-between items-center pt-4">
-                <h2 className="text-2xl font-heading font-bold text-primary">
-                  <TranslatedText
-                    text="السبحة الإلكترونية"
-                    staticTranslation={getTranslation(t, "tasbih.title", i18n.language) || undefined}
-                    keepArabic={false}
-                    inline
-                  />
-                </h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-2xl font-heading font-bold text-primary">
+                    <TranslatedText
+                      text="السبحة الإلكترونية"
+                      staticTranslation={getTranslation(t, "tasbih.title", i18n.language) || undefined}
+                      keepArabic={false}
+                      inline
+                    />
+                  </h2>
+                  <SectionBooklet sectionId="tasbih" />
+                </div>
                 
                 <Button
                   variant="outline"
@@ -386,18 +390,11 @@ export default function Tasbih() {
                     transition={{ type: "spring", bounce: 0, duration: 0.4 }}
                   />
                 </svg>
-                
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={count}
-                    initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -10, scale: 1.2 }}
-                    className="text-6xl font-bold tracking-tight tabular-nums text-foreground"
-                  >
-                    {count}
-                  </motion.span>
-                </AnimatePresence>
+                <span
+                  className="text-6xl font-bold tracking-tight tabular-nums text-foreground select-none"
+                >
+                  {count}
+                </span>
                 <span className="text-muted-foreground mt-2 font-medium text-xs tracking-wider">
                   <TranslatedText
                     text="الهدف"

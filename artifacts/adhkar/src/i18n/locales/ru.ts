@@ -1,3 +1,4 @@
+// Auto-generated locale file for ru
 export default {
   "app": {
     "name": "Исламские Азкары",
@@ -30,7 +31,8 @@ export default {
     "merged_evening": "Вечер и рукья",
     "tracker": "Путь обязательств",
     "daily_supplications": "Воспоминания о сегодняшнем и сегодняшнем вечере",
-    "quran_duas": "Коранические молитвы"
+    "quran_duas": "Коранические молитвы",
+    "prophetic_duas": "Пророческие дуа"
   },
   "home": {
     "greeting_morning": "Доброе утро",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Напоминание о входе и выходе из дома и благословении в нем.",
-    "masjid_desc": "Напоминания о походе, входе и выходе из мечети"
+    "masjid_desc": "Напоминания о походе, входе и выходе из мечети",
+    "quran_duas_desc": "Просьбы и молитвы, упомянутые в Священном Коране",
+    "prophetic_duas_desc": "Достоверные мольбы, переданные от Пророка ﷺ"
   },
   "favorites": {
     "empty": "Избранных пока нет",

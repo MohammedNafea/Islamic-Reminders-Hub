@@ -1,3 +1,4 @@
+// Auto-generated locale file for ko
 export default {
   "app": {
     "name": "이슬람 아드카르",
@@ -30,7 +31,8 @@ export default {
     "tracker": "약정 경로",
     "merged_evening": "저녁과 루카",
     "daily_supplications": "오늘과 오늘 밤의 추억",
-    "quran_duas": "꾸란 두아"
+    "quran_duas": "꾸란 두아",
+    "prophetic_duas": "예언의 두아스"
   },
   "home": {
     "greeting_morning": "좋은 아침입니다",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "집에 들어오고 나갈 때의 추억과 그 안에서의 축복",
-    "masjid_desc": "모스크에 가고, 들어가고, 나가는 것에 대한 추억"
+    "masjid_desc": "모스크에 가고, 들어가고, 나가는 것에 대한 추억",
+    "quran_duas_desc": "꾸란에 언급된 간구와 기도",
+    "prophetic_duas_desc": "선지자가 들려주는 진정한 간구 ﷺ"
   },
   "favorites": {
     "empty": "아직 즐겨찾기가 없습니다.",

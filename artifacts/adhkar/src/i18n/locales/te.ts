@@ -1,3 +1,4 @@
+// Auto-generated locale file for te
 export default {
   "app": {
     "name": "ఇస్లామిక్ హబ్",
@@ -30,7 +31,8 @@ export default {
     "download": "అప్లికేషన్‌ను డౌన్‌లోడ్ చేయండి",
     "sunan": "ప్రవక్త యొక్క సున్నత్లు",
     "daily_supplications": "ఈరోజు మరియు ఈ రాత్రికి జ్ఞాపకాలు",
-    "quran_duas": "ఖురానిక్ దుఆలు"
+    "quran_duas": "ఖురానిక్ దుఆలు",
+    "prophetic_duas": "ప్రవక్త దువాస్"
   },
   "home": {
     "greeting_morning": "శుభోదయం",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "మసీదులోకి వెళ్లడం, ప్రవేశించడం మరియు బయటకు వెళ్లడం కోసం జ్ఞాపకాలు",
-    "house_desc": "ఇంట్లోకి ప్రవేశించడం మరియు బయటకు రావడం మరియు దానిలోని ఆశీర్వాదం కోసం జ్ఞాపకాలు"
+    "house_desc": "ఇంట్లోకి ప్రవేశించడం మరియు బయటకు రావడం మరియు దానిలోని ఆశీర్వాదం కోసం జ్ఞాపకాలు",
+    "quran_duas_desc": "పవిత్ర ఖురాన్‌లో ప్రస్తావించబడిన ప్రార్థనలు మరియు ప్రార్థనలు",
+    "prophetic_duas_desc": "ప్రవక్త సల్లల్లాహు అలైహి వసల్లం నుండి వివరించబడిన ప్రామాణికమైన ప్రార్థనలు"
   },
   "favorites": {
     "subtitle": "మీరు కంఠస్థం చేసుకున్న ధిక్ర్ మరియు రూల్‌ల జాబితా",

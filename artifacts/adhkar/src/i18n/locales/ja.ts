@@ -1,3 +1,4 @@
+// Auto-generated locale file for ja
 export default {
   "app": {
     "name": "イスラミック・ハブ",
@@ -30,7 +31,8 @@ export default {
     "sunan": "預言者のスンナ",
     "download": "アプリケーションをダウンロードする",
     "daily_supplications": "今日と今夜の思い出",
-    "quran_duas": "クルアーンの祈願"
+    "quran_duas": "クルアーンの祈願",
+    "prophetic_duas": "予言のデュアス"
   },
   "home": {
     "greeting_morning": "おはようございます",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "家への出入りとその中での祝福の記憶",
-    "masjid_desc": "モスクへの出入りの思い出"
+    "masjid_desc": "モスクへの出入りの思い出",
+    "quran_duas_desc": "聖クルアーンに記されている嘆願と祈り",
+    "prophetic_duas_desc": "預言者から語られる本物の嘆願 ﷺ"
   },
   "favorites": {
     "empty": "お気に入りはまだありません",

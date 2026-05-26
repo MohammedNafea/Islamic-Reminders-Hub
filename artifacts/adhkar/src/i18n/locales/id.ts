@@ -1,3 +1,4 @@
+// Auto-generated locale file for id
 export default {
   "app": {
     "name": "Dzikir Islam",
@@ -30,7 +31,8 @@ export default {
     "merged_evening": "Malam dan ruqyah",
     "sunan": "Sunnah Nabi",
     "daily_supplications": "Kenangan untuk hari ini dan malam ini",
-    "quran_duas": "Doa-doa Al-Quran"
+    "quran_duas": "Doa-doa Al-Quran",
+    "prophetic_duas": "Duas Nabi"
   },
   "home": {
     "greeting_morning": "Selamat Pagi",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Peringatan masuk dan keluar rumah serta berkah didalamnya",
-    "masjid_desc": "Zikir pergi, masuk dan keluar masjid"
+    "masjid_desc": "Zikir pergi, masuk dan keluar masjid",
+    "quran_duas_desc": "Doa dan doa disebutkan dalam Al-Qur'an",
+    "prophetic_duas_desc": "Doa shahih yang diriwayatkan dari Nabi ﷺ"
   },
   "favorites": {
     "empty": "Belum ada favorit",
