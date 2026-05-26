@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -45,6 +46,15 @@ class _MainLayoutState extends State<MainLayout> {
         ),
       )
       ..loadRequest(Uri.parse('https://adhkar.thedarkgalaxy.com/'));
+
+    if (_controller.platform is AndroidWebViewController) {
+      (_controller.platform as AndroidWebViewController).setGeolocationPermissionsPromptCallbacks(
+        onShowPrompt: (GeolocationPermissionsRequestParams params) async {
+          return const GeolocationPermissionsResponse(allow: true, retain: true);
+        },
+        onHidePrompt: () {},
+      );
+    }
   }
 
   @override
