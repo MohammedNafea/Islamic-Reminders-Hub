@@ -118,6 +118,8 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
         return adhkarMasjid;
       case 'distress_illness':
         return adhkarDistressAndIllness;
+      case 'arafah_hajj':
+        return adhkarArafahHajj;
       case 'favorites':
         final favs = tracker.favorites;
         return allAdhkar.where((d) => favs.contains(d.id)).toList();
@@ -172,6 +174,10 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
         return localizations.locale.languageCode == 'ar'
             ? 'أدعية الكرب والمرض والاستجابة'
             : (localizations.locale.languageCode == 'en' ? 'Distress & Illness' : 'የጭንቀትና ህመም ዱዓዎች');
+      case 'arafah_hajj':
+        return localizations.locale.languageCode == 'ar'
+            ? 'يوم عرفة والحج'
+            : (localizations.locale.languageCode == 'en' ? 'Arafah Day & Hajj' : 'የዓረፋ ቀንና ሐጅ');
       case 'favorites':
         return localizations.translate('nav_favorites');
       default:
@@ -275,6 +281,7 @@ class _AdhkarScreenState extends State<AdhkarScreen> {
       {'key': 'house', 'icon': Icons.home, 'color': Colors.brown},
       {'key': 'masjid', 'icon': Icons.mosque, 'color': Colors.blueGrey},
       {'key': 'distress_illness', 'icon': Icons.healing, 'color': Colors.redAccent},
+      {'key': 'arafah_hajj', 'icon': Icons.landscape, 'color': Colors.amber},
     ];
 
     final isWide = MediaQuery.of(context).size.width >= 600;

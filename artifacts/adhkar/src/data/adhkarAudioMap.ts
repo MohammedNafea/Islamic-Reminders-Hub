@@ -7,739 +7,25 @@ export interface AdhkarAudioConfig {
 }
 
 export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
-  "ayat_kursi_morning_evening": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      255
-    ]
-  },
-  "sayyid_istighfar": {
+  "afia_body_hearing_sight": {
     "type": "dureihim",
-    "filename": "79"
-  },
-  "la_ilaha_10": {
-    "type": "dureihim",
-    "filename": "92"
-  },
-  "subhan_allah_100": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "bismillah_protection": {
-    "type": "dureihim",
-    "filename": "86"
+    "filename": "82"
   },
   "afia_dua": {
     "type": "dureihim",
     "filename": "84"
   },
-  "ikhlas_morning_evening": {
-    "type": "quran",
-    "surah": 112,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4
-    ]
-  },
-  "falaq_morning_evening": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "nas_morning_evening": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "raditu": {
-    "type": "dureihim",
-    "filename": "87"
-  },
-  "fatirul_samawat": {
-    "type": "dureihim",
-    "filename": "85"
-  },
-  "ya_hayyu": {
-    "type": "dureihim",
-    "filename": "88"
-  },
-  "hasbiyallah_7": {
-    "type": "dureihim",
-    "filename": "83"
-  },
-  "asbahna_morning": {
-    "type": "dureihim",
-    "filename": "77"
-  },
-  "fitra_morning": {
-    "type": "dureihim",
-    "filename": "90"
-  },
-  "la_ilaha_100_day": {
-    "type": "dureihim",
-    "filename": "93"
-  },
-  "awudhu_kalimat": {
-    "type": "dureihim",
-    "filename": "216"
-  },
-  "ayatan_baqarah": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      285,
-      286
-    ]
-  },
-  "ayat_kursi_sleep": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      255
-    ]
-  },
-  "akhir_baqarah_sleep": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      285,
-      286
-    ]
-  },
-  "ikhlas_sleep": {
-    "type": "quran",
-    "surah": 112,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4
-    ]
-  },
-  "falaq_sleep": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "nas_sleep": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "subhan_allah_sleep_33": {
-    "type": "dureihim",
-    "filename": "240"
-  },
-  "allahu_akbar_sleep_34": {
-    "type": "dureihim",
-    "filename": "241"
-  },
-  "bismika_rabbi": {
-    "type": "dureihim",
-    "filename": "102"
-  },
-  "allahumma_bismika": {
-    "type": "dureihim",
-    "filename": "105"
-  },
-  "allahumma_khalaqta": {
-    "type": "dureihim",
-    "filename": "103"
-  },
-  "allahumma_rabb_samawat": {
-    "type": "dureihim",
-    "filename": "107"
-  },
-  "alhamdu_atamana": {
-    "type": "dureihim",
-    "filename": "108"
-  },
-  "allahumma_qini": {
-    "type": "dureihim",
-    "filename": "104"
-  },
-  "bismillah_wadatu": {
-    "type": "dureihim",
-    "filename": "102"
-  },
-  "allahumma_aslamtu": {
-    "type": "dureihim",
-    "filename": "111"
-  },
-  "istighfar_3_prayer": {
-    "type": "dureihim",
-    "filename": "66"
-  },
-  "la_ilaha_prayer": {
-    "type": "dureihim",
-    "filename": "67"
-  },
-  "tahlil_prayer": {
-    "type": "dureihim",
-    "filename": "68"
-  },
-  "ayat_kursi_prayer": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      255
-    ]
-  },
-  "subhan_allah_prayer_33": {
-    "type": "dureihim",
-    "filename": "240"
-  },
-  "allahu_akbar_prayer_33": {
-    "type": "dureihim",
-    "filename": "241"
-  },
-  "tamam_miah_prayer": {
-    "type": "dureihim",
-    "filename": "93"
-  },
-  "ikhlas_prayer": {
-    "type": "quran",
-    "surah": 112,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4
-    ]
-  },
-  "falaq_prayer": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "nas_prayer": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "salawat_100_prayer": {
-    "type": "dureihim",
-    "filename": "98"
-  },
-  "salawat_ibrahimiya_prayer": {
-    "type": "dureihim",
-    "filename": "53"
-  },
-  "fatiha_ruqyah": {
-    "type": "quran",
-    "surah": 1,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7
-    ]
-  },
-  "ayat_kursi_ruqyah": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      255
-    ]
-  },
-  "aman_rasul_ruqyah": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      285,
-      286
-    ]
-  },
-  "kafirun_ruqyah": {
-    "type": "quran",
-    "surah": 109,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "ikhlas_ruqyah": {
-    "type": "quran",
-    "surah": 112,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4
-    ]
-  },
-  "falaq_ruqyah": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "nas_ruqyah": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "awudhu_qudra": {
-    "type": "dureihim",
-    "filename": "243"
-  },
-  "awudhu_kalimat_ruqyah": {
-    "type": "dureihim",
-    "filename": "146"
-  },
-  "salawat_100": {
-    "type": "dureihim",
-    "filename": "98"
-  },
-  "salawat_ibrahimiya": {
-    "type": "dureihim",
-    "filename": "53"
-  },
-  "sv1": {
-    "type": "dureihim",
-    "filename": "219"
-  },
-  "sv3": {
-    "type": "dureihim",
-    "filename": "221"
-  },
-  "sv4": {
-    "type": "dureihim",
-    "filename": "220"
-  },
-  "sv5": {
-    "type": "quran",
-    "surah": 33,
-    "ayahs": [
-      56
-    ]
-  },
-  "enter_house_bismillah": {
-    "type": "dureihim",
-    "filename": "18"
-  },
-  "leave_house_tawakkul": {
-    "type": "dureihim",
-    "filename": "16"
-  },
-  "leave_house_dua": {
-    "type": "dureihim",
-    "filename": "17"
-  },
-  "house_taawwudh_night": {
-    "type": "dureihim",
-    "filename": "216"
-  },
-  "house_bismillah_shaytan": {
-    "type": "dureihim",
-    "filename": "12"
-  },
-  "go_to_masjid_noor": {
-    "type": "dureihim",
-    "filename": "19"
-  },
-  "enter_masjid_dua": {
-    "type": "dureihim",
-    "filename": "20"
-  },
-  "enter_masjid_istiaadha": {
-    "type": "dureihim",
-    "filename": "20"
-  },
-  "leave_masjid_dua": {
-    "type": "dureihim",
-    "filename": "21"
-  },
-  "afia_body_hearing_sight": {
-    "type": "dureihim",
-    "filename": "82"
-  },
-  "istighfar_100_daily": {
-    "type": "dureihim",
-    "filename": "96"
-  },
-  "bika_asbahna": {
-    "type": "dureihim",
-    "filename": "78"
-  },
-  "niamah_morning": {
-    "type": "dureihim",
-    "filename": "81"
-  },
-  "subhan_allah_adada_khalqihi": {
-    "type": "dureihim",
-    "filename": "94"
-  },
-  "ashhadu_himalata_arshika": {
-    "type": "dureihim",
-    "filename": "80"
-  },
-  "alhamdulillah_sleep_33": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "sleep_taqallub": {
-    "type": "dureihim",
-    "filename": "112"
-  },
-  "sleep_faza": {
-    "type": "dureihim",
-    "filename": "245"
-  },
-  "sleep_faza_istiaadha": {
-    "type": "dureihim",
-    "filename": "113"
-  },
-  "sleep_bad_dream": {
-    "type": "dureihim",
-    "filename": "114"
-  },
-  "sleep_waking_up_1": {
-    "type": "dureihim",
-    "filename": "1"
-  },
-  "sleep_waking_up_2": {
-    "type": "dureihim",
-    "filename": "3"
-  },
-  "sleep_mulk_sajdah": {
-    "type": "quran",
-    "surah": 67,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15,
-      16,
-      17,
-      18,
-      19,
-      20,
-      21,
-      22,
-      23,
-      24,
-      25,
-      26,
-      27,
-      28,
-      29,
-      30
-    ]
-  },
-  "sleep_ali_imran_waking": {
-    "type": "quran",
-    "surah": 3,
-    "ayahs": [
-      190,
-      191,
-      192,
-      193,
-      194,
-      195,
-      196,
-      197,
-      198,
-      199,
-      200
-    ]
-  },
-  "sleep_kafirun_recitation": {
-    "type": "quran",
-    "surah": 109,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "sleep_insomnia_dua": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "alhamdulillah_prayer_33": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "prayer_qini_v1": {
-    "type": "dureihim",
-    "filename": "104"
-  },
-  "prayer_istiaadha_bukhari": {
-    "type": "dureihim",
-    "filename": "60"
-  },
-  "prayer_istighfar_khataaya": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "prayer_aanni_ala_dhikrika": {
-    "type": "dureihim",
-    "filename": "59"
-  },
-  "prayer_ilm_nafi": {
-    "type": "dureihim",
-    "filename": "95"
-  },
-  "prayer_la_ilaha_yuhyi_10": {
-    "type": "dureihim",
-    "filename": "209"
-  },
-  "prayer_ajirni_min_nar_7": {
-    "type": "dureihim",
-    "filename": "61"
-  },
-  "prayer_tasbih_10_alternate": {
-    "type": "dureihim",
-    "filename": "106"
-  },
-  "prayer_tasbih_34_alternate": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "prayer_tasbih_25_alternate": {
-    "type": "dureihim",
-    "filename": "264"
-  },
-  "rabb_nas": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6
-    ]
-  },
-  "ruqyah_jibril": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "ruqyah_rubb_nas_bidal_shifa": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "ruqyah_jibril_alternate": {
-    "type": "dureihim",
-    "filename": "178"
-  },
-  "ruqyah_bismillah_turbat_ardina": {
-    "type": "dureihim",
-    "filename": "18"
-  },
-  "ruqyah_muawwidhat_blow": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "ruqyah_baqarah_intro": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "ruqyah_sihr_arafah": {
-    "type": "quran",
-    "surah": 7,
-    "ayahs": [
-      117,
-      118,
-      119,
-      120,
-      121,
-      122
-    ]
-  },
-  "ruqyah_sihr_yunus": {
-    "type": "quran",
-    "surah": 10,
-    "ayahs": [
-      81,
-      82
-    ]
-  },
-  "ruqyah_sihr_taha": {
-    "type": "quran",
-    "surah": 20,
-    "ayahs": [
-      69
-    ]
-  },
-  "ruqyah_ain_qalam": {
-    "type": "quran",
-    "surah": 68,
-    "ayahs": [
-      51,
-      52
-    ]
-  },
-  "ruqyah_yabrik": {
-    "type": "dureihim",
-    "filename": "178"
-  },
-  "ruqyah_faza_shayatin": {
-    "type": "dureihim",
-    "filename": "113"
-  },
-  "ruqyah_khambash": {
-    "type": "dureihim",
-    "filename": "247"
-  },
-  "ruqyah_jibril_self": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "ruqyah_khalaq": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ]
-  },
-  "ruqyah_bismillah_protection": {
-    "type": "dureihim",
-    "filename": "86"
-  },
-  "sv2": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "wear_clothes": {
-    "type": "dureihim",
-    "filename": "5"
-  },
-  "wear_clothes_general": {
-    "type": "dureihim",
-    "filename": "5"
-  },
-  "take_off_clothes": {
-    "type": "dureihim",
-    "filename": "15"
-  },
-  "enter_restroom": {
-    "type": "dureihim",
-    "filename": "10"
-  },
-  "leave_restroom": {
-    "type": "dureihim",
-    "filename": "11"
-  },
-  "before_wudu": {
-    "type": "dureihim",
-    "filename": "12"
-  },
-  "after_wudu": {
-    "type": "dureihim",
-    "filename": "13"
-  },
-  "after_wudu_tawabeen": {
-    "type": "dureihim",
-    "filename": "13"
-  },
-  "hear_athan_repeat": {
-    "type": "dureihim",
-    "filename": "22"
-  },
   "after_athan_salawat": {
     "type": "dureihim",
     "filename": "24"
-  },
-  "after_athan_wasilah": {
-    "type": "dureihim",
-    "filename": "25"
   },
   "after_athan_shahada": {
     "type": "dureihim",
     "filename": "23"
   },
-  "before_food": {
+  "after_athan_wasilah": {
     "type": "dureihim",
-    "filename": "175"
+    "filename": "25"
   },
   "after_food": {
     "type": "dureihim",
@@ -753,6 +39,766 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "179"
   },
+  "after_wudu": {
+    "type": "dureihim",
+    "filename": "13"
+  },
+  "after_wudu_tawabeen": {
+    "type": "dureihim",
+    "filename": "13"
+  },
+  "akhir_baqarah_sleep": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      285, 286
+    ]
+  },
+  "alhamdu_atamana": {
+    "type": "dureihim",
+    "filename": "108"
+  },
+  "alhamdulillah_prayer_33": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "alhamdulillah_sleep_33": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "allahu_akbar_prayer_33": {
+    "type": "dureihim",
+    "filename": "241"
+  },
+  "allahu_akbar_sleep_34": {
+    "type": "dureihim",
+    "filename": "241"
+  },
+  "allahumma_aslamtu": {
+    "type": "dureihim",
+    "filename": "111"
+  },
+  "allahumma_bismika": {
+    "type": "dureihim",
+    "filename": "105"
+  },
+  "allahumma_khalaqta": {
+    "type": "dureihim",
+    "filename": "103"
+  },
+  "allahumma_qini": {
+    "type": "dureihim",
+    "filename": "104"
+  },
+  "allahumma_rabb_samawat": {
+    "type": "dureihim",
+    "filename": "107"
+  },
+  "aman_rasul_ruqyah": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      285, 286
+    ]
+  },
+  "answered_ism_aazam": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "answered_thul_jalal": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "arafah_ali_dua": {
+    "type": "dureihim",
+    "filename": "237"
+  },
+  "arafah_best_dhikr": {
+    "type": "dureihim",
+    "filename": "237"
+  },
+  "arafah_prophetic_afia": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "arafah_prophetic_huda": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "arafah_prophetic_jame": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "arafah_prophetic_refuge": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "arafah_quran_hasanah": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      201
+    ]
+  },
+  "arafah_quran_tazigh": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      8
+    ]
+  },
+  "arafah_quran_younus": {
+    "type": "quran",
+    "surah": 21,
+    "ayahs": [
+      87
+    ]
+  },
+  "arafah_quran_zulmna": {
+    "type": "quran",
+    "surah": 7,
+    "ayahs": [
+      23
+    ]
+  },
+  "asbahna_morning": {
+    "type": "dureihim",
+    "filename": "77"
+  },
+  "asbahna_morning_rab_al_alamin": {
+    "type": "dureihim",
+    "filename": "89"
+  },
+  "ashhadu_himalata_arshika": {
+    "type": "dureihim",
+    "filename": "80"
+  },
+  "awudhu_kalimat": {
+    "type": "dureihim",
+    "filename": "216"
+  },
+  "awudhu_kalimat_ruqyah": {
+    "type": "dureihim",
+    "filename": "146"
+  },
+  "awudhu_qudra": {
+    "type": "dureihim",
+    "filename": "243"
+  },
+  "ayat_kursi_morning_evening": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      255
+    ]
+  },
+  "ayat_kursi_prayer": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      255
+    ]
+  },
+  "ayat_kursi_ruqyah": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      255
+    ]
+  },
+  "ayat_kursi_sleep": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      255
+    ]
+  },
+  "ayatan_baqarah": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      285, 286
+    ]
+  },
+  "before_food": {
+    "type": "dureihim",
+    "filename": "175"
+  },
+  "before_wudu": {
+    "type": "dureihim",
+    "filename": "12"
+  },
+  "bika_asbahna": {
+    "type": "dureihim",
+    "filename": "78"
+  },
+  "bismika_rabbi": {
+    "type": "dureihim",
+    "filename": "102"
+  },
+  "bismillah_protection": {
+    "type": "dureihim",
+    "filename": "86"
+  },
+  "bismillah_wadatu": {
+    "type": "dureihim",
+    "filename": "102"
+  },
+  "dhikr_mashar_al_haram": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_114": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_115": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_117": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_119": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_120": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_123": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_124": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_125": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_126": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_127": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_128": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_129": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_131": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_132": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_133": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_135": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_136": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_139": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_140": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_141": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_143": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_144": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_145": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_146": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_149": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_150": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_154": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_155": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_156": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_157": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_158": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_159": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_160": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_161": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_164": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_165": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_166": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_169": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_170": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_171": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_174": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_177": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_185": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_186": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_187": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_19": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_191": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_195": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_198": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_199": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_200": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_201": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_202": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_203": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_204": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_205": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_208": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_214": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_219": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_22": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_220": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_222": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_223": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_224": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_225": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_24": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_253": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_26": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_41": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_45": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_47": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_51": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_54": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_66": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_71": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_74": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_79": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_85": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_89": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dhikr_missing_90": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_anger_istiaadhah": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_hamm_hazan": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_hasbiyallah": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_1": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_10": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_11": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_12": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_13": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_14": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_15": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_16": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_17": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_18": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_19": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_2": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_20": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_21": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_22": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_23": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_24": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_25": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_26": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_27": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_28": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_29": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_3": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_30": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_31": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_32": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_4": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_5": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_6": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_7": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_8": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_jawami_9": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_kurb_great": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_musibah_istirja": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "distress_yunus_dhunnoon": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dog_barking_night": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "dua_between_yamani_and_black_stone": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "eating_forget_dua": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "enter_house_bismillah": {
+    "type": "dureihim",
+    "filename": "18"
+  },
+  "enter_masjid_dua": {
+    "type": "dureihim",
+    "filename": "20"
+  },
+  "enter_masjid_istiaadha": {
+    "type": "dureihim",
+    "filename": "20"
+  },
+  "enter_restroom": {
+    "type": "dureihim",
+    "filename": "10"
+  },
+  "enter_town": {
+    "type": "dureihim",
+    "filename": "209"
+  },
+  "falaq_morning_evening": {
+    "type": "quran",
+    "surah": 113,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "falaq_prayer": {
+    "type": "quran",
+    "surah": 113,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "falaq_ruqyah": {
+    "type": "quran",
+    "surah": 113,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "falaq_sleep": {
+    "type": "quran",
+    "surah": 113,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "fatiha_ruqyah": {
+    "type": "quran",
+    "surah": 1,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6, 7
+    ]
+  },
+  "fatirul_samawat": {
+    "type": "dureihim",
+    "filename": "85"
+  },
+  "fitra_morning": {
+    "type": "dureihim",
+    "filename": "90"
+  },
+  "food_breaking_fast_host": {
+    "type": "dureihim",
+    "filename": "184"
+  },
   "food_guest_dua": {
     "type": "dureihim",
     "filename": "182"
@@ -761,149 +807,232 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "183"
   },
-  "food_breaking_fast_host": {
+  "go_to_masjid_noor": {
     "type": "dureihim",
-    "filename": "184"
+    "filename": "19"
   },
-  "vehicle_mount_dua": {
+  "great_days_arafah": {
     "type": "dureihim",
-    "filename": "206"
+    "filename": "237"
   },
-  "travel_start": {
+  "great_days_ashura": {
     "type": "dureihim",
-    "filename": "207"
+    "filename": "91"
   },
-  "enter_town": {
+  "great_days_athan_iqamah": {
     "type": "dureihim",
-    "filename": "209"
+    "filename": "91"
   },
-  "travel_return": {
+  "great_days_breaking_fast": {
     "type": "dureihim",
-    "filename": "211"
+    "filename": "176"
   },
-  "traveler_to_resident": {
+  "great_days_dhul_hijjah": {
     "type": "dureihim",
-    "filename": "212"
+    "filename": "91"
   },
-  "resident_to_traveler": {
+  "great_days_friday": {
     "type": "dureihim",
-    "filename": "213"
+    "filename": "98"
   },
-  "travel_takbeer_tasbih": {
+  "great_days_friday_hour": {
     "type": "dureihim",
-    "filename": "214"
+    "filename": "64"
   },
-  "travel_tewdeea_resident": {
+  "great_days_la_ilaha_100": {
     "type": "dureihim",
-    "filename": "213"
+    "filename": "93"
   },
-  "travel_mount_fail": {
+  "great_days_night_third": {
     "type": "dureihim",
-    "filename": "206"
+    "filename": "250"
   },
-  "travel_sahar": {
+  "great_days_qadr": {
     "type": "dureihim",
-    "filename": "215"
+    "filename": "91"
   },
-  "prayer_istiftah_1": {
+  "great_days_sayyid_istighfar": {
     "type": "dureihim",
-    "filename": "27"
+    "filename": "79"
   },
-  "prayer_istiftah_2": {
+  "great_days_suhoor_istighfar": {
     "type": "dureihim",
-    "filename": "28"
+    "filename": "96"
   },
-  "prayer_ruku_2": {
+  "great_days_sujood_dua": {
     "type": "dureihim",
-    "filename": "35"
+    "filename": "47"
   },
-  "prayer_ruku_3": {
+  "hajj_eid_takbeer": {
     "type": "dureihim",
-    "filename": "34"
+    "filename": "226"
   },
-  "prayer_raf_ruku": {
+  "hajj_jamarat_takbeer": {
     "type": "dureihim",
-    "filename": "39"
+    "filename": "224"
   },
-  "prayer_sujud_2": {
+  "hajj_muzdalifah_dua": {
     "type": "dureihim",
-    "filename": "46"
+    "filename": "223"
   },
-  "prayer_sujud_3": {
+  "hajj_safa_marwa_dua": {
     "type": "dureihim",
-    "filename": "44"
+    "filename": "221"
   },
-  "prayer_between_sujud": {
+  "hajj_talbiyah": {
     "type": "dureihim",
-    "filename": "48"
+    "filename": "218"
   },
-  "prayer_between_sujud_2": {
+  "hajj_tawaf_dua": {
     "type": "dureihim",
-    "filename": "49"
+    "filename": "220"
   },
-  "prayer_tashahhud_text": {
+  "hajj_udhiyah_takbeer": {
     "type": "dureihim",
-    "filename": "52"
+    "filename": "225"
   },
-  "prayer_before_tasleem_1": {
+  "hasbiyallah_7": {
     "type": "dureihim",
-    "filename": "55"
+    "filename": "83"
   },
-  "prayer_before_tasleem_2": {
+  "hear_athan_repeat": {
     "type": "dureihim",
-    "filename": "57"
+    "filename": "22"
   },
-  "prayer_sujud_tilawah": {
+  "house_bismillah_shaytan": {
     "type": "dureihim",
-    "filename": "50"
+    "filename": "12"
   },
-  "social_sneezing": {
+  "house_taawwudh_night": {
     "type": "dureihim",
-    "filename": "189"
+    "filename": "216"
   },
-  "social_married": {
-    "type": "dureihim",
-    "filename": "190"
+  "ikhlas_morning_evening": {
+    "type": "quran",
+    "surah": 112,
+    "ayahs": [
+      1, 2, 3, 4
+    ]
   },
-  "social_anger": {
-    "type": "dureihim",
-    "filename": "191"
+  "ikhlas_prayer": {
+    "type": "quran",
+    "surah": 112,
+    "ayahs": [
+      1, 2, 3, 4
+    ]
   },
-  "social_afflicted": {
-    "type": "dureihim",
-    "filename": "194"
+  "ikhlas_ruqyah": {
+    "type": "quran",
+    "surah": 112,
+    "ayahs": [
+      1, 2, 3, 4
+    ]
   },
-  "social_market": {
-    "type": "dureihim",
-    "filename": "210"
+  "ikhlas_sleep": {
+    "type": "quran",
+    "surah": 112,
+    "ayahs": [
+      1, 2, 3, 4
+    ]
   },
-  "social_condolence": {
+  "illness_pain_ruqyah": {
     "type": "dureihim",
-    "filename": "162"
+    "filename": "91"
   },
-  "social_sick_visit_1": {
+  "illness_visit_seven_times": {
     "type": "dureihim",
-    "filename": "147"
+    "filename": "91"
   },
-  "social_sick_visit_2": {
+  "illness_visit_tahoor": {
     "type": "dureihim",
-    "filename": "148"
+    "filename": "91"
   },
-  "social_wear_new_clothes_1": {
+  "istighfar_100_daily": {
     "type": "dureihim",
-    "filename": "7"
+    "filename": "96"
   },
-  "social_wear_new_clothes_2": {
+  "istighfar_3_prayer": {
     "type": "dureihim",
-    "filename": "8"
+    "filename": "66"
   },
-  "nature_rain_start": {
+  "kafirun_ruqyah": {
+    "type": "quran",
+    "surah": 109,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "la_hawla_treasure_of_jannah": {
     "type": "dureihim",
-    "filename": "172"
+    "filename": "91"
+  },
+  "la_ilaha_10": {
+    "type": "dureihim",
+    "filename": "92"
+  },
+  "la_ilaha_100_day": {
+    "type": "dureihim",
+    "filename": "93"
+  },
+  "la_ilaha_prayer": {
+    "type": "dureihim",
+    "filename": "67"
+  },
+  "leave_house_dua": {
+    "type": "dureihim",
+    "filename": "17"
+  },
+  "leave_house_tawakkul": {
+    "type": "dureihim",
+    "filename": "16"
+  },
+  "leave_masjid_dua": {
+    "type": "dureihim",
+    "filename": "21"
+  },
+  "leave_restroom": {
+    "type": "dureihim",
+    "filename": "11"
+  },
+  "nas_morning_evening": {
+    "type": "quran",
+    "surah": 114,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "nas_prayer": {
+    "type": "quran",
+    "surah": 114,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "nas_ruqyah": {
+    "type": "quran",
+    "surah": 114,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "nas_sleep": {
+    "type": "quran",
+    "surah": 114,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "nature_crescent": {
+    "type": "dureihim",
+    "filename": "174"
   },
   "nature_rain_after": {
     "type": "dureihim",
     "filename": "173"
+  },
+  "nature_rain_start": {
+    "type": "dureihim",
+    "filename": "172"
   },
   "nature_thunder": {
     "type": "dureihim",
@@ -913,209 +1042,85 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "167"
   },
-  "nature_crescent": {
+  "nearness_to_allah_last_third": {
     "type": "dureihim",
-    "filename": "174"
+    "filename": "91"
+  },
+  "nearness_to_allah_sujood": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "new_muslim_prayer_dua": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "niamah_morning": {
+    "type": "dureihim",
+    "filename": "81"
+  },
+  "night_protection_children_devils": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "occasion_arafah_ali_dua": {
+    "type": "dureihim",
+    "filename": "91"
   },
   "occasion_arafah_best_dhikr": {
     "type": "dureihim",
     "filename": "237"
   },
-  "protection_children_family": {
-    "type": "dureihim",
-    "filename": "146"
-  },
-  "protection_entire_creation": {
-    "type": "dureihim",
-    "filename": "247"
-  },
-  "protection_body_injury": {
-    "type": "dureihim",
-    "filename": "84"
-  },
-  "protection_sleep_fears": {
-    "type": "dureihim",
-    "filename": "113"
-  },
-  "protection_entry_exit_plague": {
-    "type": "dureihim",
-    "filename": "10"
-  },
-  "protection_envy_evil_eye": {
-    "type": "dureihim",
-    "filename": "178"
-  },
-  "protection_dhikr_waswas": {
-    "type": "dureihim",
-    "filename": "134"
-  },
-  "protection_anxiety_grief": {
-    "type": "dureihim",
-    "filename": "121"
-  },
-  "sunnah_bed_shake": {
-    "type": "dureihim",
-    "filename": "102"
-  },
-  "sunnah_lick_fingers": {
-    "type": "dureihim",
-    "filename": "178"
-  },
-  "sunnah_wudu_prayer": {
+  "occasion_arafah_dua_anbiya": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_istikhara_dua": {
+  "occasion_arafah_tahlil_takbeer": {
     "type": "dureihim",
-    "filename": "74"
+    "filename": "92"
   },
-  "sunnah_travel_tasbih_takbeer": {
-    "type": "dureihim",
-    "filename": "106"
-  },
-  "sunnah_sit_drink": {
+  "occasion_laylat_al_qadr": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_salat_nafilah_house": {
+  "occasion_laylat_al_qadr_dua_maghfirah": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_tahiyyat_masjid": {
+  "occasion_laylat_al_qadr_tahajjud": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_sleep_wudu": {
+  "praised_person_response": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_tahajjud_siwak": {
+  "praising_muslim_dua": {
     "type": "dureihim",
     "filename": "91"
   },
-  "sunnah_sujood_shukr": {
+  "prayer_aanni_ala_dhikrika": {
     "type": "dureihim",
-    "filename": "242"
+    "filename": "59"
   },
-  "sunnah_covering_vessels": {
+  "prayer_ajirni_min_nar_7": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "61"
   },
-  "sunnah_greeting_children": {
+  "prayer_before_tasleem_1": {
     "type": "dureihim",
-    "filename": "163"
+    "filename": "55"
   },
-  "sunnah_smile": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "great_days_arafah": {
-    "type": "dureihim",
-    "filename": "237"
-  },
-  "great_days_friday": {
-    "type": "dureihim",
-    "filename": "98"
-  },
-  "great_days_sayyid_istighfar": {
-    "type": "dureihim",
-    "filename": "79"
-  },
-  "great_days_friday_hour": {
+  "prayer_before_tasleem_10": {
     "type": "dureihim",
     "filename": "64"
   },
-  "great_days_night_third": {
+  "prayer_before_tasleem_11": {
     "type": "dureihim",
-    "filename": "250"
+    "filename": "65"
   },
-  "great_days_sujood_dua": {
+  "prayer_before_tasleem_2": {
     "type": "dureihim",
-    "filename": "47"
-  },
-  "great_days_breaking_fast": {
-    "type": "dureihim",
-    "filename": "176"
-  },
-  "great_days_suhoor_istighfar": {
-    "type": "dureihim",
-    "filename": "96"
-  },
-  "sneeze_tashmeet_dua": {
-    "type": "dureihim",
-    "filename": "188"
-  },
-  "asbahna_morning_rab_al_alamin": {
-    "type": "dureihim",
-    "filename": "89"
-  },
-  "great_days_la_ilaha_100": {
-    "type": "dureihim",
-    "filename": "93"
-  },
-  "rooster_donkey_sound_dua": {
-    "type": "dureihim",
-    "filename": "228"
-  },
-  "prayer_istiftah_3": {
-    "type": "dureihim",
-    "filename": "29"
-  },
-  "prayer_istiftah_4": {
-    "type": "dureihim",
-    "filename": "30"
-  },
-  "prayer_istiftah_5": {
-    "type": "dureihim",
-    "filename": "31"
-  },
-  "prayer_istiftah_6": {
-    "type": "dureihim",
-    "filename": "32"
-  },
-  "prayer_ruku_1": {
-    "type": "dureihim",
-    "filename": "33"
-  },
-  "prayer_ruku_4": {
-    "type": "dureihim",
-    "filename": "36"
-  },
-  "prayer_ruku_5": {
-    "type": "dureihim",
-    "filename": "37"
-  },
-  "prayer_raf_ruku_1": {
-    "type": "dureihim",
-    "filename": "38"
-  },
-  "prayer_raf_ruku_3": {
-    "type": "dureihim",
-    "filename": "40"
-  },
-  "prayer_sujud_1": {
-    "type": "dureihim",
-    "filename": "41"
-  },
-  "prayer_sujud_4": {
-    "type": "dureihim",
-    "filename": "42"
-  },
-  "prayer_sujud_5": {
-    "type": "dureihim",
-    "filename": "43"
-  },
-  "prayer_sujud_6": {
-    "type": "dureihim",
-    "filename": "45"
-  },
-  "prayer_sujud_7": {
-    "type": "dureihim",
-    "filename": "47"
-  },
-  "prayer_sujud_tilawah_2": {
-    "type": "dureihim",
-    "filename": "51"
+    "filename": "57"
   },
   "prayer_before_tasleem_3": {
     "type": "dureihim",
@@ -1124,6 +1129,10 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   "prayer_before_tasleem_4": {
     "type": "dureihim",
     "filename": "58"
+  },
+  "prayer_before_tasleem_5": {
+    "type": "dureihim",
+    "filename": "91"
   },
   "prayer_before_tasleem_6": {
     "type": "dureihim",
@@ -1141,13 +1150,57 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "type": "dureihim",
     "filename": "63"
   },
-  "prayer_before_tasleem_10": {
+  "prayer_between_sujud": {
     "type": "dureihim",
-    "filename": "64"
+    "filename": "48"
   },
-  "prayer_before_tasleem_11": {
+  "prayer_between_sujud_2": {
     "type": "dureihim",
-    "filename": "65"
+    "filename": "49"
+  },
+  "prayer_ilm_nafi": {
+    "type": "dureihim",
+    "filename": "95"
+  },
+  "prayer_istiaadha_bukhari": {
+    "type": "dureihim",
+    "filename": "60"
+  },
+  "prayer_istiftah_1": {
+    "type": "dureihim",
+    "filename": "27"
+  },
+  "prayer_istiftah_2": {
+    "type": "dureihim",
+    "filename": "28"
+  },
+  "prayer_istiftah_3": {
+    "type": "dureihim",
+    "filename": "29"
+  },
+  "prayer_istiftah_4": {
+    "type": "dureihim",
+    "filename": "30"
+  },
+  "prayer_istiftah_5": {
+    "type": "dureihim",
+    "filename": "31"
+  },
+  "prayer_istiftah_6": {
+    "type": "dureihim",
+    "filename": "32"
+  },
+  "prayer_istighfar_khataaya": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "prayer_la_ilaha_yuhyi_10": {
+    "type": "dureihim",
+    "filename": "209"
+  },
+  "prayer_qini_v1": {
+    "type": "dureihim",
+    "filename": "104"
   },
   "prayer_qunut_1": {
     "type": "dureihim",
@@ -1160,5 +1213,534 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   "prayer_qunut_3": {
     "type": "dureihim",
     "filename": "118"
+  },
+  "prayer_raf_ruku": {
+    "type": "dureihim",
+    "filename": "39"
+  },
+  "prayer_raf_ruku_1": {
+    "type": "dureihim",
+    "filename": "38"
+  },
+  "prayer_raf_ruku_2": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "prayer_raf_ruku_3": {
+    "type": "dureihim",
+    "filename": "40"
+  },
+  "prayer_ruku_1": {
+    "type": "dureihim",
+    "filename": "33"
+  },
+  "prayer_ruku_2": {
+    "type": "dureihim",
+    "filename": "35"
+  },
+  "prayer_ruku_3": {
+    "type": "dureihim",
+    "filename": "34"
+  },
+  "prayer_ruku_4": {
+    "type": "dureihim",
+    "filename": "36"
+  },
+  "prayer_ruku_5": {
+    "type": "dureihim",
+    "filename": "37"
+  },
+  "prayer_sujud_1": {
+    "type": "dureihim",
+    "filename": "41"
+  },
+  "prayer_sujud_2": {
+    "type": "dureihim",
+    "filename": "46"
+  },
+  "prayer_sujud_3": {
+    "type": "dureihim",
+    "filename": "44"
+  },
+  "prayer_sujud_4": {
+    "type": "dureihim",
+    "filename": "42"
+  },
+  "prayer_sujud_5": {
+    "type": "dureihim",
+    "filename": "43"
+  },
+  "prayer_sujud_6": {
+    "type": "dureihim",
+    "filename": "45"
+  },
+  "prayer_sujud_7": {
+    "type": "dureihim",
+    "filename": "47"
+  },
+  "prayer_sujud_tilawah": {
+    "type": "dureihim",
+    "filename": "50"
+  },
+  "prayer_sujud_tilawah_2": {
+    "type": "dureihim",
+    "filename": "51"
+  },
+  "prayer_tasbih_10_alternate": {
+    "type": "dureihim",
+    "filename": "106"
+  },
+  "prayer_tasbih_25_alternate": {
+    "type": "dureihim",
+    "filename": "264"
+  },
+  "prayer_tasbih_34_alternate": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "prayer_tashahhud_text": {
+    "type": "dureihim",
+    "filename": "52"
+  },
+  "prophet_tasbih_by_right_hand": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "protection_against_rebel_devils": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "protection_anxiety_grief": {
+    "type": "dureihim",
+    "filename": "121"
+  },
+  "protection_body_injury": {
+    "type": "dureihim",
+    "filename": "84"
+  },
+  "protection_children_family": {
+    "type": "dureihim",
+    "filename": "146"
+  },
+  "protection_dhikr_waswas": {
+    "type": "dureihim",
+    "filename": "134"
+  },
+  "protection_entire_creation": {
+    "type": "dureihim",
+    "filename": "247"
+  },
+  "protection_entry_exit_plague": {
+    "type": "dureihim",
+    "filename": "10"
+  },
+  "protection_envy_evil_eye": {
+    "type": "dureihim",
+    "filename": "178"
+  },
+  "protection_envy_seeing_admired_thing": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "protection_sleep_fears": {
+    "type": "dureihim",
+    "filename": "113"
+  },
+  "rabb_nas": {
+    "type": "quran",
+    "surah": 114,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "raditu": {
+    "type": "dureihim",
+    "filename": "87"
+  },
+  "repentance_seeking_forgiveness_100": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "reply_non_muslim_salaam": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "resident_to_traveler": {
+    "type": "dureihim",
+    "filename": "213"
+  },
+  "rooster_donkey_sound_dua": {
+    "type": "dureihim",
+    "filename": "228"
+  },
+  "ruqyah_ain_qalam": {
+    "type": "quran",
+    "surah": 68,
+    "ayahs": [
+      51, 52
+    ]
+  },
+  "ruqyah_baqarah_intro": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "ruqyah_bismillah_protection": {
+    "type": "dureihim",
+    "filename": "86"
+  },
+  "ruqyah_bismillah_turbat_ardina": {
+    "type": "dureihim",
+    "filename": "18"
+  },
+  "ruqyah_faza_shayatin": {
+    "type": "dureihim",
+    "filename": "113"
+  },
+  "ruqyah_jibril": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "ruqyah_jibril_alternate": {
+    "type": "dureihim",
+    "filename": "178"
+  },
+  "ruqyah_jibril_self": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "ruqyah_khalaq": {
+    "type": "quran",
+    "surah": 113,
+    "ayahs": [
+      1, 2, 3, 4, 5
+    ]
+  },
+  "ruqyah_khambash": {
+    "type": "dureihim",
+    "filename": "247"
+  },
+  "ruqyah_muawwidhat_blow": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "ruqyah_rubb_nas_bidal_shifa": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "ruqyah_sihr_arafah": {
+    "type": "quran",
+    "surah": 7,
+    "ayahs": [
+      117, 118, 119, 120, 121, 122
+    ]
+  },
+  "ruqyah_sihr_taha": {
+    "type": "quran",
+    "surah": 20,
+    "ayahs": [
+      69
+    ]
+  },
+  "ruqyah_sihr_yunus": {
+    "type": "quran",
+    "surah": 10,
+    "ayahs": [
+      81, 82
+    ]
+  },
+  "ruqyah_yabrik": {
+    "type": "dureihim",
+    "filename": "178"
+  },
+  "salawat_100": {
+    "type": "dureihim",
+    "filename": "98"
+  },
+  "salawat_100_prayer": {
+    "type": "dureihim",
+    "filename": "98"
+  },
+  "salawat_ibrahimiya": {
+    "type": "dureihim",
+    "filename": "53"
+  },
+  "salawat_ibrahimiya_prayer": {
+    "type": "dureihim",
+    "filename": "53"
+  },
+  "sayyid_istighfar": {
+    "type": "dureihim",
+    "filename": "79"
+  },
+  "sleep_ali_imran_waking": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200
+    ]
+  },
+  "sleep_bad_dream": {
+    "type": "dureihim",
+    "filename": "114"
+  },
+  "sleep_faza": {
+    "type": "dureihim",
+    "filename": "245"
+  },
+  "sleep_faza_istiaadha": {
+    "type": "dureihim",
+    "filename": "113"
+  },
+  "sleep_insomnia_dua": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sleep_kafirun_recitation": {
+    "type": "quran",
+    "surah": 109,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6
+    ]
+  },
+  "sleep_mulk_sajdah": {
+    "type": "quran",
+    "surah": 67,
+    "ayahs": [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+    ]
+  },
+  "sleep_taqallub": {
+    "type": "dureihim",
+    "filename": "112"
+  },
+  "sleep_waking_up_1": {
+    "type": "dureihim",
+    "filename": "1"
+  },
+  "sleep_waking_up_2": {
+    "type": "dureihim",
+    "filename": "3"
+  },
+  "sneeze_tashmeet_dua": {
+    "type": "dureihim",
+    "filename": "188"
+  },
+  "social_afflicted": {
+    "type": "dureihim",
+    "filename": "194"
+  },
+  "social_anger": {
+    "type": "dureihim",
+    "filename": "191"
+  },
+  "social_condolence": {
+    "type": "dureihim",
+    "filename": "162"
+  },
+  "social_market": {
+    "type": "dureihim",
+    "filename": "210"
+  },
+  "social_married": {
+    "type": "dureihim",
+    "filename": "190"
+  },
+  "social_sick_visit_1": {
+    "type": "dureihim",
+    "filename": "147"
+  },
+  "social_sick_visit_2": {
+    "type": "dureihim",
+    "filename": "148"
+  },
+  "social_sneezing": {
+    "type": "dureihim",
+    "filename": "189"
+  },
+  "social_wear_new_clothes_1": {
+    "type": "dureihim",
+    "filename": "7"
+  },
+  "social_wear_new_clothes_2": {
+    "type": "dureihim",
+    "filename": "8"
+  },
+  "subhan_allah_100": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "subhan_allah_adada_khalqihi": {
+    "type": "dureihim",
+    "filename": "94"
+  },
+  "subhan_allah_prayer_33": {
+    "type": "dureihim",
+    "filename": "240"
+  },
+  "subhan_allah_sleep_33": {
+    "type": "dureihim",
+    "filename": "240"
+  },
+  "sujud_shukr_action": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_bed_shake": {
+    "type": "dureihim",
+    "filename": "102"
+  },
+  "sunnah_covering_vessels": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_greeting_children": {
+    "type": "dureihim",
+    "filename": "163"
+  },
+  "sunnah_istikhara_dua": {
+    "type": "dureihim",
+    "filename": "74"
+  },
+  "sunnah_lick_fingers": {
+    "type": "dureihim",
+    "filename": "178"
+  },
+  "sunnah_salat_nafilah_house": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_sit_drink": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_sleep_wudu": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_smile": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_sujood_shukr": {
+    "type": "dureihim",
+    "filename": "242"
+  },
+  "sunnah_tahajjud_siwak": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_tahiyyat_masjid": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sunnah_travel_tasbih_takbeer": {
+    "type": "dureihim",
+    "filename": "106"
+  },
+  "sunnah_wudu_prayer": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "supplication_for_whom_you_insulted": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sv1": {
+    "type": "dureihim",
+    "filename": "219"
+  },
+  "sv2": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "sv3": {
+    "type": "dureihim",
+    "filename": "221"
+  },
+  "sv4": {
+    "type": "dureihim",
+    "filename": "220"
+  },
+  "sv5": {
+    "type": "quran",
+    "surah": 33,
+    "ayahs": [
+      56
+    ]
+  },
+  "tahlil_prayer": {
+    "type": "dureihim",
+    "filename": "68"
+  },
+  "takbeer_black_stone": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "takbeer_throwing_pebbles": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "take_off_clothes": {
+    "type": "dureihim",
+    "filename": "15"
+  },
+  "talbiyah_hajj_umrah": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "tamam_miah_prayer": {
+    "type": "dureihim",
+    "filename": "93"
+  },
+  "tasbih_gaining_thousand_good_deeds": {
+    "type": "dureihim",
+    "filename": "91"
+  },
+  "travel_mount_fail": {
+    "type": "dureihim",
+    "filename": "206"
+  },
+  "travel_return": {
+    "type": "dureihim",
+    "filename": "211"
+  },
+  "travel_sahar": {
+    "type": "dureihim",
+    "filename": "215"
+  },
+  "travel_start": {
+    "type": "dureihim",
+    "filename": "207"
+  },
+  "travel_takbeer_tasbih": {
+    "type": "dureihim",
+    "filename": "214"
+  },
+  "travel_tewdeea_resident": {
+    "type": "dureihim",
+    "filename": "213"
+  },
+  "traveler_to_resident": {
+    "type": "dureihim",
+    "filename": "212"
+  },
+  "vehicle_mount_dua": {
+    "type": "dureihim",
+    "filename": "206"
+  },
+  "wear_clothes": {
+    "type": "dureihim",
+    "filename": "5"
+  },
+  "wear_clothes_general": {
+    "type": "dureihim",
+    "filename": "5"
+  },
+  "ya_hayyu": {
+    "type": "dureihim",
+    "filename": "88"
   }
 };
