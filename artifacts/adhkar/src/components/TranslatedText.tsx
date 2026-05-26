@@ -72,7 +72,7 @@ export function TranslatedText({
 
   const dir = getLanguageDir(currentLang);
   const isTargetRTL = isRTL(currentLang);
-  const alignClass = isTargetRTL ? "text-right" : "text-left";
+  const alignClass = inline ? "" : (isTargetRTL ? "text-right" : "text-left");
 
   const ContainerTag = inline ? "span" : "div";
   const TextTag = inline ? "span" : "p";
@@ -84,7 +84,9 @@ export function TranslatedText({
     return (
       <TextTag
         className={cn(
-          isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
+          isDhikrText 
+            ? "dhikr-text text-center w-full block" 
+            : cn("font-sans text-foreground", !inline && "text-right"),
           arabicClassName,
           className
         )}
@@ -102,7 +104,9 @@ export function TranslatedText({
         <ContainerTag className={cn("space-y-2", className)}>
           <TextTag
             className={cn(
-              isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
+              isDhikrText 
+                ? "dhikr-text text-center w-full block" 
+                : cn("font-sans text-foreground", !inline && "text-right"),
               arabicClassName
             )}
             dir="rtl"
@@ -138,7 +142,9 @@ export function TranslatedText({
         {/* Arabic original on top */}
         <TextTag
           className={cn(
-            isDhikrText ? "dhikr-text text-center w-full block" : "font-sans text-foreground text-right",
+            isDhikrText 
+              ? "dhikr-text text-center w-full block" 
+              : cn("font-sans text-foreground", !inline && "text-right"),
             "leading-relaxed",
             arabicClassName
           )}

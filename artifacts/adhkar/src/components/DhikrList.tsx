@@ -12,7 +12,6 @@ import { isArabic, getTranslation } from "@/lib/content-i18n";
 import { logCategoryCompletion } from "@/lib/tracker";
 import { TranslatedText } from "@/components/TranslatedText";
 import { adhkarAudioMap } from "@/data/adhkarAudioMap";
-import { toast } from "@/hooks/use-toast";
 import { exportToImage, shareText, copyDhikrText } from "@/lib/image-share";
 
 
@@ -239,13 +238,6 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
         vibrateRef.current = now;
       }
     }
-  };
-
-  const handleCopyText = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      description: i18n.language === "ar" ? "تم نسخ النص إلى الحافظة" : "Text copied to clipboard",
-    });
   };
 
   const handleReset = (id: string) => {

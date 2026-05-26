@@ -4,7 +4,7 @@ import { toHijri, formatHijriDate } from "@/lib/hijri";
 import { getPrayerTimesFromAPI } from "@/lib/prayer-times";
 import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone, HeartPulse } from "lucide-react";
+import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn, safeFormatDate } from "@/lib/utils";
 import { Link } from "wouter";

@@ -18,6 +18,7 @@ import { useLocation } from "wouter";
 import { TranslatedText } from "@/components/TranslatedText";
 import { RECITERS } from "@/data/reciters";
 import { exportToImage, shareText, copyDhikrText } from "@/lib/image-share";
+import { translateText } from "@/lib/google-translate";
 
 
 const normalizeArabic = (text: string) => {

@@ -14,6 +14,132 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
       80
     ]
   },
+  "quran_dua_sabron": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      250
+    ]
+  },
+  "quran_dua_imanna": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      16
+    ]
+  },
+  "quran_dua_tayyibah": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      38
+    ]
+  },
+  "quran_dua_shahidina": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      53
+    ]
+  },
+  "quran_dua_ulil_albab": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      191,
+      192,
+      193,
+      194
+    ]
+  },
+  "quran_dua_fatihina": {
+    "type": "quran",
+    "surah": 7,
+    "ayahs": [
+      89
+    ]
+  },
+  "quran_dua_tawaffana": {
+    "type": "quran",
+    "surah": 7,
+    "ayahs": [
+      126
+    ]
+  },
+  "quran_dua_nuh_refuge": {
+    "type": "quran",
+    "surah": 11,
+    "ayahs": [
+      47
+    ]
+  },
+  "quran_dua_shayatini": {
+    "type": "quran",
+    "surah": 23,
+    "ayahs": [
+      97,
+      98
+    ]
+  },
+  "quran_dua_khairu_rahimin": {
+    "type": "quran",
+    "surah": 23,
+    "ayahs": [
+      109
+    ]
+  },
+  "quran_dua_rabbighfir": {
+    "type": "quran",
+    "surah": 23,
+    "ayahs": [
+      118
+    ]
+  },
+  "quran_dua_jahannam": {
+    "type": "quran",
+    "surah": 25,
+    "ayahs": [
+      65
+    ]
+  },
+  "quran_dua_shukr": {
+    "type": "quran",
+    "surah": 27,
+    "ayahs": [
+      19
+    ]
+  },
+  "quran_dua_faqir": {
+    "type": "quran",
+    "surah": 28,
+    "ayahs": [
+      24
+    ]
+  },
+  "quran_dua_malaikah": {
+    "type": "quran",
+    "surah": 40,
+    "ayahs": [
+      7,
+      8,
+      9
+    ]
+  },
+  "quran_dua_kafaroo": {
+    "type": "quran",
+    "surah": 60,
+    "ayahs": [
+      4,
+      5
+    ]
+  },
+  "quran_dua_nuh_parents": {
+    "type": "quran",
+    "surah": 71,
+    "ayahs": [
+      28
+    ]
+  },
   "quran_dua_ilman": {
     "type": "quran",
     "surah": 20,
