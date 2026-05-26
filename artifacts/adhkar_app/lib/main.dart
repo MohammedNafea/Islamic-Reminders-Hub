@@ -37,22 +37,10 @@ Future<void> _requestInitialPermissions() async {
       await Permission.locationWhenInUse.request();
     }
 
-    // Request overlay permission (to display reminders over other apps)
-    final overlayStatus = await Permission.systemAlertWindow.status;
-    if (overlayStatus.isDenied) {
-      await Permission.systemAlertWindow.request();
-    }
-
     // Request exact alarm permission (for Android 12+ prayer/adhkar schedule)
     final alarmStatus = await Permission.scheduleExactAlarm.status;
     if (alarmStatus.isDenied) {
       await Permission.scheduleExactAlarm.request();
-    }
-
-    // Request battery optimizations ignore permission
-    final batteryStatus = await Permission.ignoreBatteryOptimizations.status;
-    if (batteryStatus.isDenied) {
-      await Permission.ignoreBatteryOptimizations.request();
     }
   } catch (_) {
     // Silently handle if permissions are not available on this platform

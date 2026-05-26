@@ -556,7 +556,15 @@ export default function Settings() {
               </Label>
               {!(typeof window !== "undefined" && "Notification" in window) && (
                 <p className="text-xs text-amber-600 font-medium leading-normal mt-1">
-                  ⚠️ الإشعارات غير مدعومة في هذا المتصفح/الجهاز. يرجى تثبيت التطبيق PWA (إضافة إلى الشاشة الرئيسية) لتتمكن من تفعيل التنبيهات.
+                  {typeof window !== "undefined" && navigator.userAgent.includes("AdhkarApp") ? (
+                    i18n.language === "ar" 
+                      ? "⚠️ الإشعارات غير مدعومة حالياً في نسخة التطبيق المباشرة. يمكنك تفعيلها عبر تشغيل الموقع من المتصفح وتثبيت نسخة الـ PWA." 
+                      : "⚠️ Notifications are not currently supported in the app wrapper. You can enable them by opening the site in a browser and installing the PWA version."
+                  ) : (
+                    i18n.language === "ar"
+                      ? "⚠️ الإشعارات غير مدعومة في هذا المتصفح/الجهاز. يرجى تثبيت التطبيق PWA (إضافة إلى الشاشة الرئيسية) لتتمكن من تفعيل التنبيهات."
+                      : "⚠️ Notifications are not supported in this browser/device. Please install the PWA (Add to Home Screen) to enable notifications."
+                  )}
                 </p>
               )}
             </div>

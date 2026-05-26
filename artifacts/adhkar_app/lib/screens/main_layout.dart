@@ -19,6 +19,7 @@ class _MainLayoutState extends State<MainLayout> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setUserAgent("Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 AdhkarApp/Android")
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {

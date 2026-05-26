@@ -706,12 +706,12 @@ export default function Quran() {
   });
 
   const renderViewSwitcher = () => (
-    <div className="flex justify-center gap-2 p-1 bg-muted/40 rounded-2xl w-full max-w-[280px] mx-auto border border-primary/5">
+    <div className="flex justify-center gap-1 p-1 bg-muted/40 rounded-2xl w-full max-w-[220px] sm:max-w-[280px] mx-auto border border-primary/5">
       <Button
         variant={viewMode === "list" ? "secondary" : "ghost"}
         size="sm"
         className={cn(
-          "rounded-xl flex-1 text-xs h-9 transition-all duration-300",
+          "rounded-xl flex-1 text-[10px] sm:text-xs h-8 sm:h-9 px-2 transition-all duration-300",
           viewMode === "list" && "bg-white shadow-sm font-bold text-primary"
         )}
         onClick={() => setViewMode("list")}
@@ -722,7 +722,7 @@ export default function Quran() {
         variant={viewMode === "pages" ? "secondary" : "ghost"}
         size="sm"
         className={cn(
-          "rounded-xl flex-1 text-xs h-9 transition-all duration-300",
+          "rounded-xl flex-1 text-[10px] sm:text-xs h-8 sm:h-9 px-2 transition-all duration-300",
           viewMode === "pages" && "bg-white shadow-sm font-bold text-primary"
         )}
         onClick={() => {
@@ -849,7 +849,7 @@ export default function Quran() {
               </div>
             </div>
             
-            <div className="flex items-center gap-2 justify-between md:justify-end">
+            <div className="flex flex-wrap items-center gap-2 justify-between md:justify-end w-full md:w-auto">
               <Button
                 variant="outline"
                 size="icon"
@@ -898,7 +898,7 @@ export default function Quran() {
               </div>
             </div>
             
-            <div className="flex items-center gap-4 justify-between md:justify-end">
+            <div className="flex flex-wrap items-center gap-2 justify-between md:justify-end w-full md:w-auto">
               {renderViewSwitcher()}
             </div>
           </div>
