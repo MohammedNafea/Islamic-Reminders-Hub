@@ -4,7 +4,7 @@ import { toHijri, formatHijriDate } from "@/lib/hijri";
 import { getPrayerTimesFromAPI } from "@/lib/prayer-times";
 import { getSettings, getTasbihCount, setTasbihCount } from "@/lib/store";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone } from "lucide-react";
+import { Sun, Moon, Bed, Shield, Clock, BookOpen, Calendar as CalendarIcon, Star as StarIcon, Heart, Smartphone, HeartPulse } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -448,6 +448,20 @@ export default function Home() {
             Icon={Clock}
             color="bg-rose-500"
             description="home.daily_supplications_desc"
+          />
+          <HubCard 
+            href="/daily-supplications?tab=distress_illness"
+            titleKey="nav.distress_illness"
+            Icon={HeartPulse}
+            color="bg-red-600"
+            description="home.distress_illness_desc"
+          />
+          <HubCard 
+            href="/arafah-hajj"
+            titleKey="nav.arafah_hajj"
+            Icon={StarIcon}
+            color="bg-emerald-600"
+            description="home.arafah_hajj_desc"
           />
         </div>
       </div>

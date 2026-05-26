@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Search, Play, Pause, ChevronRight, Clock, BookOpen, Bookmark, BookmarkCheck, Copy, SkipForward, SkipBack, Volume2, Image } from "lucide-react";
+import { Search, Play, Pause, ChevronRight, Clock, BookOpen, Bookmark, BookmarkCheck, Copy, SkipForward, SkipBack, Volume2, Image, Share2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -17,7 +17,7 @@ import { localDB } from "@/lib/db";
 import { useLocation } from "wouter";
 import { TranslatedText } from "@/components/TranslatedText";
 import { RECITERS } from "@/data/reciters";
-import { exportToImage } from "@/lib/image-share";
+import { exportToImage, shareText } from "@/lib/image-share";
 
 
 const normalizeArabic = (text: string) => {
@@ -991,6 +991,25 @@ export default function Quran() {
                           >
                             <Image className="w-5 h-5" />
                           </Button>
+                          <Button 
+                            size="icon" 
+                            variant="secondary"
+                            className="rounded-full w-12 h-12 bg-white shadow-sm hover:bg-primary/5 text-primary"
+                            onClick={async () => {
+                              const cleanText = cleanBismillah(ayah.text);
+                              const surahTitle = i18n.language === "ar" ? currentSurah.name : currentSurah.englishName;
+                              const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${ayah.numberInSurah}`;
+                              await shareText(
+                                source,
+                                cleanText,
+                                source,
+                                i18n.language
+                              );
+                            }}
+                            title={i18n.language === "ar" ? "مشاركة الآية" : "Share Ayah"}
+                          >
+                            <Share2 className="w-5 h-5" />
+                          </Button>
                         </div>
                         <div className="flex items-center gap-3">
                           <div className="h-[1px] w-8 bg-primary/20" />
@@ -1070,7 +1089,7 @@ export default function Quran() {
             </div>
           </>
         ) : (
-          <div className="max-w-2xl mx-auto space-y-6">
+          <div className="max-w-3xl mx-auto space-y-6">
             {/* Page Navigation Controls - Top */}
             <div className="flex items-center justify-between gap-4 bg-card/50 p-3 rounded-2xl border border-primary/5 backdrop-blur-sm">
               <Button 
@@ -1123,11 +1142,20 @@ export default function Quran() {
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    {renderPageContent()}
+                  <div className="space-y-6">
+                    {/* Quran page inner decorative border representing Medina Mushaf frames */}
+                    <div className="border-2 border-double border-amber-600/20 dark:border-amber-500/10 p-5 md:p-8 rounded-[2rem] bg-[#fdfbf7] dark:bg-[#121614] shadow-inner relative overflow-hidden">
+                      {/* Decorative corner patterns */}
+                      <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-tl-sm pointer-events-none" />
+                      <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-tr-sm pointer-events-none" />
+                      <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-bl-sm pointer-events-none" />
+                      <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-br-sm pointer-events-none" />
+                      
+                      {renderPageContent()}
+                    </div>
                     
                     {/* Bottom page number indicator (Quran style) */}
-                    <div className="pt-8 flex justify-center">
+                    <div className="pt-4 flex justify-center">
                       <div className="relative inline-flex items-center justify-center w-12 h-12 border border-amber-600/20 rounded-full bg-amber-50/30 select-none">
                         <span className="text-xs font-bold text-amber-900/70 dark:text-amber-400/70 font-mono">{currentPage}</span>
                       </div>
@@ -1371,7 +1399,7 @@ export default function Quran() {
                 )}
 
                 {/* Bottom actions */}
-                <div className="flex justify-end gap-2 pt-2 border-t border-primary/5">
+                <div className="flex flex-wrap justify-end gap-2 pt-2 border-t border-primary/5">
                   <Button
                     variant="outline"
                     onClick={() => {
@@ -1399,6 +1427,20 @@ export default function Quran() {
                   <Button
                     variant="outline"
                     onClick={() => {
+                      navigator.clipboard.writeText(selectedPageAyah.text);
+                      toast({
+                        description: t("quran.ayah_copied", { defaultValue: "تم نسخ الآية الكريمة" }),
+                      });
+                    }}
+                    className="rounded-xl gap-2 text-xs"
+                  >
+                    <Copy className="w-4 h-4" />
+                    <span>{t("common.copy", { defaultValue: "نسخ الآية" })}</span>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => {
                       const textToCopy = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
                       navigator.clipboard.writeText(textToCopy);
                       toast({
@@ -1408,7 +1450,44 @@ export default function Quran() {
                     className="rounded-xl gap-2 text-xs"
                   >
                     <Copy className="w-4 h-4" />
-                    <span>{t("common.copy", { defaultValue: "نسخ الآية" })}</span>
+                    <span>{t("quran.copy_tafsir", { defaultValue: "نسخ بالترجمة والتفسير" })}</span>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const cleanText = cleanBismillah(selectedPageAyah.text);
+                      const surahTitle = i18n.language === "ar" ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName;
+                      exportToImage(
+                        `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${selectedPageAyah.numberInSurah}`,
+                        cleanText,
+                        `${surahTitle} (${selectedPageAyah.numberInSurah})`,
+                        i18n.language
+                      );
+                    }}
+                    className="rounded-xl gap-2 text-xs"
+                  >
+                    <Image className="w-4 h-4" />
+                    <span>{t("common.export_image", { defaultValue: "تصدير كصورة" })}</span>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={async () => {
+                      const cleanText = cleanBismillah(selectedPageAyah.text);
+                      const surahTitle = i18n.language === "ar" ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName;
+                      const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${selectedPageAyah.numberInSurah}`;
+                      await shareText(
+                        source,
+                        cleanText,
+                        source,
+                        i18n.language
+                      );
+                    }}
+                    className="rounded-xl gap-2 text-xs"
+                  >
+                    <Share2 className="w-4 h-4" />
+                    <span>{i18n.language === "ar" ? "مشاركة" : "Share"}</span>
                   </Button>
                 </div>
               </div>

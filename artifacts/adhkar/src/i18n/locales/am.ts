@@ -29,7 +29,9 @@ export default {
     "sunan": "የነብዩ ሱናዎች",
     "house": "የቤት ውስጥ ትውስታዎች",
     "tracker": "የቁርጠኝነት መንገድ",
-    "daily_supplications": "ዛሬ እና ዛሬ ማታ ትዝታዎች"
+    "daily_supplications": "ዛሬ እና ዛሬ ማታ ትዝታዎች",
+    "distress_illness": "የጭንቀትና ህመም ዱዓዎች",
+    "arafah_hajj": "የዓረፋ ቀን እና ሐጅ"
   },
   "home": {
     "greeting_morning": "መልካም ጠዋት",
@@ -52,7 +54,9 @@ export default {
     "merged_evening_desc": "የምሽት አዝካር ከሩቅያ ጋር",
     "daily_inspiration": "ዕለታዊ አነሳሽ",
     "sunan_desc": "ሱናዎች፣ ደሞዞች፣ የኩፒንግ በጎነቶች እና ፍርዶቹ",
-    "daily_supplications_desc": "የልብስ፣ የውበት፣ የምግብ፣ የጉዞ እና የቤት ትውስታዎች",
+    "daily_supplications_desc": "የልብስ، የውበት፣ የምግብ፣ የጉዞ እና የቤት ትውስታዎች",
+    "distress_illness_desc": "የጭንቀት፣ የጭንቀት፣ የበሽታ እና ለጸلوት ምላሽ የሚሰጡ ዱዓዎች",
+    "arafah_hajj_desc": "የዓረፋ ቀን እና የሐጅ ልመናዎች፣ ተልቢያህ እና ዚክሮች",
     "hub_prayer_desc": "ከግዴታ ሶላት በኋላ የሚደረጉ ትውስታዎች",
     "sadaqa_jariya": "ቀጣይነት ያለው በጎ አድራጎት",
     "made_with_love": "ለእስልምና ብሄር በፍቅር የተሰራ"
@@ -233,7 +237,9 @@ export default {
     "ruqyah_desc": "ከቁርኣን ማገግመትና ጥበቃ",
     "post_prayer": "ከሶላት በኋላ አዝካር",
     "house_desc": "ቤቱን የመግባት እና የመውጣት ትዝታዎች እና በውስጡ የመባረክ",
-    "masjid_desc": "መስጂድ የመግባት፣ የመግባት እና የመውጣት ትዝታዎች"
+    "masjid_desc": "መስጂድ የመግባት፣ የመግባት እና የመውጣት ትዝታዎች",
+    "distress_illness_desc": "የጭንቀት፣ የጭንቀት፣ የበሽታ እና ለጸلوት ምላሽ የሚሰጡ ዱዓዎች",
+    "arafah_hajj_desc": "የዓረፋ ቀን እና የሐጅ ልመናዎች፣ ተልቢያህ እና ዚክሮች"
   },
   "salawat": {
     "title": "በነቢዩ ላይ ፀሎት",

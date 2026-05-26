@@ -30,6 +30,8 @@ export default {
     download: "تحميل التطبيق",
     sunan: "السنن النبوية",
     daily_supplications: "أذكار اليوم والليلة",
+    distress_illness: "الكرب والمرض والاستجابة",
+    arafah_hajj: "يوم عرفة والحج",
   },
   favorites: {
     subtitle: "قائمة الأذكار والأحكام التي قمت بحفظها",
@@ -153,6 +155,8 @@ export default {
     merged_evening_desc: "أذكار المساء مع الرقية الشرعية",
     sunan_desc: "السنن الرواتب وفضل الحجامة وأحكامها",
     daily_supplications_desc: "أذكار اللباس والوضوء والطعام والسفر والبيت",
+    distress_illness_desc: "أدعية الكرب والهم والحزن والغضب وعيادة المريض والاستجابة",
+    arafah_hajj_desc: "أدعية وأذكار يوم عرفة وتلبية الحج وأعماله المأثورة عن النبي ﷺ",
     daily_inspiration: "إلهام اليوم",
     sadaqa_jariya: "صدقة جارية",
     made_with_love: "صُنع بحب لأمة الإسلام",
@@ -469,6 +473,8 @@ export default {
     post_prayer: "أذكار بعد الصلاة",
     house_desc: "أذكار دخول وخروج المنزل والبركة فيه",
     masjid_desc: "أذكار الذهاب والدخول والخروج من المسجد",
+    distress_illness_desc: "أدعية الكرب والهم والحزن والغضب وعيادة المريض والاستجابة",
+    arafah_hajj_desc: "أدعية وأذكار يوم عرفة وتلبية الحج وأعماله المأثورة عن النبي ﷺ",
   },
   dhikr: {
     count: "عدد",

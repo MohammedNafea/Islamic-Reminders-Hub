@@ -29,7 +29,9 @@ export default {
     "search": "Search",
     "download": "Download App",
     "sunan": "Prophetic Sunan",
-    "daily_supplications": "Daily Supplications"
+    "daily_supplications": "Daily Supplications",
+    "distress_illness": "Distress & Illness",
+    "arafah_hajj": "Arafah Day & Hajj"
   },
   "search": {
     "title": "Unified Search",
@@ -342,6 +344,8 @@ export default {
     "merged_evening_desc": "Evening + Ruqyah",
     "sunan_desc": "Sunan Rawatib and Hijamah virtues",
     "daily_supplications_desc": "Supplications for clothing, wudu, food, travel and home",
+    "distress_illness_desc": "Supplications for distress, anxiety, grief, illness, and answered prayers",
+    "arafah_hajj_desc": "Supplications, Talbiyah, and remembrances for the Day of Arafah and Hajj pilgrimage",
     "daily_inspiration": "Daily Inspiration",
     "sadaqa_jariya": "ongoing charity",
     "made_with_love": "Made with love for the nation of Islam"
@@ -729,7 +733,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Adhkar for entering and leaving the house",
-    "masjid_desc": "Adhkar for entering, leaving, and going to the mosque"
+    "masjid_desc": "Adhkar for entering, leaving, and going to the mosque",
+    "distress_illness_desc": "Supplications for distress, anxiety, grief, illness, and answered prayers",
+    "arafah_hajj_desc": "Supplications, Talbiyah, and remembrances for the Day of Arafah and Hajj pilgrimage"
   },
   "dhikr": {
     "count": "Count",

@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
-import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins, Home, MapPin } from "lucide-react";
+import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins, Home, MapPin, HeartPulse } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { getDailyProgress } from "@/lib/store";
-import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah, adhkarHouse, adhkarMasjid } from "@/data/adhkar";
+import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah, adhkarHouse, adhkarMasjid, adhkarDistressAndIllness, adhkarArafahHajj } from "@/data/adhkar";
 import { useEffect, useState } from "react";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
@@ -20,6 +20,28 @@ const categories = [
     border: "border-amber-200 dark:border-amber-800/50",
     activeBg: "bg-amber-100 dark:bg-amber-900/40",
     adhkar: () => [...adhkarMorningEvening, ...adhkarMorningVariant, ...adhkarMorningOnly],
+  },
+  {
+    href: "/daily-supplications?tab=distress_illness",
+    Icon: HeartPulse,
+    titleKey: "nav.distress_illness",
+    descKey: "adhkar_hub.distress_illness_desc",
+    color: "text-red-600 dark:text-red-400",
+    bg: "bg-red-50 dark:bg-red-950/30",
+    border: "border-red-200 dark:border-red-800/50",
+    activeBg: "bg-red-100 dark:bg-red-900/40",
+    adhkar: () => adhkarDistressAndIllness,
+  },
+  {
+    href: "/arafah-hajj",
+    Icon: Star,
+    titleKey: "nav.arafah_hajj",
+    descKey: "adhkar_hub.arafah_hajj_desc",
+    color: "text-emerald-600 dark:text-emerald-400",
+    bg: "bg-emerald-50 dark:bg-emerald-950/30",
+    border: "border-emerald-200 dark:border-emerald-800/50",
+    activeBg: "bg-emerald-100 dark:bg-emerald-900/40",
+    adhkar: () => adhkarArafahHajj,
   },
   {
     href: "/evening",

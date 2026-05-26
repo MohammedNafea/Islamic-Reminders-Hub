@@ -34,7 +34,7 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
     return rawAdhkar.filter(item => {
       if (seenIds.has(item.id)) return false;
       
-      const cleanText = item.arabic.replace(/[^\u0621-\u064A]/g, "");
+            const cleanText = item.arabic.replace(/[^\u0621-\u064A]/g, "") + "_" + item.count;
       // Allow short common phrases (e.g. "بِسْمِ اللَّهِ") to duplicate in different parts if needed
       const isShortCommonPhrase = cleanText.length <= 15;
       

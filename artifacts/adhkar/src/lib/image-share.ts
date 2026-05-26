@@ -58,16 +58,16 @@ export const exportToImage = async (
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Could not create 2D canvas context");
 
-    const canvasWidth = 800;
-    const padding = 55;
+    const canvasWidth = 1200;
+    const padding = 80;
     const maxWidth = canvasWidth - padding * 2;
 
-    // Fonts
-    const arabicFont = "400 30px 'Amiri', 'Traditional Arabic', 'Tajawal', serif";
-    const titleFont = "bold 22px 'Tajawal', sans-serif";
-    const noteFont = "italic 16px 'Tajawal', sans-serif";
-    const sourceFont = "italic 17px 'Tajawal', sans-serif";
-    const watermarkFont = "13px 'Tajawal', sans-serif";
+    // Fonts — larger sizes for high resolution canvas
+    const arabicFont = "400 42px 'Amiri', 'Traditional Arabic', 'Tajawal', serif";
+    const titleFont = "bold 32px 'Tajawal', sans-serif";
+    const noteFont = "italic 24px 'Tajawal', sans-serif";
+    const sourceFont = "italic 26px 'Tajawal', sans-serif";
+    const watermarkFont = "18px 'Tajawal', sans-serif";
 
     // Measure text
     ctx.font = arabicFont;
@@ -77,40 +77,42 @@ export const exportToImage = async (
     let noteLines: string[] = [];
     if (note) {
       ctx.font = noteFont;
-      noteLines = wrapText(ctx, note, maxWidth - 20);
+      noteLines = wrapText(ctx, note, maxWidth - 30);
     }
 
     // Measure source lines
     let sourceLines: string[] = [];
     if (source) {
       ctx.font = sourceFont;
-      sourceLines = wrapText(ctx, source, maxWidth - 20);
+      sourceLines = wrapText(ctx, source, maxWidth - 30);
     }
 
     // Layout
-    const lineHeight = 52;
-    const noteLineHeight = 28;
-    const sourceLineHeight = 28;
+    const lineHeight = 70;
+    const noteLineHeight = 38;
+    const sourceLineHeight = 38;
 
-    const titleSectionH = 80;
-    const noteSectionH = noteLines.length > 0 ? noteLines.length * noteLineHeight + 30 : 0;
-    const textSectionH = lines.length * lineHeight + 20;
-    const sourceSectionH = sourceLines.length > 0 ? sourceLines.length * sourceLineHeight + 50 : 0;
-    const watermarkH = 50;
+    const titleSectionH = 100;
+    const noteSectionH = noteLines.length > 0 ? noteLines.length * noteLineHeight + 40 : 0;
+    const textSectionH = lines.length * lineHeight + 30;
+    const sourceSectionH = sourceLines.length > 0 ? sourceLines.length * sourceLineHeight + 65 : 0;
+    const watermarkH = 65;
 
     const canvasHeight =
       padding +
       titleSectionH +
-      (noteSectionH > 0 ? noteSectionH + 10 : 0) +
+      (noteSectionH > 0 ? noteSectionH + 15 : 0) +
       textSectionH +
       (sourceSectionH > 0 ? sourceSectionH : 0) +
       watermarkH +
       padding;
 
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+    const dpr = 2; // Scale factor for high resolution crisp image exports
+    canvas.width = canvasWidth * dpr;
+    canvas.height = canvasHeight * dpr;
 
     const ctx2 = canvas.getContext("2d")!;
+    ctx2.scale(dpr, dpr);
     ctx2.textBaseline = "middle";
 
     // Background gradient
@@ -123,41 +125,41 @@ export const exportToImage = async (
 
     // Outer border
     ctx2.strokeStyle = "rgba(245, 158, 11, 0.4)";
-    ctx2.lineWidth = 4;
-    ctx2.strokeRect(18, 18, canvasWidth - 36, canvasHeight - 36);
+    ctx2.lineWidth = 6;
+    ctx2.strokeRect(24, 24, canvasWidth - 48, canvasHeight - 48);
 
     // Inner border
     ctx2.strokeStyle = "rgba(245, 158, 11, 0.15)";
-    ctx2.lineWidth = 1;
-    ctx2.strokeRect(24, 24, canvasWidth - 48, canvasHeight - 48);
+    ctx2.lineWidth = 2;
+    ctx2.strokeRect(34, 34, canvasWidth - 68, canvasHeight - 68);
 
     // Title
-    let cursorY = padding + 20;
+    let cursorY = padding + 28;
     ctx2.fillStyle = "#f59e0b";
     ctx2.font = titleFont;
     ctx2.textAlign = "center";
     ctx2.fillText(title, canvasWidth / 2, cursorY);
 
     // Decorative line under title
-    cursorY += 20;
+    cursorY += 28;
     ctx2.beginPath();
-    ctx2.moveTo(canvasWidth / 2 - 100, cursorY);
-    ctx2.lineTo(canvasWidth / 2 + 100, cursorY);
+    ctx2.moveTo(canvasWidth / 2 - 150, cursorY);
+    ctx2.lineTo(canvasWidth / 2 + 150, cursorY);
     ctx2.strokeStyle = "rgba(245, 158, 11, 0.5)";
-    ctx2.lineWidth = 1.5;
+    ctx2.lineWidth = 2;
     ctx2.stroke();
 
     // Diamond
     ctx2.fillStyle = "#f59e0b";
     ctx2.beginPath();
-    ctx2.moveTo(canvasWidth / 2, cursorY - 5);
-    ctx2.lineTo(canvasWidth / 2 + 5, cursorY);
-    ctx2.lineTo(canvasWidth / 2, cursorY + 5);
-    ctx2.lineTo(canvasWidth / 2 - 5, cursorY);
+    ctx2.moveTo(canvasWidth / 2, cursorY - 7);
+    ctx2.lineTo(canvasWidth / 2 + 7, cursorY);
+    ctx2.lineTo(canvasWidth / 2, cursorY + 7);
+    ctx2.lineTo(canvasWidth / 2 - 7, cursorY);
     ctx2.closePath();
     ctx2.fill();
 
-    cursorY += 30;
+    cursorY += 40;
 
     // Note/timing section (متى وأين تقال)
     if (noteLines.length > 0) {
@@ -211,17 +213,17 @@ export const exportToImage = async (
 
     // Source / Reference
     if (sourceLines.length > 0) {
-      cursorY += 18;
+      cursorY += 26;
 
       // Separator line
       ctx2.beginPath();
-      ctx2.moveTo(canvasWidth / 2 - 150, cursorY);
-      ctx2.lineTo(canvasWidth / 2 + 150, cursorY);
+      ctx2.moveTo(canvasWidth / 2 - 250, cursorY);
+      ctx2.lineTo(canvasWidth / 2 + 250, cursorY);
       ctx2.strokeStyle = "rgba(245, 158, 11, 0.25)";
-      ctx2.lineWidth = 1;
+      ctx2.lineWidth = 2;
       ctx2.stroke();
 
-      cursorY += 22;
+      cursorY += 30;
       ctx2.fillStyle = "rgba(255, 255, 255, 0.75)";
       ctx2.font = sourceFont;
       ctx2.textAlign = "center";
@@ -234,11 +236,11 @@ export const exportToImage = async (
     }
 
     // Watermark / branding
-    cursorY = canvasHeight - watermarkH / 2 - 8;
+    cursorY = canvasHeight - watermarkH / 2 - 12;
     ctx2.fillStyle = "rgba(245, 158, 11, 0.35)";
     ctx2.font = watermarkFont;
     ctx2.textAlign = "center";
-    ctx2.fillText(`Islamic Reminders Hub - واذكر  |  ${SITE_URL}`, canvasWidth / 2, cursorY);
+    ctx2.fillText(`🌙 Islamic Reminders Hub • واذكر  |  ${SITE_URL}`, canvasWidth / 2, cursorY);
 
     // Convert canvas to blob for sharing
     const dataUrl = canvas.toDataURL("image/png");

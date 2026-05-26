@@ -16,14 +16,15 @@ import {
   adhkarNature,
   adhkarOccasions,
   adhkarImmunization,
-  adhkarGreatDays
+  adhkarGreatDays,
+  adhkarDistressAndIllness
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
-import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star } from "lucide-react";
+import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star, HeartPulse } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 
-type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days";
+type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days" | "distress_illness";
 
 interface TabItem {
   id: TabId;
@@ -34,7 +35,39 @@ interface TabItem {
 
 export default function DailySupplications() {
   const { t, i18n } = useTranslation();
-  const [activeTab, setActiveTab] = useState<TabId>("house_masjid");
+  const [activeTab, setActiveTab] = useState<TabId>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab") as TabId;
+    const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness"];
+    if (tabParam && validTabs.includes(tabParam)) {
+      return tabParam;
+    }
+    return "house_masjid";
+  });
+
+  // Watch for tab parameter changes in URL (e.g. back/forward navigation)
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as TabId;
+      const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness"];
+      if (tabParam && validTabs.includes(tabParam)) {
+        setActiveTab(tabParam);
+      }
+    };
+    window.addEventListener("popstate", handleUrlChange);
+    return () => window.removeEventListener("popstate", handleUrlChange);
+  }, []);
+
+  // Update tab parameter in URL when activeTab changes
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("tab") !== activeTab) {
+      params.set("tab", activeTab);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState(null, "", newUrl);
+    }
+  }, [activeTab]);
 
   // Scroll to top when active tab changes
   useEffect(() => {
@@ -51,6 +84,7 @@ export default function DailySupplications() {
     { id: "sleep_events", labelAr: "النوم واليقظة", labelEn: "Sleep & Waking", Icon: Moon },
     { id: "prayer_actions", labelAr: "أفعال الصلاة", labelEn: "Prayer Actions", Icon: BookOpen },
     { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun },
+    { id: "distress_illness", labelAr: "الكرب والمرض والاستجابة", labelEn: "Distress, Illness & Answered", Icon: HeartPulse },
     { id: "great_days", labelAr: "الأيام والليالي العظيمة", labelEn: "Virtuous Days & Nights", Icon: Star }
   ];
 
@@ -80,6 +114,8 @@ export default function DailySupplications() {
         return adhkarPrayerActions;
       case "occasions_nature":
         return [...adhkarDailyLifeEvents, ...adhkarNature, ...adhkarOccasions, ...adhkarImmunization];
+      case "distress_illness":
+        return adhkarDistressAndIllness;
       case "great_days":
         return adhkarGreatDays;
       default:

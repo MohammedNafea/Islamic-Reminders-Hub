@@ -32,6 +32,7 @@ import TrackerDashboard from "@/pages/TrackerDashboard";
 import Download from "@/pages/Download";
 import Sunan from "@/pages/Sunan";
 import DailySupplications from "@/pages/DailySupplications";
+import ArafahHajj from "@/pages/ArafahHajj";
 import { monitoring } from "@/lib/monitoring";
 
 // Initialize monitoring for production telemetry
@@ -72,6 +73,7 @@ function Router() {
         <Route path="/download" component={Download} />
         <Route path="/sunan" component={Sunan} />
         <Route path="/daily-supplications" component={DailySupplications} />
+        <Route path="/arafah-hajj" component={ArafahHajj} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
