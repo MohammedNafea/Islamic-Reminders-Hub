@@ -69,10 +69,56 @@ export default function Tasbih() {
     setStats(loadedStats);
   }, []);
 
+  const lastSavedCountRef = useRef<number>(0);
+
   useEffect(() => {
     const activeCount = localDB.getGeneralProgress<number>("active_count_" + selectedDhikrId, 0);
     setCount(activeCount);
+    lastSavedCountRef.current = activeCount;
   }, [selectedDhikrId]);
+
+  // Debounced database saving & stats update to avoid main thread freeze during rapid taps
+  useEffect(() => {
+    if (count === lastSavedCountRef.current) return;
+
+    const delayDebounce = setTimeout(() => {
+      const delta = count - lastSavedCountRef.current;
+      if (delta <= 0) {
+        if (count === 0) {
+          localDB.saveGeneralProgress("active_count_" + selectedDhikrId, 0);
+          lastSavedCountRef.current = 0;
+          return;
+        }
+      }
+
+      const currentTodayStr = getTodayStr();
+      const currentStats = { ...stats };
+      const dhikrStat = currentStats[selectedDhikrId] || { today: 0, lifetime: 0, lastUpdated: currentTodayStr };
+      if (dhikrStat.lastUpdated !== currentTodayStr) {
+        dhikrStat.today = 0;
+        dhikrStat.lastUpdated = currentTodayStr;
+      }
+
+      let incrementAmount = delta;
+      if (delta < 0) {
+        incrementAmount = (target - lastSavedCountRef.current) + count;
+        if (incrementAmount < 0) incrementAmount = 1;
+      }
+
+      dhikrStat.today += incrementAmount;
+      dhikrStat.lifetime += incrementAmount;
+      currentStats[selectedDhikrId] = dhikrStat;
+      
+      setStats(currentStats);
+      localDB.saveGeneralProgress("active_count_" + selectedDhikrId, count);
+      localDB.saveGeneralProgress("tasbih_stats_v3", currentStats);
+      logTasbihIncrement(incrementAmount);
+
+      lastSavedCountRef.current = count;
+    }, 1000);
+
+    return () => clearTimeout(delayDebounce);
+  }, [count, selectedDhikrId, stats, target]);
 
   const allDhikrs = [...DEFAULT_DHIKRS, ...customDhikrs];
   const activeDhikr = allDhikrs.find(d => d.id === selectedDhikrId) || DEFAULT_DHIKRS[0];
@@ -80,23 +126,6 @@ export default function Tasbih() {
   const handleTap = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
     const next = count >= target ? 1 : count + 1;
     setCount(next);
-    localDB.saveGeneralProgress("active_count_" + selectedDhikrId, next);
-
-    // Update stats
-    const currentTodayStr = getTodayStr();
-    const currentStats = { ...stats };
-    const dhikrStat = currentStats[selectedDhikrId] || { today: 0, lifetime: 0, lastUpdated: currentTodayStr };
-    if (dhikrStat.lastUpdated !== currentTodayStr) {
-      dhikrStat.today = 0;
-      dhikrStat.lastUpdated = currentTodayStr;
-    }
-    dhikrStat.today += 1;
-    dhikrStat.lifetime += 1;
-    currentStats[selectedDhikrId] = dhikrStat;
-    setStats(currentStats);
-    localDB.saveGeneralProgress("tasbih_stats_v3", currentStats);
-
-    logTasbihIncrement(1);
 
     // Create ripple effect
     const rect = e.currentTarget.getBoundingClientRect();
@@ -108,8 +137,13 @@ export default function Tasbih() {
       y,
     };
     setRipples(prev => [...prev, newRipple]);
+    
+    // Auto cleanup ripple after animation completes to prevent memory leaks in WebView
+    setTimeout(() => {
+      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+    }, 800);
 
-    // Haptic feedback logic
+    // Haptic feedback logic (non-blocking)
     if (settings.vibrate && navigator.vibrate) {
       const now = Date.now();
       if (now - vibrateRef.current > 80) {
@@ -129,6 +163,7 @@ export default function Tasbih() {
     if (e) e.stopPropagation();
     setCount(0);
     localDB.saveGeneralProgress("active_count_" + selectedDhikrId, 0);
+    lastSavedCountRef.current = 0;
   };
 
   const handleAddCustomDhikr = (e: React.FormEvent) => {

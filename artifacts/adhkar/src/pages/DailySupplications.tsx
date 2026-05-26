@@ -18,14 +18,16 @@ import {
   adhkarImmunization,
   adhkarGreatDays,
   adhkarDistressAndIllness,
-  adhkarQuran
+  adhkarQuran,
+  adhkarRuqyah,
+  adhkarSunanMahjora
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
-import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star, HeartPulse, Landmark } from "lucide-react";
+import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star, HeartPulse, Landmark, Heart, Sparkles } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 
-type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days" | "distress_illness" | "quran_duas";
+type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days" | "distress_illness" | "quran_duas" | "ruqyah" | "sunan_mahjora";
 
 interface TabItem {
   id: TabId;
@@ -39,7 +41,7 @@ export default function DailySupplications() {
   const [activeTab, setActiveTab] = useState<TabId>(() => {
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get("tab") as TabId;
-    const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas"];
+    const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas", "ruqyah", "sunan_mahjora"];
     if (tabParam && validTabs.includes(tabParam)) {
       return tabParam;
     }
@@ -51,7 +53,7 @@ export default function DailySupplications() {
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab") as TabId;
-      const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas"];
+      const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas", "ruqyah", "sunan_mahjora"];
       if (tabParam && validTabs.includes(tabParam)) {
         setActiveTab(tabParam);
       }
@@ -87,18 +89,10 @@ export default function DailySupplications() {
     { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun },
     { id: "distress_illness", labelAr: "الكرب والمرض والاستجابة", labelEn: "Distress, Illness & Answered", Icon: HeartPulse },
     { id: "great_days", labelAr: "الأيام والليالي العظيمة", labelEn: "Virtuous Days & Nights", Icon: Star },
-    { id: "quran_duas", labelAr: "الأدعية من القرآن الكريم", labelEn: "Quranic Duas", Icon: Landmark }
+    { id: "quran_duas", labelAr: "الأدعية من القرآن الكريم", labelEn: "Quranic Duas", Icon: Landmark },
+    { id: "ruqyah", labelAr: "الرقية الشرعية", labelEn: "Ruqyah", Icon: Heart },
+    { id: "sunan_mahjora", labelAr: "السنن المهجورة", labelEn: "Forgotten Sunnahs", Icon: Sparkles }
   ];
-
-  // Get sleep-related waking/night events
-  const sleepEvents = useMemo(() => {
-    return adhkarSleep.filter(d =>
-      d.id.startsWith("sleep_waking") ||
-      d.id.startsWith("sleep_faza") ||
-      d.id === "sleep_taqallub" ||
-      d.id === "sleep_bad_dream"
-    );
-  }, []);
 
   const currentAdhkar = useMemo(() => {
     switch (activeTab) {
@@ -111,7 +105,7 @@ export default function DailySupplications() {
       case "travel":
         return adhkarTravel;
       case "sleep_events":
-        return sleepEvents;
+        return adhkarSleep;
       case "prayer_actions":
         return adhkarPrayerActions;
       case "occasions_nature":
@@ -122,10 +116,14 @@ export default function DailySupplications() {
         return adhkarGreatDays;
       case "quran_duas":
         return adhkarQuran;
+      case "ruqyah":
+        return adhkarRuqyah;
+      case "sunan_mahjora":
+        return adhkarSunanMahjora;
       default:
         return [];
     }
-  }, [activeTab, sleepEvents]);
+  }, [activeTab]);
 
   const currentTitleKey = useMemo(() => {
     switch (activeTab) {
@@ -147,6 +145,10 @@ export default function DailySupplications() {
         return "nav.daily_supplications";
       case "quran_duas":
         return "nav.quran_duas";
+      case "ruqyah":
+        return "nav.ruqyah";
+      case "sunan_mahjora":
+        return "nav.daily_supplications";
       default:
         return "nav.daily_supplications";
     }
