@@ -29,7 +29,8 @@ export default {
     "merged_evening": "شام و رقیه",
     "tracker": "مسیر تعهد",
     "sunan": "سنت های پیامبر",
-    "daily_supplications": "خاطرات امروز و امشب"
+    "daily_supplications": "خاطرات امروز و امشب",
+    "quran_duas": "دعاهای قرآنی"
   },
   "home": {
     "greeting_morning": "صبح بخیر",

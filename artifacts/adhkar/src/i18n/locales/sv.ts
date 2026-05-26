@@ -29,7 +29,8 @@ export default {
     "merged_evening": "Kväll och ruqyah",
     "download": "Ladda ner applikationen",
     "merged_morning": "Morgon och ruqyah",
-    "daily_supplications": "Minnen för idag och ikväll"
+    "daily_supplications": "Minnen för idag och ikväll",
+    "quran_duas": "Koraniska Böner"
   },
   "home": {
     "greeting_morning": "God morgon",

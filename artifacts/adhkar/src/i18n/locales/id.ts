@@ -29,7 +29,8 @@ export default {
     "download": "Unduh aplikasinya",
     "merged_evening": "Malam dan ruqyah",
     "sunan": "Sunnah Nabi",
-    "daily_supplications": "Kenangan untuk hari ini dan malam ini"
+    "daily_supplications": "Kenangan untuk hari ini dan malam ini",
+    "quran_duas": "Doa-doa Al-Quran"
   },
   "home": {
     "greeting_morning": "Selamat Pagi",

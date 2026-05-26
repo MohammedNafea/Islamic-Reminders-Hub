@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/localization/app_localizations.dart';
@@ -30,6 +32,10 @@ class SettingsScreen extends StatelessWidget {
             _buildSectionHeader(context, localizations.translate('settings_language')),
             const SizedBox(height: 8),
             _buildLanguageCard(context, settings, localizations),
+            const SizedBox(height: 24),
+            _buildSectionHeader(context, settings.languageCode == 'ar' ? 'الموقع الجغرافي' : 'Location Settings'),
+            const SizedBox(height: 8),
+            _buildLocationCard(context, settings),
             const SizedBox(height: 24),
             _buildSectionHeader(context, localizations.translate('settings_theme')),
             const SizedBox(height: 8),
@@ -306,6 +312,162 @@ class SettingsScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildLocationCard(BuildContext context, SettingsProvider settings) {
+    final isArabic = settings.languageCode == 'ar';
+    final hasOverride = settings.latOverride != null;
+    final city = settings.cityOverride ?? (isArabic ? 'مكة المكرمة' : 'Makkah');
+
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.location_on, color: Theme.of(context).colorScheme.primary),
+              title: Text(
+                hasOverride ? city : (isArabic ? 'تحديد تلقائي (GPS)' : 'Auto Detect (GPS)'),
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                hasOverride 
+                  ? (isArabic ? 'موقع مخصص (مواقيت صلاة مخصصة)' : 'Manual override active')
+                  : (isArabic ? 'يتم تحديد الموقع تلقائياً عبر نظام تحديد المواقع' : 'Location is automatically determined via GPS'),
+                style: const TextStyle(fontSize: 11),
+              ),
+            ),
+            const Divider(height: 24),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await settings.clearLocationOverride();
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(isArabic 
+                            ? 'تم تفعيل التحديد التلقائي عبر GPS' 
+                            : 'Auto GPS detection enabled'),
+                        ));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: !hasOverride ? Theme.of(context).colorScheme.primary : Colors.transparent,
+                      foregroundColor: !hasOverride ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+                      side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    child: Text(isArabic ? 'تلقائي' : 'GPS Auto'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _showLocationInputModal(context, settings, isArabic);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: hasOverride ? Theme.of(context).colorScheme.primary : Colors.transparent,
+                      foregroundColor: hasOverride ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.primary,
+                      side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                    child: Text(isArabic ? 'تعديل يدوي' : 'Manual'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showLocationInputModal(BuildContext context, SettingsProvider settings, bool isArabic) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
+            isArabic ? 'إدخال المدينة يدوياً' : 'Manual City Input',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: isArabic ? 'اسم المدينة' : 'City Name',
+              hintText: isArabic ? 'مثال: القاهرة، مكة...' : 'e.g. Cairo, Mecca...',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: Text(isArabic ? 'إلغاء' : 'Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final city = controller.text.trim();
+                if (city.isNotEmpty) {
+                  Navigator.pop(dialogContext);
+                  // Call Nominatim to search coordinates
+                  try {
+                    final response = await http.get(Uri.parse(
+                      "https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(city)}&format=json&limit=1"
+                    ));
+                    if (response.statusCode == 200) {
+                      final List data = json.decode(response.body);
+                      if (data.isNotEmpty) {
+                        final lat = double.parse(data[0]['lat']);
+                        final lng = double.parse(data[0]['lon']);
+                        final displayName = data[0]['display_name'] as String;
+                        final shortName = displayName.split(',')[0];
+                        await settings.setLocationOverride(lat, lng, shortName);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(isArabic 
+                              ? 'تم تحديث الموقع لـ $shortName بنجاح!' 
+                              : 'Location set to $shortName successfully!'),
+                          ));
+                        }
+                      } else {
+                        if (context.mounted) {
+                          _showError(context, isArabic ? 'لم يتم العثور على المدينة' : 'City not found');
+                        }
+                      }
+                    }
+                  } catch (e) {
+                    if (context.mounted) {
+                      _showError(context, isArabic ? 'خطأ في الاتصال بالخادم' : 'Server connection error');
+                    }
+                  }
+                }
+              },
+              child: Text(isArabic ? 'بحث وتعيين' : 'Search & Set'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showError(BuildContext context, String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Icon(Icons.error_outline, color: Colors.red),
+        content: Text(msg),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('OK')),
+        ],
       ),
     );
   }

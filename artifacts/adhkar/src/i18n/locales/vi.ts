@@ -29,6 +29,7 @@ export default {
     "merged_evening": "Buổi tối và ruqyah",
     "download": "Tải ứng dụng",
     "daily_supplications": "Nỗi nhớ hôm nay và đêm nay",
+    "quran_duas": "Lời Cầu Nguyện Từ Kinh Qur'an",
     "sunan": "Sunnahs của nhà tiên tri"
   },
   "home": {

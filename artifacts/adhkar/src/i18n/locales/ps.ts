@@ -29,7 +29,8 @@ export default {
     "masjid": "د جومات یادونه",
     "sunan": "د رسول الله صلی الله علیه وسلم سنتونه",
     "download": "اپلیکیشن ډاونلوډ کړئ",
-    "daily_supplications": "د نن او نن شپې یادونه"
+    "daily_supplications": "د نن او نن شپې یادونه",
+    "quran_duas": "د قرآن دعاګانې"
   },
   "home": {
     "greeting_morning": "سهار مو پخیر",

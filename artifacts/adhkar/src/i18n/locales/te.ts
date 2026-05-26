@@ -29,7 +29,8 @@ export default {
     "merged_evening": "సాయంత్రం మరియు రుక్యా",
     "download": "అప్లికేషన్‌ను డౌన్‌లోడ్ చేయండి",
     "sunan": "ప్రవక్త యొక్క సున్నత్లు",
-    "daily_supplications": "ఈరోజు మరియు ఈ రాత్రికి జ్ఞాపకాలు"
+    "daily_supplications": "ఈరోజు మరియు ఈ రాత్రికి జ్ఞాపకాలు",
+    "quran_duas": "ఖురానిక్ దుఆలు"
   },
   "home": {
     "greeting_morning": "శుభోదయం",

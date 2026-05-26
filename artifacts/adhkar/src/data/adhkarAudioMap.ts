@@ -17,7 +17,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "after_athan_salawat": {
     "type": "dureihim",
-    "filename": "24"
+    "filename": "98"
   },
   "after_athan_shahada": {
     "type": "dureihim",
@@ -29,11 +29,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "after_food": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "180"
   },
   "after_food_hamd_general": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "91"
   },
   "after_milk_dua": {
     "type": "dureihim",
@@ -45,7 +45,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "after_wudu_tawabeen": {
     "type": "dureihim",
-    "filename": "13"
+    "filename": "14"
   },
   "akhir_baqarah_sleep": {
     "type": "quran",
@@ -60,31 +60,31 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "alhamdulillah_prayer_33": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "69"
   },
   "alhamdulillah_sleep_33": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "106"
   },
   "allahu_akbar_prayer_33": {
     "type": "dureihim",
-    "filename": "241"
+    "filename": "69"
   },
   "allahu_akbar_sleep_34": {
     "type": "dureihim",
-    "filename": "241"
+    "filename": "106"
   },
   "allahumma_aslamtu": {
     "type": "dureihim",
-    "filename": "111"
+    "filename": "91"
   },
   "allahumma_bismika": {
     "type": "dureihim",
-    "filename": "105"
+    "filename": "91"
   },
   "allahumma_khalaqta": {
     "type": "dureihim",
-    "filename": "103"
+    "filename": "91"
   },
   "allahumma_qini": {
     "type": "dureihim",
@@ -92,7 +92,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "allahumma_rabb_samawat": {
     "type": "dureihim",
-    "filename": "107"
+    "filename": "91"
   },
   "aman_rasul_ruqyah": {
     "type": "quran",
@@ -103,7 +103,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "answered_ism_aazam": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "65"
   },
   "answered_thul_jalal": {
     "type": "dureihim",
@@ -119,7 +119,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "arafah_prophetic_afia": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "84"
   },
   "arafah_prophetic_huda": {
     "type": "dureihim",
@@ -163,11 +163,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "asbahna_morning": {
     "type": "dureihim",
-    "filename": "77"
+    "filename": "91"
   },
   "asbahna_morning_rab_al_alamin": {
     "type": "dureihim",
-    "filename": "89"
+    "filename": "91"
   },
   "ashhadu_himalata_arshika": {
     "type": "dureihim",
@@ -179,11 +179,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "awudhu_kalimat_ruqyah": {
     "type": "dureihim",
-    "filename": "146"
+    "filename": "91"
   },
   "awudhu_qudra": {
     "type": "dureihim",
-    "filename": "243"
+    "filename": "91"
   },
   "ayat_kursi_morning_evening": {
     "type": "quran",
@@ -193,11 +193,8 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     ]
   },
   "ayat_kursi_prayer": {
-    "type": "quran",
-    "surah": 2,
-    "ayahs": [
-      255
-    ]
+    "type": "dureihim",
+    "filename": "91"
   },
   "ayat_kursi_ruqyah": {
     "type": "quran",
@@ -222,7 +219,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "before_food": {
     "type": "dureihim",
-    "filename": "175"
+    "filename": "12"
   },
   "before_wudu": {
     "type": "dureihim",
@@ -230,7 +227,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "bika_asbahna": {
     "type": "dureihim",
-    "filename": "78"
+    "filename": "91"
   },
   "bismika_rabbi": {
     "type": "dureihim",
@@ -242,335 +239,335 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "bismillah_wadatu": {
     "type": "dureihim",
-    "filename": "102"
+    "filename": "91"
   },
   "dhikr_mashar_al_haram": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "238"
   },
   "dhikr_missing_114": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "114"
   },
   "dhikr_missing_115": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "115"
   },
   "dhikr_missing_117": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "117"
   },
   "dhikr_missing_119": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "119"
   },
   "dhikr_missing_120": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "120"
   },
   "dhikr_missing_123": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "123"
   },
   "dhikr_missing_124": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "124"
   },
   "dhikr_missing_125": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "125"
   },
   "dhikr_missing_126": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "126"
   },
   "dhikr_missing_127": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "127"
   },
   "dhikr_missing_128": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "128"
   },
   "dhikr_missing_129": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "129"
   },
   "dhikr_missing_131": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "131"
   },
   "dhikr_missing_132": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "132"
   },
   "dhikr_missing_133": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "133"
   },
   "dhikr_missing_135": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "135"
   },
   "dhikr_missing_136": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "136"
   },
   "dhikr_missing_139": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "139"
   },
   "dhikr_missing_140": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "140"
   },
   "dhikr_missing_141": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "141"
   },
   "dhikr_missing_143": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "143"
   },
   "dhikr_missing_144": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "144"
   },
   "dhikr_missing_145": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "145"
   },
   "dhikr_missing_146": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "146"
   },
   "dhikr_missing_149": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "149"
   },
   "dhikr_missing_150": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "150"
   },
   "dhikr_missing_154": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "154"
   },
   "dhikr_missing_155": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "155"
   },
   "dhikr_missing_156": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "156"
   },
   "dhikr_missing_157": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "157"
   },
   "dhikr_missing_158": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "158"
   },
   "dhikr_missing_159": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "159"
   },
   "dhikr_missing_160": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "160"
   },
   "dhikr_missing_161": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "161"
   },
   "dhikr_missing_164": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "164"
   },
   "dhikr_missing_165": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "165"
   },
   "dhikr_missing_166": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "166"
   },
   "dhikr_missing_169": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "169"
   },
   "dhikr_missing_170": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "170"
   },
   "dhikr_missing_171": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "171"
   },
   "dhikr_missing_174": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "174"
   },
   "dhikr_missing_177": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "177"
   },
   "dhikr_missing_185": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "185"
   },
   "dhikr_missing_186": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "186"
   },
   "dhikr_missing_187": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "187"
   },
   "dhikr_missing_19": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "19"
   },
   "dhikr_missing_191": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "191"
   },
   "dhikr_missing_195": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "195"
   },
   "dhikr_missing_198": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "198"
   },
   "dhikr_missing_199": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "199"
   },
   "dhikr_missing_200": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "200"
   },
   "dhikr_missing_201": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "201"
   },
   "dhikr_missing_202": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "202"
   },
   "dhikr_missing_203": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "203"
   },
   "dhikr_missing_204": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "204"
   },
   "dhikr_missing_205": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "205"
   },
   "dhikr_missing_208": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "208"
   },
   "dhikr_missing_214": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "214"
   },
   "dhikr_missing_219": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "219"
   },
   "dhikr_missing_22": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "22"
   },
   "dhikr_missing_220": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "220"
   },
   "dhikr_missing_222": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "222"
   },
   "dhikr_missing_223": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "223"
   },
   "dhikr_missing_224": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "224"
   },
   "dhikr_missing_225": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "225"
   },
   "dhikr_missing_24": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "24"
   },
   "dhikr_missing_253": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "253"
   },
   "dhikr_missing_26": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "26"
   },
   "dhikr_missing_41": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "41"
   },
   "dhikr_missing_45": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "37"
   },
   "dhikr_missing_47": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "47"
   },
   "dhikr_missing_51": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "51"
   },
   "dhikr_missing_54": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "54"
   },
   "dhikr_missing_66": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "66"
   },
   "dhikr_missing_71": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "71"
   },
   "dhikr_missing_74": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "74"
   },
   "dhikr_missing_79": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "79"
   },
   "dhikr_missing_85": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "85"
   },
   "dhikr_missing_89": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "89"
   },
   "dhikr_missing_90": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "90"
   },
   "distress_anger_istiaadhah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "193"
   },
   "distress_hamm_hazan": {
     "type": "dureihim",
@@ -578,7 +575,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "distress_hasbiyallah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "83"
   },
   "distress_jawami_1": {
     "type": "dureihim",
@@ -714,23 +711,23 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "distress_musibah_istirja": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "154"
   },
   "distress_yunus_dhunnoon": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "124"
   },
   "dog_barking_night": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "229"
   },
   "dua_between_yamani_and_black_stone": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "235"
   },
   "eating_forget_dua": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "226"
   },
   "enter_house_bismillah": {
     "type": "dureihim",
@@ -738,11 +735,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "enter_masjid_dua": {
     "type": "dureihim",
-    "filename": "20"
+    "filename": "91"
   },
   "enter_masjid_istiaadha": {
     "type": "dureihim",
-    "filename": "20"
+    "filename": "91"
   },
   "enter_restroom": {
     "type": "dureihim",
@@ -750,7 +747,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "enter_town": {
     "type": "dureihim",
-    "filename": "209"
+    "filename": "91"
   },
   "falaq_morning_evening": {
     "type": "quran",
@@ -789,11 +786,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "fatirul_samawat": {
     "type": "dureihim",
-    "filename": "85"
+    "filename": "91"
   },
   "fitra_morning": {
     "type": "dureihim",
-    "filename": "90"
+    "filename": "91"
   },
   "food_breaking_fast_host": {
     "type": "dureihim",
@@ -809,7 +806,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "go_to_masjid_noor": {
     "type": "dureihim",
-    "filename": "19"
+    "filename": "91"
   },
   "great_days_arafah": {
     "type": "dureihim",
@@ -821,7 +818,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_athan_iqamah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "84"
   },
   "great_days_breaking_fast": {
     "type": "dureihim",
@@ -837,7 +834,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_friday_hour": {
     "type": "dureihim",
-    "filename": "64"
+    "filename": "91"
   },
   "great_days_la_ilaha_100": {
     "type": "dureihim",
@@ -845,7 +842,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "great_days_night_third": {
     "type": "dureihim",
-    "filename": "250"
+    "filename": "91"
   },
   "great_days_qadr": {
     "type": "dureihim",
@@ -856,40 +853,43 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "filename": "79"
   },
   "great_days_suhoor_istighfar": {
-    "type": "dureihim",
-    "filename": "96"
+    "type": "quran",
+    "surah": 51,
+    "ayahs": [
+      18
+    ]
   },
   "great_days_sujood_dua": {
     "type": "dureihim",
-    "filename": "47"
+    "filename": "46"
   },
   "hajj_eid_takbeer": {
     "type": "dureihim",
-    "filename": "226"
+    "filename": "241"
   },
   "hajj_jamarat_takbeer": {
     "type": "dureihim",
-    "filename": "224"
+    "filename": "239"
   },
   "hajj_muzdalifah_dua": {
     "type": "dureihim",
-    "filename": "223"
+    "filename": "238"
   },
   "hajj_safa_marwa_dua": {
     "type": "dureihim",
-    "filename": "221"
+    "filename": "236"
   },
   "hajj_talbiyah": {
     "type": "dureihim",
-    "filename": "218"
+    "filename": "233"
   },
   "hajj_tawaf_dua": {
     "type": "dureihim",
-    "filename": "220"
+    "filename": "235"
   },
   "hajj_udhiyah_takbeer": {
     "type": "dureihim",
-    "filename": "225"
+    "filename": "246"
   },
   "hasbiyallah_7": {
     "type": "dureihim",
@@ -897,7 +897,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "hear_athan_repeat": {
     "type": "dureihim",
-    "filename": "22"
+    "filename": "91"
   },
   "house_bismillah_shaytan": {
     "type": "dureihim",
@@ -941,19 +941,19 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "illness_visit_seven_times": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "148"
   },
   "illness_visit_tahoor": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "147"
   },
   "istighfar_100_daily": {
     "type": "dureihim",
-    "filename": "96"
+    "filename": "91"
   },
   "istighfar_3_prayer": {
     "type": "dureihim",
-    "filename": "66"
+    "filename": "91"
   },
   "kafirun_ruqyah": {
     "type": "quran",
@@ -964,7 +964,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "la_hawla_treasure_of_jannah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "260"
   },
   "la_ilaha_10": {
     "type": "dureihim",
@@ -976,7 +976,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "la_ilaha_prayer": {
     "type": "dureihim",
-    "filename": "67"
+    "filename": "91"
   },
   "leave_house_dua": {
     "type": "dureihim",
@@ -984,7 +984,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "leave_house_tawakkul": {
     "type": "dureihim",
-    "filename": "16"
+    "filename": "91"
   },
   "leave_masjid_dua": {
     "type": "dureihim",
@@ -1024,7 +1024,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "nature_crescent": {
     "type": "dureihim",
-    "filename": "174"
+    "filename": "91"
   },
   "nature_rain_after": {
     "type": "dureihim",
@@ -1044,27 +1044,27 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "nearness_to_allah_last_third": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "251"
   },
   "nearness_to_allah_sujood": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "252"
   },
   "new_muslim_prayer_dua": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "263"
   },
   "niamah_morning": {
     "type": "dureihim",
-    "filename": "81"
+    "filename": "91"
   },
   "night_protection_children_devils": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "267"
   },
   "occasion_arafah_ali_dua": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "237"
   },
   "occasion_arafah_best_dhikr": {
     "type": "dureihim",
@@ -1084,7 +1084,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "occasion_laylat_al_qadr_dua_maghfirah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "84"
   },
   "occasion_laylat_al_qadr_tahajjud": {
     "type": "dureihim",
@@ -1092,11 +1092,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "praised_person_response": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "232"
   },
   "praising_muslim_dua": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "231"
   },
   "prayer_aanni_ala_dhikrika": {
     "type": "dureihim",
@@ -1104,7 +1104,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_ajirni_min_nar_7": {
     "type": "dureihim",
-    "filename": "61"
+    "filename": "91"
   },
   "prayer_before_tasleem_1": {
     "type": "dureihim",
@@ -1112,7 +1112,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_before_tasleem_10": {
     "type": "dureihim",
-    "filename": "64"
+    "filename": "91"
   },
   "prayer_before_tasleem_11": {
     "type": "dureihim",
@@ -1132,7 +1132,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_before_tasleem_5": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "59"
   },
   "prayer_before_tasleem_6": {
     "type": "dureihim",
@@ -1144,7 +1144,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_before_tasleem_8": {
     "type": "dureihim",
-    "filename": "62"
+    "filename": "91"
   },
   "prayer_before_tasleem_9": {
     "type": "dureihim",
@@ -1164,7 +1164,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_istiaadha_bukhari": {
     "type": "dureihim",
-    "filename": "60"
+    "filename": "91"
   },
   "prayer_istiftah_1": {
     "type": "dureihim",
@@ -1196,11 +1196,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_la_ilaha_yuhyi_10": {
     "type": "dureihim",
-    "filename": "209"
+    "filename": "91"
   },
   "prayer_qini_v1": {
     "type": "dureihim",
-    "filename": "104"
+    "filename": "91"
   },
   "prayer_qunut_1": {
     "type": "dureihim",
@@ -1208,15 +1208,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_qunut_2": {
     "type": "dureihim",
-    "filename": "117"
+    "filename": "47"
   },
   "prayer_qunut_3": {
     "type": "dureihim",
     "filename": "118"
-  },
-  "prayer_raf_ruku": {
-    "type": "dureihim",
-    "filename": "39"
   },
   "prayer_raf_ruku_1": {
     "type": "dureihim",
@@ -1224,7 +1220,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_raf_ruku_2": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "39"
   },
   "prayer_raf_ruku_3": {
     "type": "dureihim",
@@ -1232,7 +1228,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_ruku_1": {
     "type": "dureihim",
-    "filename": "33"
+    "filename": "91"
   },
   "prayer_ruku_2": {
     "type": "dureihim",
@@ -1244,7 +1240,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_ruku_4": {
     "type": "dureihim",
-    "filename": "36"
+    "filename": "91"
   },
   "prayer_ruku_5": {
     "type": "dureihim",
@@ -1252,7 +1248,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_sujud_1": {
     "type": "dureihim",
-    "filename": "41"
+    "filename": "91"
   },
   "prayer_sujud_2": {
     "type": "dureihim",
@@ -1264,15 +1260,15 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_sujud_4": {
     "type": "dureihim",
-    "filename": "42"
+    "filename": "34"
   },
   "prayer_sujud_5": {
     "type": "dureihim",
-    "filename": "43"
+    "filename": "35"
   },
   "prayer_sujud_6": {
     "type": "dureihim",
-    "filename": "45"
+    "filename": "37"
   },
   "prayer_sujud_7": {
     "type": "dureihim",
@@ -1288,11 +1284,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prayer_tasbih_10_alternate": {
     "type": "dureihim",
-    "filename": "106"
+    "filename": "91"
   },
   "prayer_tasbih_25_alternate": {
     "type": "dureihim",
-    "filename": "264"
+    "filename": "92"
   },
   "prayer_tasbih_34_alternate": {
     "type": "dureihim",
@@ -1304,11 +1300,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "prophet_tasbih_by_right_hand": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "266"
   },
   "protection_against_rebel_devils": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "247"
   },
   "protection_anxiety_grief": {
     "type": "dureihim",
@@ -1316,11 +1312,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "protection_body_injury": {
     "type": "dureihim",
-    "filename": "84"
+    "filename": "91"
   },
   "protection_children_family": {
     "type": "dureihim",
-    "filename": "146"
+    "filename": "91"
   },
   "protection_dhikr_waswas": {
     "type": "dureihim",
@@ -1328,30 +1324,97 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "protection_entire_creation": {
     "type": "dureihim",
-    "filename": "247"
+    "filename": "91"
   },
   "protection_entry_exit_plague": {
     "type": "dureihim",
-    "filename": "10"
+    "filename": "91"
   },
   "protection_envy_evil_eye": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "91"
   },
   "protection_envy_seeing_admired_thing": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "244"
   },
   "protection_sleep_fears": {
     "type": "dureihim",
-    "filename": "113"
+    "filename": "91"
+  },
+  "quran_dua_forgiveness": {
+    "type": "quran",
+    "surah": 59,
+    "ayahs": [
+      10
+    ]
+  },
+  "quran_dua_hasanah": {
+    "type": "quran",
+    "surah": 2,
+    "ayahs": [
+      201
+    ]
+  },
+  "quran_dua_mercy": {
+    "type": "quran",
+    "surah": 18,
+    "ayahs": [
+      10
+    ]
+  },
+  "quran_dua_parent": {
+    "type": "quran",
+    "surah": 14,
+    "ayahs": [
+      40, 41
+    ]
+  },
+  "quran_dua_sharih": {
+    "type": "quran",
+    "surah": 20,
+    "ayahs": [
+      25, 26, 27, 28
+    ]
+  },
+  "quran_dua_solitude": {
+    "type": "quran",
+    "surah": 21,
+    "ayahs": [
+      89
+    ]
+  },
+  "quran_dua_spouse": {
+    "type": "quran",
+    "surah": 25,
+    "ayahs": [
+      74
+    ]
+  },
+  "quran_dua_tazigh": {
+    "type": "quran",
+    "surah": 3,
+    "ayahs": [
+      8
+    ]
+  },
+  "quran_dua_younus": {
+    "type": "quran",
+    "surah": 21,
+    "ayahs": [
+      87
+    ]
+  },
+  "quran_dua_zulmna": {
+    "type": "quran",
+    "surah": 7,
+    "ayahs": [
+      23
+    ]
   },
   "rabb_nas": {
-    "type": "quran",
-    "surah": 114,
-    "ayahs": [
-      1, 2, 3, 4, 5, 6
-    ]
+    "type": "dureihim",
+    "filename": "91"
   },
   "raditu": {
     "type": "dureihim",
@@ -1359,15 +1422,15 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "repentance_seeking_forgiveness_100": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "249"
   },
   "reply_non_muslim_salaam": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "227"
   },
   "resident_to_traveler": {
     "type": "dureihim",
-    "filename": "213"
+    "filename": "212"
   },
   "rooster_donkey_sound_dua": {
     "type": "dureihim",
@@ -1393,11 +1456,11 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "ruqyah_bismillah_turbat_ardina": {
     "type": "dureihim",
-    "filename": "18"
+    "filename": "91"
   },
   "ruqyah_faza_shayatin": {
     "type": "dureihim",
-    "filename": "113"
+    "filename": "91"
   },
   "ruqyah_jibril": {
     "type": "dureihim",
@@ -1405,22 +1468,19 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "ruqyah_jibril_alternate": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "91"
   },
   "ruqyah_jibril_self": {
     "type": "dureihim",
     "filename": "91"
   },
   "ruqyah_khalaq": {
-    "type": "quran",
-    "surah": 113,
-    "ayahs": [
-      1, 2, 3, 4, 5
-    ]
+    "type": "dureihim",
+    "filename": "216"
   },
   "ruqyah_khambash": {
     "type": "dureihim",
-    "filename": "247"
+    "filename": "91"
   },
   "ruqyah_muawwidhat_blow": {
     "type": "dureihim",
@@ -1453,7 +1513,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "ruqyah_yabrik": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "91"
   },
   "salawat_100": {
     "type": "dureihim",
@@ -1476,15 +1536,12 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     "filename": "79"
   },
   "sleep_ali_imran_waking": {
-    "type": "quran",
-    "surah": 3,
-    "ayahs": [
-      190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200
-    ]
+    "type": "dureihim",
+    "filename": "91"
   },
   "sleep_bad_dream": {
     "type": "dureihim",
-    "filename": "114"
+    "filename": "91"
   },
   "sleep_faza": {
     "type": "dureihim",
@@ -1506,15 +1563,12 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
     ]
   },
   "sleep_mulk_sajdah": {
-    "type": "quran",
-    "surah": 67,
-    "ayahs": [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
-    ]
+    "type": "dureihim",
+    "filename": "91"
   },
   "sleep_taqallub": {
     "type": "dureihim",
-    "filename": "112"
+    "filename": "91"
   },
   "sleep_waking_up_1": {
     "type": "dureihim",
@@ -1534,15 +1588,15 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "social_anger": {
     "type": "dureihim",
-    "filename": "191"
+    "filename": "193"
   },
   "social_condolence": {
     "type": "dureihim",
-    "filename": "162"
+    "filename": "91"
   },
   "social_market": {
     "type": "dureihim",
-    "filename": "210"
+    "filename": "209"
   },
   "social_married": {
     "type": "dureihim",
@@ -1558,7 +1612,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "social_sneezing": {
     "type": "dureihim",
-    "filename": "189"
+    "filename": "91"
   },
   "social_wear_new_clothes_1": {
     "type": "dureihim",
@@ -1566,7 +1620,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "social_wear_new_clothes_2": {
     "type": "dureihim",
-    "filename": "8"
+    "filename": "91"
   },
   "subhan_allah_100": {
     "type": "dureihim",
@@ -1578,19 +1632,19 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "subhan_allah_prayer_33": {
     "type": "dureihim",
-    "filename": "240"
+    "filename": "69"
   },
   "subhan_allah_sleep_33": {
     "type": "dureihim",
-    "filename": "240"
+    "filename": "106"
   },
   "sujud_shukr_action": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "242"
   },
   "sunnah_bed_shake": {
     "type": "dureihim",
-    "filename": "102"
+    "filename": "91"
   },
   "sunnah_covering_vessels": {
     "type": "dureihim",
@@ -1598,15 +1652,15 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "sunnah_greeting_children": {
     "type": "dureihim",
-    "filename": "163"
+    "filename": "91"
   },
   "sunnah_istikhara_dua": {
     "type": "dureihim",
-    "filename": "74"
+    "filename": "91"
   },
   "sunnah_lick_fingers": {
     "type": "dureihim",
-    "filename": "178"
+    "filename": "91"
   },
   "sunnah_salat_nafilah_house": {
     "type": "dureihim",
@@ -1626,7 +1680,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "sunnah_sujood_shukr": {
     "type": "dureihim",
-    "filename": "242"
+    "filename": "91"
   },
   "sunnah_tahajjud_siwak": {
     "type": "dureihim",
@@ -1638,7 +1692,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "sunnah_travel_tasbih_takbeer": {
     "type": "dureihim",
-    "filename": "106"
+    "filename": "91"
   },
   "sunnah_wudu_prayer": {
     "type": "dureihim",
@@ -1646,30 +1700,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "supplication_for_whom_you_insulted": {
     "type": "dureihim",
-    "filename": "91"
-  },
-  "sv1": {
-    "type": "dureihim",
-    "filename": "219"
-  },
-  "sv2": {
-    "type": "dureihim",
-    "filename": "91"
-  },
-  "sv3": {
-    "type": "dureihim",
-    "filename": "221"
-  },
-  "sv4": {
-    "type": "dureihim",
-    "filename": "220"
-  },
-  "sv5": {
-    "type": "quran",
-    "surah": 33,
-    "ayahs": [
-      56
-    ]
+    "filename": "230"
   },
   "tahlil_prayer": {
     "type": "dureihim",
@@ -1677,35 +1708,35 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "takbeer_black_stone": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "234"
   },
   "takbeer_throwing_pebbles": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "239"
   },
   "take_off_clothes": {
     "type": "dureihim",
-    "filename": "15"
+    "filename": "12"
   },
   "talbiyah_hajj_umrah": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "233"
   },
   "tamam_miah_prayer": {
     "type": "dureihim",
-    "filename": "93"
+    "filename": "69"
   },
   "tasbih_gaining_thousand_good_deeds": {
     "type": "dureihim",
-    "filename": "91"
+    "filename": "258"
   },
   "travel_mount_fail": {
     "type": "dureihim",
-    "filename": "206"
+    "filename": "12"
   },
   "travel_return": {
     "type": "dureihim",
-    "filename": "211"
+    "filename": "91"
   },
   "travel_sahar": {
     "type": "dureihim",
@@ -1717,7 +1748,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "travel_takbeer_tasbih": {
     "type": "dureihim",
-    "filename": "214"
+    "filename": "91"
   },
   "travel_tewdeea_resident": {
     "type": "dureihim",
@@ -1725,15 +1756,15 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "traveler_to_resident": {
     "type": "dureihim",
-    "filename": "212"
+    "filename": "211"
   },
   "vehicle_mount_dua": {
     "type": "dureihim",
-    "filename": "206"
+    "filename": "91"
   },
   "wear_clothes": {
     "type": "dureihim",
-    "filename": "5"
+    "filename": "6"
   },
   "wear_clothes_general": {
     "type": "dureihim",

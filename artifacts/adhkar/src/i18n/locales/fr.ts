@@ -29,7 +29,8 @@ export default {
     "merged_morning": "Matin et ruqyah",
     "sunan": "Sunnah du Prophète",
     "merged_evening": "Soirée et ruqyah",
-    "daily_supplications": "Souvenirs d'aujourd'hui et de ce soir"
+    "daily_supplications": "Souvenirs d'aujourd'hui et de ce soir",
+    "quran_duas": "Invocations Coraniques"
   },
   "home": {
     "greeting_morning": "Bonjour",

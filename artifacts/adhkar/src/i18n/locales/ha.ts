@@ -29,6 +29,7 @@ export default {
     "house": "Tunawa da gida",
     "sunan": "Sunnan Annabi",
     "daily_supplications": "Zikirin yau da daren yau",
+    "quran_duas": "Addu'o'i na Alqur'ani",
     "download": "Zazzage aikace-aikacen"
   },
   "home": {

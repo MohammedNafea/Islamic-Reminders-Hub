@@ -31,7 +31,8 @@ export default {
     "tracker": "የቁርጠኝነት መንገድ",
     "daily_supplications": "ዛሬ እና ዛሬ ማታ ትዝታዎች",
     "distress_illness": "የጭንቀትና ህመም ዱዓዎች",
-    "arafah_hajj": "የዓረፋ ቀን እና ሐጅ"
+    "arafah_hajj": "የዓረፋ ቀን እና ሐጅ",
+    "quran_duas": "ከቁርኣን ቅዱስ ዱዓዎች"
   },
   "home": {
     "greeting_morning": "መልካም ጠዋት",

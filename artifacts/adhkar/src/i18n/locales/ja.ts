@@ -29,7 +29,8 @@ export default {
     "masjid": "モスクの思い出",
     "sunan": "預言者のスンナ",
     "download": "アプリケーションをダウンロードする",
-    "daily_supplications": "今日と今夜の思い出"
+    "daily_supplications": "今日と今夜の思い出",
+    "quran_duas": "クルアーンの祈願"
   },
   "home": {
     "greeting_morning": "おはようございます",

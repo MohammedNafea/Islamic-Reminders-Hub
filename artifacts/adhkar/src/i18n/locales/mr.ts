@@ -29,6 +29,7 @@ export default {
     "merged_morning": "सकाळी आणि ruqyah",
     "download": "अर्ज डाउनलोड करा",
     "daily_supplications": "आजच्या आणि आजच्या रात्रीच्या आठवणी",
+    "quran_duas": "कुराणातील दुआ",
     "sunan": "पैगंबर च्या Sunnahs"
   },
   "home": {

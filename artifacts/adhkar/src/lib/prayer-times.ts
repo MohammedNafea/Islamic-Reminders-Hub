@@ -153,3 +153,22 @@ function methodToName(method: number): CalculationMethodName {
     default: return "MuslimWorldLeague";
   }
 }
+
+export async function getCoordsFromCity(city: string): Promise<{ lat: number; lng: number; displayName: string } | null> {
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1`
+    );
+    const data = await res.json();
+    if (data && data.length > 0) {
+      return {
+        lat: parseFloat(data[0].lat),
+        lng: parseFloat(data[0].lon),
+        displayName: data[0].display_name
+      };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}

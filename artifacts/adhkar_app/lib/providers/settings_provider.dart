@@ -11,6 +11,20 @@ class SettingsProvider extends ChangeNotifier {
   AppThemeMode get themeMode => _themeMode;
   double get fontSizeScale => _fontSizeScale;
 
+  double? get latOverride => AppStorage.getLatOverride();
+  double? get lngOverride => AppStorage.getLngOverride();
+  String? get cityOverride => AppStorage.getCityOverride();
+
+  Future<void> setLocationOverride(double lat, double lng, String city) async {
+    await AppStorage.setLocationOverride(lat, lng, city);
+    notifyListeners();
+  }
+
+  Future<void> clearLocationOverride() async {
+    await AppStorage.clearLocationOverride();
+    notifyListeners();
+  }
+
   SettingsProvider() {
     _languageCode = AppStorage.getLanguage();
     _fontSizeScale = AppStorage.getFontSizeScale();

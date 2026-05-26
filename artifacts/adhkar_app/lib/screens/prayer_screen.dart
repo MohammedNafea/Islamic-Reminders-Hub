@@ -87,6 +87,20 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
       _loadingTimes = true;
     });
 
+    final settings = Provider.of<SettingsProvider>(context, listen: false);
+    if (settings.latOverride != null && settings.lngOverride != null) {
+      final lat = settings.latOverride!;
+      final lng = settings.lngOverride!;
+      final city = settings.cityOverride ?? (settings.languageCode == 'ar' ? 'موقع مخصص' : 'Custom Location');
+      _calculateQiblaAngle(lat, lng);
+      await _fetchPrayerTimes(lat, lng);
+      setState(() {
+        _cityName = city;
+        _loadingTimes = false;
+      });
+      return;
+    }
+
     try {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
@@ -121,6 +135,150 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
       debugPrint("Error getting location: $e");
       _fallbackToMakkah();
     }
+  }
+
+  Future<void> _searchCityAndSet(String cityName, SettingsProvider settings) async {
+    if (cityName.trim().isEmpty) return;
+    setState(() {
+      _loadingTimes = true;
+    });
+    try {
+      final response = await http.get(Uri.parse(
+        "https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(cityName)}&format=json&limit=1"
+      ));
+      if (response.statusCode == 200) {
+        final List data = json.decode(response.body);
+        if (data.isNotEmpty) {
+          final lat = double.parse(data[0]['lat']);
+          final lng = double.parse(data[0]['lon']);
+          final displayName = data[0]['display_name'] as String;
+          final shortName = displayName.split(',')[0];
+          await settings.setLocationOverride(lat, lng, shortName);
+          _calculateQiblaAngle(lat, lng);
+          await _fetchPrayerTimes(lat, lng);
+          setState(() {
+            _cityName = shortName;
+            _loadingTimes = false;
+          });
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(settings.languageCode == 'ar' 
+                ? 'تم تحديث الموقع بنجاح لـ $shortName' 
+                : 'Location updated successfully to $shortName'),
+            ));
+          }
+        } else {
+          setState(() { _loadingTimes = false; });
+          if (mounted) {
+            _showErrorDialog(settings.languageCode == 'ar'
+              ? 'تعذر العثور على المدينة. يرجى التحقق من الاسم.'
+              : 'City not found. Please check spelling.');
+          }
+        }
+      } else {
+        throw Exception("Search failed");
+      }
+    } catch (e) {
+      setState(() { _loadingTimes = false; });
+      if (mounted) {
+        _showErrorDialog(settings.languageCode == 'ar'
+          ? 'حدث خطأ أثناء البحث. يرجى المحاولة لاحقاً.'
+          : 'Search error occurred. Please try again.');
+      }
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Icon(Icons.error_outline, color: Colors.red, size: 40),
+        content: Text(message, textAlign: TextAlign.center),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLocationDialog(SettingsProvider settings, bool isArabic) {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Text(
+            isArabic ? 'إعدادات الموقع الجغرافي' : 'Location Settings',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // GPS Button
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    settings.clearLocationOverride();
+                    _determinePosition();
+                  },
+                  icon: const Icon(Icons.gps_fixed),
+                  label: Text(isArabic ? 'تحديد تلقائي عبر GPS' : 'Detect Automatically (GPS)'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Expanded(child: Divider()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        isArabic ? 'أو إدخال يدوي' : 'Or Manual Input',
+                        style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ),
+                    const Expanded(child: Divider()),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    labelText: isArabic ? 'اسم المدينة' : 'City Name',
+                    hintText: isArabic ? 'مثال: القاهرة، مكة...' : 'e.g. Cairo, Mecca...',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    final city = controller.text.trim();
+                    if (city.isNotEmpty) {
+                      Navigator.pop(context);
+                      _searchCityAndSet(city, settings);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size.fromHeight(48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: Text(isArabic ? 'بحث وتعيين' : 'Search & Set'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _fallbackToMakkah() {
@@ -298,20 +456,25 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
           // Location banner card
           Card(
             color: theme.colorScheme.primary.withValues(alpha: 0.05),
-            child: ListTile(
-              leading: Icon(Icons.location_on, color: theme.colorScheme.primary),
-              title: Text(
-                _cityName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(
-                isArabic ? 'حساب مواقيت الصلاة تلقائياً' : 'Calculated prayer times automatically',
-                style: const TextStyle(fontSize: 11),
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.refresh, color: theme.colorScheme.primary),
-                onPressed: _determinePosition,
-              ),
+            child: Consumer<SettingsProvider>(
+              builder: (context, settings, _) {
+                final hasOverride = settings.latOverride != null;
+                return ListTile(
+                  onTap: () => _showLocationDialog(settings, isArabic),
+                  leading: Icon(Icons.location_on, color: theme.colorScheme.primary),
+                  title: Text(
+                    _cityName,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    hasOverride
+                        ? (isArabic ? 'موقع مخصص يدوياً' : 'Manual custom location')
+                        : (isArabic ? 'حساب مواقيت الصلاة تلقائياً' : 'Calculated prayer times automatically'),
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  trailing: Icon(Icons.edit, color: theme.colorScheme.primary),
+                );
+              }
             ),
           ),
           const SizedBox(height: 16),

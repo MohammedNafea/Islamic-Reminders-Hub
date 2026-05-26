@@ -17,14 +17,15 @@ import {
   adhkarOccasions,
   adhkarImmunization,
   adhkarGreatDays,
-  adhkarDistressAndIllness
+  adhkarDistressAndIllness,
+  adhkarQuran
 } from "@/data/adhkar";
 import { DhikrList } from "@/components/DhikrList";
-import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star, HeartPulse } from "lucide-react";
+import { Home, Compass, Coffee, Shield, Moon, Clock, BookOpen, Sun, Star, HeartPulse, Landmark } from "lucide-react";
 import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 
-type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days" | "distress_illness";
+type TabId = "house_masjid" | "clothes_wudu" | "food_athan" | "travel" | "sleep_events" | "prayer_actions" | "occasions_nature" | "great_days" | "distress_illness" | "quran_duas";
 
 interface TabItem {
   id: TabId;
@@ -38,7 +39,7 @@ export default function DailySupplications() {
   const [activeTab, setActiveTab] = useState<TabId>(() => {
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get("tab") as TabId;
-    const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness"];
+    const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas"];
     if (tabParam && validTabs.includes(tabParam)) {
       return tabParam;
     }
@@ -50,7 +51,7 @@ export default function DailySupplications() {
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
       const tabParam = params.get("tab") as TabId;
-      const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness"];
+      const validTabs: TabId[] = ["house_masjid", "clothes_wudu", "food_athan", "travel", "sleep_events", "prayer_actions", "occasions_nature", "great_days", "distress_illness", "quran_duas"];
       if (tabParam && validTabs.includes(tabParam)) {
         setActiveTab(tabParam);
       }
@@ -85,7 +86,8 @@ export default function DailySupplications() {
     { id: "prayer_actions", labelAr: "أفعال الصلاة", labelEn: "Prayer Actions", Icon: BookOpen },
     { id: "occasions_nature", labelAr: "المناسبات والظواهر", labelEn: "Occasions & Nature", Icon: Sun },
     { id: "distress_illness", labelAr: "الكرب والمرض والاستجابة", labelEn: "Distress, Illness & Answered", Icon: HeartPulse },
-    { id: "great_days", labelAr: "الأيام والليالي العظيمة", labelEn: "Virtuous Days & Nights", Icon: Star }
+    { id: "great_days", labelAr: "الأيام والليالي العظيمة", labelEn: "Virtuous Days & Nights", Icon: Star },
+    { id: "quran_duas", labelAr: "الأدعية من القرآن الكريم", labelEn: "Quranic Duas", Icon: Landmark }
   ];
 
   // Get sleep-related waking/night events
@@ -118,6 +120,8 @@ export default function DailySupplications() {
         return adhkarDistressAndIllness;
       case "great_days":
         return adhkarGreatDays;
+      case "quran_duas":
+        return adhkarQuran;
       default:
         return [];
     }
@@ -141,6 +145,8 @@ export default function DailySupplications() {
         return "nav.daily_supplications";
       case "great_days":
         return "nav.daily_supplications";
+      case "quran_duas":
+        return "nav.quran_duas";
       default:
         return "nav.daily_supplications";
     }

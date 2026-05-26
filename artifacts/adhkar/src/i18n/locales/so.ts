@@ -29,7 +29,8 @@ export default {
     "house": "Xusuusta guriga",
     "sunan": "Sunnada Nabiga",
     "download": "Soo deji codsiga",
-    "daily_supplications": "Xuska maanta iyo caawa"
+    "daily_supplications": "Xuska maanta iyo caawa",
+    "quran_duas": "Ducooyinka Quraanka"
   },
   "home": {
     "greeting_morning": "Subax wanaagsan",

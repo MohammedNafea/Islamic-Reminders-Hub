@@ -29,7 +29,8 @@ export default {
     "tracker": "Ścieżka zaangażowania",
     "merged_morning": "Rano i ruqyah",
     "sunan": "Sunny Proroka",
-    "daily_supplications": "Wspomnienia na dziś i wieczór"
+    "daily_supplications": "Wspomnienia na dziś i wieczór",
+    "quran_duas": "Modlitwy Koraniczne"
   },
   "home": {
     "greeting_morning": "Dzień dobry",

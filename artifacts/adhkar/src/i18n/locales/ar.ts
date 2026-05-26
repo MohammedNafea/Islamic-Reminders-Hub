@@ -32,6 +32,7 @@ export default {
     daily_supplications: "أذكار اليوم والليلة",
     distress_illness: "الكرب والمرض والاستجابة",
     arafah_hajj: "يوم عرفة والحج",
+    quran_duas: "الأدعية من القرآن الكريم",
   },
   favorites: {
     subtitle: "قائمة الأذكار والأحكام التي قمت بحفظها",

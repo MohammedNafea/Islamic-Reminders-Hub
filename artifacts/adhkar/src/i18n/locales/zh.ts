@@ -29,7 +29,8 @@ export default {
     "merged_evening": "晚上和鲁基亚",
     "tracker": "承诺路径",
     "download": "下载应用程序",
-    "daily_supplications": "今天和今晚的纪念"
+    "daily_supplications": "今天和今晚的纪念",
+    "quran_duas": "古兰经祈祷"
   },
   "home": {
     "greeting_morning": "早上好",

@@ -28,6 +28,7 @@ export default {
     "tracker": "Rêya pabendbûnê",
     "merged_evening": "Êvar û ruqye",
     "daily_supplications": "Bîranînên îro û îşev",
+    "quran_duas": "دوعاکانی قورئان",
     "download": "Serlêdanê dakêşin",
     "sunan": "Sunnetên Pêxember"
   },

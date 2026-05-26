@@ -29,7 +29,8 @@ export default {
     "tracker": "प्रतिबद्धता पथ",
     "merged_evening": "शाम और रुक्याह",
     "merged_morning": "सुबह और रुक्याह",
-    "daily_supplications": "आज और आज रात के लिए यादें"
+    "daily_supplications": "आज और आज रात के लिए यादें",
+    "quran_duas": "कुरआनी दुआएं"
   },
   "home": {
     "greeting_morning": "सुप्रभात",

@@ -31,7 +31,8 @@ export default {
     "sunan": "Prophetic Sunan",
     "daily_supplications": "Daily Supplications",
     "distress_illness": "Distress & Illness",
-    "arafah_hajj": "Arafah Day & Hajj"
+    "arafah_hajj": "Arafah Day & Hajj",
+    "quran_duas": "Quranic Duas"
   },
   "search": {
     "title": "Unified Search",

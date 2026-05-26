@@ -29,7 +29,8 @@ export default {
     "merged_morning": "Jutro i ruqyah",
     "download": "Preuzmite aplikaciju",
     "sunan": "Sunneti Poslanika",
-    "daily_supplications": "Sećanja za danas i večeras"
+    "daily_supplications": "Sećanja za danas i večeras",
+    "quran_duas": "Dove iz Kur'ana"
   },
   "home": {
     "greeting_morning": "Dobro jutro",

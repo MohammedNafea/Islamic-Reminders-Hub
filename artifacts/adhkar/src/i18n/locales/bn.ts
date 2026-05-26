@@ -29,7 +29,8 @@ export default {
     "sunan": "নবীর সুন্নত",
     "merged_morning": "সকাল এবং ruqyah",
     "merged_evening": "সন্ধ্যা এবং ruqyah",
-    "daily_supplications": "আজকের এবং আজকের রাতের স্মৃতি"
+    "daily_supplications": "আজকের এবং আজকের রাতের স্মৃতি",
+    "quran_duas": "কোরআন থেকে দুআ"
   },
   "home": {
     "greeting_morning": "শুভ সকাল",

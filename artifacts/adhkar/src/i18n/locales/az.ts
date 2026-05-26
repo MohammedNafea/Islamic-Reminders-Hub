@@ -29,7 +29,8 @@ export default {
     "merged_morning": "Səhər və ruqyah",
     "download": "Proqramı yükləyin",
     "sunan": "Peyğəmbərin sünnələri",
-    "daily_supplications": "Bu gün və axşam üçün xatirələr"
+    "daily_supplications": "Bu gün və axşam üçün xatirələr",
+    "quran_duas": "Qurandan Dualar"
   },
   "home": {
     "greeting_morning": "Sabahınız xeyir",

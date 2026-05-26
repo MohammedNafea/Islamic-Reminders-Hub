@@ -28,6 +28,22 @@ class AppStorage {
   static double getFontSizeScale() => _settingsBox.get('fontSizeScale', defaultValue: 1.0);
   static Future<void> setFontSizeScale(double scale) => _settingsBox.put('fontSizeScale', scale);
 
+  static double? getLatOverride() => _settingsBox.get('latOverride');
+  static double? getLngOverride() => _settingsBox.get('lngOverride');
+  static String? getCityOverride() => _settingsBox.get('cityOverride');
+
+  static Future<void> setLocationOverride(double lat, double lng, String city) async {
+    await _settingsBox.put('latOverride', lat);
+    await _settingsBox.put('lngOverride', lng);
+    await _settingsBox.put('cityOverride', city);
+  }
+
+  static Future<void> clearLocationOverride() async {
+    await _settingsBox.delete('latOverride');
+    await _settingsBox.delete('lngOverride');
+    await _settingsBox.delete('cityOverride');
+  }
+
   static int getTasbihTarget() => _settingsBox.get('tasbihTarget', defaultValue: 33);
   static Future<void> setTasbihTarget(int target) => _settingsBox.put('tasbihTarget', target);
 

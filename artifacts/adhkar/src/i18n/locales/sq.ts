@@ -29,7 +29,8 @@ export default {
     "masjid": "Përkujtimet e xhamisë",
     "sunan": "Sunetet e Profetit",
     "download": "Shkarkoni aplikacionin",
-    "daily_supplications": "Kujtime për sot dhe sonte"
+    "daily_supplications": "Kujtime për sot dhe sonte",
+    "quran_duas": "Lutjet Kuranore"
   },
   "home": {
     "greeting_morning": "Mirëmëngjes",

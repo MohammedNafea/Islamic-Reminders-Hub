@@ -749,7 +749,7 @@ export default function Quran() {
           {isNewSurah && (
             <div className="my-6 text-center select-none">
               {/* Surah Header Frame */}
-              <div className="relative inline-flex items-center justify-center px-12 py-3 border-2 border-double border-amber-600/30 rounded-xl bg-amber-50/50 shadow-sm min-w-[280px]">
+              <div className="relative inline-flex items-center justify-center px-6 sm:px-12 py-2 sm:py-3 border-2 border-double border-amber-600/30 rounded-xl bg-amber-50/50 shadow-sm min-w-[200px] sm:min-w-[280px]">
                 <div className="absolute left-3 right-3 top-1 bottom-1 border border-dashed border-amber-600/20 rounded-lg pointer-events-none" />
                 <span className="text-xl font-bold font-heading text-amber-900 dark:text-amber-500">
                   {i18n.language === 'ar' ? surahInfo.name : surahInfo.englishName}
@@ -758,14 +758,14 @@ export default function Quran() {
               {/* Bismillah */}
               {surahNum !== 1 && surahNum !== 9 && (
                 <div className="mt-4 text-center">
-                  <p className="dhikr-text text-2xl text-primary opacity-80">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                  <p className="dhikr-text text-xl sm:text-2xl text-primary opacity-80">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                 </div>
               )}
             </div>
           )}
           
           {/* Ayahs text container */}
-          <p className="quran-page-text text-2xl md:text-3xl leading-[2.2] md:leading-[2.5] text-amber-950 dark:text-amber-100 font-serif text-justify animate-fade-in" dir="rtl" style={{ textJustify: 'inter-word' }}>
+          <p className="quran-page-text text-lg sm:text-2xl md:text-3xl leading-[2] sm:leading-[2.2] md:leading-[2.5] text-amber-955 dark:text-amber-100 font-serif text-justify animate-fade-in" dir="rtl" style={{ textJustify: 'inter-word' }}>
             {ayahsInSurah.map((ayah) => {
               const index = pageAyahs.findIndex(a => a.number === ayah.number);
               const isAyahPlaying = 
@@ -1136,19 +1136,19 @@ export default function Quran() {
             </div>
 
             {/* Actual Quran Page paper */}
-            <Card className="border-none shadow-lg bg-[#fbf9f4] dark:bg-[#111413] rounded-[2.5rem] overflow-hidden relative border-8 border-double border-amber-900/10 dark:border-amber-500/10">
-              <CardContent className="p-6 md:p-10 space-y-6 min-h-[500px]">
+            <Card className="border-none shadow-lg bg-[#fbf9f4] dark:bg-[#111413] rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden relative border-4 sm:border-8 border-double border-amber-900/10 dark:border-amber-500/10">
+              <CardContent className="p-3 sm:p-6 md:p-10 space-y-4 sm:space-y-6 min-h-[400px] sm:min-h-[500px]">
                 {pageLoading ? (
-                  <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+                  <div className="flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] space-y-4">
                     <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
                     <p className="text-sm text-amber-900/60 dark:text-amber-500/60 font-medium">
                       {t("common.loading", { defaultValue: "جاري تحميل الصفحة..." })}
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-6">
+                  <div className="space-y-4 sm:space-y-6">
                     {/* Quran page inner decorative border representing Medina Mushaf frames */}
-                    <div className="border-2 border-double border-amber-600/20 dark:border-amber-500/10 p-5 md:p-8 rounded-[2rem] bg-[#fdfbf7] dark:bg-[#121614] shadow-inner relative overflow-hidden">
+                    <div className="border-2 border-double border-amber-600/20 dark:border-amber-500/10 p-3 sm:p-5 md:p-8 rounded-[1rem] sm:rounded-[2rem] bg-[#fdfbf7] dark:bg-[#121614] shadow-inner relative overflow-hidden">
                       {/* Decorative corner patterns */}
                       <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-tl-sm pointer-events-none" />
                       <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-tr-sm pointer-events-none" />

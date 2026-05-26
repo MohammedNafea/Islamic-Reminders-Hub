@@ -38,6 +38,20 @@ import az from "./locales/az";
 import ps from "./locales/ps";
 import kk from "./locales/kk";
 import uz from "./locales/uz";
+import ptBR from "./locales/pt-BR";
+import uk from "./locales/uk";
+import th from "./locales/th";
+import el from "./locales/el";
+import he from "./locales/he";
+import no from "./locales/no";
+import da from "./locales/da";
+import fi from "./locales/fi";
+import cs from "./locales/cs";
+import hu from "./locales/hu";
+import ro from "./locales/ro";
+import fil from "./locales/fil";
+import ml from "./locales/ml";
+import kn from "./locales/kn";
 
 const resources = {
   ar: { translation: ar },
@@ -76,6 +90,20 @@ const resources = {
   ps: { translation: ps },
   kk: { translation: kk },
   uz: { translation: uz },
+  "pt-BR": { translation: ptBR },
+  uk: { translation: uk },
+  th: { translation: th },
+  el: { translation: el },
+  he: { translation: he },
+  no: { translation: no },
+  da: { translation: da },
+  fi: { translation: fi },
+  cs: { translation: cs },
+  hu: { translation: hu },
+  ro: { translation: ro },
+  fil: { translation: fil },
+  ml: { translation: ml },
+  kn: { translation: kn },
 };
 
 export const supportedLanguages = [
@@ -115,6 +143,20 @@ export const supportedLanguages = [
   { code: "ps", name: "Pashto", nativeName: "پښتو", dir: "rtl", flag: "🇦🇫" },
   { code: "kk", name: "Kazakh", nativeName: "Қазақша", dir: "ltr", flag: "🇰🇿" },
   { code: "uz", name: "Uzbek", nativeName: "Oʻzbekcha", dir: "ltr", flag: "🇺🇿" },
+  { code: "pt-BR", name: "Português (Brasil)", nativeName: "Português (Brasil)", dir: "ltr", flag: "🇧🇷" },
+  { code: "uk", name: "Ukrainian", nativeName: "Українська", dir: "ltr", flag: "🇺🇦" },
+  { code: "th", name: "Thai", nativeName: "ไทย", dir: "ltr", flag: "🇹🇭" },
+  { code: "el", name: "Greek", nativeName: "Ελληνικά", dir: "ltr", flag: "🇬🇷" },
+  { code: "he", name: "Hebrew", nativeName: "עברית", dir: "rtl", flag: "🇮🇱" },
+  { code: "no", name: "Norwegian", nativeName: "Norsk", dir: "ltr", flag: "🇳🇴" },
+  { code: "da", name: "Danish", nativeName: "Dansk", dir: "ltr", flag: "🇩🇰" },
+  { code: "fi", name: "Finnish", nativeName: "Suomi", dir: "ltr", flag: "🇫🇮" },
+  { code: "cs", name: "Czech", nativeName: "Čeština", dir: "ltr", flag: "🇨🇿" },
+  { code: "hu", name: "Hungarian", nativeName: "Magyar", dir: "ltr", flag: "🇭🇺" },
+  { code: "ro", name: "Romanian", nativeName: "Română", dir: "ltr", flag: "🇷🇴" },
+  { code: "fil", name: "Filipino", nativeName: "Filipino", dir: "ltr", flag: "🇵🇭" },
+  { code: "ml", name: "Malayalam", nativeName: "മലയാളം", dir: "ltr", flag: "🇮🇳" },
+  { code: "kn", name: "Kannada", nativeName: "ಕನ್ನಡ", dir: "ltr", flag: "🇮🇳" },
 ];
 
 i18n

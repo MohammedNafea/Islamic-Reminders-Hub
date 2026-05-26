@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
-import { getPrayerTimesFromAPI, getPrayerTimes, getCityFromCoords, formatTime, getNextPrayer, PrayerTimesResult } from "@/lib/prayer-times";
+import { getPrayerTimesFromAPI, getPrayerTimes, getCityFromCoords, getCoordsFromCity, formatTime, getNextPrayer, PrayerTimesResult } from "@/lib/prayer-times";
 import { toHijri, formatHijriDate, isFastingDay, isHijamaDay } from "@/lib/hijri";
 import { getSettings, saveSettings } from "@/lib/store";
 import { MapPin, RefreshCw, ChevronLeft, ChevronRight, Info, Calendar as CalendarIcon, Clock, Music, Compass } from "lucide-react";
@@ -29,6 +29,10 @@ export default function PrayerTimesPage() {
     settings.location ? { lat: settings.location.lat, lng: settings.location.lng } : { lat: 21.4225, lng: 39.8262 }
   );
   const today = new Date();
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [searchCityQuery, setSearchCityQuery] = useState("");
+  const [manualLat, setManualLat] = useState(coords.lat.toString());
+  const [manualLng, setManualLng] = useState(coords.lng.toString());
 
   const fetchTimes = React.useCallback(async (forceRefresh = false) => {
     setLoading(true);
@@ -144,7 +148,14 @@ export default function PrayerTimesPage() {
               </p>
             </div>
             {city && (
-              <div className="flex items-center gap-3 bg-white/20 backdrop-blur-md rounded-2xl px-4 py-3 text-sm border border-white/20">
+              <div 
+                onClick={() => {
+                  setManualLat(coords.lat.toString());
+                  setManualLng(coords.lng.toString());
+                  setIsLocationOpen(true);
+                }}
+                className="flex items-center gap-3 bg-white/20 backdrop-blur-md rounded-2xl px-4 py-3 text-sm border border-white/20 cursor-pointer hover:bg-white/30 transition-all shrink-0"
+              >
                 <MapPin className="w-5 h-5 text-white shrink-0" />
                 <div>
                   <p className="font-bold text-white">
@@ -783,6 +794,157 @@ export default function PrayerTimesPage() {
               </div>
             );
           })()}
+        </DialogContent>
+      </Dialog>
+
+      {/* Location Settings Dialog */}
+      <Dialog open={isLocationOpen} onOpenChange={(open) => !open && setIsLocationOpen(false)}>
+        <DialogContent className="rounded-3xl max-w-[380px] border-none shadow-2xl overflow-y-auto max-h-[90vh]">
+          <DialogHeader>
+            <DialogTitle className="text-center font-heading text-xl text-primary">
+              <TranslatedText
+                text="إعدادات الموقع الجغرافي"
+                staticTranslation={i18n.language === "ar" ? "إعدادات الموقع" : "Location Settings"}
+                keepArabic={false}
+                inline
+              />
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-2">
+            <p className="text-xs text-muted-foreground text-center">
+              <TranslatedText
+                text="قم بتعيين موقعك الجغرافي لحساب مواقيت الصلاة واتجاه القبلة بدقة متناهية."
+                staticTranslation={i18n.language === "ar" 
+                  ? "قم بتعيين موقعك الجغرافي لحساب مواقيت الصلاة واتجاه القبلة بدقة متناهية." 
+                  : "Set your location to calculate prayer times and Qibla direction accurately."}
+                keepArabic={false}
+                inline
+              />
+            </p>
+
+            {/* GPS Auto Button */}
+            <Button 
+              onClick={async () => {
+                if (navigator.geolocation) {
+                  setLoading(true);
+                  setIsLocationOpen(false);
+                  fetchTimes(true);
+                } else {
+                  alert(i18n.language === "ar" ? "تحديد الموقع التلقائي غير مدعوم في متصفحك." : "Automatic location is not supported by your browser.");
+                }
+              }}
+              className="w-full rounded-2xl flex items-center justify-center gap-2 py-3"
+            >
+              <MapPin className="w-4 h-4 text-white" />
+              <TranslatedText
+                text="تحديد تلقائي عبر GPS"
+                staticTranslation={i18n.language === "ar" ? "تحديد تلقائي عبر GPS" : "Detect Automatically (GPS)"}
+                keepArabic={false}
+                inline
+              />
+            </Button>
+
+            <div className="relative flex items-center justify-center my-3">
+              <hr className="w-full border-t border-border/60" />
+              <span className="absolute bg-background px-3 text-[10px] uppercase font-bold text-muted-foreground">
+                {i18n.language === "ar" ? "أو إدخال يدوي" : "Or Manual Input"}
+              </span>
+            </div>
+
+            {/* Manual City Search */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-muted-foreground font-sans">
+                {i18n.language === "ar" ? "البحث بالمدينة:" : "Search by City:"}
+              </label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={searchCityQuery}
+                  onChange={(e) => setSearchCityQuery(e.target.value)}
+                  placeholder={i18n.language === "ar" ? "مثال: القاهرة، مكة، دبي..." : "e.g., Cairo, Makkah, London..."} 
+                  className="flex-1 bg-muted/30 border border-border/80 rounded-2xl px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
+                />
+                <Button 
+                  onClick={async () => {
+                    if (searchCityQuery.trim()) {
+                      const res = await getCoordsFromCity(searchCityQuery.trim());
+                      if (res) {
+                        saveSettings({ location: { lat: res.lat, lng: res.lng, city: res.displayName.split(",")[0] } });
+                        setCoords({ lat: res.lat, lng: res.lng });
+                        setCity(res.displayName.split(",")[0]);
+                        window.dispatchEvent(new Event("settings-changed"));
+                        setIsLocationOpen(false);
+                        fetchTimes();
+                        alert(i18n.language === "ar" ? `تم تحديد الموقع لـ ${res.displayName.split(",")[0]} بنجاح!` : `Location set to ${res.displayName.split(",")[0]}!`);
+                      } else {
+                        alert(i18n.language === "ar" ? "تعذر العثور على المدينة، يرجى المحاولة باسم آخر." : "City not found, please check name.");
+                      }
+                    }
+                  }} 
+                  className="rounded-2xl shrink-0"
+                >
+                  {i18n.language === "ar" ? "بحث" : "Search"}
+                </Button>
+              </div>
+            </div>
+
+            {/* Advanced Manual Coordinates */}
+            <div className="space-y-1.5 pt-1">
+              <label className="text-xs font-bold text-muted-foreground font-sans">
+                {i18n.language === "ar" ? "الإحداثيات الجغرافية (خيار متقدم):" : "Geographic Coordinates (Advanced):"}
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-muted-foreground font-bold font-sans">{i18n.language === "ar" ? "خط العرض" : "Lat"}</span>
+                  <input 
+                    type="number" 
+                    step="any"
+                    value={manualLat}
+                    onChange={(e) => setManualLat(e.target.value)}
+                    className="w-full bg-muted/30 border border-border/80 rounded-2xl px-3 py-1.5 text-sm text-center font-mono"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] text-muted-foreground font-bold font-sans">{i18n.language === "ar" ? "خط الطول" : "Lng"}</span>
+                  <input 
+                    type="number" 
+                    step="any"
+                    value={manualLng}
+                    onChange={(e) => setManualLng(e.target.value)}
+                    className="w-full bg-muted/30 border border-border/80 rounded-2xl px-3 py-1.5 text-sm text-center font-mono"
+                  />
+                </div>
+              </div>
+              <Button 
+                onClick={() => {
+                  const lat = parseFloat(manualLat);
+                  const lng = parseFloat(manualLng);
+                  if (!isNaN(lat) && !isNaN(lng)) {
+                    const c = i18n.language === "ar" ? "إحداثيات مخصصة" : "Custom Coordinates";
+                    saveSettings({ location: { lat, lng, city: c } });
+                    setCoords({ lat, lng });
+                    setCity(c);
+                    window.dispatchEvent(new Event("settings-changed"));
+                    setIsLocationOpen(false);
+                    fetchTimes();
+                    alert(i18n.language === "ar" ? "تم تعيين الإحداثيات بنجاح!" : "Coordinates set successfully!");
+                  } else {
+                    alert(i18n.language === "ar" ? "الرجاء إدخال إحداثيات صحيحة." : "Please enter valid coordinates.");
+                  }
+                }}
+                variant="outline" 
+                className="w-full rounded-2xl border-primary/20 text-primary hover:bg-primary/5 mt-2"
+              >
+                {i18n.language === "ar" ? "حفظ الإحداثيات" : "Save Coordinates"}
+              </Button>
+            </div>
+
+            <div className="text-center pt-2">
+              <Button variant="ghost" className="rounded-2xl px-8 text-muted-foreground" onClick={() => setIsLocationOpen(false)}>
+                {i18n.language === "ar" ? "إلغاء" : "Cancel"}
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

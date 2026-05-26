@@ -29,7 +29,8 @@ export default {
     "merged_evening": "Petang dan ruqyah",
     "tracker": "Laluan komitmen",
     "merged_morning": "Pagi dan ruqyah",
-    "daily_supplications": "Peringatan untuk hari ini dan malam ini"
+    "daily_supplications": "Peringatan untuk hari ini dan malam ini",
+    "quran_duas": "Doa-doa Al-Quran"
   },
   "home": {
     "greeting_morning": "Selamat Pagi",

@@ -29,7 +29,8 @@ export default {
     "sunan": "سنت نبویؐ",
     "tracker": "عزم کا راستہ",
     "merged_evening": "شام اور رقیہ",
-    "daily_supplications": "آج اور آج کی رات کی یادیں۔"
+    "daily_supplications": "آج اور آج کی رات کی یادیں۔",
+    "quran_duas": "قرآنی دعائیں"
   },
   "home": {
     "greeting_morning": "صبح بخیر",

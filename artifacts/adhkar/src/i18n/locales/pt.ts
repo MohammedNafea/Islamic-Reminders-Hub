@@ -29,7 +29,8 @@ export default {
     "sunan": "Sunnahs do Profeta",
     "tracker": "Caminho de compromisso",
     "merged_evening": "Noite e ruqyah",
-    "daily_supplications": "Lembranças para hoje e esta noite"
+    "daily_supplications": "Lembranças para hoje e esta noite",
+    "quran_duas": "Súplicas Corânicas"
   },
   "home": {
     "greeting_morning": "Bom dia",

@@ -29,6 +29,7 @@ export default {
     "merged_morning": "Ertalab va ruqya",
     "download": "Ilovani yuklab oling",
     "daily_supplications": "Bugun va kecha uchun xotiralar",
+    "quran_duas": "Qur'oniy du'olar",
     "sunan": "Payg'ambarimiz sunnatlari"
   },
   "home": {

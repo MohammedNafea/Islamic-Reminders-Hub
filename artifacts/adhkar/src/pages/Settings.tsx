@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
 import { Button } from "@/components/ui/button";
+import { getCityFromCoords, getCoordsFromCity } from "@/lib/prayer-times";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -320,6 +321,94 @@ export default function Settings() {
               ))}
             </SelectContent>
           </Select>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">
+            <TranslatedText
+              text="موقع المستخدم"
+              staticTranslation={i18n.language === "ar" ? "الموقع الجغرافي" : "Location settings"}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-muted-foreground">
+              <TranslatedText
+                text="حدد موقعك الحالي يدوياً أو دع التطبيق يحدده تلقائياً لمواقيت صلاة واتجاه قبلة دقيقين."
+                staticTranslation={i18n.language === "ar" 
+                  ? "حدد موقعك الحالي يدوياً أو دع التطبيق يحدده تلقائياً لمواقيت صلاة واتجاه قبلة دقيقين." 
+                  : "Set your location manually or let the app detect it automatically for accurate prayer times."}
+                keepArabic={false}
+                inline
+              />
+            </p>
+            {settings.location && (
+              <div className="bg-muted/50 rounded-2xl p-3 text-sm flex items-center justify-between border border-border/30">
+                <div>
+                  <p className="font-bold">
+                    <TranslatedText text={settings.location.city || "Makkah"} keepArabic={false} inline />
+                  </p>
+                  <p className="text-[11px] text-muted-foreground font-sans tabular-nums">
+                    Lat: {settings.location.lat.toFixed(4)}, Lng: {settings.location.lng.toFixed(4)}
+                  </p>
+                </div>
+                <Button variant="outline" size="sm" onClick={() => updateSetting("location", null as any)} className="rounded-xl">
+                  {i18n.language === "ar" ? "إعادة تعيين" : "Reset"}
+                </Button>
+              </div>
+            )}
+            
+            <div className="flex gap-2">
+              <Button onClick={async () => {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    const c = await getCityFromCoords(lat, lng, i18n.language);
+                    updateSetting("location", { lat, lng, city: c });
+                    alert(i18n.language === "ar" ? "تم تحديد موقعك تلقائياً بنجاح!" : "Location detected successfully!");
+                  }, () => {
+                    alert(i18n.language === "ar" ? "فشل تحديد الموقع تلقائياً، الرجاء المحاولة يدوياً." : "Failed to detect location, please enter manually.");
+                  });
+                }
+              }} className="flex-1 rounded-xl">
+                {i18n.language === "ar" ? "تحديد تلقائي (GPS)" : "Detect Location (GPS)"}
+              </Button>
+            </div>
+            
+            <div className="border-t border-border/30 pt-3 flex flex-col gap-2">
+              <p className="text-xs font-bold text-muted-foreground font-sans">
+                {i18n.language === "ar" ? "إدخال يدوي للمدينة:" : "Manual City Input:"}
+              </p>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  id="settings-city-input"
+                  placeholder={i18n.language === "ar" ? "مثال: القاهرة، مكة..." : "e.g., Cairo, Mecca..."} 
+                  className="flex-1 bg-background border border-input rounded-xl px-3 py-1.5 text-sm"
+                />
+                <Button onClick={async () => {
+                  const input = document.getElementById("settings-city-input") as HTMLInputElement;
+                  if (input && input.value.trim()) {
+                    const coords = await getCoordsFromCity(input.value.trim());
+                    if (coords) {
+                      updateSetting("location", { lat: coords.lat, lng: coords.lng, city: coords.displayName.split(",")[0] });
+                      alert(i18n.language === "ar" ? `تم تحديث الموقع لـ ${coords.displayName.split(",")[0]} بنجاح!` : `Location updated to ${coords.displayName.split(",")[0]} successfully!`);
+                    } else {
+                      alert(i18n.language === "ar" ? "تعذر العثور على المدينة، يرجى التحقق من الاسم." : "City not found, please check the name.");
+                    }
+                  }
+                }} className="rounded-xl">
+                  {i18n.language === "ar" ? "بحث وتعديل" : "Search & Set"}
+                </Button>
+              </div>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

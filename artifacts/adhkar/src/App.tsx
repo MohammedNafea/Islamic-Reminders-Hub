@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -83,6 +84,21 @@ function Router() {
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 function App() {
+  useEffect(() => {
+    // Request Notification permission on startup
+    if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(console.error);
+    }
+    // Request Geolocation permission on startup to ensure prayer times work smoothly
+    if (typeof window !== "undefined" && "navigator" in window && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        () => console.log("Startup geolocation permission checked"),
+        (err) => console.warn("Startup geolocation check:", err.message),
+        { timeout: 5000 }
+      );
+    }
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="system" storageKey="adhkar_settings">

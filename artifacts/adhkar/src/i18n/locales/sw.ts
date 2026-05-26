@@ -28,6 +28,7 @@ export default {
     "house": "Kumbukumbu za nyumbani",
     "tracker": "Njia ya kujitolea",
     "daily_supplications": "Kumbukumbu za leo na usiku wa leo",
+    "quran_duas": "Dua za Qur'ani",
     "sunan": "Sunnah za Mtume",
     "download": "Pakua programu"
   },

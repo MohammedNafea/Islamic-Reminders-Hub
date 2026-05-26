@@ -29,7 +29,8 @@ export default {
     "tracker": "Percorso dell'impegno",
     "merged_evening": "Sera e ruqyah",
     "sunan": "Sunnah del Profeta",
-    "daily_supplications": "Ricordi per oggi e stasera"
+    "daily_supplications": "Ricordi per oggi e stasera",
+    "quran_duas": "Suppliche Coraniche"
   },
   "home": {
     "greeting_morning": "Buongiorno",

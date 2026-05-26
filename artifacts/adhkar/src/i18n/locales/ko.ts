@@ -29,7 +29,8 @@ export default {
     "download": "애플리케이션 다운로드",
     "tracker": "약정 경로",
     "merged_evening": "저녁과 루카",
-    "daily_supplications": "오늘과 오늘 밤의 추억"
+    "daily_supplications": "오늘과 오늘 밤의 추억",
+    "quran_duas": "꾸란 두아"
   },
   "home": {
     "greeting_morning": "좋은 아침입니다",

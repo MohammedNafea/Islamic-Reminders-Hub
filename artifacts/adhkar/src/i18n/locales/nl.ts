@@ -29,7 +29,8 @@ export default {
     "tracker": "Toewijding pad",
     "merged_evening": "Avond en ruqya",
     "merged_morning": "Ochtend en ruqya",
-    "daily_supplications": "Herinneringen voor vandaag en vanavond"
+    "daily_supplications": "Herinneringen voor vandaag en vanavond",
+    "quran_duas": "Koranische Smeekbeden"
   },
   "home": {
     "greeting_morning": "Goedemorgen",

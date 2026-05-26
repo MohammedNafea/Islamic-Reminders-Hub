@@ -29,7 +29,8 @@ export default {
     "merged_evening": "Abend und Ruqyah",
     "tracker": "Commitment-Pfad",
     "sunan": "Sunnahs des Propheten",
-    "daily_supplications": "Erinnerungen für heute und heute Abend"
+    "daily_supplications": "Erinnerungen für heute und heute Abend",
+    "quran_duas": "Koranische Bittgebete"
   },
   "home": {
     "greeting_morning": "Guten Morgen",

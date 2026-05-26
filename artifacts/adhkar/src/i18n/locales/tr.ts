@@ -29,7 +29,8 @@ export default {
     "merged_morning": "Sabah ve rukye",
     "tracker": "Taahhüt yolu",
     "sunan": "Peygamberimizin Sünnetleri",
-    "daily_supplications": "Bugün ve bu gece için hatıralar"
+    "daily_supplications": "Bugün ve bu gece için hatıralar",
+    "quran_duas": "Kur'an Duaları"
   },
   "home": {
     "greeting_morning": "Günaydın",

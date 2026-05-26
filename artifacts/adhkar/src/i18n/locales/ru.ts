@@ -29,7 +29,8 @@ export default {
     "sunan": "Сунны Пророка",
     "merged_evening": "Вечер и рукья",
     "tracker": "Путь обязательств",
-    "daily_supplications": "Воспоминания о сегодняшнем и сегодняшнем вечере"
+    "daily_supplications": "Воспоминания о сегодняшнем и сегодняшнем вечере",
+    "quran_duas": "Коранические молитвы"
   },
   "home": {
     "greeting_morning": "Доброе утро",
