@@ -1,3 +1,4 @@
+// Auto-generated locale file for vi
 export default {
   "app": {
     "name": "Trung tâm Hồi giáo",
@@ -30,7 +31,8 @@ export default {
     "download": "Tải ứng dụng",
     "daily_supplications": "Nỗi nhớ hôm nay và đêm nay",
     "quran_duas": "Lời Cầu Nguyện Từ Kinh Qur'an",
-    "sunan": "Sunnahs của nhà tiên tri"
+    "sunan": "Sunnahs của nhà tiên tri",
+    "prophetic_duas": "Duas tiên tri"
   },
   "home": {
     "greeting_morning": "Chào buổi sáng",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Tưởng nhớ việc ra vào nhà và chúc phúc trong đó",
-    "masjid_desc": "Những kỷ niệm khi đi, vào và rời khỏi nhà thờ Hồi giáo"
+    "masjid_desc": "Những kỷ niệm khi đi, vào và rời khỏi nhà thờ Hồi giáo",
+    "quran_duas_desc": "Những lời khẩn cầu và cầu nguyện được đề cập trong Kinh Qur'an Thánh",
+    "prophetic_duas_desc": "Những lời khẩn cầu xác thực được thuật lại từ Nhà tiên tri ﷺ"
   },
   "favorites": {
     "empty": "Chưa có mục yêu thích nào",

@@ -1,3 +1,4 @@
+// Auto-generated locale file for ms
 export default {
   "app": {
     "name": "Zikir Islam",
@@ -30,7 +31,8 @@ export default {
     "tracker": "Laluan komitmen",
     "merged_morning": "Pagi dan ruqyah",
     "daily_supplications": "Peringatan untuk hari ini dan malam ini",
-    "quran_duas": "Doa-doa Al-Quran"
+    "quran_duas": "Doa-doa Al-Quran",
+    "prophetic_duas": "Doa Nabi"
   },
   "home": {
     "greeting_morning": "Selamat Pagi",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Zikir keluar masuk rumah dan berselawat di dalamnya",
-    "masjid_desc": "Zikir pergi, masuk dan keluar masjid"
+    "masjid_desc": "Zikir pergi, masuk dan keluar masjid",
+    "quran_duas_desc": "Doa dan doa yang disebutkan dalam Al-Quran",
+    "prophetic_duas_desc": "Doa sahih yang diriwayatkan daripada Nabi ﷺ"
   },
   "favorites": {
     "empty": "Tiada kegemaran lagi",

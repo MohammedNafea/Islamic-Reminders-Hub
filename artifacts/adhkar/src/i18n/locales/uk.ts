@@ -1,4 +1,4 @@
-// Auto-generated locale file for Ukrainian (uk)
+// Auto-generated locale file for uk
 export default {
   "app": {
     "name": "Ісламський центр",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Щоденні молитви",
     "distress_illness": "Дистрес і хвороба",
     "arafah_hajj": "День Арафа та Хадж",
-    "quran_duas": "Коранічні дуа"
+    "quran_duas": "Коранічні дуа",
+    "prophetic_duas": "Пророчі дуа"
   },
   "search": {
     "title": "Уніфікований пошук",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Адхкар для входу та виходу з дому",
     "masjid_desc": "Адхкар для входу, виходу та відвідування мечеті",
     "distress_illness_desc": "Благання про горе, тривогу, горе, хворобу та відповіді на молитви",
-    "arafah_hajj_desc": "Благання, тальбія та поминання на день Арафи та паломництво в хадж"
+    "arafah_hajj_desc": "Благання, тальбія та поминання на день Арафи та паломництво в хадж",
+    "quran_duas_desc": "Благання та молитви, згадані у Священному Корані",
+    "prophetic_duas_desc": "Автентичні благання, переказані від Пророка (р.а.а.)."
   },
   "dhikr": {
     "count": "Граф",

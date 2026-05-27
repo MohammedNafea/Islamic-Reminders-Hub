@@ -13,6 +13,7 @@ import { fastingDays } from "@/data/fasting-days";
 import { useWiki } from "@/hooks/useWiki";
 import { TranslatedText } from "@/components/TranslatedText";
 import { logTasbihIncrement } from "@/lib/tracker";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 const QURAN_SURAHS = [
   "الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة", "الأنعام", "الأعراف", "الأنفال", "التوبة", "يونس",
@@ -230,10 +231,13 @@ export default function Home() {
     <div className="space-y-12 animate-in fade-in duration-500 max-w-3xl mx-auto pb-32">
       {/* Greeting + Date */}
       <div className="flex flex-col items-center text-center space-y-4 pt-2">
-        <div className="space-y-1">
-          <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">
-            {t(greetingKey)}
-          </h1>
+        <div className="space-y-1 flex flex-col items-center">
+          <div className="flex items-center justify-center gap-2">
+            <h1 className="text-3xl md:text-4xl font-heading font-bold text-primary">
+              {t(greetingKey)}
+            </h1>
+            <SectionBooklet sectionId="home" />
+          </div>
           <p className="text-muted-foreground text-sm font-medium">
             {wikiData?.daily?.inspiration ? (
               <TranslatedText

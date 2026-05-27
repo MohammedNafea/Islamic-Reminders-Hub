@@ -1,3 +1,4 @@
+// Auto-generated locale file for zh
 export default {
   "app": {
     "name": "伊斯兰赞念",
@@ -30,7 +31,8 @@ export default {
     "tracker": "承诺路径",
     "download": "下载应用程序",
     "daily_supplications": "今天和今晚的纪念",
-    "quran_duas": "古兰经祈祷"
+    "quran_duas": "古兰经祈祷",
+    "prophetic_duas": "预言杜阿"
   },
   "home": {
     "greeting_morning": "早上好",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "进出家门的纪念及家中的祝福",
-    "masjid_desc": "前往、进入和离开清真寺的纪念"
+    "masjid_desc": "前往、进入和离开清真寺的纪念",
+    "quran_duas_desc": "《古兰经》中提到的祈求和祈祷",
+    "prophetic_duas_desc": "先知ﷺ 讲述的真实祈求"
   },
   "favorites": {
     "subtitle": "您已记住的 dhikr 和规则列表",

@@ -1,3 +1,4 @@
+// Auto-generated locale file for uz
 export default {
   "app": {
     "name": "Islom markazi",
@@ -30,7 +31,8 @@ export default {
     "download": "Ilovani yuklab oling",
     "daily_supplications": "Bugun va kecha uchun xotiralar",
     "quran_duas": "Qur'oniy du'olar",
-    "sunan": "Payg'ambarimiz sunnatlari"
+    "sunan": "Payg'ambarimiz sunnatlari",
+    "prophetic_duas": "Payg'ambarlik duolari"
   },
   "home": {
     "greeting_morning": "Xayrli tong",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "Masjidga borish, kirish va chiqish xotiralari",
-    "house_desc": "Uyga kirish va chiqish uchun zikr va unda barakalar"
+    "house_desc": "Uyga kirish va chiqish uchun zikr va unda barakalar",
+    "quran_duas_desc": "Qur'oni Karimda tilga olingan duolar va duolar",
+    "prophetic_duas_desc": "Rasululloh sollallohu alayhi vasallamdan rivoyat qilingan sahih duolar"
   },
   "favorites": {
     "empty": "Hozircha favoritlar yo'q",

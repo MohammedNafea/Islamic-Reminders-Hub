@@ -1,4 +1,4 @@
-// Auto-generated locale file for Finnish (fi)
+// Auto-generated locale file for fi
 export default {
   "app": {
     "name": "Islamilainen keskus",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Päivittäiset rukoukset",
     "distress_illness": "Hätä & Sairaus",
     "arafah_hajj": "Arafah Day & Hajj",
-    "quran_duas": "Koraani Duas"
+    "quran_duas": "Koraani Duas",
+    "prophetic_duas": "Profeetallinen Duas"
   },
   "search": {
     "title": "Yhdistetty haku",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar taloon tuloon ja sieltä poistumiseen",
     "masjid_desc": "Adhkar moskeijaan saapumisesta, lähtemisestä ja menemisestä",
     "distress_illness_desc": "Rukoukset ahdistuksesta, ahdistuksesta, surusta, sairaudesta ja vastattuihin rukouksiin",
-    "arafah_hajj_desc": "Rukoukset, Talbiyah ja muistot Arafahin päivää ja Hajj-pyhiinvaellusta varten"
+    "arafah_hajj_desc": "Rukoukset, Talbiyah ja muistot Arafahin päivää ja Hajj-pyhiinvaellusta varten",
+    "quran_duas_desc": "Pyhässä Koraanissa mainitut anomukset ja rukoukset",
+    "prophetic_duas_desc": "Profeetan ﷺ kertomia aitoja rukouksia"
   },
   "dhikr": {
     "count": "Laskea",

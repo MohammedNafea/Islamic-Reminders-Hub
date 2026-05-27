@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { QiblaCompass } from "@/components/QiblaCompass";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 type Tab = "times" | "calendar" | "qibla";
 
@@ -113,14 +114,17 @@ export default function PrayerTimesPage() {
     <div className="animate-in fade-in duration-500 space-y-6 max-w-lg mx-auto pb-10">
       {/* Header */}
       <div className="flex items-center justify-between pt-4">
-        <h2 className="text-3xl font-heading font-bold text-primary">
-          <TranslatedText
-            text="مواقيت الصلاة"
-            staticTranslation={getTranslation(t, "nav.times", i18n.language) || undefined}
-            keepArabic={false}
-            inline
-          />
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-3xl font-heading font-bold text-primary">
+            <TranslatedText
+              text="مواقيت الصلاة"
+              staticTranslation={getTranslation(t, "nav.times", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </h2>
+          <SectionBooklet sectionId="prayer" />
+        </div>
         <Button variant="outline" size="icon" onClick={() => fetchTimes(true)} disabled={loading} className="rounded-full hover:bg-primary/5 hover:text-primary transition-colors">
           <RefreshCw className={cn("w-4 h-4", loading && "animate-spin")} />
         </Button>

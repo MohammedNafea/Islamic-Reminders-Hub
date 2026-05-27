@@ -1,4 +1,4 @@
-// Auto-generated locale file for Brazilian Portuguese (pt-BR)
+// Auto-generated locale file for pt-BR
 export default {
   "app": {
     "name": "Centro Islâmico",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Súplicas Diárias",
     "distress_illness": "Angústia e doença",
     "arafah_hajj": "Dia de Arafah e Hajj",
-    "quran_duas": "Alcorão Duas"
+    "quran_duas": "Alcorão Duas",
+    "prophetic_duas": "Duas Proféticas"
   },
   "search": {
     "title": "Pesquisa Unificada",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar por entrar e sair de casa",
     "masjid_desc": "Adhkar por entrar, sair e ir à mesquita",
     "distress_illness_desc": "Súplicas por angústia, ansiedade, tristeza, doença e orações respondidas",
-    "arafah_hajj_desc": "Súplicas, Talbiyah e lembranças para o Dia de Arafah e peregrinação do Hajj"
+    "arafah_hajj_desc": "Súplicas, Talbiyah e lembranças para o Dia de Arafah e peregrinação do Hajj",
+    "quran_duas_desc": "Súplicas e orações mencionadas no Alcorão Sagrado",
+    "prophetic_duas_desc": "Súplicas autênticas narradas pelo Profeta ﷺ"
   },
   "dhikr": {
     "count": "Contar",

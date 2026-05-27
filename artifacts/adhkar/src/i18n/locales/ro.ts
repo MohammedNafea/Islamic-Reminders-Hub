@@ -1,4 +1,4 @@
-// Auto-generated locale file for Romanian (ro)
+// Auto-generated locale file for ro
 export default {
   "app": {
     "name": "Hub islamic",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Rugări zilnice",
     "distress_illness": "Suferință și boală",
     "arafah_hajj": "Ziua Arafah și Hajj",
-    "quran_duas": "Duas coranic"
+    "quran_duas": "Duas coranic",
+    "prophetic_duas": "Duas profetic"
   },
   "search": {
     "title": "Căutare unificată",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar pentru intrarea și ieșirea din casă",
     "masjid_desc": "Adhkar pentru intrarea, ieșirea și mersul la moschee",
     "distress_illness_desc": "Cereri pentru suferință, anxietate, durere, boală și rugăciuni răspunse",
-    "arafah_hajj_desc": "Cereri, Talbiyah și amintiri pentru Ziua Arafah și pelerinajul Hajj"
+    "arafah_hajj_desc": "Cereri, Talbiyah și amintiri pentru Ziua Arafah și pelerinajul Hajj",
+    "quran_duas_desc": "Cereri și rugăciuni menționate în Sfântul Coran",
+    "prophetic_duas_desc": "Cereri autentice povestite de la Profetul ﷺ"
   },
   "dhikr": {
     "count": "Conta",

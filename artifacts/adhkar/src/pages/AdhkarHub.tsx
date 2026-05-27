@@ -4,10 +4,11 @@ import { Sun, Moon, Star, Clock, Heart, BookOpen, Coins, Home, MapPin, HeartPuls
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { getDailyProgress } from "@/lib/store";
-import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah, adhkarHouse, adhkarMasjid, adhkarDistressAndIllness, adhkarArafahHajj } from "@/data/adhkar";
+import { adhkarMorningEvening, adhkarMorningVariant, adhkarMorningOnly, adhkarEveningOnly, adhkarSleep, adhkarPrayer, adhkarSalawat, adhkarRuqyah, adhkarHouse, adhkarMasjid, adhkarDistressAndIllness, adhkarArafahHajj, adhkarQuran } from "@/data/adhkar";
 import { useEffect, useState } from "react";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 const categories = [
   {
@@ -132,6 +133,28 @@ const categories = [
     adhkar: () => adhkarMasjid,
   },
   {
+    href: "/daily-supplications?tab=quran_duas",
+    Icon: Star,
+    titleKey: "nav.quran_duas",
+    descKey: "adhkar_hub.quran_duas_desc",
+    color: "text-teal-600 dark:text-teal-400",
+    bg: "bg-teal-50 dark:bg-teal-950/30",
+    border: "border-teal-200 dark:border-teal-800/50",
+    activeBg: "bg-teal-100 dark:bg-teal-900/40",
+    adhkar: () => adhkarQuran,
+  },
+  {
+    href: "/daily-supplications?tab=distress_illness",
+    Icon: HeartPulse,
+    titleKey: "nav.prophetic_duas",
+    descKey: "adhkar_hub.prophetic_duas_desc",
+    color: "text-indigo-600 dark:text-indigo-400",
+    bg: "bg-indigo-50 dark:bg-indigo-950/30",
+    border: "border-indigo-200 dark:border-indigo-800/50",
+    activeBg: "bg-indigo-100 dark:bg-indigo-900/40",
+    adhkar: () => adhkarDistressAndIllness,
+  },
+  {
     href: "/zakat",
     Icon: Coins,
     titleKey: "nav.zakat",
@@ -155,14 +178,17 @@ export default function AdhkarHub() {
   return (
     <div className="animate-in fade-in duration-500 space-y-6 max-w-2xl mx-auto">
       <div className="pt-4 space-y-1">
-        <h1 className="text-3xl font-heading font-bold text-primary">
-          <TranslatedText
-            text="مركز الأذكار"
-            staticTranslation={getTranslation(t, "adhkar_hub.title", i18n.language) || undefined}
-            keepArabic={false}
-            inline
-          />
-        </h1>
+        <div className="flex items-center justify-between gap-4">
+          <h1 className="text-3xl font-heading font-bold text-primary flex items-center gap-2">
+            <TranslatedText
+              text="مركز الأذكار"
+              staticTranslation={getTranslation(t, "adhkar_hub.title", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </h1>
+          <SectionBooklet sectionId="adhkar" />
+        </div>
         <p className="text-muted-foreground">
           <TranslatedText
             text="حصنك اليومي من الأذكار والرقية"

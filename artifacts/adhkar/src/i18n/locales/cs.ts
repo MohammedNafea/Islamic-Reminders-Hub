@@ -1,4 +1,4 @@
-// Auto-generated locale file for Czech (cs)
+// Auto-generated locale file for cs
 export default {
   "app": {
     "name": "Islámské centrum",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Denní prosby",
     "distress_illness": "Úzkost a nemoc",
     "arafah_hajj": "Arafah Day & Hajj",
-    "quran_duas": "Duas koránu"
+    "quran_duas": "Duas koránu",
+    "prophetic_duas": "Prorocké Duas"
   },
   "search": {
     "title": "Jednotné vyhledávání",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar za vstup a odchod z domu",
     "masjid_desc": "Adhkar za vstup, odchod a odchod do mešity",
     "distress_illness_desc": "Prosby pro úzkost, úzkost, smutek, nemoc a vyslyšené modlitby",
-    "arafah_hajj_desc": "Prosby, Talbiyah a vzpomínky na den Arafah a pouť hadždž"
+    "arafah_hajj_desc": "Prosby, Talbiyah a vzpomínky na den Arafah a pouť hadždž",
+    "quran_duas_desc": "Prosby a modlitby zmíněné ve Svatém Koránu",
+    "prophetic_duas_desc": "Autentické prosby vyprávěné z Proroka ﷺ"
   },
   "dhikr": {
     "count": "Počítat",

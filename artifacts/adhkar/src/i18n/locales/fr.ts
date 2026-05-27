@@ -1,3 +1,4 @@
+// Auto-generated locale file for fr
 export default {
   "app": {
     "name": "Adhkar Islamiques",
@@ -30,7 +31,8 @@ export default {
     "sunan": "Sunnah du Prophète",
     "merged_evening": "Soirée et ruqyah",
     "daily_supplications": "Souvenirs d'aujourd'hui et de ce soir",
-    "quran_duas": "Invocations Coraniques"
+    "quran_duas": "Invocations Coraniques",
+    "prophetic_duas": "Duas prophétiques"
   },
   "home": {
     "greeting_morning": "Bonjour",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Souvenirs de l'entrée et de la sortie de la maison et de la bénédiction",
-    "masjid_desc": "Souvenirs pour aller, entrer et sortir de la mosquée"
+    "masjid_desc": "Souvenirs pour aller, entrer et sortir de la mosquée",
+    "quran_duas_desc": "Supplications et prières mentionnées dans le Saint Coran",
+    "prophetic_duas_desc": "Supplications authentiques rapportées du Prophète ﷺ"
   },
   "favorites": {
     "empty": "Il n'y a pas encore de favoris",

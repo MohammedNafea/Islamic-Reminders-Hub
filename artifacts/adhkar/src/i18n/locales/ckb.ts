@@ -1,3 +1,4 @@
+// Auto-generated locale file for ckb
 export default {
   "app": {
     "name": "ناوەندی ئیسلامی",
@@ -30,7 +31,8 @@ export default {
     "daily_supplications": "Bîranînên îro û îşev",
     "quran_duas": "دوعاکانی قورئان",
     "download": "Serlêdanê dakêşin",
-    "sunan": "Sunnetên Pêxember"
+    "sunan": "Sunnetên Pêxember",
+    "prophetic_duas": "دووانەی پێغەمبەرانە"
   },
   "home": {
     "greeting_morning": "بەیانیت باش",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "Bîranînên çûn, ketin û derketina mizgeftê",
-    "house_desc": "Bîranînên ketin û derketina malê û bereketa wê"
+    "house_desc": "Bîranînên ketin û derketina malê û bereketa wê",
+    "quran_duas_desc": "ئەو دوعا و دوعایانەی لە قورئانی پیرۆزدا هاتووە",
+    "prophetic_duas_desc": "دوعای ڕەسەن کە لە پێغەمبەر صلى الله عليه وسلمەوە گێڕاوەتەوە"
   },
   "favorites": {
     "empty": "Hîn bijare nînin",

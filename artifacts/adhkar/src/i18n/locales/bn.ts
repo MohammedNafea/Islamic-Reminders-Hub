@@ -1,3 +1,4 @@
+// Auto-generated locale file for bn
 export default {
   "app": {
     "name": "ইসলামিক যিকর",
@@ -30,7 +31,8 @@ export default {
     "merged_morning": "সকাল এবং ruqyah",
     "merged_evening": "সন্ধ্যা এবং ruqyah",
     "daily_supplications": "আজকের এবং আজকের রাতের স্মৃতি",
-    "quran_duas": "কোরআন থেকে দুআ"
+    "quran_duas": "কোরআন থেকে দুআ",
+    "prophetic_duas": "ভাববাদী দুআ"
   },
   "home": {
     "greeting_morning": "শুভ সকাল",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "গৃহে প্রবেশ ও বের হওয়ার স্মরণ এবং সেখানে দোয়া করা",
-    "masjid_desc": "মসজিদে যাওয়া, প্রবেশ করা এবং বের হওয়ার স্মৃতি"
+    "masjid_desc": "মসজিদে যাওয়া, প্রবেশ করা এবং বের হওয়ার স্মৃতি",
+    "quran_duas_desc": "পবিত্র কোরআনে উল্লেখিত দোয়া ও দোয়া",
+    "prophetic_duas_desc": "রাসূলুল্লাহ সাল্লাল্লাহু আলাইহি ওয়াসাল্লাম থেকে বর্ণিত প্রামাণিক দোয়া"
   },
   "search": {
     "title": "ব্যাপক অনুসন্ধান",

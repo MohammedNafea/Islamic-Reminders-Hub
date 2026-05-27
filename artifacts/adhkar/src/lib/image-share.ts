@@ -328,27 +328,32 @@ export const exportToImage = async (
     }
 
     // Layout math
-    const lineHeight = 70;
-    const transLineHeight = 44;
-    const noteLineHeight = 38;
-    const sourceLineHeight = 38;
+    const lineHeight = 76;
+    const transLineHeight = 48;
+    const noteLineHeight = 40;
+    const sourceLineHeight = 40;
+    const footerSectionH = 165;
 
-    const titleSectionH = 140; // Spacing for category + subcategory
-    const noteSectionH = noteLines.length > 0 ? noteLines.length * noteLineHeight + 40 : 0;
-    const arabicTextSectionH = arabicLines.length * lineHeight + 30;
-    const transTextSectionH = translationLines.length > 0 ? translationLines.length * transLineHeight + 40 : 0;
-    const sourceSectionH = sourceLines.length > 0 ? sourceLines.length * sourceLineHeight + 65 : 0;
-    const footerSectionH = 160;
+    // Calculate exact canvas height by simulating cursor increments
+    let calculatedY = padding;
+    calculatedY += 147; // Title section (Category + Subcategory + Line + Spacing)
 
-    const canvasHeight =
-      padding +
-      titleSectionH +
-      (noteSectionH > 0 ? noteSectionH + 15 : 0) +
-      arabicTextSectionH +
-      (transTextSectionH > 0 ? transTextSectionH + 15 : 0) +
-      (sourceSectionH > 0 ? sourceSectionH : 0) +
-      footerSectionH +
-      padding;
+    if (noteLines.length > 0) {
+      calculatedY += noteLines.length * noteLineHeight + 18;
+    }
+
+    calculatedY += arabicLines.length * lineHeight;
+
+    if (translationLines.length > 0) {
+      calculatedY += 15 + translationLines.length * transLineHeight;
+    }
+
+    if (sourceLines.length > 0) {
+      calculatedY += 56 + sourceLines.length * sourceLineHeight;
+    }
+
+    const footerY = calculatedY + 20;
+    const canvasHeight = footerY + footerSectionH + padding;
 
     const dpr = 2; // high definition scale factor
     canvas.width = canvasWidth * dpr;
@@ -496,7 +501,7 @@ export const exportToImage = async (
     }
 
     // Draw Footer Section
-    let footerY = canvasHeight - padding - footerSectionH + 15;
+    // Using pre-calculated footerY from layout stage
 
     // Divider line
     ctx2.beginPath();

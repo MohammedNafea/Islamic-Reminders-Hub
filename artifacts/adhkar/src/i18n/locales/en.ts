@@ -1,3 +1,4 @@
+// Auto-generated locale file for en
 export default {
   "app": {
     "name": "Islamic Hub",
@@ -32,7 +33,11 @@ export default {
     "daily_supplications": "Daily Supplications",
     "distress_illness": "Distress & Illness",
     "arafah_hajj": "Arafah Day & Hajj",
-    "quran_duas": "Quranic Duas"
+    "quran_duas": "Quranic Duas",
+    "prophetic_duas": "Prophetic Duas",
+    "daily_life": "Social & Daily Life",
+    "nature": "Nature & Cosmology",
+    "occasions": "Eid & Special Occasions"
   },
   "search": {
     "title": "Unified Search",
@@ -736,7 +741,9 @@ export default {
     "house_desc": "Adhkar for entering and leaving the house",
     "masjid_desc": "Adhkar for entering, leaving, and going to the mosque",
     "distress_illness_desc": "Supplications for distress, anxiety, grief, illness, and answered prayers",
-    "arafah_hajj_desc": "Supplications, Talbiyah, and remembrances for the Day of Arafah and Hajj pilgrimage"
+    "arafah_hajj_desc": "Supplications, Talbiyah, and remembrances for the Day of Arafah and Hajj pilgrimage",
+    "quran_duas_desc": "Supplications and prayers mentioned in the Holy Quran",
+    "prophetic_duas_desc": "Authentic supplications narrated from the Prophet ﷺ"
   },
   "dhikr": {
     "count": "Count",

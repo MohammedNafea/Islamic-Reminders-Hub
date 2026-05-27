@@ -1,3 +1,4 @@
+// Auto-generated locale file for am
 export default {
   "app": {
     "name": "ኢስላሚክ ሀብ",
@@ -32,7 +33,8 @@ export default {
     "daily_supplications": "ዛሬ እና ዛሬ ማታ ትዝታዎች",
     "distress_illness": "የጭንቀትና ህመም ዱዓዎች",
     "arafah_hajj": "የዓረፋ ቀን እና ሐጅ",
-    "quran_duas": "ከቁርኣን ቅዱስ ዱዓዎች"
+    "quran_duas": "ከቁርኣን ቅዱስ ዱዓዎች",
+    "prophetic_duas": "ትንቢታዊ ዱዓዎች"
   },
   "home": {
     "greeting_morning": "መልካም ጠዋት",
@@ -240,7 +242,9 @@ export default {
     "house_desc": "ቤቱን የመግባት እና የመውጣት ትዝታዎች እና በውስጡ የመባረክ",
     "masjid_desc": "መስጂድ የመግባት፣ የመግባት እና የመውጣት ትዝታዎች",
     "distress_illness_desc": "የጭንቀት፣ የጭንቀት፣ የበሽታ እና ለጸلوት ምላሽ የሚሰጡ ዱዓዎች",
-    "arafah_hajj_desc": "የዓረፋ ቀን እና የሐጅ ልመናዎች፣ ተልቢያህ እና ዚክሮች"
+    "arafah_hajj_desc": "የዓረፋ ቀን እና የሐጅ ልመናዎች፣ ተልቢያህ እና ዚክሮች",
+    "quran_duas_desc": "በቅዱስ ቁርኣን ውስጥ የተጠቀሱ ጸሎቶች እና ጸሎቶች",
+    "prophetic_duas_desc": "ከነቢዩ ﷺ የተተረከ ትክክለኛ ዱዓዎች"
   },
   "salawat": {
     "title": "በነቢዩ ላይ ፀሎት",

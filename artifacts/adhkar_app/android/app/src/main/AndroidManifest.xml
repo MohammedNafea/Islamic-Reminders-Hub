@@ -3,8 +3,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Push notifications for prayer times and adhkar reminders -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <!-- Overlay permission to appear over other apps for urgent notifications -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <!-- Location for accurate prayer times and Qibla direction -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -17,7 +15,7 @@
     <!-- Receive boot to restart alarms after device reboot -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
-        android:label="adhkar_app"
+        android:label="@string/app_name"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

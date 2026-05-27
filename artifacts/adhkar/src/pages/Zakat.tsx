@@ -10,6 +10,7 @@ import { getTranslation } from "@/lib/content-i18n";
 import { TranslatedText } from "@/components/TranslatedText";
 import { localDB } from "@/lib/db";
 import { Button } from "@/components/ui/button";
+import { SectionBooklet } from "@/components/SectionBooklet";
 
 const CURRENCIES = [
   { code: "SAR", symbolAr: "ر.س", symbolEn: "SAR", nameAr: "ريال سعودي", nameEn: "Saudi Riyal", flag: "🇸🇦" },
@@ -150,18 +151,21 @@ export default function ZakatCalculator() {
 
   return (
     <div className="animate-in fade-in duration-500 max-w-4xl mx-auto space-y-8 pt-6 pb-20">
-      <div className="text-center space-y-3">
-        <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-4">
+      <div className="text-center space-y-3 flex flex-col items-center">
+        <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-1">
           <Calculator className="w-10 h-10 text-primary" />
         </div>
-        <h2 className="text-3xl font-heading font-bold text-primary">
-          <TranslatedText
-            text="حاسبة الزكاة"
-            staticTranslation={getTranslation(t, "zakat.title", i18n.language) || undefined}
-            keepArabic={false}
-            inline
-          />
-        </h2>
+        <div className="flex items-center justify-center gap-2">
+          <h2 className="text-3xl font-heading font-bold text-primary">
+            <TranslatedText
+              text="حاسبة الزكاة"
+              staticTranslation={getTranslation(t, "zakat.title", i18n.language) || undefined}
+              keepArabic={false}
+              inline
+            />
+          </h2>
+          <SectionBooklet sectionId="zakat" />
+        </div>
         <p className="text-muted-foreground text-center">
           <TranslatedText
             text="احسب زكاتك بدقة وسهولة بناءً على أسعار الذهب والفضة اليومية"

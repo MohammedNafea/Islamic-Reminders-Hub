@@ -1,3 +1,4 @@
+// Auto-generated locale file for pl
 export default {
   "app": {
     "name": "Islamskie Adhkar",
@@ -30,7 +31,8 @@ export default {
     "merged_morning": "Rano i ruqyah",
     "sunan": "Sunny Proroka",
     "daily_supplications": "Wspomnienia na dziś i wieczór",
-    "quran_duas": "Modlitwy Koraniczne"
+    "quran_duas": "Modlitwy Koraniczne",
+    "prophetic_duas": "Proroczy Duas"
   },
   "home": {
     "greeting_morning": "Dzień dobry",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Wspomnienie wejścia i wyjścia z domu oraz błogosławieństwo w nim",
-    "masjid_desc": "Wspomnienia dotyczące wyjścia, wejścia i wyjścia z meczetu"
+    "masjid_desc": "Wspomnienia dotyczące wyjścia, wejścia i wyjścia z meczetu",
+    "quran_duas_desc": "Błagania i modlitwy wymienione w Świętym Koranie",
+    "prophetic_duas_desc": "Autentyczne błagania przekazane przez Proroka ﷺ"
   },
   "favorites": {
     "empty_desc": "Zacznij dodawać dhikr lub orzeczenia, które Cię interesują, aby pojawiły się tutaj",

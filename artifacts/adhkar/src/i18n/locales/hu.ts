@@ -1,4 +1,4 @@
-// Auto-generated locale file for Hungarian (hu)
+// Auto-generated locale file for hu
 export default {
   "app": {
     "name": "Iszlám Hub",
@@ -33,7 +33,8 @@ export default {
     "daily_supplications": "Napi könyörgések",
     "distress_illness": "Szorongás és betegség",
     "arafah_hajj": "Arafah Day és Hajj",
-    "quran_duas": "Korán Duas"
+    "quran_duas": "Korán Duas",
+    "prophetic_duas": "Prófétai Duas"
   },
   "search": {
     "title": "Egységesített keresés",
@@ -737,7 +738,9 @@ export default {
     "house_desc": "Adhkar a házba való be- és kilépésért",
     "masjid_desc": "Adhkar a mecsetbe való belépésért, távozásért és a mecsetbe menésért",
     "distress_illness_desc": "Könyörgések szorongás, szorongás, bánat, betegség miatt és megválaszolt imák",
-    "arafah_hajj_desc": "Könyörgések, Talbiyah és emlékezés az Arafah és a Hajj zarándoklat napjára"
+    "arafah_hajj_desc": "Könyörgések, Talbiyah és emlékezés az Arafah és a Hajj zarándoklat napjára",
+    "quran_duas_desc": "A Szent Koránban említett könyörgések és imák",
+    "prophetic_duas_desc": "A Prófétától ﷺ elmondott hiteles könyörgések"
   },
   "dhikr": {
     "count": "Gróf",

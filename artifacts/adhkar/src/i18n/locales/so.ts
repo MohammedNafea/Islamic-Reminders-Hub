@@ -1,3 +1,4 @@
+// Auto-generated locale file for so
 export default {
   "app": {
     "name": "Xarunta Islaamka",
@@ -30,7 +31,8 @@ export default {
     "sunan": "Sunnada Nabiga",
     "download": "Soo deji codsiga",
     "daily_supplications": "Xuska maanta iyo caawa",
-    "quran_duas": "Ducooyinka Quraanka"
+    "quran_duas": "Ducooyinka Quraanka",
+    "prophetic_duas": "Ducadii nabiga"
   },
   "home": {
     "greeting_morning": "Subax wanaagsan",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "masjid_desc": "Xusuusta tagitaanka, gelidda iyo ka bixidda masaajidka",
-    "house_desc": "Xusuusta gelitaanka iyo ka bixidda guriga iyo ducada dhexdeeda"
+    "house_desc": "Xusuusta gelitaanka iyo ka bixidda guriga iyo ducada dhexdeeda",
+    "quran_duas_desc": "Ducada iyo ducada lagu sheegay quraanka kariimka ah",
+    "prophetic_duas_desc": "Ducooyin saxiix ah oo Nabiga ﷺ laga wariyey"
   },
   "favorites": {
     "subtitle": "Liis zikri iyo axkaam oo aad xifdisay",

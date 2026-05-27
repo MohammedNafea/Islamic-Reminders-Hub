@@ -1,3 +1,4 @@
+// Auto-generated locale file for ha
 export default {
   "app": {
     "name": "Cibiyar Musulunci",
@@ -30,7 +31,8 @@ export default {
     "sunan": "Sunnan Annabi",
     "daily_supplications": "Zikirin yau da daren yau",
     "quran_duas": "Addu'o'i na Alqur'ani",
-    "download": "Zazzage aikace-aikacen"
+    "download": "Zazzage aikace-aikacen",
+    "prophetic_duas": "Addu'ar Annabi"
   },
   "home": {
     "greeting_morning": "Barka da safe",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Zikirin shiga da fita gida da albarka a cikinsa",
-    "masjid_desc": "Zikirin tafiya da shiga da fita masallaci"
+    "masjid_desc": "Zikirin tafiya da shiga da fita masallaci",
+    "quran_duas_desc": "Addu'o'i da addu'o'i da aka ambata a cikin Alkur'ani mai girma",
+    "prophetic_duas_desc": "Addu'o'i ingantattu da aka ruwaito daga Annabi SAW"
   },
   "favorites": {
     "subtitle": "Jerin zikiri da hukunce-hukuncen da ka haddace",

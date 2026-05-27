@@ -53,7 +53,49 @@ import fil from "./locales/fil";
 import ml from "./locales/ml";
 import kn from "./locales/kn";
 
+import bg from "./locales/bg";
+import ca from "./locales/ca";
+import hr from "./locales/hr";
+import et from "./locales/et";
+import is from "./locales/is";
+import lv from "./locales/lv";
+import lt from "./locales/lt";
+import mk from "./locales/mk";
+import sk from "./locales/sk";
+import sl from "./locales/sl";
+import hy from "./locales/hy";
+import ka from "./locales/ka";
+import mn from "./locales/mn";
+import ne from "./locales/ne";
+import si from "./locales/si";
+import km from "./locales/km";
+import lo from "./locales/lo";
+import my from "./locales/my";
+import gu from "./locales/gu";
+import sr from "./locales/sr";
+
 const resources = {
+  bg: { translation: bg },
+  ca: { translation: ca },
+  hr: { translation: hr },
+  et: { translation: et },
+  is: { translation: is },
+  lv: { translation: lv },
+  lt: { translation: lt },
+  mk: { translation: mk },
+  sk: { translation: sk },
+  sl: { translation: sl },
+  hy: { translation: hy },
+  ka: { translation: ka },
+  mn: { translation: mn },
+  ne: { translation: ne },
+  si: { translation: si },
+  km: { translation: km },
+  lo: { translation: lo },
+  my: { translation: my },
+  gu: { translation: gu },
+  sr: { translation: sr },
+
   ar: { translation: ar },
   en: { translation: en },
   fr: { translation: fr },
@@ -107,6 +149,27 @@ const resources = {
 };
 
 export const supportedLanguages = [
+  { code: "bg", name: "Bulgarian", nativeName: "Български", dir: "ltr", flag: "🇧🇬" },
+  { code: "ca", name: "Catalan", nativeName: "Català", dir: "ltr", flag: "🇪🇸" },
+  { code: "hr", name: "Croatian", nativeName: "Hrvatski", dir: "ltr", flag: "🇭🇷" },
+  { code: "et", name: "Estonian", nativeName: "Eesti", dir: "ltr", flag: "🇪🇪" },
+  { code: "is", name: "Icelandic", nativeName: "Íslenska", dir: "ltr", flag: "🇮🇸" },
+  { code: "lv", name: "Latvian", nativeName: "Latviešu", dir: "ltr", flag: "🇱🇻" },
+  { code: "lt", name: "Lithuanian", nativeName: "Lietuvių", dir: "ltr", flag: "🇱🇹" },
+  { code: "mk", name: "Macedonian", nativeName: "Македонски", dir: "ltr", flag: "🇲🇰" },
+  { code: "sk", name: "Slovak", nativeName: "Slovenčina", dir: "ltr", flag: "🇸🇰" },
+  { code: "sl", name: "Slovenian", nativeName: "Slovenščina", dir: "ltr", flag: "🇸🇮" },
+  { code: "hy", name: "Armenian", nativeName: "Հայերեն", dir: "ltr", flag: "🇦🇲" },
+  { code: "ka", name: "Georgian", nativeName: "ქართული", dir: "ltr", flag: "🇬🇪" },
+  { code: "mn", name: "Mongolian", nativeName: "Монгол хэл", dir: "ltr", flag: "🇲🇳" },
+  { code: "ne", name: "Nepali", nativeName: "नेपाली", dir: "ltr", flag: "🇳🇵" },
+  { code: "si", name: "Sinhala", nativeName: "සිංහල", dir: "ltr", flag: "🇱🇰" },
+  { code: "km", name: "Khmer", nativeName: "ខ្មែរ", dir: "ltr", flag: "🇰🇭" },
+  { code: "lo", name: "Lao", nativeName: "ລາວ", dir: "ltr", flag: "🇱🇦" },
+  { code: "my", name: "Burmese", nativeName: "မြန်မာဘာသာ", dir: "ltr", flag: "🇲🇲" },
+  { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી", dir: "ltr", flag: "🇮🇳" },
+  { code: "sr", name: "Serbian", nativeName: "Српски", dir: "ltr", flag: "🇷🇸" },
+
   { code: "ar", name: "العربية", nativeName: "العربية", dir: "rtl", flag: "🇸🇦" },
   { code: "fa", name: "فارسی", nativeName: "فارسی", dir: "rtl", flag: "🇮🇷" },
   { code: "ur", name: "اردو", nativeName: "اردو", dir: "rtl", flag: "🇵🇰" },

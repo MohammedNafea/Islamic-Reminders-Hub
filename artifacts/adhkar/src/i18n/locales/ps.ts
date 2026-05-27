@@ -1,3 +1,4 @@
+// Auto-generated locale file for ps
 export default {
   "app": {
     "name": "اسلامي مرکز",
@@ -30,7 +31,8 @@ export default {
     "sunan": "د رسول الله صلی الله علیه وسلم سنتونه",
     "download": "اپلیکیشن ډاونلوډ کړئ",
     "daily_supplications": "د نن او نن شپې یادونه",
-    "quran_duas": "د قرآن دعاګانې"
+    "quran_duas": "د قرآن دعاګانې",
+    "prophetic_duas": "نبوي دعاګانې"
   },
   "home": {
     "greeting_morning": "سهار مو پخیر",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "کور ته د ننوتلو او وتلو یادونه او په هغه کې برکت",
-    "masjid_desc": "جومات ته د تلو، ننوتلو او وتلو يادونه"
+    "masjid_desc": "جومات ته د تلو، ننوتلو او وتلو يادونه",
+    "quran_duas_desc": "دعاګانې او دعاګانې چې په قران کریم کې ذکر شوي دي",
+    "prophetic_duas_desc": "مستند دعاګانې چې له رسول الله صلی الله علیه وسلم څخه روایت شوې دي"
   },
   "favorites": {
     "subtitle": "د ذکر او احکامو لیست چې تاسو یاد کړی",

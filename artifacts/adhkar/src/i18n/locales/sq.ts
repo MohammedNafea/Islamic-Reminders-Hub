@@ -1,3 +1,4 @@
+// Auto-generated locale file for sq
 export default {
   "app": {
     "name": "Qendra Islame",
@@ -30,7 +31,8 @@ export default {
     "sunan": "Sunetet e Profetit",
     "download": "Shkarkoni aplikacionin",
     "daily_supplications": "Kujtime për sot dhe sonte",
-    "quran_duas": "Lutjet Kuranore"
+    "quran_duas": "Lutjet Kuranore",
+    "prophetic_duas": "Dua profetike"
   },
   "home": {
     "greeting_morning": "Mirëmëngjes",
@@ -700,7 +702,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Kujtime për hyrjen dhe daljen nga shtëpia dhe bekimin në të",
-    "masjid_desc": "Kujtime për vajtjen, hyrjen dhe daljen nga xhamia"
+    "masjid_desc": "Kujtime për vajtjen, hyrjen dhe daljen nga xhamia",
+    "quran_duas_desc": "Lutjet dhe lutjet e përmendura në Kuranin e Shenjtë",
+    "prophetic_duas_desc": "Lutjet autentike të transmetuara nga Profeti ﷺ"
   },
   "favorites": {
     "subtitle": "Një listë dhikrish dhe vendimesh që i keni mësuar përmendësh",

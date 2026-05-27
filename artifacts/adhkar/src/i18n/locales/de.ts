@@ -1,3 +1,4 @@
+// Auto-generated locale file for de
 export default {
   "app": {
     "name": "Islamische Adhkar",
@@ -30,7 +31,8 @@ export default {
     "tracker": "Commitment-Pfad",
     "sunan": "Sunnahs des Propheten",
     "daily_supplications": "Erinnerungen für heute und heute Abend",
-    "quran_duas": "Koranische Bittgebete"
+    "quran_duas": "Koranische Bittgebete",
+    "prophetic_duas": "Prophetische Duas"
   },
   "home": {
     "greeting_morning": "Guten Morgen",
@@ -458,7 +460,9 @@ export default {
     "ruqyah_desc": "Healing and Protection from Quran",
     "post_prayer": "Post-Prayer Adhkar",
     "house_desc": "Erinnerungen an das Betreten und Verlassen des Hauses und die Segnung darin",
-    "masjid_desc": "Erinnerungen an den Besuch, das Betreten und das Verlassen der Moschee"
+    "masjid_desc": "Erinnerungen an den Besuch, das Betreten und das Verlassen der Moschee",
+    "quran_duas_desc": "Bitten und Gebete, die im Heiligen Koran erwähnt werden",
+    "prophetic_duas_desc": "Authentische Gebete, überliefert vom Propheten ﷺ"
   },
   "search": {
     "title": "Umfangreiche Suche",
