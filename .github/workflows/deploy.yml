@@ -53,6 +53,7 @@ jobs:
           touch ./gh-pages-dist/.nojekyll
           # Ensure _redirects exists for SPA routing
           echo "/* /index.html 200" > ./gh-pages-dist/_redirects
+          echo "adhkar.thedarkgalaxy.com" > ./gh-pages-dist/CNAME
           echo "✅ Build ready: $(ls gh-pages-dist | wc -l) files"
 
       - name: 🚀 Deploy to gh-pages branch
