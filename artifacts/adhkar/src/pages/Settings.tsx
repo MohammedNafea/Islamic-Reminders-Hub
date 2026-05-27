@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { NotificationManager } from "@/lib/notifications";
+import { NotificationManager, isNotificationSupported, isInstalledPWA, getNotificationPermission } from "@/lib/notifications";
 import { motion, AnimatePresence } from "framer-motion";
 import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
@@ -118,6 +118,14 @@ export default function Settings() {
   useEffect(() => {
     setLocalSettings(getSettings());
   }, []);
+
+  // ── Notification capability detection ──────────────────────────────────────
+  const notifSupported = isNotificationSupported();
+  const isPWA = isInstalledPWA();
+  const notifPermission = getNotificationPermission();
+  // Enable toggle if Notification API exists OR we're in an installed PWA
+  const canEnableNotifications = notifSupported || isPWA;
+  const notifCurrentlyEnabled = settings.notifications && canEnableNotifications;
 
   const updateSetting = async (key: keyof typeof settings, value: typeof settings[typeof key]) => {
     let finalValue: typeof settings[typeof key] = value;
@@ -554,22 +562,35 @@ export default function Settings() {
                   inline
                 />
               </Label>
-              {!(typeof window !== "undefined" && "Notification" in window) && (
-                <p className="text-xs text-amber-600 font-medium leading-normal mt-1">
-                  ⚠️ الإشعارات غير مدعومة في هذا المتصفح/الجهاز. يرجى تثبيت التطبيق PWA (إضافة إلى الشاشة الرئيسية) لتتمكن من تفعيل التنبيهات.
+              {!canEnableNotifications && (
+                <div className="mt-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/50 dark:border-amber-800/30 space-y-2">
+                  <p className="text-xs text-amber-700 dark:text-amber-400 font-medium leading-relaxed">
+                    ⚠️ الإشعارات تحتاج إلى تثبيت التطبيق كـ PWA على جهازك.
+                  </p>
+                  <ol className="text-[11px] text-amber-600 dark:text-amber-500 list-decimal list-inside space-y-1 leading-relaxed">
+                    <li>افتح الموقع في متصفح Chrome أو Safari</li>
+                    <li>اضغط على قائمة الخيارات (⋮ أو مشاركة)</li>
+                    <li>اختر "إضافة إلى الشاشة الرئيسية"</li>
+                    <li>افتح التطبيق من الشاشة الرئيسية وفعّل التنبيهات</li>
+                  </ol>
+                </div>
+              )}
+              {canEnableNotifications && notifPermission === "denied" && (
+                <p className="text-xs text-red-600 dark:text-red-400 font-medium leading-relaxed mt-1">
+                  ⛔ تم رفض إذن الإشعارات. يرجى السماح بالإشعارات من إعدادات المتصفح/الجهاز.
                 </p>
               )}
             </div>
-            <Switch 
-              id="notifications" 
-              disabled={!(typeof window !== "undefined" && "Notification" in window)}
-              checked={settings.notifications && (typeof window !== "undefined" && "Notification" in window)}
+            <Switch
+              id="notifications"
+              disabled={!canEnableNotifications}
+              checked={notifCurrentlyEnabled}
               onCheckedChange={(val) => updateSetting("notifications", val)}
             />
           </div>
 
           <AnimatePresence>
-            {settings.notifications && (typeof window !== "undefined" && "Notification" in window) && (
+            {notifCurrentlyEnabled && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}

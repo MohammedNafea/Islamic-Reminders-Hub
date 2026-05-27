@@ -23,6 +23,8 @@ self.addEventListener("activate", (event) => {
 // Precache all compiled assets (HTML, JS, CSS, PNG, MP3)
 precacheAndRoute(self.__WB_MANIFEST || []);
 
+// ─── Cache Strategies ────────────────────────────────────────────────────────
+
 // Cache Google Fonts (stylesheets and font files)
 registerRoute(
   /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
@@ -31,7 +33,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 30,
-        maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+        maxAgeSeconds: 365 * 24 * 60 * 60,
       }),
     ],
   })
@@ -43,18 +45,16 @@ registerRoute(
   new CacheFirst({
     cacheName: "quran-api-cache",
     plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
       new ExpirationPlugin({
         maxEntries: 200,
-        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+        maxAgeSeconds: 30 * 24 * 60 * 60,
       }),
     ],
   })
 );
 
-// Cache Prayer Times API using NetworkFirst (always try online first to get accurate date adjustments)
+// Prayer Times API: NetworkFirst for accuracy
 registerRoute(
   /^https:\/\/api\.aladhan\.com\/v1\/.*/i,
   new NetworkFirst({
@@ -62,44 +62,93 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+        maxAgeSeconds: 7 * 24 * 60 * 60,
       }),
     ],
   })
 );
 
-// Cache Quran and Adhkar audio files for offline listening
+// Cache Quran and Adhkar audio files
 registerRoute(
   /.*(?:everyayah\.com|raw\.githubusercontent\.com\/rn0x\/Adhkar-json|mp3quran\.net).*\.(?:mp3|wav)/i,
   new CacheFirst({
     cacheName: "audio-cache",
     plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
       new ExpirationPlugin({
         maxEntries: 150,
-        maxAgeSeconds: 60 * 24 * 60 * 60, // 60 days
+        maxAgeSeconds: 60 * 24 * 60 * 60,
       }),
     ],
   })
 );
 
-// Handle notification click to open or focus the app window
+// ─── Push Notifications (Android PWA Background Support) ─────────────────────
+
+/**
+ * Handle incoming push events (from Push API / background notifications).
+ * On Android, this fires even when the app is closed.
+ */
+self.addEventListener("push", (event) => {
+  let data: { title?: string; body?: string; icon?: string; badge?: string; tag?: string } = {};
+  try {
+    data = event.data?.json() ?? {};
+  } catch {
+    data = { title: "مركز الأذكار", body: event.data?.text() ?? "" };
+  }
+
+  const title = data.title ?? "مركز الأذكار";
+  const options: NotificationOptions = {
+    body: data.body ?? "",
+    icon: data.icon ?? "/icon-192.png",
+    badge: data.badge ?? "/favicon.png",
+    dir: "rtl",
+    lang: "ar",
+    tag: data.tag,
+    requireInteraction: false,
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// ─── Notification Click Handler ───────────────────────────────────────────────
+
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
-      // Find and focus an already open window client
+      // Focus existing window if open
       for (const client of clientList) {
         if (client.url.includes(self.location.origin) && "focus" in client) {
           return client.focus();
         }
       }
-      // If no open client exists, open a new window
+      // Open new window if none found
       if (self.clients.openWindow) {
         return self.clients.openWindow("/");
       }
     })
   );
+});
+
+// ─── Message Handler (for scheduling from app) ───────────────────────────────
+
+/**
+ * Listen for messages from the app to trigger notifications directly from SW.
+ * This allows the app to schedule background-compatible notifications on Android.
+ */
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SHOW_NOTIFICATION") {
+    const { title, options } = event.data;
+    self.registration.showNotification(title ?? "مركز الأذكار", {
+      icon: "/icon-192.png",
+      badge: "/favicon.png",
+      dir: "rtl",
+      lang: "ar",
+      ...options,
+    });
+  }
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });

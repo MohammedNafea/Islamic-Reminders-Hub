@@ -1,0 +1,84 @@
+name: 🚀 Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      # ─── Checkout ───────────────────────────────────────────────
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ─── Setup pnpm ─────────────────────────────────────────────
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      # ─── Setup Node ─────────────────────────────────────────────
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      # ─── Cache ──────────────────────────────────────────────────
+      - name: 🗄️ Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pnpm-store
+            node_modules
+            artifacts/adhkar/node_modules
+          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-${{ runner.os }}-
+
+      # ─── Install Dependencies ───────────────────────────────────
+      - name: 📥 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ─── Build CSS ──────────────────────────────────────────────
+      - name: 🎨 Build TailwindCSS
+        run: pnpm run build:css:prod
+
+      # ─── Build App ──────────────────────────────────────────────
+      - name: 🏗️ Build Application
+        run: pnpm --filter @workspace/adhkar run build
+        env:
+          NODE_ENV: production
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      # ─── Deploy to Cloudflare Pages ─────────────────────────────
+      - name: ☁️ Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy artifacts/adhkar/dist/public --project-name=islamic-reminders-hub --commit-dirty=true
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      # ─── Print Deploy URL ───────────────────────────────────────
+      - name: 🌍 Deployment Complete
+        run: |
+          echo "✅ Deployed successfully to Cloudflare Pages!"
+          echo "🌐 Project: islamic-reminders-hub"
+          echo "🔗 URL: https://islamic-reminders-hub.pages.dev"

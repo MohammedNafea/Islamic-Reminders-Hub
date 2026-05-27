@@ -829,37 +829,38 @@ export default function Quran() {
     if (!currentSurah) return null;
 
     return (
-      <div className="space-y-6 animate-in fade-in duration-500 pb-80 md:pb-48">
+      <div className="space-y-6 animate-in fade-in duration-500 pb-56 md:pb-44">
         {/* Header */}
         {viewMode === "list" ? (
-          <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
-            <div className="flex items-center gap-4 flex-1">
-              <Button variant="ghost" onClick={() => { audio.pause(); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
-                <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
+          <div className="bg-card/90 backdrop-blur-md border border-primary/5 rounded-[2rem] shadow-sm sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 p-3 md:p-4">
+            {/* Row 1: Back button + Title */}
+            <div className="flex items-center gap-3 mb-2">
+              <Button variant="ghost" onClick={() => { audio.pause(); setActiveSurah(null); }} className="rounded-full h-10 w-10 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary shrink-0">
+                <ChevronRight className={cn("w-5 h-5", i18n.language !== 'ar' && "rotate-180")} />
               </Button>
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold font-heading text-primary">{i18n.language === 'ar' ? currentSurah?.name : currentSurah?.englishName}</h2>
-                <div className="flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+              <div className="flex-1 min-w-0">
+                <h2 className="text-lg md:text-2xl font-bold font-heading text-primary truncate">{i18n.language === 'ar' ? currentSurah?.name : currentSurah?.englishName}</h2>
+                <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                   <span>{currentSurah?.numberOfAyahs} {t("common.ayahs")}</span>
                   <span className="w-1 h-1 bg-muted-foreground/30 rounded-full" />
                   <span>{currentSurah?.revelationType === "Meccan" ? t("quran.meccan") : t("quran.medinan")}</span>
                 </div>
               </div>
-            </div>
-            
-            <div className="flex items-center gap-2 justify-between md:justify-end">
+              {/* Search icon - always visible */}
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full w-10 h-10 border-primary/10 hover:bg-primary/5 text-primary bg-white shadow-sm"
+                className="rounded-full w-9 h-9 border-primary/10 hover:bg-primary/5 text-primary bg-white shadow-sm shrink-0"
                 onClick={() => setIsSearchOpen(true)}
                 title={t("quran.search_in_surah", { defaultValue: "البحث في السورة" })}
               >
                 <Search className="w-4 h-4" />
               </Button>
-              
+            </div>
+            {/* Row 2: Controls */}
+            <div className="flex items-center gap-2 flex-wrap">
               <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
-                <SelectTrigger className="w-[125px] sm:w-[140px] h-8 rounded-xl border-primary/10 bg-white/50 text-[11px]">
+                <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl max-h-72">
@@ -870,34 +871,33 @@ export default function Quran() {
                   <SelectItem value="none" className="text-[11px]">{t("quran.hide_tafsir", { defaultValue: "إخفاء التفسير" })}</SelectItem>
                 </SelectContent>
               </Select>
-              {renderViewSwitcher()}
+              <div className="flex-1">{renderViewSwitcher()}</div>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col md:flex-row md:items-center gap-4 bg-card/90 p-4 rounded-[2rem] border border-primary/5 backdrop-blur-md sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 shadow-sm">
-            <div className="flex items-center gap-4 flex-1">
-              <Button variant="ghost" onClick={() => { audio.pause(); setViewMode("list"); setActiveSurah(null); }} className="rounded-full h-12 w-12 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary">
-                <ChevronRight className={cn("w-6 h-6", i18n.language !== 'ar' && "rotate-180")} />
+          <div className="bg-card/90 backdrop-blur-md border border-primary/5 rounded-[2rem] shadow-sm sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 p-3 md:p-4">
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" onClick={() => { audio.pause(); setViewMode("list"); setActiveSurah(null); }} className="rounded-full h-10 w-10 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary shrink-0">
+                <ChevronRight className={cn("w-5 h-5", i18n.language !== 'ar' && "rotate-180")} />
               </Button>
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-bold font-heading text-primary">
+                  <h2 className="text-lg font-bold font-heading text-primary">
                     {t("quran.page", { defaultValue: "صفحة" })} {currentPage}
                   </h2>
                   {pageAyahs.length > 0 && (
-                    <span className="text-xs text-muted-foreground bg-primary/5 px-2.5 py-1 rounded-full font-medium">
+                    <span className="text-[10px] text-muted-foreground bg-primary/5 px-2 py-0.5 rounded-full font-medium">
                       {t("quran.juz", { defaultValue: "الجزء" })} {pageAyahs[0].juz}
                     </span>
                   )}
                 </div>
-                <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-0.5">
+                <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest truncate">
                   {Array.from(new Set(pageAyahs.map(a => i18n.language === 'ar' ? a.surah.name : a.surah.englishName))).join(" / ")}
                 </div>
               </div>
+              <div className="shrink-0">{renderViewSwitcher()}</div>
             </div>
-            
-            <div className="flex items-center gap-4 justify-between md:justify-end">
-              {renderViewSwitcher()}
+            <div className="flex items-center gap-4 justify-between md:justify-end mt-0">
             </div>
           </div>
         )}
@@ -1517,17 +1517,12 @@ export default function Quran() {
         )}
 
         {/* Floating bottom audio player */}
-        <div className={cn(
-          "fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-4 right-4 z-40 bg-card/90 backdrop-blur-md border border-primary/10 rounded-[2.5rem] shadow-xl p-4 md:p-5 flex flex-col gap-3 animate-in slide-in-from-bottom duration-300",
-          rtl 
-            ? "md:left-[calc(50%-8rem)] md:right-auto md:-translate-x-1/2 md:w-[calc(100vw-16rem-2rem)] md:max-w-3xl"
-            : "md:left-[calc(50%+8rem)] md:right-auto md:-translate-x-1/2 md:w-[calc(100vw-16rem-2rem)] md:max-w-3xl"
-        )}>
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-2 right-2 md:left-auto md:right-auto md:w-[min(calc(100vw-4rem),720px)] md:mx-auto md:inset-x-0 z-40 bg-card/95 backdrop-blur-md border border-primary/10 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl p-3 md:p-5 flex flex-col gap-2 md:gap-3 animate-in slide-in-from-bottom duration-300">
+          <div className="flex items-center justify-between gap-2 md:gap-4">
             {/* Left: Info */}
-            <div className="flex items-center gap-2 justify-between md:justify-start">
-              <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl md:rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                   {isPlaying ? (
                     <span className="flex gap-0.5 items-end h-4">
                       <span className="w-0.5 bg-primary rounded-full animate-bounce h-3" style={{ animationDelay: '0.1s' }} />
@@ -1538,13 +1533,13 @@ export default function Quran() {
                     <Volume2 className="w-5 h-5" />
                   )}
                 </div>
-                <div>
-                  <h4 className="text-xs font-bold text-foreground whitespace-nowrap">
+                <div className="min-w-0">
+                  <h4 className="text-[11px] md:text-xs font-bold text-foreground truncate max-w-[100px] md:max-w-none">
                     {selectedQari.type === "ayah" && activeAyahIndex !== null 
                       ? `${t("quran.ayah", { defaultValue: "آية" })} ${ayahs[activeAyahIndex].numberInSurah}`
                       : t("quran_audio.playing_surah", { defaultValue: "تشغيل السورة" })}
                   </h4>
-                  <p className="text-[10px] text-muted-foreground whitespace-nowrap">
+                  <p className="text-[9px] md:text-[10px] text-muted-foreground truncate max-w-[100px] md:max-w-none">
                     {i18n.language === "ar" ? selectedQari.name : selectedQari.englishName}
                   </p>
                 </div>
@@ -1552,36 +1547,36 @@ export default function Quran() {
             </div>
 
             {/* Center: Play controls */}
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center gap-2 md:gap-3 shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 rounded-full text-primary hover:bg-primary/5"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full text-primary hover:bg-primary/5"
                 onClick={skipPrev}
                 title={t("quran_audio.prev_ayah")}
               >
-                <SkipBack className="w-4 h-4" />
+                <SkipBack className="w-3.5 h-3.5 md:w-4 md:h-4" />
               </Button>
               <Button
                 size="icon"
-                className="w-12 h-12 rounded-full bg-primary hover:bg-primary/90 text-white shadow-md"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary hover:bg-primary/90 text-white shadow-md"
                 onClick={togglePlayPause}
               >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
+                {isPlaying ? <Pause className="w-4 h-4 md:w-5 md:h-5" /> : <Play className="w-4 h-4 md:w-5 md:h-5 ml-0.5" />}
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
-                className="w-8 h-8 rounded-full text-primary hover:bg-primary/5"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full text-primary hover:bg-primary/5"
                 onClick={skipNext}
                 title={t("quran_audio.next_ayah")}
               >
-                <SkipForward className="w-4 h-4" />
+                <SkipForward className="w-3.5 h-3.5 md:w-4 md:h-4" />
               </Button>
             </div>
 
-            {/* Right: Selectors (Reciter & Speed) */}
-            <div className="flex items-center justify-between md:justify-end gap-3">
+            {/* Right: Selectors (Reciter & Speed) - Desktop only */}
+            <div className="hidden md:flex items-center justify-end gap-3">
               {/* Reciter selector */}
               <div className="flex items-center gap-1.5">
                 <span className="text-[10px] text-muted-foreground hidden sm:inline whitespace-nowrap">{t("quran_audio.reciter")}:</span>
@@ -1601,27 +1596,50 @@ export default function Quran() {
                   </SelectContent>
                 </Select>
               </div>
-
               {/* Playback speed */}
               <div className="flex items-center gap-1.5">
                 <span className="text-[10px] text-muted-foreground hidden sm:inline whitespace-nowrap">{t("quran_audio.playback_speed")}:</span>
-                <Select 
-                  value={String(playbackSpeed)} 
-                  onValueChange={(val) => setPlaybackSpeed(parseFloat(val))}
-                >
+                <Select value={String(playbackSpeed)} onValueChange={(val) => setPlaybackSpeed(parseFloat(val))}>
                   <SelectTrigger className="w-[75px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px]">
                     <SelectValue placeholder="1x" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl">
                     {["0.5", "0.75", "1", "1.25", "1.5", "2"].map((speed) => (
-                      <SelectItem key={speed} value={speed} className="text-[10px]">
-                        {speed}x
-                      </SelectItem>
+                      <SelectItem key={speed} value={speed} className="text-[10px]">{speed}x</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
+          </div>
+
+          {/* Mobile: Reciter + Speed row */}
+          <div className="flex md:hidden items-center gap-2 pt-1 border-t border-primary/5">
+            <Select value={selectedQariId} onValueChange={(val) => {
+              setSelectedQariId(val);
+              localStorage.setItem("quran_selected_qari", val);
+            }}>
+              <SelectTrigger className="flex-1 h-8 rounded-xl border-primary/10 bg-white/50 text-[10px]">
+                <SelectValue placeholder={t("quran.select_reciter", { defaultValue: "اختر القارئ" })} />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl max-h-64">
+                {RECITERS.filter(q => !q.surahList || (activeSurah && q.surahList.includes(activeSurah))).map((q) => (
+                  <SelectItem key={q.id} value={q.id} className="text-[11px]">
+                    {i18n.language === "ar" ? q.name : q.englishName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={String(playbackSpeed)} onValueChange={(val) => setPlaybackSpeed(parseFloat(val))}>
+              <SelectTrigger className="w-[65px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px]">
+                <SelectValue placeholder="1x" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl">
+                {["0.5", "0.75", "1", "1.25", "1.5", "2"].map((speed) => (
+                  <SelectItem key={speed} value={speed} className="text-[10px]">{speed}x</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Configuration Switches Row */}

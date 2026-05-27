@@ -496,7 +496,11 @@ export function usePrayerNotifications() {
   useEffect(() => {
     const settings = getSettings();
     if (!settings.notifications) return;
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    // Allow if standard Notification API granted OR service worker is available (Android PWA)
+    const hasPermission =
+      ("Notification" in window && Notification.permission === "granted") ||
+      ("serviceWorker" in navigator && "PushManager" in window);
+    if (!hasPermission) return;
 
     let cancelled = false;
 
