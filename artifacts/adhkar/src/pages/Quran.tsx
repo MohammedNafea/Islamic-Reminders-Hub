@@ -118,7 +118,6 @@ const SURAH_START_PAGES = [
 
 export default function Quran() {
   const { t, i18n } = useTranslation();
-  const rtl = isRTL(i18n.language);
   const [surahs, setSurahs] = useState<Surah[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);

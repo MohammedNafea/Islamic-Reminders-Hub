@@ -562,17 +562,45 @@ export default function Settings() {
                   inline
                 />
               </Label>
-              {!(typeof window !== "undefined" && "Notification" in window) && (
-                <p className="text-xs text-amber-600 font-medium leading-normal mt-1">
+              {!canEnableNotifications && (
+                <div className="mt-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200/50 dark:border-amber-800/30 space-y-2">
                   {typeof window !== "undefined" && navigator.userAgent.includes("AdhkarApp") ? (
-                    i18n.language === "ar" 
-                      ? "⚠️ الإشعارات غير مدعومة حالياً في نسخة التطبيق المباشرة. يمكنك تفعيلها عبر تشغيل الموقع من المتصفح وتثبيت نسخة الـ PWA." 
-                      : "⚠️ Notifications are not currently supported in the app wrapper. You can enable them by opening the site in a browser and installing the PWA version."
+                    <p className="text-xs text-amber-700 dark:text-amber-400 font-medium leading-relaxed">
+                      ⚠️ {i18n.language === "ar" 
+                        ? "الإشعارات غير مدعومة في نسخة التطبيق المباشرة. افتح الموقع من المتصفح وثبّته كـ PWA."
+                        : "Notifications are not supported in the app wrapper. Open the site in a browser and install as PWA."}
+                    </p>
                   ) : (
-                    i18n.language === "ar"
-                      ? "⚠️ الإشعارات غير مدعومة في هذا المتصفح/الجهاز. يرجى تثبيت التطبيق PWA (إضافة إلى الشاشة الرئيسية) لتتمكن من تفعيل التنبيهات."
-                      : "⚠️ Notifications are not supported in this browser/device. Please install the PWA (Add to Home Screen) to enable notifications."
+                    <>
+                      <p className="text-xs text-amber-700 dark:text-amber-400 font-medium leading-relaxed">
+                        ⚠️ {i18n.language === "ar" ? "لتفعيل التنبيهات على جهازك:" : "To enable notifications on your device:"}
+                      </p>
+                      <ol className="text-[11px] text-amber-600 dark:text-amber-500 list-decimal list-inside space-y-1 leading-relaxed">
+                        {i18n.language === "ar" ? (
+                          <>
+                            <li>افتح الموقع في متصفح Chrome أو Safari</li>
+                            <li>اضغط على قائمة الخيارات (⋮ أو مشاركة)</li>
+                            <li>اختر "إضافة إلى الشاشة الرئيسية"</li>
+                            <li>افتح التطبيق من الشاشة الرئيسية وفعّل التنبيهات</li>
+                          </>
+                        ) : (
+                          <>
+                            <li>Open the site in Chrome or Safari</li>
+                            <li>Tap the menu (⋮ or Share button)</li>
+                            <li>Select "Add to Home Screen"</li>
+                            <li>Open the installed app and enable notifications</li>
+                          </>
+                        )}
+                      </ol>
+                    </>
                   )}
+                </div>
+              )}
+              {canEnableNotifications && notifPermission === "denied" && (
+                <p className="text-xs text-red-600 dark:text-red-400 font-medium leading-relaxed mt-1">
+                  ⛔ {i18n.language === "ar" 
+                    ? "تم رفض إذن الإشعارات. يرجى السماح بالإشعارات من إعدادات المتصفح."
+                    : "Notification permission was denied. Please allow notifications in browser settings."}
                 </p>
               )}
             </div>
