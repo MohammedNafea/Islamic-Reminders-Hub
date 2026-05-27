@@ -1,0 +1,7 @@
+# Cloudflare Pages configuration
+# Used when deploying via: wrangler pages deploy
+name = "islamic-reminders-hub"
+pages_build_output_dir = "dist/public"
+
+[env.production]
+# No additional env vars needed - they are set as Cloudflare Pages secrets

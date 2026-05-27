@@ -10,11 +10,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── Step 1: Build ──────────────────────────────────────────────────────────
+  # ── Build ──────────────────────────────────────────────────────────────────
   build:
     name: 🏗️ Build
     runs-on: ubuntu-latest
     timeout-minutes: 20
+
+    outputs:
+      dist-path: artifacts/adhkar/dist/public
 
     steps:
       - name: 📥 Checkout
@@ -25,7 +28,7 @@ jobs:
         with:
           version: 9
 
-      - name: 🟢 Setup Node.js
+      - name: 🟢 Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -44,44 +47,41 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - name: 📤 Upload Build Artifact
+      - name: 📦 Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-public
           path: artifacts/adhkar/dist/public
-          retention-days: 1
+          retention-days: 7
 
-  # ── Step 2: Deploy ─────────────────────────────────────────────────────────
+  # ── Deploy ─────────────────────────────────────────────────────────────────
   deploy:
     name: ☁️ Deploy to Cloudflare Pages
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
 
     permissions:
       contents: read
       deployments: write
 
     steps:
-      - name: 📥 Download Build Artifact
+      - name: 📥 Download Build
         uses: actions/download-artifact@v4
         with:
-          name: dist
-          path: dist
+          name: dist-public
+          path: ./dist
 
-      # ── OPTION A: Use Cloudflare Pages GitHub Action (recommended) ──────────
-      # This action uses direct Cloudflare API and supports CLOUDFLARE_API_TOKEN
-      - name: ☁️ Deploy to Cloudflare Pages
+      - name: ☁️ Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: islamic-reminders-hub
-          directory: dist
+          directory: ./dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: main
-          wranglerVersion: '3'
 
-      - name: 🌍 Done
-        run: |
-          echo "✅ Deployed to https://islamic-reminders-hub.pages.dev"
+      - name: 🎉 Deploy Complete
+        run: echo "✅ Live at https://islamic-reminders-hub.pages.dev"
