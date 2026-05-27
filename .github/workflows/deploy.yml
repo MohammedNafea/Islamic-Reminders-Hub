@@ -10,44 +10,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Build & Deploy
+  # ── Step 1: Build ──────────────────────────────────────────────────────────
+  build:
+    name: 🏗️ Build
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-
-    permissions:
-      contents: read
-      deployments: write
+    timeout-minutes: 20
 
     steps:
-      # ─── Checkout ───────────────────────────────────────────────
-      - name: 📥 Checkout Repository
+      - name: 📥 Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      # ─── Setup pnpm ─────────────────────────────────────────────
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      # ─── Setup Node ─────────────────────────────────────────────
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
-      # ─── Install Dependencies ───────────────────────────────────
       - name: 📥 Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # ─── Build CSS ──────────────────────────────────────────────
       - name: 🎨 Build TailwindCSS
         run: pnpm run build:css:prod
 
-      # ─── Build App ──────────────────────────────────────────────
       - name: 🏗️ Build Application
         run: pnpm --filter @workspace/adhkar run build
         env:
@@ -55,34 +44,44 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      # ─── Install Wrangler ────────────────────────────────────────
-      - name: ⚙️ Install Wrangler
-        run: npm install -g wrangler@latest
+      - name: 📤 Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: artifacts/adhkar/dist/public
+          retention-days: 1
 
-      # ─── Create Pages Project (if not exists) ───────────────────
-      - name: 🏗️ Create Cloudflare Pages Project
-        run: |
-          wrangler pages project create islamic-reminders-hub \
-            --production-branch=main 2>/dev/null || echo "Project already exists"
-        env:
-          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
-          CLOUDFLARE_GLOBAL_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_API_KEY }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  # ── Step 2: Deploy ─────────────────────────────────────────────────────────
+  deploy:
+    name: ☁️ Deploy to Cloudflare Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
-      # ─── Deploy to Cloudflare Pages ─────────────────────────────
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: 📥 Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      # ── OPTION A: Use Cloudflare Pages GitHub Action (recommended) ──────────
+      # This action uses direct Cloudflare API and supports CLOUDFLARE_API_TOKEN
       - name: ☁️ Deploy to Cloudflare Pages
-        run: |
-          wrangler pages deploy artifacts/adhkar/dist/public \
-            --project-name=islamic-reminders-hub \
-            --branch=main \
-            --commit-dirty=true
-        env:
-          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
-          CLOUDFLARE_GLOBAL_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_API_KEY }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: islamic-reminders-hub
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          wranglerVersion: '3'
 
-      # ─── Done ────────────────────────────────────────────────────
-      - name: 🌍 Deployment Complete
+      - name: 🌍 Done
         run: |
-          echo "✅ Deploy succeeded!"
-          echo "🔗 URL: https://islamic-reminders-hub.pages.dev"
+          echo "✅ Deployed to https://islamic-reminders-hub.pages.dev"
