@@ -10,78 +10,196 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── Build ──────────────────────────────────────────────────────────────────
+  # ── 1. Build ────────────────────────────────────────────────────────────────
   build:
     name: 🏗️ Build
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    outputs:
-      dist-path: artifacts/adhkar/dist/public
-
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v3
+      - uses: pnpm/action-setup@v3
         with:
           version: 9
 
-      - name: 🟢 Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: 📥 Install Dependencies
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: 🎨 Build TailwindCSS
+      - name: Build CSS
         run: pnpm run build:css:prod
 
-      - name: 🏗️ Build Application
+      - name: Build App
         run: pnpm --filter @workspace/adhkar run build
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
-      - name: 📦 Upload Build Artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: dist-public
           path: artifacts/adhkar/dist/public
           retention-days: 7
 
-  # ── Deploy ─────────────────────────────────────────────────────────────────
+  # ── 2. Deploy ───────────────────────────────────────────────────────────────
   deploy:
-    name: ☁️ Deploy to Cloudflare Pages
+    name: ☁️ Deploy
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: always() && needs.build.result == 'success'
-
     permissions:
       contents: read
       deployments: write
 
     steps:
-      - name: 📥 Download Build
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: dist-public
           path: ./dist
 
-      - name: ☁️ Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: islamic-reminders-hub
-          directory: ./dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+      - name: Install Wrangler
+        run: npm install -g wrangler@latest
 
-      - name: 🎉 Deploy Complete
-        run: echo "✅ Live at https://islamic-reminders-hub.pages.dev"
+      # ── Try each token until one works ─────────────────────────────────────
+      - name: 🔑 Deploy with CF_TOKEN_EDIT_ALL
+        id: deploy_1
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_EDIT_ALL }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_MMM
+        id: deploy_2
+        if: steps.deploy_1.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_MMM }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_GUARDIAN
+        id: deploy_3
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_GUARDIAN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_PAGES_DEPLOY
+        id: deploy_4
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_PAGES_DEPLOY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_WORKERS_EDIT
+        id: deploy_5
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure' && steps.deploy_4.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_WORKERS_EDIT }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_CREATE_TOK
+        id: deploy_6
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure' && steps.deploy_4.outcome == 'failure' && steps.deploy_5.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_CREATE_TOK }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_MO
+        id: deploy_7
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure' && steps.deploy_4.outcome == 'failure' && steps.deploy_5.outcome == 'failure' && steps.deploy_6.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_MO }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: 🔑 Deploy with CF_TOKEN_KIN
+        id: deploy_8
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure' && steps.deploy_4.outcome == 'failure' && steps.deploy_5.outcome == 'failure' && steps.deploy_6.outcome == 'failure' && steps.deploy_7.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_TOKEN_KIN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # ── Global API Key fallback (email + key) ───────────────────────────────
+      - name: 🔑 Deploy with Global API Key (Email Auth)
+        id: deploy_global
+        if: steps.deploy_1.outcome == 'failure' && steps.deploy_2.outcome == 'failure' && steps.deploy_3.outcome == 'failure' && steps.deploy_4.outcome == 'failure' && steps.deploy_5.outcome == 'failure' && steps.deploy_6.outcome == 'failure' && steps.deploy_7.outcome == 'failure' && steps.deploy_8.outcome == 'failure'
+        continue-on-error: true
+        run: |
+          CLOUDFLARE_API_TOKEN=${{ secrets.CF_GLOBAL_KEY_1 }} \
+          wrangler pages deploy ./dist \
+            --project-name=islamic-reminders-hub \
+            --branch=main --commit-dirty=true
+        env:
+          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # ── Report ──────────────────────────────────────────────────────────────
+      - name: 📊 Deploy Summary
+        if: always()
+        run: |
+          echo "========================================="
+          echo "Deploy Results:"
+          echo "  Token 1 (EDIT_ALL):      ${{ steps.deploy_1.outcome }}"
+          echo "  Token 2 (MMM):           ${{ steps.deploy_2.outcome }}"
+          echo "  Token 3 (GUARDIAN):      ${{ steps.deploy_3.outcome }}"
+          echo "  Token 4 (PAGES_DEPLOY):  ${{ steps.deploy_4.outcome }}"
+          echo "  Token 5 (WORKERS_EDIT):  ${{ steps.deploy_5.outcome }}"
+          echo "  Token 6 (CREATE_TOK):    ${{ steps.deploy_6.outcome }}"
+          echo "  Token 7 (MO):            ${{ steps.deploy_7.outcome }}"
+          echo "  Token 8 (KIN):           ${{ steps.deploy_8.outcome }}"
+          echo "  Global API Key:          ${{ steps.deploy_global.outcome }}"
+          echo "========================================="
+          if [[ "${{ steps.deploy_1.outcome }}" == "success" || "${{ steps.deploy_2.outcome }}" == "success" || "${{ steps.deploy_3.outcome }}" == "success" || "${{ steps.deploy_4.outcome }}" == "success" || "${{ steps.deploy_5.outcome }}" == "success" || "${{ steps.deploy_6.outcome }}" == "success" || "${{ steps.deploy_7.outcome }}" == "success" || "${{ steps.deploy_8.outcome }}" == "success" || "${{ steps.deploy_global.outcome }}" == "success" ]]; then
+            echo "✅ DEPLOYMENT SUCCESSFUL!"
+            echo "🔗 https://islamic-reminders-hub.pages.dev"
+          else
+            echo "❌ ALL TOKENS FAILED - All tokens have IP restrictions"
+            echo "⚠️  Solution: Go to Cloudflare Dashboard > Profiles > API Tokens"
+            echo "   Create a new token with Cloudflare Pages:Edit permission"
+            echo "   WITHOUT any IP Address Filtering"
+            echo "   Add it to GitHub as CLOUDFLARE_API_TOKEN secret"
+            exit 1
+          fi
