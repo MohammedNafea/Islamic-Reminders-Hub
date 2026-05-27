@@ -13,7 +13,7 @@ jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     permissions:
       contents: read
@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
 
       # ─── Setup pnpm ─────────────────────────────────────────────
-      - name: 📦 Install pnpm
+      - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 9
@@ -38,18 +38,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-
-      # ─── Cache ──────────────────────────────────────────────────
-      - name: 🗄️ Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.pnpm-store
-            node_modules
-            artifacts/adhkar/node_modules
-          key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-${{ runner.os }}-
 
       # ─── Install Dependencies ───────────────────────────────────
       - name: 📥 Install Dependencies
@@ -67,18 +55,34 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
+      # ─── Install Wrangler ────────────────────────────────────────
+      - name: ⚙️ Install Wrangler
+        run: npm install -g wrangler@latest
+
+      # ─── Create Pages Project (if not exists) ───────────────────
+      - name: 🏗️ Create Cloudflare Pages Project
+        run: |
+          wrangler pages project create islamic-reminders-hub \
+            --production-branch=main 2>/dev/null || echo "Project already exists"
+        env:
+          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
+          CLOUDFLARE_GLOBAL_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       # ─── Deploy to Cloudflare Pages ─────────────────────────────
       - name: ☁️ Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy artifacts/adhkar/dist/public --project-name=islamic-reminders-hub --commit-dirty=true
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          wrangler pages deploy artifacts/adhkar/dist/public \
+            --project-name=islamic-reminders-hub \
+            --branch=main \
+            --commit-dirty=true
+        env:
+          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
+          CLOUDFLARE_GLOBAL_API_KEY: ${{ secrets.CLOUDFLARE_GLOBAL_API_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      # ─── Print Deploy URL ───────────────────────────────────────
+      # ─── Done ────────────────────────────────────────────────────
       - name: 🌍 Deployment Complete
         run: |
-          echo "✅ Deployed successfully to Cloudflare Pages!"
-          echo "🌐 Project: islamic-reminders-hub"
+          echo "✅ Deploy succeeded!"
           echo "🔗 URL: https://islamic-reminders-hub.pages.dev"
