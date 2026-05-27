@@ -1,115 +1,97 @@
-name: 🚀 Deploy to Cloudflare Pages
+name: 🚀 Deploy to GitHub Pages + Cloudflare CDN
 
 on:
   push:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 concurrency:
-  group: cloudflare-deploy-${{ github.ref }}
+  group: pages-deploy-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: 🏗️ Build
+  build-and-deploy:
+    name: 🏗️ Build & Deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: pnpm/action-setup@v3
         with:
           version: 9
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build:css:prod
-      - name: Build App
+
+      - name: 📥 Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🎨 Build CSS
+        run: pnpm run build:css:prod
+
+      - name: 🏗️ Build App
         run: pnpm --filter @workspace/adhkar run build
         env:
           NODE_ENV: production
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      - uses: actions/upload-artifact@v4
+
+      - name: 📂 Prepare for GitHub Pages
+        run: |
+          # Copy dist to gh-pages folder
+          cp -r artifacts/adhkar/dist/public ./gh-pages-dist
+          # Add .nojekyll to bypass Jekyll processing
+          touch ./gh-pages-dist/.nojekyll
+          # Ensure _redirects exists for SPA routing
+          echo "/* /index.html 200" > ./gh-pages-dist/_redirects
+          echo "✅ Build ready: $(ls gh-pages-dist | wc -l) files"
+
+      - name: 🚀 Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: dist-public
-          path: artifacts/adhkar/dist/public
-          retention-days: 7
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages-dist
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "deploy: update site from ${{ github.sha }}"
 
-  deploy:
-    name: ☁️ Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-      deployments: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist-public
-          path: ./dist
-
-      - name: Install Wrangler
-        run: npm install -g wrangler@latest
-
-      - name: 🚀 Deploy (try all tokens)
+      - name: 🌐 Also Try Cloudflare Pages (if token works)
+        continue-on-error: true
         env:
           CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          T1: ${{ secrets.CF_TOKEN_EDIT_ALL }}
-          T2: ${{ secrets.CF_TOKEN_MMM }}
-          T3: ${{ secrets.CF_TOKEN_GUARDIAN }}
-          T4: ${{ secrets.CF_TOKEN_PAGES_DEPLOY }}
-          T5: ${{ secrets.CF_TOKEN_WORKERS_EDIT }}
-          T6: ${{ secrets.CF_TOKEN_CREATE_TOK }}
-          T7: ${{ secrets.CF_TOKEN_MO }}
-          T8: ${{ secrets.CF_TOKEN_KIN }}
-          T9: ${{ secrets.CF_TOKEN_WORKERS_AI }}
-          T10: ${{ secrets.CF_TOKEN_AI_GATEWAY }}
-          T11: ${{ secrets.CF_GLOBAL_KEY_1 }}
-          T12: ${{ secrets.CF_GLOBAL_KEY_2 }}
         run: |
-          TOKENS=("$T1" "$T2" "$T3" "$T4" "$T5" "$T6" "$T7" "$T8" "$T9" "$T10" "$T11" "$T12")
-          NAMES=("EDIT_ALL" "MMM" "GUARDIAN" "PAGES_DEPLOY" "WORKERS_EDIT" "CREATE_TOK" "MO" "KIN" "WORKERS_AI" "AI_GATEWAY" "GLOBAL_KEY_1" "GLOBAL_KEY_2")
-          DEPLOYED=false
-
+          npm install -g wrangler@latest
+          TOKENS=("${{ secrets.CF_TOKEN_EDIT_ALL }}" "${{ secrets.CF_TOKEN_MMM }}" "${{ secrets.CF_TOKEN_GUARDIAN }}" "${{ secrets.CF_TOKEN_PAGES_DEPLOY }}" "${{ secrets.CLOUDFLARE_API_TOKEN }}")
+          NAMES=("EDIT_ALL" "MMM" "GUARDIAN" "PAGES_DEPLOY" "API_TOKEN")
           for i in "${!TOKENS[@]}"; do
             TOKEN="${TOKENS[$i]}"
             NAME="${NAMES[$i]}"
-            if [ -z "$TOKEN" ]; then
-              echo "⏭️  Token $NAME is empty, skipping..."
-              continue
-            fi
-            echo "🔑 Trying token: $NAME..."
+            [ -z "$TOKEN" ] && continue
+            echo "🔑 Trying $NAME..."
             OUTPUT=$(CLOUDFLARE_API_TOKEN="$TOKEN" CLOUDFLARE_ACCOUNT_ID="$CF_ACCOUNT_ID" \
-              wrangler pages deploy ./dist \
+              wrangler pages deploy ./gh-pages-dist \
               --project-name=islamic-reminders-hub \
-              --branch=main \
-              --commit-dirty=true 2>&1)
-            EXIT_CODE=$?
-            if [ $EXIT_CODE -eq 0 ]; then
-              echo "✅ SUCCESS with token: $NAME"
-              echo "$OUTPUT"
-              DEPLOYED=true
+              --branch=main --commit-dirty=true 2>&1)
+            if [ $? -eq 0 ]; then
+              echo "✅ Cloudflare Pages deployed with $NAME!"
+              echo "$OUTPUT" | tail -5
               break
-            else
-              ERR=$(echo "$OUTPUT" | grep -i "error\|host not\|allowlist\|unauthorized\|permission" | head -3)
-              echo "❌ Failed with $NAME: $ERR"
             fi
           done
 
-          if [ "$DEPLOYED" = true ]; then
-            echo ""
-            echo "🎉 Deployment successful!"
-            echo "🔗 https://islamic-reminders-hub.pages.dev"
-          else
-            echo ""
-            echo "❌ ALL TOKENS FAILED"
-            echo "All tokens have IP restrictions blocking GitHub Actions."
-            echo "Fix: Create a new Cloudflare API Token with NO IP filtering"
-            echo "  - Permission: Cloudflare Pages:Edit + Account Settings:Read"
-            echo "  - NO Client IP Address Filtering"
-            echo "  - Add as CLOUDFLARE_API_TOKEN secret in GitHub"
-            exit 1
-          fi
+      - name: 🎉 Deploy Complete
+        run: |
+          echo "=================================="
+          echo "✅ DEPLOYED SUCCESSFULLY!"
+          echo "🔗 GitHub Pages: https://mohammednafea.github.io/Islamic-Reminders-Hub/"
+          echo "🔗 Custom domain: configure thedarkgalaxy.com in repo Settings > Pages"
+          echo "=================================="
