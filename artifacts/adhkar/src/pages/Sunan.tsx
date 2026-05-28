@@ -203,7 +203,8 @@ export default function Sunan() {
               return (
                 <div
                   key={item.key}
-                  onClick={() => handleToggle(item.key as keyof Omit<SunanTracker, "lastUpdated">)}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onClick={() => handleToggle(item.key as any)}
                   className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer select-none ${
                     active
                       ? "bg-primary/5 border-primary/30 shadow-sm"
