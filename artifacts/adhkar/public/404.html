@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مركز الأذكار</title>
+  <script>
+    // GitHub Pages SPA Redirect Trick
+    // عند 404، نحفظ المسار في sessionStorage ونعيد التوجيه لـ index.html
+    var path = window.location.pathname;
+    var search = window.location.search;
+    var hash = window.location.hash;
+    // تحقق إذا كان مسار حقيقي وليس مجرد /
+    if (path !== '/') {
+      sessionStorage.setItem('spa_redirect', path + search + hash);
+    }
+    window.location.replace('/');
+  </script>
+  <style>
+    body { 
+      font-family: 'Segoe UI', sans-serif; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      min-height: 100vh; 
+      margin: 0;
+      background: #0f1a0f;
+      color: #c8a84b;
+    }
+    .loader { text-align: center; }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(200,168,75,0.2);
+      border-top-color: #c8a84b;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>جارٍ التحميل...</p>
+  </div>
+</body>
+</html>
