@@ -54,8 +54,10 @@ jobs:
           # Ensure _redirects exists for SPA routing
           echo "/* /index.html 200" > ./gh-pages-dist/_redirects
           echo "adhkar.thedarkgalaxy.com" > ./gh-pages-dist/CNAME
-          # Copy 404.html from public (SPA routing fix)
-          [ -f artifacts/adhkar/public/404.html ] && cp artifacts/adhkar/public/404.html ./gh-pages-dist/404.html
+          # Copy all public files (404, robots, sitemap, browserconfig)
+          for f in 404.html robots.txt sitemap.xml browserconfig.xml _headers _redirects; do
+            [ -f "artifacts/adhkar/public/$f" ] && cp "artifacts/adhkar/public/$f" "./gh-pages-dist/$f"
+          done
           echo "✅ Build ready: $(ls gh-pages-dist | wc -l) files"
 
       - name: 🚀 Deploy to gh-pages branch
