@@ -92,7 +92,6 @@ export default function Home() {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
   useEffect(() => {
     setSalawatCount(getTasbihCount("home_salawat", true));
   }, []);
@@ -115,7 +114,8 @@ export default function Home() {
       await getPrayerTimesFromAPI(lat, lng, new Date(), method);
     }
     fetchPrayerTimes();
-  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng, settings.location]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng]);
 
   const handleSalawat = () => {
     const next = salawatCount + 1;
