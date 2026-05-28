@@ -73,6 +73,35 @@ import lo from "./locales/lo";
 import my from "./locales/my";
 import gu from "./locales/gu";
 import sr from "./locales/sr";
+import af from "./locales/af";
+import be from "./locales/be";
+import cy from "./locales/cy";
+import eo from "./locales/eo";
+import eu from "./locales/eu";
+import gl from "./locales/gl";
+import ht from "./locales/ht";
+import ig from "./locales/ig";
+import jv from "./locales/jv";
+import ku from "./locales/ku";
+import lb from "./locales/lb";
+import mg from "./locales/mg";
+import mi from "./locales/mi";
+import mt from "./locales/mt";
+import ny from "./locales/ny";
+import pa from "./locales/pa";
+import sd from "./locales/sd";
+import sm from "./locales/sm";
+import sn from "./locales/sn";
+import st from "./locales/st";
+import su from "./locales/su";
+import tk from "./locales/tk";
+import tl from "./locales/tl";
+import tt from "./locales/tt";
+import ug from "./locales/ug";
+import xh from "./locales/xh";
+import yi from "./locales/yi";
+import yo from "./locales/yo";
+import zu from "./locales/zu";
 
 const resources = {
   bg: { translation: bg },
@@ -95,6 +124,36 @@ const resources = {
   my: { translation: my },
   gu: { translation: gu },
   sr: { translation: sr },
+
+  af: { translation: af },
+  be: { translation: be },
+  cy: { translation: cy },
+  eo: { translation: eo },
+  eu: { translation: eu },
+  gl: { translation: gl },
+  ht: { translation: ht },
+  ig: { translation: ig },
+  jv: { translation: jv },
+  ku: { translation: ku },
+  lb: { translation: lb },
+  mg: { translation: mg },
+  mi: { translation: mi },
+  mt: { translation: mt },
+  ny: { translation: ny },
+  pa: { translation: pa },
+  sd: { translation: sd },
+  sm: { translation: sm },
+  sn: { translation: sn },
+  st: { translation: st },
+  su: { translation: su },
+  tk: { translation: tk },
+  tl: { translation: tl },
+  tt: { translation: tt },
+  ug: { translation: ug },
+  xh: { translation: xh },
+  yi: { translation: yi },
+  yo: { translation: yo },
+  zu: { translation: zu },
 
   ar: { translation: ar },
   en: { translation: en },
@@ -220,6 +279,36 @@ export const supportedLanguages = [
   { code: "fil", name: "Filipino", nativeName: "Filipino", dir: "ltr", flag: "🇵🇭" },
   { code: "ml", name: "Malayalam", nativeName: "മലയാളം", dir: "ltr", flag: "🇮🇳" },
   { code: "kn", name: "Kannada", nativeName: "ಕನ್ನಡ", dir: "ltr", flag: "🇮🇳" },
+
+  { code: "af", name: "Afrikaans", nativeName: "Afrikaans", dir: "ltr", flag: "🇿🇦" },
+  { code: "be", name: "Belarusian", nativeName: "Беларуская", dir: "ltr", flag: "🇧🇾" },
+  { code: "cy", name: "Welsh", nativeName: "Cymraeg", dir: "ltr", flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿" },
+  { code: "eo", name: "Esperanto", nativeName: "Esperanto", dir: "ltr", flag: "🟢" },
+  { code: "eu", name: "Basque", nativeName: "Euskara", dir: "ltr", flag: "🏴" },
+  { code: "gl", name: "Galician", nativeName: "Galego", dir: "ltr", flag: "🇪🇸" },
+  { code: "ht", name: "Haitian Creole", nativeName: "Kreyòl ayisyen", dir: "ltr", flag: "🇭🇹" },
+  { code: "ig", name: "Igbo", nativeName: "Igbo", dir: "ltr", flag: "🇳🇬" },
+  { code: "jv", name: "Javanese", nativeName: "Basa Jawa", dir: "ltr", flag: "🇮🇩" },
+  { code: "ku", name: "Kurmanji", nativeName: "Kurmancî", dir: "ltr", flag: "☀️" },
+  { code: "lb", name: "Luxembourgish", nativeName: "Lëtzebuergesch", dir: "ltr", flag: "🇱🇺" },
+  { code: "mg", name: "Malagasy", nativeName: "Malagasy", dir: "ltr", flag: "🇲🇬" },
+  { code: "mi", name: "Maori", nativeName: "Te Reo Māori", dir: "ltr", flag: "🇳🇿" },
+  { code: "mt", name: "Maltese", nativeName: "Malti", dir: "ltr", flag: "🇲🇹" },
+  { code: "ny", name: "Chichewa", nativeName: "Chichewa", dir: "ltr", flag: "🇲🇼" },
+  { code: "pa", name: "Punjabi", nativeName: "ਪੰਜਾਬੀ", dir: "ltr", flag: "🇮🇳" },
+  { code: "sd", name: "Sindhi", nativeName: "سنڌي", dir: "rtl", flag: "🇵🇰" },
+  { code: "sm", name: "Samoan", nativeName: "Gagana Samoa", dir: "ltr", flag: "🇼🇸" },
+  { code: "sn", name: "Shona", nativeName: "chiShona", dir: "ltr", flag: "🇿🇼" },
+  { code: "st", name: "Sesotho", nativeName: "Sesotho", dir: "ltr", flag: "🇱🇸" },
+  { code: "su", name: "Sundanese", nativeName: "Basa Sunda", dir: "ltr", flag: "🇮🇩" },
+  { code: "tk", name: "Turkmen", nativeName: "Türkmen dili", dir: "ltr", flag: "🇹🇲" },
+  { code: "tl", name: "Tagalog", nativeName: "Tagalog", dir: "ltr", flag: "🇵🇭" },
+  { code: "tt", name: "Tatar", nativeName: "Татар теле", dir: "ltr", flag: "🇷🇺" },
+  { code: "ug", name: "Uyghur", nativeName: "ئۇيغۇرچە", dir: "rtl", flag: "🇨🇳" },
+  { code: "xh", name: "Xhosa", nativeName: "isiXhosa", dir: "ltr", flag: "🇿🇦" },
+  { code: "yi", name: "Yiddish", nativeName: "ייִדיש", dir: "rtl", flag: "✡️" },
+  { code: "yo", name: "Yoruba", nativeName: "Yorùbá", dir: "ltr", flag: "🇳🇬" },
+  { code: "zu", name: "Zulu", nativeName: "isiZulu", dir: "ltr", flag: "🇿🇦" },
 ];
 
 i18n
