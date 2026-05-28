@@ -862,7 +862,7 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
-              <Select value={selectedTafsir} onValueChange={setSelectedTafsir}>
+              <Select value={selectedTafsir} onValueChange={(val) => setSelectedTafsir(val as "none" | "muyassar" | "jalalayn" | "ibnkathir" | "tabari")}>
                 <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
                 </SelectTrigger>
