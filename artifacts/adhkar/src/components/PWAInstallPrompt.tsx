@@ -5,18 +5,10 @@ import { X, Download, ShieldCheck, Zap, CloudLightning, Monitor } from "lucide-r
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[];
-  readonly userChoice: Promise<{
-    outcome: "accepted" | "dismissed";
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
-
 export default function PWAInstallPrompt() {
   const { t, i18n } = useTranslation();
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -44,7 +36,7 @@ export default function PWAInstallPrompt() {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
       // Stash the event so it can be triggered later.
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      setDeferredPrompt(e);
       // Show the install banner after a small delay
       const timer = setTimeout(() => {
         setIsVisible(true);
