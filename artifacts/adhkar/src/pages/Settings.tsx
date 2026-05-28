@@ -365,6 +365,7 @@ export default function Settings() {
                     Lat: {settings.location.lat.toFixed(4)}, Lng: {settings.location.lng.toFixed(4)}
                   </p>
                 </div>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 <Button variant="outline" size="sm" onClick={() => updateSetting("location", null as any)} className="rounded-xl">
                   {i18n.language === "ar" ? "إعادة تعيين" : "Reset"}
                 </Button>
@@ -936,6 +937,7 @@ export default function Settings() {
                     <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                       <Select
                         value={settings.notificationsAthan}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         onValueChange={(val) => updateSetting("notificationsAthan", val as any)}
                       >
                         <SelectTrigger id="notificationsAthan" className="flex-1 h-10 bg-background text-sm">
