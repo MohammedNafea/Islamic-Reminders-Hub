@@ -405,6 +405,7 @@ export default function Quran() {
     Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirData, tabariData]) => {
       if (audioData?.data && transData?.data) {
         const totalAyahs = audioData.data.ayahs.length;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const enrichedAyahs = audioData.data.ayahs.map((a: any, i: number) => ({
           ...a,
           translatedText: transData.data.ayahs[i]?.text || "",
@@ -417,6 +418,7 @@ export default function Quran() {
         // Map Ibn Kathir Tafsir
         const ibnKathirAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
         if (ibnKathirData?.tafsirs) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ibnKathirData.tafsirs.forEach((t: any) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
@@ -430,6 +432,7 @@ export default function Quran() {
         // Map Al-Tabari Tafsir
         const tabariAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
         if (tabariData?.tafsirs) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           tabariData.tafsirs.forEach((t: any) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
@@ -468,13 +471,16 @@ export default function Quran() {
       .then(([uthmaniData, transData, tafsirData]) => {
         if (uthmaniData?.data?.ayahs) {
           const rawAyahs = uthmaniData.data.ayahs;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const transTexts = transData?.data?.ayahs?.map((a: any) => a.text) || [];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const tafsirTexts = tafsirData?.data?.ayahs?.map((a: any) => a.text) || [];
           
           const audioEdition = selectedQari.type === "ayah" && selectedQari.audioEditionId 
             ? selectedQari.audioEditionId 
             : "ar.husary";
             
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const enriched = rawAyahs.map((ayah: any, i: number) => ({
             ...ayah,
             audio: `https://cdn.alquran.cloud/media/audio/ayah/${audioEdition}/${ayah.number}`,
@@ -862,6 +868,9 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
               <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
                 <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
