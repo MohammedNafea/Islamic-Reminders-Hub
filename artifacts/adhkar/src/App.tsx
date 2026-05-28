@@ -97,6 +97,15 @@ function App() {
         { timeout: 5000 }
       );
     }
+    // Periodically check for service worker updates (every 5 minutes)
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((registration) => {
+        const interval = setInterval(() => {
+          registration.update().catch(console.error);
+        }, 5 * 60 * 1000);
+        return () => clearInterval(interval);
+      }).catch(console.error);
+    }
   }, []);
 
   return (
