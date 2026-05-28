@@ -31,7 +31,7 @@ export function resolveDhikrGroupInfo(
   let arrayName = "";
   for (const [key, value] of Object.entries(allAdhkar)) {
     if (Array.isArray(value)) {
-      if (value.some((item: any) => item.id === dhikrId)) {
+      if (value.some((item: { id: string }) => item.id === dhikrId)) {
         arrayName = key;
         break;
       }
@@ -253,9 +253,16 @@ export const exportToImage = async (
   dhikrId?: string
 ) => {
   try {
+    if (typeof document !== "undefined" && document.fonts) {
+      await document.fonts.ready;
+    }
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Could not create 2D canvas context");
+
+    const isRtl = isRtlLang(language);
+    ctx.direction = isRtl ? "rtl" : "ltr";
 
     const canvasWidth = 1200;
     const padding = 80;
@@ -362,6 +369,7 @@ export const exportToImage = async (
     const ctx2 = canvas.getContext("2d")!;
     ctx2.scale(dpr, dpr);
     ctx2.textBaseline = "middle";
+    ctx2.direction = isRtl ? "rtl" : "ltr";
 
     // Background gradient (Luxurious dark emerald green)
     const gradient = ctx2.createLinearGradient(0, 0, 0, canvasHeight);
@@ -511,7 +519,6 @@ export const exportToImage = async (
     ctx2.lineWidth = 1;
     ctx2.stroke();
 
-    const isRtl = isRtlLang(language);
     const qrSize = 110;
     const qrBoxSize = qrSize + 16;
     const qrY = footerY + 25;

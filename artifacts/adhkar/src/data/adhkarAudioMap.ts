@@ -267,7 +267,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "alhamdulillah_prayer_33": {
     "type": "dureihim",
-    "filename": "69"
+    "filename": "70"
   },
   "alhamdulillah_sleep_33": {
     "type": "dureihim",
@@ -275,7 +275,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "allahu_akbar_prayer_33": {
     "type": "dureihim",
-    "filename": "69"
+    "filename": "71"
   },
   "allahu_akbar_sleep_34": {
     "type": "dureihim",
@@ -1486,7 +1486,7 @@ export const adhkarAudioMap: Record<string, AdhkarAudioConfig> = {
   },
   "tamam_miah_prayer": {
     "type": "dureihim",
-    "filename": "69"
+    "filename": "72"
   },
   "tasbih_gaining_thousand_good_deeds": {
     "type": "dureihim",

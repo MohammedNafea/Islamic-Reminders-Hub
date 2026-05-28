@@ -115,7 +115,7 @@ export default function Home() {
       await getPrayerTimesFromAPI(lat, lng, new Date(), method);
     }
     fetchPrayerTimes();
-  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng]);
+  }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng, settings.location]);
 
   const handleSalawat = () => {
     const next = salawatCount + 1;

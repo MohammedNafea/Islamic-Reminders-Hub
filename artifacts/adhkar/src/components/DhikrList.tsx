@@ -380,7 +380,7 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
     }
   };
 
-  const speak = (id: string, _text: string) => {
+  const speak = (id: string) => {
     if (isPlayingAll) {
       stopPlaylist();
     }
@@ -676,7 +676,7 @@ export function DhikrList({ adhkar: rawAdhkar, titleKey, isEvening = false, comp
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              speak(dhikr.id, arabicText);
+                              speak(dhikr.id);
                             }}
                             className={cn(
                               "p-2 rounded-full transition-colors",

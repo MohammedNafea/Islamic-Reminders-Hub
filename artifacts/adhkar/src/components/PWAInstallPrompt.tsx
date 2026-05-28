@@ -5,15 +5,24 @@ import { X, Download, ShieldCheck, Zap, CloudLightning, Monitor } from "lucide-r
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: "accepted" | "dismissed";
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
+
 export default function PWAInstallPrompt() {
   const { t, i18n } = useTranslation();
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     // Check if running in standalone mode (already installed)
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches 
-      || (window.navigator as any).standalone 
+      || (window.navigator as Navigator & { standalone?: boolean }).standalone 
       || document.referrer.includes('android-app://');
 
     if (isStandalone) {
@@ -35,7 +44,7 @@ export default function PWAInstallPrompt() {
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
       // Stash the event so it can be triggered later.
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
       // Show the install banner after a small delay
       const timer = setTimeout(() => {
         setIsVisible(true);

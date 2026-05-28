@@ -365,7 +365,7 @@ export default function Settings() {
                     Lat: {settings.location.lat.toFixed(4)}, Lng: {settings.location.lng.toFixed(4)}
                   </p>
                 </div>
-                <Button variant="outline" size="sm" onClick={() => updateSetting("location", null as any)} className="rounded-xl">
+                <Button variant="outline" size="sm" onClick={() => updateSetting("location", undefined)} className="rounded-xl">
                   {i18n.language === "ar" ? "إعادة تعيين" : "Reset"}
                 </Button>
               </div>
@@ -936,7 +936,7 @@ export default function Settings() {
                     <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
                       <Select
                         value={settings.notificationsAthan}
-                        onValueChange={(val) => updateSetting("notificationsAthan", val as any)}
+                        onValueChange={(val) => updateSetting("notificationsAthan", val as "off" | "azan1" | "azan2" | "makkah" | "madinah" | "daghiri")}
                       >
                         <SelectTrigger id="notificationsAthan" className="flex-1 h-10 bg-background text-sm">
                           <SelectValue placeholder={getTranslation(t, "settings.notifications_athan", i18n.language) || "صوت الأذان"} />

@@ -405,7 +405,7 @@ export default function Quran() {
     Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirData, tabariData]) => {
       if (audioData?.data && transData?.data) {
         const totalAyahs = audioData.data.ayahs.length;
-        const enrichedAyahs = audioData.data.ayahs.map((a: any, i: number) => ({
+        const enrichedAyahs = audioData.data.ayahs.map((a: Ayah, i: number) => ({
           ...a,
           translatedText: transData.data.ayahs[i]?.text || "",
           translationEdition
@@ -417,7 +417,7 @@ export default function Quran() {
         // Map Ibn Kathir Tafsir
         const ibnKathirAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
         if (ibnKathirData?.tafsirs) {
-          ibnKathirData.tafsirs.forEach((t: any) => {
+          ibnKathirData.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
             if (idx >= 0 && idx < totalAyahs) {
@@ -430,7 +430,7 @@ export default function Quran() {
         // Map Al-Tabari Tafsir
         const tabariAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
         if (tabariData?.tafsirs) {
-          tabariData.tafsirs.forEach((t: any) => {
+          tabariData.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
             if (idx >= 0 && idx < totalAyahs) {
@@ -468,14 +468,14 @@ export default function Quran() {
       .then(([uthmaniData, transData, tafsirData]) => {
         if (uthmaniData?.data?.ayahs) {
           const rawAyahs = uthmaniData.data.ayahs;
-          const transTexts = transData?.data?.ayahs?.map((a: any) => a.text) || [];
-          const tafsirTexts = tafsirData?.data?.ayahs?.map((a: any) => a.text) || [];
+          const transTexts = transData?.data?.ayahs?.map((a: Ayah) => a.text) || [];
+          const tafsirTexts = tafsirData?.data?.ayahs?.map((a: Ayah) => a.text) || [];
           
           const audioEdition = selectedQari.type === "ayah" && selectedQari.audioEditionId 
             ? selectedQari.audioEditionId 
             : "ar.husary";
             
-          const enriched = rawAyahs.map((ayah: any, i: number) => ({
+          const enriched = rawAyahs.map((ayah: Ayah, i: number) => ({
             ...ayah,
             audio: `https://cdn.alquran.cloud/media/audio/ayah/${audioEdition}/${ayah.number}`,
             translatedText: transTexts[i] || "",
@@ -862,7 +862,7 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
-              <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
+              <Select value={selectedTafsir} onValueChange={setSelectedTafsir}>
                 <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
                 </SelectTrigger>
