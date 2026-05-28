@@ -1,3 +1,14 @@
+# مركز الأذكار - Islamic Hub
 User-agent: *
 Allow: /
+
+# Block unnecessary paths
+Disallow: /assets/*.map
+Disallow: /api/
+
+# Sitemaps
 Sitemap: https://adhkar.thedarkgalaxy.com/sitemap.xml
+Sitemap: https://adhkar.thedarkgalaxy.com/sitemap-ar.xml
+
+# Crawl delay for bots
+Crawl-delay: 1
