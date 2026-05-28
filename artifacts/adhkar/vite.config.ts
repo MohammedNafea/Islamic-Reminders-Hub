@@ -14,9 +14,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
     legacy({
-      targets: ["defaults", "not IE 11", "Android >= 5", "Chrome >= 50", "safari >= 10"],
+      targets: [
+        "chrome >= 70", "safari >= 12", "firefox >= 68", "edge >= 79",
+        "samsung >= 12", "and_chr >= 70", "ios_saf >= 12",
+        "android >= 70", "opera >= 60", "not dead", "not op_mini all"
+      ],
       renderLegacyChunks: true,
       modernPolyfills: true,
+      additionalLegacyPolyfills: ["regenerator-runtime/runtime"],
     }),
     VitePWA({
       strategies: "injectManifest",
@@ -29,11 +34,11 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff2,mp3}"],
       },
       manifest: {
-        name: "مركز الأذكار الإسلامي",
+        name: "مركز الأذكار الإسلامي | Islamic Hub",
         short_name: "الأذكار",
-        description: "رفيقك المسلم للأذكار، القرآن، ومواقيت الصلاة - يعمل بدون إنترنت",
-        theme_color: "#0f766e",
-        background_color: "#ffffff",
+        description: "القرآن الكريم، أذكار يومية، مواقيت الصلاة، القبلة، الزكاة - 100 لغة - يعمل بدون إنترنت",
+        theme_color: "#0a150a",
+        background_color: "#0a150a",
         display: "standalone",
         orientation: "portrait",
         scope: basePath,
