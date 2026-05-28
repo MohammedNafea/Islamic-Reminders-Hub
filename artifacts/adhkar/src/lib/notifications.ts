@@ -22,7 +22,7 @@ export function isInstalledPWA(): boolean {
   return (
     window.matchMedia?.("(display-mode: standalone)").matches ||
     window.matchMedia?.("(display-mode: fullscreen)").matches ||
-    (navigator as any).standalone === true
+    (navigator as Navigator & { standalone?: boolean }).standalone === true
   );
 }
 
