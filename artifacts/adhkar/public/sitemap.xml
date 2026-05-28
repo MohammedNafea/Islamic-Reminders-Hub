@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://adhkar.thedarkgalaxy.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/morning</loc><priority>0.9</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/evening</loc><priority>0.9</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/sleep</loc><priority>0.8</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/prayer</loc><priority>0.8</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/ruqyah</loc><priority>0.8</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/quran</loc><priority>0.9</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/times</loc><priority>0.8</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/qibla</loc><priority>0.7</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/fasting</loc><priority>0.7</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/tasbih</loc><priority>0.7</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/zakat</loc><priority>0.6</priority></url>
-  <url><loc>https://adhkar.thedarkgalaxy.com/settings</loc><priority>0.5</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://adhkar.thedarkgalaxy.com/?lng=ar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://adhkar.thedarkgalaxy.com/?lng=en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://adhkar.thedarkgalaxy.com/"/>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/quran</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/prayer-times</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/adhkar</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/tasbih</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/qibla</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/zakat</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://adhkar.thedarkgalaxy.com/settings</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
