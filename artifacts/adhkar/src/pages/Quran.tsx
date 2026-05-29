@@ -549,7 +549,31 @@ export default function Quran() {
           return;
         }
 
-        const data = await fetch(`https://api.quran.com/api/v4/tafsirs/${tafsirId}/by_chapter/${number}?per_page=300`).then(res => res.json()).catch(() => null);
+        // Try api.quran.com first, fallback to alquran.cloud for Ibn Kathir
+        let data = await fetch(`https://api.quran.com/api/v4/tafsirs/${tafsirId}/by_chapter/${number}?per_page=300`, {
+          headers: { 'Accept': 'application/json' }
+        }).then(res => res.ok ? res.json() : null).catch(() => null);
+
+        // Fallback: alquran.cloud editions for common tafsirs
+        if (!data?.tafsirs) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const alquranEditions: Record<number, string> = { 14: 'ar.ibnkathir', 91: 'ar.muyassar' };
+          const edition = alquranEditions[tafsirId];
+          if (edition) {
+            const fb = await fetch(`https://api.alquran.cloud/v1/surah/${number}/${edition}`)
+              .then(r => r.json()).catch(() => null);
+            if (fb?.data?.ayahs) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const fbMapped = fb.data.ayahs.map((a: any) => ({ text: a.text || '' }));
+              fbMapped.forEach((a: { text: string }, i: number) => {
+                localDB.saveCachedTafsir(tafsirId, number, i + 1, a.text);
+              });
+              setTafsirState(fbMapped);
+              return;
+            }
+          }
+        }
+
         const mappedAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
         if (data?.tafsirs) {
           data.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
