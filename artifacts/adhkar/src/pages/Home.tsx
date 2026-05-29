@@ -526,8 +526,19 @@ export default function Home() {
                   translationClassName="text-emerald-100/80 leading-relaxed text-xs md:text-sm font-medium max-w-2xl text-center md:text-right block border-t border-white/10 pt-2.5 mt-2.5"
                 />
               </div>
-              <div className="bg-[#c9a84c]/10 backdrop-blur-md rounded-2xl p-6 border border-[#c9a84c]/20 shadow-inner group-hover:scale-105 transition-transform duration-300">
-                <Heart className="w-12 h-12 md:w-14 md:h-14 text-[#c9a84c] fill-[#c9a84c]/50 animate-pulse" />
+              <div className="bg-white rounded-3xl p-3 border-2 border-[#c9a84c]/40 shadow-lg group-hover:scale-105 transition-all duration-300 shrink-0 flex flex-col items-center gap-1.5">
+                <img 
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fadhkar.thedarkgalaxy.com%2F" 
+                  alt="Website QR Code" 
+                  className="w-24 h-24 md:w-28 md:h-28 rounded-xl"
+                />
+                <span className="text-[10px] text-emerald-950 font-bold tracking-wider text-center px-1">
+                  <TranslatedText 
+                    text="امسح الرمز لزيارة الموقع" 
+                    staticTranslation={i18n.language === 'ar' ? "امسح الرمز لزيارة الموقع" : "Scan to visit site"} 
+                    keepArabic={false} 
+                  />
+                </span>
               </div>
             </div>
             

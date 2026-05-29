@@ -349,6 +349,46 @@ export default function DownloadPage() {
 
       </div>
 
+      {/* Website QR Code Card */}
+      <Card className="border border-border bg-card/60 backdrop-blur-sm shadow-md rounded-[2rem] overflow-hidden">
+        <CardContent className="p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="space-y-3 text-center md:text-start flex-1">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-primary/10 text-primary">
+              <Share2 className="w-3.5 h-3.5" />
+              <TranslatedText
+                text="رمز الاستجابة السريعة للموقع (QR Code)"
+                staticTranslation={i18n.language === "ar" ? "رمز الاستجابة السريعة للموقع (QR Code)" : "Website QR Code"}
+                keepArabic={false}
+              />
+            </span>
+            <h3 className="text-xl font-bold text-foreground">
+              <TranslatedText
+                text="تصفح الموقع على هاتفك المحمول"
+                staticTranslation={i18n.language === "ar" ? "تصفح الموقع على هاتفك المحمول" : "Browse the Website on Your Mobile"}
+                keepArabic={false}
+              />
+            </h3>
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-lg">
+              <TranslatedText
+                text="امسح رمز الاستجابة السريعة (QR Code) باستخدام كاميرا هاتفك للانتقال الفوري للموقع ومشاركة الأذكار مع أصدقائك وعائلتك."
+                staticTranslation={i18n.language === "ar" ? "امسح رمز الاستجابة السريعة (QR Code) باستخدام كاميرا هاتفك للانتقال الفوري للموقع ومشاركة الأذكار مع أصدقائك وعائلتك." : "Scan the QR Code with your phone's camera to instantly open the website and share remembrances with friends and family."}
+                keepArabic={false}
+              />
+            </p>
+          </div>
+          <div className="shrink-0 bg-white rounded-3xl p-4 border border-border shadow-md flex flex-col items-center gap-2">
+            <img 
+              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fadhkar.thedarkgalaxy.com%2F" 
+              alt="Website QR Code" 
+              className="w-36 h-36 rounded-2xl"
+            />
+            <span className="text-xs text-primary font-bold tracking-wide text-center">
+              adhkar.thedarkgalaxy.com
+            </span>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Android PWA Notification Optimization Card */}
       <Card className="border border-border bg-card/60 backdrop-blur-sm shadow-md rounded-[2rem] overflow-hidden">
         <CardHeader className="p-8 pb-4">

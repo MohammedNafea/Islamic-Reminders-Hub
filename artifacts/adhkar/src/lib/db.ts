@@ -82,40 +82,64 @@ export async function initDatabase(): Promise<void> {
       // Settings migration
       const settings = localStorage.getItem("adhkar_settings");
       if (settings) {
-        await setToDB("settings", "app_settings", JSON.parse(settings));
+        try {
+          await setToDB("settings", "app_settings", JSON.parse(settings));
+        } catch (e) {
+          console.warn("Failed to migrate settings:", e);
+        }
       }
 
       // Tracker migration
       const tracker = localStorage.getItem("adhkar_worship_tracker");
       if (tracker) {
-        const trackerObj = JSON.parse(tracker);
-        for (const [date, record] of Object.entries(trackerObj)) {
-          await setToDB("tracker", date, record);
+        try {
+          const trackerObj = JSON.parse(tracker);
+          for (const [date, record] of Object.entries(trackerObj)) {
+            await setToDB("tracker", date, record);
+          }
+        } catch (e) {
+          console.warn("Failed to migrate tracker:", e);
         }
       }
 
       // Bookmarks migration
       const bookmarks = localStorage.getItem("quran_bookmarks");
       if (bookmarks) {
-        await setToDB("bookmarks", "quran_bookmarks", JSON.parse(bookmarks));
+        try {
+          await setToDB("bookmarks", "quran_bookmarks", JSON.parse(bookmarks));
+        } catch (e) {
+          console.warn("Failed to migrate bookmarks:", e);
+        }
       }
       const lastRead = localStorage.getItem("last_read_surah");
       if (lastRead) {
-        await setToDB("bookmarks", "last_read_surah", parseInt(lastRead));
+        try {
+          await setToDB("bookmarks", "last_read_surah", parseInt(lastRead, 10));
+        } catch (e) {
+          console.warn("Failed to migrate lastRead:", e);
+        }
       }
 
       // Favorites migration
       const favorites = localStorage.getItem("hub_favorites");
       if (favorites) {
-        await setToDB("progress", "hub_favorites", JSON.parse(favorites));
+        try {
+          await setToDB("progress", "hub_favorites", JSON.parse(favorites));
+        } catch (e) {
+          console.warn("Failed to migrate favorites:", e);
+        }
       }
 
       // Dhikr Progress migration
       const progress = localStorage.getItem("adhkar_progress");
       if (progress) {
-        const progressObj = JSON.parse(progress);
-        for (const [date, record] of Object.entries(progressObj)) {
-          await setToDB("progress", date, record);
+        try {
+          const progressObj = JSON.parse(progress);
+          for (const [date, record] of Object.entries(progressObj)) {
+            await setToDB("progress", date, record);
+          }
+        } catch (e) {
+          console.warn("Failed to migrate progress:", e);
         }
       }
 
@@ -125,7 +149,11 @@ export async function initDatabase(): Promise<void> {
         if (key && key.startsWith("tasbih_")) {
           const val = localStorage.getItem(key);
           if (val) {
-            await setToDB("progress", key, parseInt(val));
+            try {
+              await setToDB("progress", key, parseInt(val, 10));
+            } catch (e) {
+              console.warn(`Failed to migrate ${key}:`, e);
+            }
           }
         }
       }

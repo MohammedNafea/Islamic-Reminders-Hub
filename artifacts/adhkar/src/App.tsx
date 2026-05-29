@@ -110,7 +110,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" storageKey="adhkar_settings">
+      <ThemeProvider defaultTheme="system" storageKey="adhkar_theme">
         <TooltipProvider>
           <WouterRouter>
             <Router />

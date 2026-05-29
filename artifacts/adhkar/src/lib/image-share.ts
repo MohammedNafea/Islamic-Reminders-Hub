@@ -568,25 +568,42 @@ export const exportToImage = async (
     }
 
     // Draw brand, url and motivation text next to QR code
-    ctx2.textAlign = textAlign;
-    
-    // Motivation line
-    ctx2.fillStyle = "#ffffff";
-    ctx2.font = "bold 22px 'Noto Sans Arabic', 'Tajawal', sans-serif";
-    ctx2.fillText(motivationText, hasQr ? (isRtl ? textX : textX) : canvasWidth / 2, footerY + 50);
-
-    // Sadaqa and URL line
-    ctx2.fillStyle = "rgba(255, 255, 255, 0.7)";
-    ctx2.font = "18px 'Noto Sans Arabic', 'Tajawal', sans-serif";
-    ctx2.fillText(
-      `🌙 ${sadaqaText}  •  ${SITE_URL.replace("https://", "")}`,
-      hasQr ? (isRtl ? textX : textX) : canvasWidth / 2,
-      footerY + 90
-    );
-
     if (!hasQr) {
       ctx2.textAlign = "center";
+    } else {
+      ctx2.textAlign = textAlign;
     }
+    
+    const footerFont = language === "ar"
+      ? "bold 22px 'Noto Sans Arabic', 'Tajawal', sans-serif"
+      : "bold 20px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+
+    const maxFooterTextWidth = hasQr ? (canvasWidth - padding * 2 - qrSize - 60) : maxWidth;
+    
+    ctx.font = footerFont;
+    const wrappedMotivation = wrapText(ctx, motivationText, maxFooterTextWidth);
+
+    ctx2.font = footerFont;
+    let footerTextY = footerY + 40;
+    const footerLineHeight = 32;
+
+    ctx2.fillStyle = "#ffffff";
+    for (const mLine of wrappedMotivation) {
+      ctx2.fillText(mLine, hasQr ? textX : canvasWidth / 2, footerTextY);
+      footerTextY += footerLineHeight;
+    }
+
+    // Draw Sadaqa and URL line below the motivation text
+    footerTextY += 8;
+    ctx2.fillStyle = "rgba(255, 255, 255, 0.7)";
+    ctx2.font = language === "ar"
+      ? "18px 'Noto Sans Arabic', 'Tajawal', sans-serif"
+      : "16px system-ui, -apple-system, sans-serif";
+    ctx2.fillText(
+      `🌙 ${sadaqaText}  •  ${SITE_URL.replace("https://", "")}`,
+      hasQr ? textX : canvasWidth / 2,
+      footerTextY
+    );
 
     // Convert canvas to blob for sharing
     const dataUrl = canvas.toDataURL("image/png");
