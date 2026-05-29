@@ -24,8 +24,8 @@ import Quran from "@/pages/Quran";
 // TEMPORARILY HIDDEN
 // import HadithPage from "@/pages/HadithRulings";
 import MergedDhikr from "@/pages/MergedDhikr";
-// import Favorites from "@/pages/Favorites";
-// import SearchPage from "@/pages/Search";
+import Favorites from "@/pages/Favorites";
+import SearchPage from "@/pages/Search";
 // import LibraryAdmin from "@/pages/LibraryAdmin";
 import Zakat from "@/pages/Zakat";
 import Qibla from "@/pages/Qibla";
