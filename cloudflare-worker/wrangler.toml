@@ -1,0 +1,14 @@
+name = "adhkar-hub"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "production"
+
+[[routes]]
+pattern = "adhkar.thedarkgalaxy.com/*"
+zone_name = "thedarkgalaxy.com"
+
+[site]
+bucket = "./dist"
