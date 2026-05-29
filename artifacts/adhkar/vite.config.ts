@@ -80,10 +80,51 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          i18n: ['i18next', 'react-i18next'],
-          ui: ['framer-motion', 'lucide-react']
+        manualChunks(id) {
+          // Core React runtime
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
+            return 'vendor';
+          }
+          // i18n
+          if (id.includes('node_modules/i18next') || id.includes('node_modules/react-i18next') || id.includes('node_modules/i18next-')) {
+            return 'i18n';
+          }
+          // App translation resources
+          if (id.includes('/src/i18n/')) {
+            return 'i18n-translations';
+          }
+          // Animation
+          if (id.includes('node_modules/framer-motion') || id.includes('node_modules/motion')) {
+            return 'motion';
+          }
+          // Icons
+          if (id.includes('node_modules/lucide-react')) {
+            return 'icons';
+          }
+          // Radix UI components
+          if (id.includes('node_modules/@radix-ui')) {
+            return 'radix';
+          }
+          // Router
+          if (id.includes('node_modules/wouter')) {
+            return 'router';
+          }
+          // DOMPurify / isomorphic-dompurify
+          if (id.includes('node_modules/dompurify') || id.includes('node_modules/isomorphic-dompurify')) {
+            return 'security';
+          }
+          // Tailwind merge / class variance utilities
+          if (id.includes('node_modules/clsx') || id.includes('node_modules/tailwind-merge') || id.includes('node_modules/class-variance-authority')) {
+            return 'ui-utils';
+          }
+          // Quran page (split out separately - it's complex but manageable)
+          if (id.includes('/src/pages/Quran')) {
+            return 'page-quran';
+          }
+          // All other app pages bundled together to avoid circular deps
+          if (id.includes('/src/pages/') || id.includes('/src/screens/')) {
+            return 'pages';
+          }
         }
       }
     }

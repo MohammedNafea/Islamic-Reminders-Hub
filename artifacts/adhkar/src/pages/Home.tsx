@@ -114,7 +114,7 @@ export default function Home() {
       await getPrayerTimesFromAPI(lat, lng, new Date(), method);
     }
     fetchPrayerTimes();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.calculationMethod, hijri.day, settings.location?.lat, settings.location?.lng]);
 
   const handleSalawat = () => {

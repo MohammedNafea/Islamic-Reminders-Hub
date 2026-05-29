@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:http/http.dart' as http;
 import '../models/reciter.dart';
 import '../data/reciters_data.dart';
+
 
 class AudioPlayerProvider extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
@@ -100,6 +102,27 @@ class AudioPlayerProvider extends ChangeNotifier {
     await _player.seek(position);
   }
 
+  // Set audio source with proper lock-screen and notification tags
+  Future<void> _setAudioSourceWithMetadata({
+    required String url,
+    required String mediaId,
+    required String title,
+    required String album,
+  }) async {
+    await _player.setAudioSource(
+      AudioSource.uri(
+        Uri.parse(url),
+        tag: MediaItem(
+          id: mediaId,
+          album: album,
+          title: title,
+          artist: _reciter.name,
+          artUri: Uri.parse("https://raw.githubusercontent.com/MohammedNafea/Islamic-Reminders-Hub/main/artifacts/adhkar/public/favicon.png"),
+        ),
+      ),
+    );
+  }
+
   // Play entire Surah
   Future<void> playSurah({
     required int surahNumber,
@@ -118,7 +141,12 @@ class AudioPlayerProvider extends ChangeNotifier {
       if (isSurahMode) {
         final padded = surahNumber.toString().padLeft(3, '0');
         final url = "${_reciter.surahBaseUrl}$padded.mp3";
-        await _player.setUrl(url);
+        await _setAudioSourceWithMetadata(
+          url: url,
+          mediaId: 'surah_$surahNumber',
+          title: name,
+          album: englishName,
+        );
         await _player.play();
       } else {
         // Ayah mode: Fetch audio urls for all ayahs in the surah
@@ -127,7 +155,12 @@ class AudioPlayerProvider extends ChangeNotifier {
         if (_ayahUrls.isNotEmpty) {
           final index = startAyahIndex ?? 0;
           _activeAyahIndex = index;
-          await _player.setUrl(_ayahUrls[index]);
+          await _setAudioSourceWithMetadata(
+            url: _ayahUrls[index],
+            mediaId: 'ayah_${surahNumber}_${index + 1}',
+            title: '$name - الآية ${index + 1}',
+            album: englishName,
+          );
           await _player.play();
         }
       }
@@ -153,7 +186,12 @@ class AudioPlayerProvider extends ChangeNotifier {
       _activeAyahIndex = null;
       _playingSingleAyahId = ayahNumber;
 
-      await _player.setUrl(url);
+      await _setAudioSourceWithMetadata(
+        url: url,
+        mediaId: 'single_ayah_${surahNumber}_$ayahNumber',
+        title: '$surahName - الآية $ayahNumber',
+        album: surahEnglishName,
+      );
       await _player.play();
       notifyListeners();
     } catch (e) {
@@ -165,16 +203,19 @@ class AudioPlayerProvider extends ChangeNotifier {
     if (_currentSurahNumber == null) return;
     if (isSurahMode) {
       if (_currentSurahNumber! < 114) {
-        // Play next surah
-        // We need metadata for the next surah - since we don't have the whole surahs list here, we just increment and let the UI trigger it, or trigger it locally with generic names or fetched names.
-        // For simplicity, we can let the UI handle next/prev or define surah basic metadata list.
+        // Play next surah (handled by UI layer or parent component)
       }
     } else {
       if (_activeAyahIndex != null && _activeAyahIndex! < _ayahUrls.length - 1) {
         final nextIndex = _activeAyahIndex! + 1;
         _activeAyahIndex = nextIndex;
         await _player.stop();
-        await _player.setUrl(_ayahUrls[nextIndex]);
+        await _setAudioSourceWithMetadata(
+          url: _ayahUrls[nextIndex],
+          mediaId: 'ayah_${_currentSurahNumber}_${nextIndex + 1}',
+          title: '${_currentSurahName ?? ""} - الآية ${nextIndex + 1}',
+          album: _currentSurahEnglishName ?? "",
+        );
         await _player.play();
         notifyListeners();
       }
@@ -192,7 +233,12 @@ class AudioPlayerProvider extends ChangeNotifier {
         final prevIndex = _activeAyahIndex! - 1;
         _activeAyahIndex = prevIndex;
         await _player.stop();
-        await _player.setUrl(_ayahUrls[prevIndex]);
+        await _setAudioSourceWithMetadata(
+          url: _ayahUrls[prevIndex],
+          mediaId: 'ayah_${_currentSurahNumber}_${prevIndex + 1}',
+          title: '${_currentSurahName ?? ""} - الآية ${prevIndex + 1}',
+          album: _currentSurahEnglishName ?? "",
+        );
         await _player.play();
         notifyListeners();
       }
@@ -205,7 +251,12 @@ class AudioPlayerProvider extends ChangeNotifier {
         final nextIndex = _activeAyahIndex! + 1;
         _activeAyahIndex = nextIndex;
         try {
-          await _player.setUrl(_ayahUrls[nextIndex]);
+          await _setAudioSourceWithMetadata(
+            url: _ayahUrls[nextIndex],
+            mediaId: 'ayah_${_currentSurahNumber}_${nextIndex + 1}',
+            title: '${_currentSurahName ?? ""} - الآية ${nextIndex + 1}',
+            album: _currentSurahEnglishName ?? "",
+          );
           await _player.play();
         } catch (e) {
           debugPrint("Error autoplaying next ayah: $e");

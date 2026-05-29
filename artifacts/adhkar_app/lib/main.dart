@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'core/storage/app_storage.dart';
 import 'core/theme/app_theme.dart';
 import 'core/localization/app_localizations.dart';
+import 'core/services/notification_service.dart';
 import 'providers/settings_provider.dart';
 import 'providers/tracker_provider.dart';
 import 'providers/audio_player_provider.dart';
@@ -12,6 +14,17 @@ import 'screens/main_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize background audio services
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.mohammednafea.islamic_reminders.channel.audio',
+    androidNotificationChannelName: 'Quran and Adhkar Playback',
+    androidNotificationOngoing: true,
+    androidShowNotificationBadge: true,
+  );
+
+  // Initialize notifications channel and system
+  await NotificationService.init();
   
   // Initialize local storage (Hive)
   await AppStorage.init();

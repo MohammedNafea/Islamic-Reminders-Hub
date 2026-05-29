@@ -14,6 +14,7 @@ import { TranslatedText } from "@/components/TranslatedText";
 import { getTranslation } from "@/lib/content-i18n";
 import { Button } from "@/components/ui/button";
 import { getCityFromCoords, getCoordsFromCity } from "@/lib/prayer-times";
+import { localDB } from "@/lib/db";
 
 export default function Settings() {
   const { t, i18n } = useTranslation();
@@ -22,6 +23,101 @@ export default function Settings() {
   const [testingSound, setTestingSound] = useState(false);
   const [testAudio, setTestAudio] = useState<HTMLAudioElement | null>(null);
   const testAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const [downloadingSurah, setDownloadingSurah] = useState<number | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [downloadStatus, setDownloadStatus] = useState<string>("");
+
+  const downloadSurahOffline = async (surahNum: number, surahName: string) => {
+    try {
+      setDownloadingSurah(surahNum);
+      setDownloadProgress(5);
+      setDownloadStatus(i18n.language === "ar" ? `جاري البدء في تحميل ${surahName}...` : `Starting download for Surah ${surahName}...`);
+      
+      const audioEdition = "ar.alafasy";
+      const translationEdition = "en.sahih"; 
+
+      // 1. Fetch audio structure
+      const audioRes = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${audioEdition}`).then(res => res.json());
+      if (!audioRes?.data?.ayahs) {
+        throw new Error("Failed to load audio surah structure");
+      }
+      setDownloadProgress(20);
+
+      // 2. Fetch Translation
+      setDownloadStatus(i18n.language === "ar" ? `جاري تحميل التراجم...` : `Fetching translations...`);
+      const transData = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/${translationEdition}`).then(res => res.json()).catch(() => null);
+      if (transData?.data?.ayahs) {
+        transData.data.ayahs.forEach((a: { text?: string }, idx: number) => {
+          localDB.saveCachedTranslation(translationEdition, surahNum, idx + 1, a.text || "");
+        });
+      }
+      setDownloadProgress(40);
+
+      // 3. Fetch Jalalayn and Muyassar
+      setDownloadStatus(i18n.language === "ar" ? `جاري تحميل تفسير الجلالين والميسر...` : `Fetching Jalalayn and Muyassar Tafsirs...`);
+      const jalData = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.jalalayn`).then(res => res.json()).catch(() => null);
+      if (jalData?.data?.ayahs) {
+        jalData.data.ayahs.forEach((a: { text?: string }, idx: number) => {
+          localDB.saveCachedTafsir(16, surahNum, idx + 1, a.text || "");
+        });
+      }
+      const muyData = await fetch(`https://api.alquran.cloud/v1/surah/${surahNum}/ar.muyassar`).then(res => res.json()).catch(() => null);
+      if (muyData?.data?.ayahs) {
+        muyData.data.ayahs.forEach((a: { text?: string }, idx: number) => {
+          localDB.saveCachedTafsir(17, surahNum, idx + 1, a.text || "");
+        });
+      }
+      setDownloadProgress(60);
+
+      // 4. Fetch Ibn Kathir (ID 14)
+      setDownloadStatus(i18n.language === "ar" ? `جاري تحميل تفسير ابن كثير...` : `Fetching Ibn Kathir Tafsir...`);
+      const ibnKathirData = await fetch(`https://api.quran.com/api/v4/tafsirs/14/by_chapter/${surahNum}?per_page=300`).then(res => res.json()).catch(() => null);
+      if (ibnKathirData?.tafsirs) {
+        ibnKathirData.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
+          const parts = t.verse_key.split(":");
+          const idx = parseInt(parts[1], 10) - 1;
+          localDB.saveCachedTafsir(14, surahNum, idx + 1, t.text || "");
+        });
+      }
+      setDownloadProgress(80);
+
+      // 5. Fetch Al-Tabari and Al-Sa'di (ID 15 & 91)
+      setDownloadStatus(i18n.language === "ar" ? `جاري تحميل تفسير الطبري والسعدي...` : `Fetching Al-Tabari and Al-Sa'di Tafsirs...`);
+      const tabariData = await fetch(`https://api.quran.com/api/v4/tafsirs/15/by_chapter/${surahNum}?per_page=300`).then(res => res.json()).catch(() => null);
+      if (tabariData?.tafsirs) {
+        tabariData.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
+          const parts = t.verse_key.split(":");
+          const idx = parseInt(parts[1], 10) - 1;
+          localDB.saveCachedTafsir(15, surahNum, idx + 1, t.text || "");
+        });
+      }
+      const saadiData = await fetch(`https://api.quran.com/api/v4/tafsirs/91/by_chapter/${surahNum}?per_page=300`).then(res => res.json()).catch(() => null);
+      if (saadiData?.tafsirs) {
+        saadiData.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
+          const parts = t.verse_key.split(":");
+          const idx = parseInt(parts[1], 10) - 1;
+          localDB.saveCachedTafsir(91, surahNum, idx + 1, t.text || "");
+        });
+      }
+
+      setDownloadProgress(100);
+      setDownloadStatus(i18n.language === "ar" ? `تم تحميل ${surahName} بنجاح للعمل بدون اتصال!` : `${surahName} downloaded successfully for offline use!`);
+      setTimeout(() => {
+        setDownloadingSurah(null);
+        setDownloadProgress(0);
+        setDownloadStatus("");
+      }, 3000);
+    } catch (err) {
+      console.error(err);
+      setDownloadStatus(i18n.language === "ar" ? "فشل التحميل، يرجى التحقق من اتصالك بالشبكة" : "Download failed. Please check your network connection.");
+      setTimeout(() => {
+        setDownloadingSurah(null);
+        setDownloadProgress(0);
+        setDownloadStatus("");
+      }, 3000);
+    }
+  };
 
   const formatSuhoorOption = (mins: number) => {
     if (i18n.language === "ar") {
@@ -365,8 +461,7 @@ export default function Settings() {
                     Lat: {settings.location.lat.toFixed(4)}, Lng: {settings.location.lng.toFixed(4)}
                   </p>
                 </div>
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                <Button variant="outline" size="sm" onClick={() => updateSetting("location", null as any)} className="rounded-xl">
+                <Button variant="outline" size="sm" onClick={() => updateSetting("location", undefined)} className="rounded-xl">
                   {i18n.language === "ar" ? "إعادة تعيين" : "Reset"}
                 </Button>
               </div>
@@ -1110,6 +1205,77 @@ export default function Settings() {
               onCheckedChange={(val) => updateSetting("vibrate", val)}
             />
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border border-border">
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <TranslatedText
+              text="مدير التحميل بدون اتصال (Offline Manager)"
+              staticTranslation={i18n.language === "ar" ? "مدير التحميل بدون اتصال" : "Offline Download Manager"}
+              keepArabic={false}
+              inline
+            />
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            <TranslatedText
+              text="قم بتحميل التفاسير والتراجم الخاصة بالسورة المفضلة لديك مسبقاً لتتمكن من القراءة والتدبر بشكل كامل وبسرعة فائقة حتى مع انقطاع الإنترنت التام."
+              staticTranslation={i18n.language === "ar" 
+                ? "قم بتحميل التفاسير والتراجم الخاصة بالسورة المفضلة لديك مسبقاً لتتمكن من القراءة والتدبر بشكل كامل وبسرعة فائقة حتى مع انقطاع الإنترنت التام."
+                : "Download Tafsirs and translations of your favorite Surahs in advance to read and reflect offline."}
+              keepArabic={false}
+              inline
+            />
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            {[
+              { id: 1, name: "الفاتحة", engName: "Al-Fatihah" },
+              { id: 18, name: "الكهف", engName: "Al-Kahf" },
+              { id: 36, name: "يس", engName: "Yaseen" },
+              { id: 55, name: "الرحمن", engName: "Ar-Rahman" },
+              { id: 56, name: "الواقعة", engName: "Al-Waqi'ah" },
+              { id: 67, name: "الملك", engName: "Al-Mulk" },
+            ].map(s => {
+              const isThisDownloading = downloadingSurah === s.id;
+              return (
+                <Button
+                  key={s.id}
+                  variant="outline"
+                  size="sm"
+                  disabled={downloadingSurah !== null}
+                  onClick={() => downloadSurahOffline(s.id, i18n.language === "ar" ? s.name : s.engName)}
+                  className="rounded-xl flex items-center justify-between text-xs py-2.5"
+                >
+                  <span>{i18n.language === "ar" ? s.name : s.engName}</span>
+                  {isThisDownloading ? (
+                    <span className="w-2.5 h-2.5 border border-primary border-t-transparent rounded-full animate-spin shrink-0 ml-1.5 mr-1.5" />
+                  ) : (
+                    <svg className="w-3.5 h-3.5 text-muted-foreground shrink-0 ml-1.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  )}
+                </Button>
+              );
+            })}
+          </div>
+
+          {downloadingSurah !== null && (
+            <div className="bg-primary/5 p-3 rounded-2xl border border-primary/10 space-y-2 animate-in fade-in duration-300">
+              <div className="flex justify-between text-[11px] font-bold text-primary">
+                <span className="truncate max-w-[200px]">{downloadStatus}</span>
+                <span>{downloadProgress}%</span>
+              </div>
+              <div className="w-full bg-primary/10 h-1.5 rounded-full overflow-hidden">
+                <div 
+                  className="bg-primary h-full transition-all duration-300 rounded-full" 
+                  style={{ width: `${downloadProgress}%` }}
+                />
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 

@@ -1,7 +1,7 @@
 // IndexedDB Storage Engine with In-Memory Caching for Offline-First capability
 
 const DB_NAME = "adhkar_db";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 // Memory cache for synchronous reads
 const dbCache = {
@@ -24,7 +24,7 @@ function openDB(): Promise<IDBDatabase> {
     };
     request.onupgradeneeded = () => {
       const db = request.result;
-      const stores = ["settings", "tracker", "bookmarks", "progress"];
+      const stores = ["settings", "tracker", "bookmarks", "progress", "tafsirs", "translations"];
       stores.forEach(store => {
         if (!db.objectStoreNames.contains(store)) {
           db.createObjectStore(store);
@@ -217,5 +217,52 @@ export const localDB = {
     setToDB("progress", key, value).catch(err =>
       console.error("IndexedDB Save General Progress Error:", key, err)
     );
+  },
+
+  // TAFSIR & TRANSLATION CACHING
+  async getCachedTafsir(tafsirId: number, surah: number, ayah: number): Promise<string | null> {
+    try {
+      const db = await openDB();
+      return new Promise((resolve) => {
+        const transaction = db.transaction("tafsirs", "readonly");
+        const store = transaction.objectStore("tafsirs");
+        const request = store.get(`${tafsirId}:${surah}:${ayah}`);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => resolve(null);
+      });
+    } catch {
+      return null;
+    }
+  },
+  
+  async saveCachedTafsir(tafsirId: number, surah: number, ayah: number, text: string): Promise<void> {
+    try {
+      await setToDB("tafsirs", `${tafsirId}:${surah}:${ayah}`, text);
+    } catch (err) {
+      console.error("Failed to cache tafsir:", err);
+    }
+  },
+
+  async getCachedTranslation(editionId: string, surah: number, ayah: number): Promise<string | null> {
+    try {
+      const db = await openDB();
+      return new Promise((resolve) => {
+        const transaction = db.transaction("translations", "readonly");
+        const store = transaction.objectStore("translations");
+        const request = store.get(`${editionId}:${surah}:${ayah}`);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => resolve(null);
+      });
+    } catch {
+      return null;
+    }
+  },
+
+  async saveCachedTranslation(editionId: string, surah: number, ayah: number, text: string): Promise<void> {
+    try {
+      await setToDB("translations", `${editionId}:${surah}:${ayah}`, text);
+    } catch (err) {
+      console.error("Failed to cache translation:", err);
+    }
   }
 };

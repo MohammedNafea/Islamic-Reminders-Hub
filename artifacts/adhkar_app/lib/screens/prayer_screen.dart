@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../core/localization/app_localizations.dart';
+import '../core/services/notification_service.dart';
 import '../providers/settings_provider.dart';
 
 class PrayerTimes {
@@ -66,6 +67,7 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
   
   // Qibla Compass
   double? _direction;
+  double? _smoothedDirection;
   double _qiblaAngle = 0.0;
   bool _hasCompass = true;
   StreamSubscription? _compassSubscription;
@@ -325,6 +327,7 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
           _prayerTimes = PrayerTimes.fromJson(timings);
           _loadingTimes = false;
         });
+        _schedulePrayerAlarms(_prayerTimes);
       } else {
         throw Exception("Failed to fetch timings");
       }
@@ -334,6 +337,33 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
         _prayerTimes = PrayerTimes.defaults();
         _loadingTimes = false;
       });
+      _schedulePrayerAlarms(_prayerTimes);
+    }
+  }
+
+  void _schedulePrayerAlarms(PrayerTimes times) {
+    try {
+      final now = DateTime.now();
+      final prayers = [
+        {'name': 'Fajr', 'time': times.fajr, 'id': 1},
+        {'name': 'Dhuhr', 'time': times.dhuhr, 'id': 2},
+        {'name': 'Asr', 'time': times.asr, 'id': 3},
+        {'name': 'Maghrib', 'time': times.maghrib, 'id': 4},
+        {'name': 'Isha', 'time': times.isha, 'id': 5},
+      ];
+
+      for (var prayer in prayers) {
+        final parts = (prayer['time'] as String).split(':');
+        final hour = int.parse(parts[0]);
+        final minute = int.parse(parts[1].split(' ')[0]);
+        
+        final scheduledTime = DateTime(now.year, now.month, now.day, hour, minute);
+        if (scheduledTime.isAfter(now)) {
+          NotificationService.schedulePrayerAlarm(prayer['id'] as int, scheduledTime);
+        }
+      }
+    } catch (e) {
+      debugPrint("Error scheduling alarms: $e");
     }
   }
 
@@ -360,9 +390,25 @@ class _PrayerScreenState extends State<PrayerScreen> with TickerProviderStateMix
   void _initCompass() {
     try {
       _compassSubscription = FlutterCompass.events?.listen((CompassEvent event) {
-        if (mounted) {
+        if (mounted && event.heading != null) {
           setState(() {
-            _direction = event.heading;
+            final raw = event.heading!;
+            if (_smoothedDirection == null) {
+              _smoothedDirection = raw;
+            } else {
+              double diff = raw - _smoothedDirection!;
+              // Wrap angle difference to [-180, 180] to handle the 0-360 crossover correctly
+              while (diff < -180.0) {
+                diff += 360.0;
+              }
+              while (diff > 180.0) {
+                diff -= 360.0;
+              }
+              // Smooth using low pass filter coefficient alpha = 0.15
+              const double alpha = 0.15;
+              _smoothedDirection = (_smoothedDirection! + alpha * diff) % 360.0;
+            }
+            _direction = _smoothedDirection;
           });
         }
       }, onError: (e) {

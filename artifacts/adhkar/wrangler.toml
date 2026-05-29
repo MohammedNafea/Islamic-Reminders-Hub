@@ -1,6 +1,6 @@
 # Cloudflare Pages configuration
 # Used when deploying via: wrangler pages deploy
-name = "islamic-reminders-hub"
+name = "adhkar"
 pages_build_output_dir = "dist/public"
 
 [env.production]
