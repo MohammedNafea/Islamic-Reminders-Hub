@@ -127,6 +127,7 @@ export default function Quran() {
   const [tafsirMuyassar, setTafsirMuyassar] = useState<Tafsir[]>([]);
   const [tafsirIbnKathir, setTafsirIbnKathir] = useState<Tafsir[]>([]);
   const [tafsirTabari, setTafsirTabari] = useState<Tafsir[]>([]);
+  const [tafsirSaadi, setTafsirSaadi] = useState<Tafsir[]>([]);
   const [pageAyahTafsirs, setPageAyahTafsirs] = useState<{
     muyassar: string;
     jalalayn: string;
@@ -134,7 +135,7 @@ export default function Quran() {
     tabari: string;
   } | null>(null);
   const [pageAyahTafsirLoading, setPageAyahTafsirLoading] = useState(false);
-  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "none">("muyassar");
+  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "saadi" | "none">("muyassar");
 
   // View modes
   const [viewMode, setViewMode] = useState<"list" | "pages">(() => {
@@ -384,6 +385,7 @@ export default function Quran() {
     setTafsirMuyassar([]);
     setTafsirIbnKathir([]);
     setTafsirTabari([]);
+    setTafsirSaadi([]);
     
     localDB.saveLastRead(number);
     setLastRead(number);
@@ -398,11 +400,20 @@ export default function Quran() {
       fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()).catch(() => null),
       fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`).then(res => res.json()).catch(() => null),
       fetch(`https://api.alquran.cloud/v1/surah/${number}/${translationEdition}`).then(res => res.json()),
-      fetch(`https://api.quran.com/api/v4/tafsirs/14/by_chapter/${number}`).then(res => res.json()).catch(() => null),
-      fetch(`https://api.quran.com/api/v4/tafsirs/15/by_chapter/${number}`).then(res => res.json()).catch(() => null)
+      // Ibn Kathir: try alquran.cloud first (free, no auth), fallback quran.com
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.ibnkathir`)
+        .then(res => res.json()).catch(() => null),
+      // Tabari: try quran.com (has full tafsir), no alquran.cloud alternative
+      fetch(`https://api.quran.com/api/v4/tafsirs/15/by_chapter/${number}`, {
+        headers: { Accept: "application/json" }
+      }).then(res => res.ok ? res.json() : null).catch(() => null),
+      // Al-Sa'di: alquran.cloud ar.wahidi is closest, quran.com ID 91
+      fetch(`https://api.quran.com/api/v4/tafsirs/91/by_chapter/${number}`, {
+        headers: { Accept: "application/json" }
+      }).then(res => res.ok ? res.json() : null).catch(() => null),
     ];
     
-    Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirData, tabariData]) => {
+    Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirRaw, tabariData, saadiData]) => {
       if (audioData?.data && transData?.data) {
         const totalAyahs = audioData.data.ayahs.length;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -415,11 +426,20 @@ export default function Quran() {
         setTafsirJalalayn(jalalaynData?.data?.ayahs || []);
         setTafsirMuyassar(muyassarData?.data?.ayahs || []);
         
-        // Map Ibn Kathir Tafsir
+        // Map Ibn Kathir Tafsir (alquran.cloud format: data.ayahs[])
         const ibnKathirAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
-        if (ibnKathirData?.tafsirs) {
+        if (ibnKathirRaw?.data?.ayahs) {
+          // alquran.cloud format
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ibnKathirData.tafsirs.forEach((t: any) => {
+          ibnKathirRaw.data.ayahs.forEach((a: any, i: number) => {
+            if (i < totalAyahs) {
+              ibnKathirAyahs[i] = { text: a.text || "" };
+            }
+          });
+        } else if (ibnKathirRaw?.tafsirs) {
+          // quran.com format fallback
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ibnKathirRaw.tafsirs.forEach((t: any) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
             if (idx >= 0 && idx < totalAyahs) {
@@ -442,6 +462,20 @@ export default function Quran() {
           });
         }
         setTafsirTabari(tabariAyahs);
+
+        // Map Al-Sa'di Tafsir (quran.com format)
+        const saadiAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
+        if (saadiData?.tafsirs) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          saadiData.tafsirs.forEach((t: any) => {
+            const parts = t.verse_key.split(":");
+            const idx = parseInt(parts[1], 10) - 1;
+            if (idx >= 0 && idx < totalAyahs) {
+              saadiAyahs[idx] = { text: t.text || "" };
+            }
+          });
+        }
+        setTafsirSaadi(saadiAyahs);
         
         setActiveSurah(number);
         
@@ -544,8 +578,15 @@ export default function Quran() {
       fetch(`https://api.alquran.cloud/v1/ayah/${globalAyahNum}/ar.muyassar`).then(res => res.json()).catch(() => null),
       // Jalalayn from Alquran.cloud
       fetch(`https://api.alquran.cloud/v1/ayah/${globalAyahNum}/ar.jalalayn`).then(res => res.json()).catch(() => null),
-      // Ibn Kathir from Quran.com
-      fetch(`https://api.quran.com/api/v4/tafsirs/14/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
+      // Ibn Kathir: alquran.cloud first (free), fallback quran.com
+      fetch(`https://api.alquran.cloud/v1/ayah/${globalAyahNum}/ar.ibnkathir`)
+        .then(res => res.json())
+        .then(d => d?.data ? { tafsir: { text: d.data.text || "" }, _source: "alquran" } : null)
+        .catch(() => null)
+        .then(d => d || 
+          fetch(`https://api.quran.com/api/v4/tafsirs/14/by_ayah/${surahNum}:${ayahNum}`, { headers: { Accept: "application/json" } })
+            .then(res => res.ok ? res.json() : null).catch(() => null)
+        ),
       // Tabari from Quran.com
       fetch(`https://api.quran.com/api/v4/tafsirs/15/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
     ];
@@ -868,10 +909,10 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
+              {/* eslint-disable-next-line handled below */}
+              <Select value={selectedTafsir} onValueChange={
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (val: any) => setSelectedTafsir(val)}>
                 <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
                 </SelectTrigger>
@@ -880,6 +921,7 @@ export default function Quran() {
                   <SelectItem value="jalalayn" className="text-[11px]">{t("quran.tafsir_jalalayn")}</SelectItem>
                   <SelectItem value="ibnkathir" className="text-[11px]">{t("quran.tafsir_ibn_kathir")}</SelectItem>
                   <SelectItem value="tabari" className="text-[11px]">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</SelectItem>
+                  <SelectItem value="saadi" className="text-[11px]">{t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}</SelectItem>
                   <SelectItem value="none" className="text-[11px]">{t("quran.hide_tafsir", { defaultValue: "إخفاء التفسير" })}</SelectItem>
                 </SelectContent>
               </Select>
@@ -908,10 +950,6 @@ export default function Quran() {
                 </div>
               </div>
               <div className="shrink-0">{renderViewSwitcher()}</div>
-            </div>
-            
-            <div className="flex flex-wrap items-center gap-2 justify-between md:justify-end w-full md:w-auto">
-              {renderViewSwitcher()}
             </div>
           </div>
         )}
@@ -1095,6 +1133,17 @@ export default function Quran() {
                               </h4>
                               <div
                                 dangerouslySetInnerHTML={{ __html: tafsirTabari[ayah.numberInSurah - 1].text }}
+                                className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
+                              />
+                            </div>
+                          )}
+                          {selectedTafsir === "saadi" && tafsirSaadi[ayah.numberInSurah - 1] && (
+                            <div className="bg-amber-500/5 p-4 rounded-2xl text-right border border-amber-500/10" dir="rtl">
+                              <h4 className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1.5">
+                                {t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}
+                              </h4>
+                              <div
+                                dangerouslySetInnerHTML={{ __html: tafsirSaadi[ayah.numberInSurah - 1].text }}
                                 className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
                               />
                             </div>
