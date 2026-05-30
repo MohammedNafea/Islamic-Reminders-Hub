@@ -1,82 +1,80 @@
-# ═══ مركز الأذكار - Security Headers ══════════════════════════════════════
+# ═══════════════════════════════════════════════════════
+# مركز الأذكار الإسلامي - Security & Compatibility Headers
+# يدعم: Chrome/Edge/Firefox/Safari/Petal/Samsung/Huawei
+# ═══════════════════════════════════════════════════════
 
 /*
-  # Force HTTPS - يجبر كل الروابط على HTTPS
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  # ── HTTPS Enforcement ──────────────────────────────
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 
-  # منع عرض الموقع داخل iframes من مواقع أخرى
-  X-Frame-Options: SAMEORIGIN
-
-  # منع تخمين نوع المحتوى - يحمي من هجمات MIME sniffing
+  # ── Core Security ──────────────────────────────────
   X-Content-Type-Options: nosniff
-
-  # حماية XSS للمتصفحات القديمة
+  X-Frame-Options: SAMEORIGIN
   X-XSS-Protection: 1; mode=block
-
-  # سياسة مرجعية آمنة
   Referrer-Policy: strict-origin-when-cross-origin
 
-  # تحديد أذونات الميزات
-  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), midi=()
+  # ── Permissions (incl. Compass for Qibla) ──────────
+  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=(), usb=(), accelerometer=(self), gyroscope=(self), magnetometer=(self), ambient-light-sensor=(self)
 
-  # Cross-Origin policies للأمان
+  # ── Cross-Origin ───────────────────────────────────
   Cross-Origin-Opener-Policy: same-origin-allow-popups
   Cross-Origin-Resource-Policy: cross-origin
+  Cross-Origin-Embedder-Policy: unsafe-none
 
-  # ترقية كل الطلبات إلى HTTPS تلقائياً
-  Content-Security-Policy: upgrade-insecure-requests; default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https:; font-src 'self' https://fonts.gstatic.com data: https:; img-src 'self' data: blob: https:; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://api.quran.com https://everyayah.com https://mp3quran.net https://supabase.co https://*.supabase.co wss://*.supabase.co https://raw.githubusercontent.com https://siimuzrjiobhxftntppr.supabase.co https://cohcnmqarjvoradzlsov.supabase.co https://fonts.googleapis.com https://fonts.gstatic.com https://restcountries.com https:; media-src 'self' blob: https://everyayah.com https://mp3quran.net https://raw.githubusercontent.com https:; worker-src 'self' blob:; manifest-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self';
+  # ── CSP: متوازن للأمان والتوافق مع كل المتصفحات ──
+  Content-Security-Policy: default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; media-src 'self' https://everyayah.com https://cdn.islamic.network https://server8.mp3quran.net https://server7.mp3quran.net https://download.quranicaudio.com https://verse.mp3quran.net https://raw.githubusercontent.com blob: data:; connect-src 'self' https: wss: blob:; worker-src 'self' blob:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; upgrade-insecure-requests
 
-  # منع تحميل الموقع في FrameOptions
-  X-Permitted-Cross-Domain-Policies: none
-
-  # Cache للصفحات الرئيسية
-  Cache-Control: no-cache
-
-# ═══ Service Worker ════════════════════════════════════════════════════════
-/sw.js
+  # ── Cache: HTML pages no-cache ─────────────────────
   Cache-Control: no-cache, no-store, must-revalidate
-  Service-Worker-Allowed: /
-  X-Content-Type-Options: nosniff
 
-# ═══ PWA Manifest ══════════════════════════════════════════════════════════
-/manifest.webmanifest
-  Content-Type: application/manifest+json
-  Cache-Control: public, max-age=86400
+  # ── CORS ───────────────────────────────────────────
+  Access-Control-Allow-Origin: *
 
-# ═══ Static Assets (immutable cache) ══════════════════════════════════════
+# ── Static Assets: long cache ─────────────────────────
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
-  X-Content-Type-Options: nosniff
+  Cross-Origin-Resource-Policy: cross-origin
 
-# ═══ Audio files ══════════════════════════════════════════════════════════
 /audio/*
   Cache-Control: public, max-age=2592000
   Accept-Ranges: bytes
   Cross-Origin-Resource-Policy: cross-origin
 
-# ═══ Data files ════════════════════════════════════════════════════════════
 /data/*
   Cache-Control: public, max-age=604800
 
-# ═══ Icons ═════════════════════════════════════════════════════════════════
+# ── PWA Files ──────────────────────────────────────────
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+  Content-Type: application/javascript
+
+/registerSW.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+# ── Icons ──────────────────────────────────────────────
 /icon-*.png
   Cache-Control: public, max-age=31536000, immutable
-
-/favicon*
-  Cache-Control: public, max-age=86400
+  Cross-Origin-Resource-Policy: cross-origin
 
 /apple-touch-icon.png
   Cache-Control: public, max-age=86400
 
-# ═══ SEO files ═════════════════════════════════════════════════════════════
-/sitemap.xml
-  Content-Type: application/xml; charset=utf-8
-  Cache-Control: public, max-age=3600
-
-/robots.txt
-  Content-Type: text/plain; charset=utf-8
+/favicon*
   Cache-Control: public, max-age=86400
+
+# ── SEO Files ──────────────────────────────────────────
+/robots.txt
+  Cache-Control: public, max-age=86400
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+  Content-Type: application/xml; charset=utf-8
 
 /browserconfig.xml
   Content-Type: application/xml
-  Cache-Control: public, max-age=86400
