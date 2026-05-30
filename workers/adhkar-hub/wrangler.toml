@@ -1,0 +1,15 @@
+name = "adhkar-hub"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# تعيين Domain المخصص
+[[routes]]
+pattern = "adhkar.thedarkgalaxy.com/*"
+zone_name = "thedarkgalaxy.com"
+
+[observability]
+enabled = true
+
+[limits]
+cpu_ms = 50
