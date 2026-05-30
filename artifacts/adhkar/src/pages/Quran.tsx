@@ -1,7 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
-import DOMPurify from "isomorphic-dompurify";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Play, Pause, ChevronRight, Clock, BookOpen, Bookmark, BookmarkCheck, Copy, SkipForward, SkipBack, Volume2, Image, Share2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -117,62 +116,6 @@ const SURAH_START_PAGES = [
 ];
 
 
-const WaveformSeekBar = ({ 
-  currentTime, 
-  duration, 
-  isPlaying, 
-  onSeek 
-}: { 
-  currentTime: number; 
-  duration: number; 
-  isPlaying: boolean; 
-  onSeek: (val: number) => void;
-}) => {
-  const barsCount = 45;
-  const progressPercent = (currentTime / (duration || 1)) * 100;
-  
-  return (
-    <div className="flex-1 h-8 relative flex items-center group">
-      {/* Waveform bars in the background */}
-      <div className="absolute inset-x-0 bottom-1 top-1 flex items-center justify-between pointer-events-none w-full">
-        {Array.from({ length: barsCount }).map((_, i) => {
-          const barPercent = (i / barsCount) * 100;
-          const isPlayed = barPercent <= progressPercent;
-          
-          // Seed heights for a nice waveform shape (e.g., camel humps / bell curves)
-          const baseHeight = 15 + Math.sin((i / barsCount) * Math.PI * 2.5) * 8 + Math.cos((i / barsCount) * Math.PI * 4) * 4;
-          const height = Math.max(6, Math.min(28, baseHeight));
-          
-          return (
-            <div
-              key={i}
-              className="w-[3px] rounded-full transition-all duration-200"
-              style={{
-                height: `${height}px`,
-                backgroundColor: isPlayed ? 'hsl(var(--primary))' : 'rgba(100, 110, 100, 0.15)',
-                animation: isPlaying ? `waveform-play 1.2s ease-in-out infinite alternate` : undefined,
-                animationDelay: `${i * 0.03}s`,
-                maxHeight: '28px',
-              }}
-            />
-          );
-        })}
-      </div>
-      
-      {/* Invisible range input on top for seeking */}
-      <input
-        type="range"
-        min={0}
-        max={duration || 100}
-        value={currentTime}
-        onChange={(e) => onSeek(parseFloat(e.target.value))}
-        className="w-full h-8 opacity-0 cursor-pointer absolute inset-0 z-10"
-      />
-    </div>
-  );
-};
-
-
 export default function Quran() {
   const { t, i18n } = useTranslation();
   const [surahs, setSurahs] = useState<Surah[]>([]);
@@ -184,16 +127,14 @@ export default function Quran() {
   const [tafsirMuyassar, setTafsirMuyassar] = useState<Tafsir[]>([]);
   const [tafsirIbnKathir, setTafsirIbnKathir] = useState<Tafsir[]>([]);
   const [tafsirTabari, setTafsirTabari] = useState<Tafsir[]>([]);
-  const [tafsirSaadi, setTafsirSaadi] = useState<Tafsir[]>([]);
   const [pageAyahTafsirs, setPageAyahTafsirs] = useState<{
     muyassar: string;
     jalalayn: string;
     ibnKathir: string;
     tabari: string;
-    saadi: string;
   } | null>(null);
   const [pageAyahTafsirLoading, setPageAyahTafsirLoading] = useState(false);
-  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "saadi" | "none">("muyassar");
+  const [selectedTafsir, setSelectedTafsir] = useState<"muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "none">("muyassar");
 
   // View modes
   const [viewMode, setViewMode] = useState<"list" | "pages">(() => {
@@ -202,19 +143,6 @@ export default function Quran() {
   const [currentPage, setCurrentPage] = useState<number>(() => {
     return parseInt(localStorage.getItem("quran_current_page") || "1", 10);
   });
-  const [flippingState, setFlippingState] = useState<"next" | "prev" | null>(null);
-  
-  const handlePageChange = (targetPage: number) => {
-    if (targetPage === currentPage || targetPage < 1 || targetPage > 604 || flippingState) return;
-    const direction = targetPage > currentPage ? "next" : "prev";
-    setFlippingState(direction);
-    setTimeout(() => {
-      setCurrentPage(targetPage);
-    }, 300);
-    setTimeout(() => {
-      setFlippingState(null);
-    }, 600);
-  };
   const [pageAyahs, setPageAyahs] = useState<Ayah[]>([]);
   const [pageLoading, setPageLoading] = useState(false);
   const playNextPageFirstAyahRef = useRef(false);
@@ -449,166 +377,83 @@ export default function Quran() {
     };
   }, []);
 
-  const fetchSurahAyahs = async (number: number) => {
+  const fetchSurahAyahs = (number: number) => {
     setLoading(true);
     setAyahs([]);
     setTafsirJalalayn([]);
     setTafsirMuyassar([]);
     setTafsirIbnKathir([]);
     setTafsirTabari([]);
-    const audioEdition = selectedQari.audioEditionId || "ar.alafasy";
-    const translationEdition = getQuranEditionForLanguage(i18n.language) || "en.sahih";
     
-    try {
-      // 1. Fetch audio structure (needed to get length of Surah and verse audio URLs)
-      const audioRes = await fetch(`https://api.alquran.cloud/v1/surah/${number}/${audioEdition}`).then(res => res.json());
-      if (!audioRes?.data?.ayahs) {
-        setLoading(false);
-        return;
-      }
-      const totalAyahs = audioRes.data.ayahs.length;
-
-      // 2. Check cached Translation
-      const cachedTrans: string[] = [];
-      let allTransCached = true;
-      for (let i = 1; i <= totalAyahs; i++) {
-        const text = await localDB.getCachedTranslation(translationEdition, number, i);
-        if (text) {
-          cachedTrans.push(text);
-        } else {
-          allTransCached = false;
-          break;
-        }
-      }
-
-      let transAyahs = cachedTrans;
-      if (!allTransCached) {
-        const transData = await fetch(`https://api.alquran.cloud/v1/surah/${number}/${translationEdition}`).then(res => res.json()).catch(() => null);
-        if (transData?.data?.ayahs) {
-          transAyahs = transData.data.ayahs.map((a: { text?: string }) => a.text || "");
-          // Cache them
-          transAyahs.forEach((text, i) => {
-            localDB.saveCachedTranslation(translationEdition, number, i + 1, text);
-          });
-        }
-      }
-
-      // 3. Enrich Ayahs with Translation
-      const enrichedAyahs = audioRes.data.ayahs.map((a: { audio: string; text: string; numberInSurah: number }, i: number) => ({
-        ...a,
-        translatedText: transAyahs[i] || "",
-        translationEdition
-      }));
-      setAyahs(enrichedAyahs);
-
-      // 4. Check/Fetch Jalalayn (Alquran.cloud)
-      let jalalaynText: string[] = [];
-      let allJalCached = true;
-      for (let i = 1; i <= totalAyahs; i++) {
-        const text = await localDB.getCachedTafsir(16, number, i); // Use ID 16 for Jalalayn
-        if (text) jalalaynText.push(text);
-        else { allJalCached = false; break; }
-      }
-      if (!allJalCached) {
-        const jalData = await fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()).catch(() => null);
-        if (jalData?.data?.ayahs) {
-          jalalaynText = jalData.data.ayahs.map((a: { text?: string }) => a.text || "");
-          jalalaynText.forEach((text, i) => localDB.saveCachedTafsir(16, number, i + 1, text));
-        }
-      }
-      setTafsirJalalayn(jalalaynText.map(t => ({ text: t })));
-
-      // 5. Check/Fetch Muyassar (Alquran.cloud)
-      let muyassarText: string[] = [];
-      let allMuyCached = true;
-      for (let i = 1; i <= totalAyahs; i++) {
-        const text = await localDB.getCachedTafsir(17, number, i); // Use ID 17 for Muyassar
-        if (text) muyassarText.push(text);
-        else { allMuyCached = false; break; }
-      }
-      if (!allMuyCached) {
-        const muyData = await fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`).then(res => res.json()).catch(() => null);
-        if (muyData?.data?.ayahs) {
-          muyassarText = muyData.data.ayahs.map((a: { text?: string }) => a.text || "");
-          muyassarText.forEach((text, i) => localDB.saveCachedTafsir(17, number, i + 1, text));
-        }
-      }
-      setTafsirMuyassar(muyassarText.map(t => ({ text: t })));
-
-      // Helper function to handle Quran.com Tafsirs caching/fetching
-      const getOrFetchQuranComTafsir = async (tafsirId: number, setTafsirState: (tafsirs: Tafsir[]) => void) => {
-        const cachedTafsir: string[] = [];
-        let allCached = true;
-        for (let i = 1; i <= totalAyahs; i++) {
-          const text = await localDB.getCachedTafsir(tafsirId, number, i);
-          if (text) cachedTafsir.push(text);
-          else { allCached = false; break; }
-        }
-        if (allCached) {
-          setTafsirState(cachedTafsir.map(t => ({ text: t })));
-          return;
-        }
-
-        // Try api.quran.com first, fallback to alquran.cloud for Ibn Kathir
-        let data = await fetch(`https://api.quran.com/api/v4/tafsirs/${tafsirId}/by_chapter/${number}?per_page=300`, {
-          headers: { 'Accept': 'application/json' }
-        }).then(res => res.ok ? res.json() : null).catch(() => null);
-
-        // Fallback: alquran.cloud editions for common tafsirs
-        if (!data?.tafsirs) {
+    localDB.saveLastRead(number);
+    setLastRead(number);
+    
+    const translationEdition = getQuranEditionForLanguage(i18n.language) || "en.sahih";
+    const audioEdition = selectedQari.type === "ayah" && selectedQari.audioEditionId 
+      ? selectedQari.audioEditionId 
+      : "ar.husary";
+    
+    const fetches = [
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/${audioEdition}`).then(res => res.json()),
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.jalalayn`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.muyassar`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.alquran.cloud/v1/surah/${number}/${translationEdition}`).then(res => res.json()),
+      fetch(`https://api.quran.com/api/v4/tafsirs/14/by_chapter/${number}`).then(res => res.json()).catch(() => null),
+      fetch(`https://api.quran.com/api/v4/tafsirs/15/by_chapter/${number}`).then(res => res.json()).catch(() => null)
+    ];
+    
+    Promise.all(fetches).then(([audioData, jalalaynData, muyassarData, transData, ibnKathirData, tabariData]) => {
+      if (audioData?.data && transData?.data) {
+        const totalAyahs = audioData.data.ayahs.length;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const enrichedAyahs = audioData.data.ayahs.map((a: any, i: number) => ({
+          ...a,
+          translatedText: transData.data.ayahs[i]?.text || "",
+          translationEdition
+        }));
+        setAyahs(enrichedAyahs);
+        setTafsirJalalayn(jalalaynData?.data?.ayahs || []);
+        setTafsirMuyassar(muyassarData?.data?.ayahs || []);
+        
+        // Map Ibn Kathir Tafsir
+        const ibnKathirAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
+        if (ibnKathirData?.tafsirs) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const alquranEditions: Record<number, string> = { 14: 'ar.ibnkathir', 91: 'ar.muyassar' };
-          const edition = alquranEditions[tafsirId];
-          if (edition) {
-            const fb = await fetch(`https://api.alquran.cloud/v1/surah/${number}/${edition}`)
-              .then(r => r.json()).catch(() => null);
-            if (fb?.data?.ayahs) {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const fbMapped = fb.data.ayahs.map((a: any) => ({ text: a.text || '' }));
-              fbMapped.forEach((a: { text: string }, i: number) => {
-                localDB.saveCachedTafsir(tafsirId, number, i + 1, a.text);
-              });
-              setTafsirState(fbMapped);
-              return;
-            }
-          }
-        }
-
-        const mappedAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
-        if (data?.tafsirs) {
-          data.tafsirs.forEach((t: { verse_key: string; text?: string }) => {
+          ibnKathirData.tafsirs.forEach((t: any) => {
             const parts = t.verse_key.split(":");
             const idx = parseInt(parts[1], 10) - 1;
             if (idx >= 0 && idx < totalAyahs) {
-              mappedAyahs[idx] = { text: t.text || "" };
-              localDB.saveCachedTafsir(tafsirId, number, idx + 1, t.text || "");
+              ibnKathirAyahs[idx] = { text: t.text || "" };
             }
           });
         }
-        setTafsirState(mappedAyahs);
-      };
+        setTafsirIbnKathir(ibnKathirAyahs);
 
-      // 6. Ibn Kathir (Tafsir ID 14)
-      await getOrFetchQuranComTafsir(14, setTafsirIbnKathir);
-
-      // 7. Al-Tabari (Tafsir ID 15)
-      await getOrFetchQuranComTafsir(15, setTafsirTabari);
-
-      // 8. Al-Sa'di (Tafsir ID 91)
-      await getOrFetchQuranComTafsir(91, setTafsirSaadi);
-
-      setActiveSurah(number);
-      audio.pause();
-      setIsPlaying(false);
-      setCurrentTime(0);
-      setDuration(0);
-      setActiveAyahIndex(null);
-      setPlayingSingleAyahId(null);
+        // Map Al-Tabari Tafsir
+        const tabariAyahs = new Array(totalAyahs).fill(null).map(() => ({ text: "" }));
+        if (tabariData?.tafsirs) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          tabariData.tafsirs.forEach((t: any) => {
+            const parts = t.verse_key.split(":");
+            const idx = parseInt(parts[1], 10) - 1;
+            if (idx >= 0 && idx < totalAyahs) {
+              tabariAyahs[idx] = { text: t.text || "" };
+            }
+          });
+        }
+        setTafsirTabari(tabariAyahs);
+        
+        setActiveSurah(number);
+        
+        audio.pause();
+        setIsPlaying(false);
+        setCurrentTime(0);
+        setDuration(0);
+        setActiveAyahIndex(null);
+        setPlayingSingleAyahId(null);
+      }
       setLoading(false);
-    } catch (err) {
-      console.error("fetchSurahAyahs failed:", err);
-      setLoading(false);
-    }
+    }).catch(() => setLoading(false));
   };
 
   // Fetch page data for page-by-page view
@@ -703,18 +548,15 @@ export default function Quran() {
       fetch(`https://api.quran.com/api/v4/tafsirs/14/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
       // Tabari from Quran.com
       fetch(`https://api.quran.com/api/v4/tafsirs/15/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
-      // Saadi from Quran.com
-      fetch(`https://api.quran.com/api/v4/tafsirs/91/by_ayah/${surahNum}:${ayahNum}`).then(res => res.json()).catch(() => null),
     ];
     
     Promise.all(fetches)
-      .then(([muyassarRes, jalalaynRes, ibnKathirRes, tabariRes, saadiRes]) => {
+      .then(([muyassarRes, jalalaynRes, ibnKathirRes, tabariRes]) => {
         setPageAyahTafsirs({
           muyassar: muyassarRes?.data?.text || "",
           jalalayn: jalalaynRes?.data?.text || "",
           ibnKathir: ibnKathirRes?.tafsir?.text || "",
           tabari: tabariRes?.tafsir?.text || "",
-          saadi: saadiRes?.tafsir?.text || "",
         });
         setPageAyahTafsirLoading(false);
       })
@@ -1026,14 +868,16 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
-              <Select value={selectedTafsir} onValueChange={(val: "muyassar" | "jalalayn" | "ibnkathir" | "tabari" | "saadi" | "none") => setSelectedTafsir(val)}>
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              <Select value={selectedTafsir} onValueChange={(val: any) => setSelectedTafsir(val)}>
                 <SelectTrigger className="w-[110px] sm:w-[130px] h-8 rounded-xl border-primary/10 bg-white/50 text-[10px] shrink-0">
                   <SelectValue placeholder={t("quran.tafsir_muyassar")} />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl max-h-72">
                   <SelectItem value="muyassar" className="text-[11px]">{t("quran.tafsir_muyassar")}</SelectItem>
                   <SelectItem value="jalalayn" className="text-[11px]">{t("quran.tafsir_jalalayn")}</SelectItem>
-                  <SelectItem value="saadi" className="text-[11px]">{t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}</SelectItem>
                   <SelectItem value="ibnkathir" className="text-[11px]">{t("quran.tafsir_ibn_kathir")}</SelectItem>
                   <SelectItem value="tabari" className="text-[11px]">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</SelectItem>
                   <SelectItem value="none" className="text-[11px]">{t("quran.hide_tafsir", { defaultValue: "إخفاء التفسير" })}</SelectItem>
@@ -1044,7 +888,7 @@ export default function Quran() {
           </div>
         ) : (
           <div className="bg-card/90 backdrop-blur-md border border-primary/5 rounded-[2rem] shadow-sm sticky top-[calc(3.5rem+env(safe-area-inset-top,0px))] md:top-4 z-20 p-3 md:p-4">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3">
               <Button variant="ghost" onClick={() => { audio.pause(); setViewMode("list"); setActiveSurah(null); }} className="rounded-full h-10 w-10 p-0 bg-white shadow-sm hover:bg-primary/5 text-primary shrink-0">
                 <ChevronRight className={cn("w-5 h-5", i18n.language !== 'ar' && "rotate-180")} />
               </Button>
@@ -1063,6 +907,7 @@ export default function Quran() {
                   {Array.from(new Set(pageAyahs.map(a => i18n.language === 'ar' ? a.surah.name : a.surah.englishName))).join(" / ")}
                 </div>
               </div>
+              <div className="shrink-0">{renderViewSwitcher()}</div>
             </div>
             
             <div className="flex flex-wrap items-center gap-2 justify-between md:justify-end w-full md:w-auto">
@@ -1232,24 +1077,13 @@ export default function Quran() {
                               />
                             </div>
                           )}
-                          {selectedTafsir === "saadi" && tafsirSaadi[ayah.numberInSurah - 1] && (
-                            <div className="bg-orange-500/5 p-4 rounded-2xl text-right border border-orange-500/10" dir="rtl">
-                              <h4 className="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-1.5">
-                                {t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}
-                              </h4>
-                              <div
-                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirSaadi[ayah.numberInSurah - 1].text) }}
-                                className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
-                              />
-                            </div>
-                          )}
                           {selectedTafsir === "ibnkathir" && tafsirIbnKathir[ayah.numberInSurah - 1] && (
                             <div className="bg-emerald-500/5 p-4 rounded-2xl text-right border border-emerald-500/10" dir="rtl">
                               <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">
                                 {t("quran.tafsir_ibn_kathir")}
                               </h4>
                               <div
-                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirIbnKathir[ayah.numberInSurah - 1].text) }}
+                                dangerouslySetInnerHTML={{ __html: tafsirIbnKathir[ayah.numberInSurah - 1].text }}
                                 className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
                               />
                             </div>
@@ -1260,7 +1094,7 @@ export default function Quran() {
                                 {t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}
                               </h4>
                               <div
-                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirTabari[ayah.numberInSurah - 1].text) }}
+                                dangerouslySetInnerHTML={{ __html: tafsirTabari[ayah.numberInSurah - 1].text }}
                                 className="text-muted-foreground text-sm leading-relaxed quran-tafsir-html"
                               />
                             </div>
@@ -1280,8 +1114,8 @@ export default function Quran() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1 || flippingState !== null}
+                onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
                 className="gap-1 text-xs rounded-xl"
               >
                 <ChevronRight className={cn("w-4 h-4", i18n.language === 'ar' ? "rotate-180" : "")} />
@@ -1297,7 +1131,7 @@ export default function Quran() {
                   value={currentPage} 
                   onChange={(e) => {
                     const val = parseInt(e.target.value, 10);
-                    if (val >= 1 && val <= 604) handlePageChange(val);
+                    if (val >= 1 && val <= 604) setCurrentPage(val);
                   }}
                   className="w-16 h-8 text-center text-xs border border-primary/10 rounded-xl bg-white dark:bg-card focus:outline-none focus:ring-1 focus:ring-primary font-bold"
                 />
@@ -1307,8 +1141,8 @@ export default function Quran() {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                onClick={() => currentPage < 604 && handlePageChange(currentPage + 1)}
-                disabled={currentPage === 604 || flippingState !== null}
+                onClick={() => currentPage < 604 && setCurrentPage(currentPage + 1)}
+                disabled={currentPage === 604}
                 className="gap-1 text-xs rounded-xl"
               >
                 <span>{t("common.next", { defaultValue: "التالي" })}</span>
@@ -1317,44 +1151,38 @@ export default function Quran() {
             </div>
 
             {/* Actual Quran Page paper */}
-            <div className="perspective-container">
-              <Card className={cn(
-                "border-none shadow-lg bg-[#fbf9f4] dark:bg-[#111413] rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden relative border-4 sm:border-8 border-double border-amber-900/10 dark:border-amber-500/10 page-flip-card",
-                flippingState === "next" && "flipping-next",
-                flippingState === "prev" && "flipping-prev"
-              )}>
-                <CardContent className="p-3 sm:p-6 md:p-10 space-y-4 sm:space-y-6 min-h-[400px] sm:min-h-[500px]">
-                  {pageLoading ? (
-                    <div className="flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] space-y-4">
-                      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-                      <p className="text-sm text-amber-900/60 dark:text-amber-500/60 font-medium">
-                        {t("common.loading", { defaultValue: "جاري تحميل الصفحة..." })}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4 sm:space-y-6">
-                      {/* Quran page inner decorative border representing Medina Mushaf frames */}
-                      <div className="border-2 border-double border-amber-600/20 dark:border-amber-500/10 p-3 sm:p-5 md:p-8 rounded-[1rem] sm:rounded-[2rem] bg-[#fdfbf7] dark:bg-[#121614] shadow-inner relative overflow-hidden">
-                        {/* Decorative corner patterns */}
-                        <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-tl-sm pointer-events-none" />
-                        <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-tr-sm pointer-events-none" />
-                        <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-bl-sm pointer-events-none" />
-                        <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-br-sm pointer-events-none" />
-                        
-                        {renderPageContent()}
-                      </div>
+            <Card className="border-none shadow-lg bg-[#fbf9f4] dark:bg-[#111413] rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden relative border-4 sm:border-8 border-double border-amber-900/10 dark:border-amber-500/10">
+              <CardContent className="p-3 sm:p-6 md:p-10 space-y-4 sm:space-y-6 min-h-[400px] sm:min-h-[500px]">
+                {pageLoading ? (
+                  <div className="flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] space-y-4">
+                    <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                    <p className="text-sm text-amber-900/60 dark:text-amber-500/60 font-medium">
+                      {t("common.loading", { defaultValue: "جاري تحميل الصفحة..." })}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-4 sm:space-y-6">
+                    {/* Quran page inner decorative border representing Medina Mushaf frames */}
+                    <div className="border-2 border-double border-amber-600/20 dark:border-amber-500/10 p-3 sm:p-5 md:p-8 rounded-[1rem] sm:rounded-[2rem] bg-[#fdfbf7] dark:bg-[#121614] shadow-inner relative overflow-hidden">
+                      {/* Decorative corner patterns */}
+                      <div className="absolute top-2 left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-tl-sm pointer-events-none" />
+                      <div className="absolute top-2 right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-tr-sm pointer-events-none" />
+                      <div className="absolute bottom-2 left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-amber-600/20 dark:border-amber-500/10 rounded-bl-sm pointer-events-none" />
+                      <div className="absolute bottom-2 right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-amber-600/20 dark:border-amber-500/10 rounded-br-sm pointer-events-none" />
                       
-                      {/* Bottom page number indicator (Quran style) */}
-                      <div className="pt-4 flex justify-center">
-                        <div className="relative inline-flex items-center justify-center w-12 h-12 border border-amber-600/20 rounded-full bg-amber-50/30 select-none">
-                          <span className="text-xs font-bold text-amber-900/70 dark:text-amber-400/70 font-mono">{currentPage}</span>
-                        </div>
+                      {renderPageContent()}
+                    </div>
+                    
+                    {/* Bottom page number indicator (Quran style) */}
+                    <div className="pt-4 flex justify-center">
+                      <div className="relative inline-flex items-center justify-center w-12 h-12 border border-amber-600/20 rounded-full bg-amber-50/30 select-none">
+                        <span className="text-xs font-bold text-amber-900/70 dark:text-amber-400/70 font-mono">{currentPage}</span>
                       </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* Page Slider control */}
             <div className="bg-card/50 p-4 rounded-3xl border border-primary/5 backdrop-blur-sm space-y-2">
@@ -1367,7 +1195,7 @@ export default function Quran() {
                 min={1} 
                 max={604} 
                 value={currentPage} 
-                onChange={(e) => handlePageChange(parseInt(e.target.value, 10))}
+                onChange={(e) => setCurrentPage(parseInt(e.target.value, 10))}
                 className="w-full h-1.5 bg-primary/10 rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none"
               />
             </div>
@@ -1433,21 +1261,11 @@ export default function Quran() {
                     </div>
                   )}
 
-                  {tafsirSaadi[selectedTafsirAyah.numberInSurah - 1]?.text && (
-                    <div className="border border-orange-500/10 bg-orange-500/5 p-4 rounded-2xl text-right" dir="rtl">
-                      <h4 className="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}</h4>
-                      <div 
-                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirSaadi[selectedTafsirAyah.numberInSurah - 1].text) }}
-                        className="text-sm text-foreground leading-relaxed quran-tafsir-html"
-                      />
-                    </div>
-                  )}
-
                   {tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text && (
                     <div className="border border-emerald-500/10 bg-emerald-500/5 p-4 rounded-2xl text-right" dir="rtl">
                       <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_ibn_kathir")}</h4>
                       <div 
-                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1].text) }}
+                        dangerouslySetInnerHTML={{ __html: tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1].text }}
                         className="text-sm text-foreground leading-relaxed quran-tafsir-html"
                       />
                     </div>
@@ -1457,7 +1275,7 @@ export default function Quran() {
                     <div className="border border-blue-500/10 bg-blue-500/5 p-4 rounded-2xl text-right" dir="rtl">
                       <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</h4>
                       <div 
-                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(tafsirTabari[selectedTafsirAyah.numberInSurah - 1].text) }}
+                        dangerouslySetInnerHTML={{ __html: tafsirTabari[selectedTafsirAyah.numberInSurah - 1].text }}
                         className="text-sm text-foreground leading-relaxed quran-tafsir-html"
                       />
                     </div>
@@ -1468,8 +1286,7 @@ export default function Quran() {
                   <Button
                     variant="outline"
                     onClick={() => {
-                      const stripHtml = (html: string) => html ? html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim() : "";
-                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير السعدي:\n${stripHtml(tafsirSaadi[selectedTafsirAyah.numberInSurah - 1]?.text)}\n\nتفسير ابن كثير:\n${stripHtml(tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text)}\n\nتفسير الطبري:\n${stripHtml(tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text)}`;
+                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير ابن كثير:\n${tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الطبري:\n${tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text || ""}`;
                       navigator.clipboard.writeText(textToCopy);
                       toast({
                         description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
@@ -1571,21 +1388,11 @@ export default function Quran() {
                       </div>
                     )}
 
-                    {pageAyahTafsirs.saadi && (
-                      <div className="border border-orange-500/10 bg-orange-500/5 p-4 rounded-2xl text-right" dir="rtl">
-                        <h4 className="text-[10px] font-bold text-orange-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}</h4>
-                        <div 
-                          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pageAyahTafsirs.saadi) }}
-                          className="text-sm text-foreground leading-relaxed quran-tafsir-html"
-                        />
-                      </div>
-                    )}
-
                     {pageAyahTafsirs.ibnKathir && (
                       <div className="border border-emerald-500/10 bg-emerald-500/5 p-4 rounded-2xl text-right" dir="rtl">
                         <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_ibn_kathir")}</h4>
                         <div 
-                          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pageAyahTafsirs.ibnKathir) }}
+                          dangerouslySetInnerHTML={{ __html: pageAyahTafsirs.ibnKathir }}
                           className="text-sm text-foreground leading-relaxed quran-tafsir-html"
                         />
                       </div>
@@ -1595,7 +1402,7 @@ export default function Quran() {
                       <div className="border border-blue-500/10 bg-blue-500/5 p-4 rounded-2xl text-right" dir="rtl">
                         <h4 className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1.5">{t("quran.tafsir_tabari", { defaultValue: "تفسير الطبري" })}</h4>
                         <div 
-                          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(pageAyahTafsirs.tabari) }}
+                          dangerouslySetInnerHTML={{ __html: pageAyahTafsirs.tabari }}
                           className="text-sm text-foreground leading-relaxed quran-tafsir-html"
                         />
                       </div>
@@ -1661,7 +1468,7 @@ export default function Quran() {
                       const cleanText = cleanBismillah(selectedPageAyah.text);
                       const surahTitle = i18n.language === "ar" ? selectedPageAyah.surah.name : selectedPageAyah.surah.englishName;
                       const source = `${surahTitle} - ${t("quran.ayah", { defaultValue: "آية" })} ${selectedPageAyah.numberInSurah}`;
-                      const rawTafsir = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير السعدي:\n${pageAyahTafsirs?.saadi || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
+                      const rawTafsir = `الآية: ${selectedPageAyah.text}\n\nتفسير الميسر:\n${pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || ""}\n\nتفسير الجلالين:\n${pageAyahTafsirs?.jalalayn || ""}\n\nتفسير ابن كثير:\n${pageAyahTafsirs?.ibnKathir || ""}\n\nتفسير الطبري:\n${pageAyahTafsirs?.tabari || ""}`;
                       let finalTafsirText = rawTafsir;
                       if (i18n.language !== "ar") {
                         const translatedTafsir = await translateText(pageAyahTafsirs?.muyassar || selectedPageAyah.tafsirText || "", i18n.language);
@@ -1876,15 +1683,20 @@ export default function Quran() {
             <span className="text-[10px] font-mono text-muted-foreground tabular-nums">
               {formatTime(currentTime)}
             </span>
-            <WaveformSeekBar
-              currentTime={currentTime}
-              duration={duration}
-              isPlaying={isPlaying}
-              onSeek={(val) => {
-                audio.currentTime = val;
-                setCurrentTime(val);
-              }}
-            />
+            <div className="flex-1 relative flex items-center">
+              <input
+                type="range"
+                min={0}
+                max={duration || 100}
+                value={currentTime}
+                onChange={(e) => {
+                  const val = parseFloat(e.target.value);
+                  audio.currentTime = val;
+                  setCurrentTime(val);
+                }}
+                className="w-full h-1 bg-primary/10 rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none"
+              />
+            </div>
             <span className="text-[10px] font-mono text-muted-foreground tabular-nums">
               {formatTime(duration)}
             </span>
