@@ -13,27 +13,6 @@ const isRtlLang = (lang: string): boolean => {
 };
 
 /**
- * Sanitizes Arabic text for Canvas rendering by replacing or removing Quranic unicode marks 
- * that are unsupported or cause glyph-shaping bugs (like U+06E1 sukoon) in system canvas renderers.
- */
-export function sanitizeArabicForCanvas(text: string): string {
-  if (!text) return "";
-  let result = text.replace(/\u06E1/g, "\u0652"); // Replace Quranic sukoon with standard sukoon
-  
-  // Remove unsupported small high/low Quranic symbols individually to avoid ESLint warnings
-  const quranicMarks = [
-    /\u06DF/g, /\u06E0/g, /\u06E2/g, /\u06E3/g, /\u06E4/g, 
-    /\u06E5/g, /\u06E6/g, /\u06E7/g, /\u06E8/g, /\u06EA/g, 
-    /\u06EB/g, /\u06EC/g, /\u06ED/g
-  ];
-  
-  for (const mark of quranicMarks) {
-    result = result.replace(mark, "");
-  }
-  return result;
-}
-
-/**
  * Resolves main category and subcategory based on dhikrId or fallback titles
  */
 export function resolveDhikrGroupInfo(
@@ -274,16 +253,9 @@ export const exportToImage = async (
   dhikrId?: string
 ) => {
   try {
-    if (typeof document !== "undefined" && document.fonts) {
-      await document.fonts.ready;
-    }
-
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("Could not create 2D canvas context");
-
-    const isRtl = isRtlLang(language);
-    ctx.direction = isRtl ? "rtl" : "ltr";
 
     const canvasWidth = 1200;
     const padding = 80;
@@ -291,8 +263,8 @@ export const exportToImage = async (
 
     // Resolve Category and Subcategory
     const info = resolveDhikrGroupInfo(dhikrId, title, language);
-    let resolvedCategory = sanitizeArabicForCanvas(info.category);
-    let resolvedSubcategory = sanitizeArabicForCanvas(info.subcategory);
+    let resolvedCategory = info.category;
+    let resolvedSubcategory = info.subcategory;
 
     // Translate UI elements dynamically if language is non-Arabic and non-English
     if (language !== "ar" && language !== "en") {
@@ -301,8 +273,8 @@ export const exportToImage = async (
     }
 
     // Dynamic translations for note & source if language is not Arabic
-    let resolvedNote = note ? sanitizeArabicForCanvas(note) : undefined;
-    let resolvedSource = source ? sanitizeArabicForCanvas(source) : undefined;
+    let resolvedNote = note;
+    let resolvedSource = source;
     if (language !== "ar") {
       if (note) resolvedNote = await translateText(note, language);
       if (source) resolvedSource = await translateText(source, language);
@@ -326,22 +298,20 @@ export const exportToImage = async (
     const motivationText = language === "ar" ? rawMotivation : await translateText(rawMotivation, language);
     const sadaqaText = language === "ar" ? rawSadaqa : await translateText(rawSadaqa, language);
 
-    const sanitizedText = sanitizeArabicForCanvas(text);
-
     // Fonts — larger sizes for high resolution canvas
-    const arabicFont = "400 42px 'Amiri', 'Traditional Arabic', 'Noto Sans Arabic', 'Tajawal', serif";
-    const translationFont = "400 28px 'Noto Sans Arabic', 'Tajawal', sans-serif";
-    const noteFont = "italic 24px 'Noto Sans Arabic', 'Tajawal', sans-serif";
-    const sourceFont = "italic 26px 'Noto Sans Arabic', 'Tajawal', sans-serif";
+    const arabicFont = "400 42px 'Amiri', 'Traditional Arabic', 'Tajawal', serif";
+    const translationFont = "400 28px 'Tajawal', sans-serif";
+    const noteFont = "italic 24px 'Tajawal', sans-serif";
+    const sourceFont = "italic 26px 'Tajawal', sans-serif";
 
     // Measure text lines
     ctx.font = arabicFont;
-    const arabicLines = wrapText(ctx, sanitizedText, maxWidth);
+    const arabicLines = wrapText(ctx, text, maxWidth);
 
     let translationLines: string[] = [];
     if (language !== "ar") {
       ctx.font = translationFont;
-      const translatedMainText = await translateText(sanitizedText, language);
+      const translatedMainText = await translateText(text, language);
       translationLines = wrapText(ctx, translatedMainText, maxWidth);
     }
 
@@ -392,7 +362,6 @@ export const exportToImage = async (
     const ctx2 = canvas.getContext("2d")!;
     ctx2.scale(dpr, dpr);
     ctx2.textBaseline = "middle";
-    ctx2.direction = isRtl ? "rtl" : "ltr";
 
     // Background gradient (Luxurious dark emerald green)
     const gradient = ctx2.createLinearGradient(0, 0, 0, canvasHeight);
@@ -415,14 +384,14 @@ export const exportToImage = async (
     // Draw Main Category
     let cursorY = padding + 28;
     ctx2.fillStyle = "rgba(245, 158, 11, 0.7)";
-    ctx2.font = "bold 22px 'Noto Sans Arabic', 'Tajawal', sans-serif";
+    ctx2.font = "bold 22px 'Tajawal', sans-serif";
     ctx2.textAlign = "center";
     ctx2.fillText(resolvedCategory.toUpperCase(), canvasWidth / 2, cursorY);
 
     // Draw Subcategory (Prominent)
     cursorY += 40;
     ctx2.fillStyle = "#f59e0b";
-    ctx2.font = "bold 38px 'Noto Sans Arabic', 'Tajawal', sans-serif";
+    ctx2.font = "bold 38px 'Tajawal', sans-serif";
     ctx2.fillText(resolvedSubcategory, canvasWidth / 2, cursorY);
 
     // Decorative line under title
@@ -542,6 +511,7 @@ export const exportToImage = async (
     ctx2.lineWidth = 1;
     ctx2.stroke();
 
+    const isRtl = isRtlLang(language);
     const qrSize = 110;
     const qrBoxSize = qrSize + 16;
     const qrY = footerY + 25;
@@ -568,42 +538,25 @@ export const exportToImage = async (
     }
 
     // Draw brand, url and motivation text next to QR code
-    if (!hasQr) {
-      ctx2.textAlign = "center";
-    } else {
-      ctx2.textAlign = textAlign;
-    }
+    ctx2.textAlign = textAlign;
     
-    const footerFont = language === "ar"
-      ? "bold 22px 'Noto Sans Arabic', 'Tajawal', sans-serif"
-      : "bold 20px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-
-    const maxFooterTextWidth = hasQr ? (canvasWidth - padding * 2 - qrSize - 60) : maxWidth;
-    
-    ctx.font = footerFont;
-    const wrappedMotivation = wrapText(ctx, motivationText, maxFooterTextWidth);
-
-    ctx2.font = footerFont;
-    let footerTextY = footerY + 40;
-    const footerLineHeight = 32;
-
+    // Motivation line
     ctx2.fillStyle = "#ffffff";
-    for (const mLine of wrappedMotivation) {
-      ctx2.fillText(mLine, hasQr ? textX : canvasWidth / 2, footerTextY);
-      footerTextY += footerLineHeight;
-    }
+    ctx2.font = "bold 22px 'Tajawal', sans-serif";
+    ctx2.fillText(motivationText, hasQr ? (isRtl ? textX : textX) : canvasWidth / 2, footerY + 50);
 
-    // Draw Sadaqa and URL line below the motivation text
-    footerTextY += 8;
+    // Sadaqa and URL line
     ctx2.fillStyle = "rgba(255, 255, 255, 0.7)";
-    ctx2.font = language === "ar"
-      ? "18px 'Noto Sans Arabic', 'Tajawal', sans-serif"
-      : "16px system-ui, -apple-system, sans-serif";
+    ctx2.font = "18px 'Tajawal', sans-serif";
     ctx2.fillText(
       `🌙 ${sadaqaText}  •  ${SITE_URL.replace("https://", "")}`,
-      hasQr ? textX : canvasWidth / 2,
-      footerTextY
+      hasQr ? (isRtl ? textX : textX) : canvasWidth / 2,
+      footerY + 90
     );
+
+    if (!hasQr) {
+      ctx2.textAlign = "center";
+    }
 
     // Convert canvas to blob for sharing
     const dataUrl = canvas.toDataURL("image/png");
