@@ -21,7 +21,6 @@ import Fasting from "@/pages/Fasting";
 import Tasbih from "@/pages/Tasbih";
 import Settings from "@/pages/Settings";
 import Quran from "@/pages/Quran";
-// TEMPORARILY HIDDEN
 // import HadithPage from "@/pages/HadithRulings";
 import MergedDhikr from "@/pages/MergedDhikr";
 import Favorites from "@/pages/Favorites";
@@ -66,8 +65,8 @@ function Router() {
         <Route path="/morning-ruqyah" component={MergedDhikr} />
         <Route path="/evening-ruqyah" component={MergedDhikr} />
         <Route path="/settings" component={Settings} />
-        {/* <Route path="/favorites" component={Favorites} /> */}
-        {/* <Route path="/search" component={SearchPage} /> */}
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/search" component={SearchPage} />
         {/* <Route path="/admin/library" component={LibraryAdmin} /> */}
         <Route path="/zakat" component={Zakat} />
         <Route path="/qibla" component={Qibla} />
