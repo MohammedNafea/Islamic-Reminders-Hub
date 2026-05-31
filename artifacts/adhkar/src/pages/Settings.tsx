@@ -365,8 +365,7 @@ export default function Settings() {
                     Lat: {settings.location.lat.toFixed(4)}, Lng: {settings.location.lng.toFixed(4)}
                   </p>
                 </div>
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                <Button variant="outline" size="sm" onClick={() => updateSetting("location", null as any)} className="rounded-xl">
+                <Button variant="outline" size="sm" onClick={() => updateSetting("location", undefined)} className="rounded-xl">
                   {i18n.language === "ar" ? "إعادة تعيين" : "Reset"}
                 </Button>
               </div>
