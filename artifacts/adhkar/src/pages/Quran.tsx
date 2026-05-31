@@ -593,10 +593,15 @@ export default function Quran() {
     
     Promise.all(fetches)
       .then(([muyassarRes, jalalaynRes, ibnKathirRes, tabariRes]) => {
+        // Handle Ibn Kathir: alquran.cloud returns { tafsir: { text: ... } } 
+        // after our fallback chain
+        const ibnKathirText = ibnKathirRes?._source === "alquran" 
+          ? (ibnKathirRes?.tafsir?.text || "")
+          : (ibnKathirRes?.tafsir?.text || "");
         setPageAyahTafsirs({
           muyassar: muyassarRes?.data?.text || "",
           jalalayn: jalalaynRes?.data?.text || "",
-          ibnKathir: ibnKathirRes?.tafsir?.text || "",
+          ibnKathir: ibnKathirText,
           tabari: tabariRes?.tafsir?.text || "",
         });
         setPageAyahTafsirLoading(false);
@@ -909,7 +914,6 @@ export default function Quran() {
             </div>
             {/* Row 2: Controls */}
             <div className="flex items-center gap-2 flex-wrap">
-              {/* eslint-disable-next-line handled below */}
               <Select value={selectedTafsir} onValueChange={
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (val: any) => setSelectedTafsir(val)}>
@@ -1329,13 +1333,24 @@ export default function Quran() {
                       />
                     </div>
                   )}
+
+                  {tafsirSaadi[selectedTafsirAyah.numberInSurah - 1]?.text && (
+                    <div className="border border-amber-600/10 bg-amber-600/5 p-4 rounded-2xl text-right" dir="rtl">
+                      <h4 className="text-[10px] font-bold text-amber-700 uppercase tracking-widest mb-1.5">{t("quran.tafsir_saadi", { defaultValue: "تفسير السعدي" })}</h4>
+                      <div 
+                        dangerouslySetInnerHTML={{ __html: tafsirSaadi[selectedTafsirAyah.numberInSurah - 1].text }}
+                        className="text-sm text-foreground leading-relaxed quran-tafsir-html"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2">
                   <Button
                     variant="outline"
                     onClick={() => {
-                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير ابن كثير:\n${tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الطبري:\n${tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text || ""}`;
+                      const saadi = tafsirSaadi[selectedTafsirAyah.numberInSurah - 1]?.text || "";
+                      const textToCopy = `الآية: ${selectedTafsirAyah.text}\n\nتفسير الميسر:\n${tafsirMuyassar[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الجلالين:\n${tafsirJalalayn[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير ابن كثير:\n${tafsirIbnKathir[selectedTafsirAyah.numberInSurah - 1]?.text || ""}\n\nتفسير الطبري:\n${tafsirTabari[selectedTafsirAyah.numberInSurah - 1]?.text || ""}${saadi ? "\n\nتفسير السعدي:\n" + saadi : ""}`;
                       navigator.clipboard.writeText(textToCopy);
                       toast({
                         description: t("quran.tafsir_copied", { defaultValue: "تم نسخ النص والتفسير" }),
@@ -1580,7 +1595,7 @@ export default function Quran() {
         )}
 
         {/* Floating bottom audio player */}
-        <div className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-2 right-2 md:left-auto md:right-auto md:w-[min(calc(100vw-4rem),720px)] md:mx-auto md:inset-x-0 z-40 bg-card/95 backdrop-blur-md border border-primary/10 rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl p-3 md:p-5 flex flex-col gap-2 md:gap-3 animate-in slide-in-from-bottom duration-300">
+        <div className="fixed bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] md:bottom-6 left-1 right-1 md:left-auto md:right-auto md:w-[min(calc(100vw-4rem),720px)] md:mx-auto md:inset-x-0 z-40 bg-card/95 backdrop-blur-md border border-primary/10 rounded-[1.25rem] md:rounded-[2.5rem] shadow-2xl p-2.5 md:p-5 flex flex-col gap-2 md:gap-3 animate-in slide-in-from-bottom duration-300 max-h-[45vh] md:max-h-none overflow-y-auto">
           <div className="flex items-center justify-between gap-2 md:gap-4">
             {/* Left: Info */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
