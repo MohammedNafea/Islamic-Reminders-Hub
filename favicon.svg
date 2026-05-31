@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="100" fill="#0d1f0d"/>
+  
+  <!-- Outer decorative ring -->
+  <circle cx="256" cy="256" r="225" fill="none" stroke="#c8a84b" stroke-width="6" stroke-dasharray="12 8" opacity="0.4"/>
+  
+  <!-- Mosque silhouette -->
+  <!-- Main dome -->
+  <path d="M256 100 Q190 105 168 172 L168 205 L344 205 L344 172 Q322 105 256 100Z" fill="#c8a84b"/>
+  
+  <!-- Dome highlight -->
+  <path d="M256 110 Q210 118 195 172 L170 172 Q185 118 256 100 Q327 118 342 172 L317 172 Q302 118 256 110Z" fill="#e8c05b" opacity="0.4"/>
+  
+  <!-- Left minaret -->
+  <rect x="130" y="155" width="28" height="90" rx="5" fill="#c8a84b"/>
+  <path d="M130 155 Q144 128 158 155Z" fill="#c8a84b"/>
+  <circle cx="144" cy="122" r="9" fill="#c8a84b"/>
+  <rect x="138" y="113" width="12" height="9" fill="#c8a84b"/>
+  
+  <!-- Right minaret -->
+  <rect x="354" y="155" width="28" height="90" rx="5" fill="#c8a84b"/>
+  <path d="M354 155 Q368 128 382 155Z" fill="#c8a84b"/>
+  <circle cx="368" cy="122" r="9" fill="#c8a84b"/>
+  <rect x="362" y="113" width="12" height="9" fill="#c8a84b"/>
+  
+  <!-- Crescent on dome -->
+  <path d="M256 82 C244 66 228 62 220 72 C216 50 236 32 256 32 C276 32 296 50 292 72 C284 62 268 66 256 82Z" fill="#c8a84b"/>
+  
+  <!-- Star near crescent -->
+  <polygon points="302,48 305,58 315,58 307,64 310,74 302,68 294,74 297,64 289,58 299,58" fill="#c8a84b"/>
+  
+  <!-- Mosque body -->
+  <rect x="148" y="205" width="216" height="125" rx="6" fill="#1a3a1a" stroke="#c8a84b" stroke-width="4"/>
+  
+  <!-- Arched door -->
+  <path d="M231 330 L231 268 Q256 246 281 268 L281 330Z" fill="#c8a84b" opacity="0.85"/>
+  
+  <!-- Left window arch -->
+  <path d="M163 233 L163 270 Q178 282 193 270 L193 233 Q178 221 163 233Z" fill="#c8a84b" opacity="0.5"/>
+  
+  <!-- Right window arch -->
+  <path d="M319 233 L319 270 Q334 282 349 270 L349 233 Q334 221 319 233Z" fill="#c8a84b" opacity="0.5"/>
+  
+  <!-- Ground platform -->
+  <rect x="108" y="330" width="296" height="18" rx="9" fill="#c8a84b" opacity="0.7"/>
+  
+  <!-- Decorative dots -->
+  <circle cx="176" cy="368" r="5" fill="#c8a84b" opacity="0.6"/>
+  <circle cx="214" cy="368" r="5" fill="#c8a84b" opacity="0.6"/>
+  <circle cx="256" cy="368" r="5" fill="#c8a84b" opacity="0.6"/>
+  <circle cx="298" cy="368" r="5" fill="#c8a84b" opacity="0.6"/>
+  <circle cx="336" cy="368" r="5" fill="#c8a84b" opacity="0.6"/>
+</svg>

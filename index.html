@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <script type="module" crossorigin src="/assets/polyfills-BbUjpWvT.js"></script>
+
+    <!-- ═══ Encoding ════════════════════════════════════════════════════════ -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- ═══ GitHub Pages SPA Routing ════════════════════════════════════════ -->
+    <script>
+      (function(l){
+        if(l.search&&l.search[1]==='/'){
+          var raw=decodeURIComponent(l.search.slice(2));
+          var hi=raw.indexOf('#'),hash=hi>=0?raw.slice(hi):l.hash;
+          if(hi>=0)raw=raw.slice(0,hi);
+          var ti=raw.indexOf('~q~'),path,query;
+          if(ti>=0){path='/'+raw.slice(0,ti);query='?'+raw.slice(ti+3);}
+          else{path='/'+raw;query='';}
+          window.history.replaceState(null,null,path+query+hash);
+        }
+      }(window.location));
+    </script>
+
+    <!-- ═══ Viewport ════════════════════════════════════════════════════════ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, shrink-to-fit=no" />
+
+    <!-- ═══ Security ════════════════════════════════════════════════════════ -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- ═══ PWA Core ════════════════════════════════════════════════════════ -->
+    <meta name="application-name" content="مركز الأذكار" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="مركز الأذكار" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0a150a" />
+    <meta name="msapplication-TileColor" content="#0a150a" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- ═══ Huawei / HarmonyOS / Petal Browser ══════════════════════════════ -->
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="browsermode" content="application" />
+    <meta name="nightmode" content="enable" />
+    <meta name="imagemode" content="force" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="full-screen" content="yes" />
+    <meta name="layoutmode" content="fitscreen" />
+    <meta name="wap-font-scale" content="no" />
+    <!-- Petal Browser safe browsing -->
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="MobileOptimized" content="width" />
+
+    <!-- ═══ SEO ══════════════════════════════════════════════════════════════ -->
+    <title>مركز الأذكار الإسلامي | قرآن كريم، أذكار، مواقيت الصلاة - Islamic Hub</title>
+    <meta name="description" content="مركز الأذكار: اقرأ واستمع للقرآن الكريم، أذكار الصباح والمساء، أذكار بعد الصلاة، حاسبة الزكاة، اتجاه القبلة، مواقيت الصلاة. يدعم 100 لغة. مجاني وبدون إنترنت." />
+    <meta name="keywords" content="أذكار,القرآن الكريم,مواقيت الصلاة,اتجاه القبلة,حاسبة الزكاة,تسبيح,حصن المسلم,أذكار الصباح,أذكار المساء,quran,adhkar,dhikr,prayer times,qibla,zakat,tasbih,islamic,muslim,dua,azkar,athan,salah,hijri" />
+    <meta name="author" content="مركز الأذكار الإسلامي" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <link rel="canonical" href="https://adhkar.thedarkgalaxy.com/" />
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="ar" href="https://adhkar.thedarkgalaxy.com/?lng=ar" />
+    <link rel="alternate" hreflang="en" href="https://adhkar.thedarkgalaxy.com/?lng=en" />
+    <link rel="alternate" hreflang="x-default" href="https://adhkar.thedarkgalaxy.com/" />
+
+    <!-- ═══ Open Graph ════════════════════════════════════════════════════════ -->
+    <meta property="og:site_name" content="مركز الأذكار الإسلامي" />
+    <meta property="og:title" content="مركز الأذكار | قرآن كريم، أذكار، صلاة، قبلة" />
+    <meta property="og:description" content="منصة إسلامية متكاملة: القرآن الكريم مع الاستماع، أذكار الصباح والمساء، مواقيت الصلاة، اتجاه القبلة، حاسبة الزكاة. 100 لغة، يعمل بدون إنترنت." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://adhkar.thedarkgalaxy.com/" />
+    <meta property="og:image" content="https://adhkar.thedarkgalaxy.com/opengraph.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ar_SA" />
+
+    <!-- ═══ Twitter Card ════════════════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="مركز الأذكار | Islamic Hub" />
+    <meta name="twitter:description" content="اقرأ القرآن، أذكار يومية، مواقيت الصلاة، القبلة. 100 لغة. مجاني." />
+    <meta name="twitter:image" content="https://adhkar.thedarkgalaxy.com/opengraph.jpg" />
+
+    <!-- ═══ Structured Data ══════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"مركز الأذكار الإسلامي","alternateName":["Islamic Hub","Adhkar Center"],"url":"https://adhkar.thedarkgalaxy.com/","description":"منصة إسلامية شاملة للقرآن والأذكار","applicationCategory":"ReligiousApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","ratingCount":"1000","bestRating":"5"}}
+    </script>
+
+    <!-- ═══ Icons & Manifest ═════════════════════════════════════════════════ -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- ═══ Preconnect ══════════════════════════════════════════════════════ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.aladhan.com" />
+    <link rel="dns-prefetch" href="https://api.alquran.cloud" />
+    <link rel="dns-prefetch" href="https://everyayah.com" />
+    <link rel="dns-prefetch" href="https://cdn.islamic.network" />
+
+    <!-- ═══ Fonts ════════════════════════════════════════════════════════════ -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="/assets/index-DAnpvxe2.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-DMY9yGHy.js">
+    <link rel="modulepreload" crossorigin href="/assets/i18n-CFSzy1DR.js">
+    <link rel="modulepreload" crossorigin href="/assets/i18n-translations-KRDEGcUG.js">
+    <link rel="modulepreload" crossorigin href="/assets/router-BBX0D4ek.js">
+    <link rel="modulepreload" crossorigin href="/assets/icons-Cjv5m64E.js">
+    <link rel="modulepreload" crossorigin href="/assets/motion-Be4V0GE9.js">
+    <link rel="modulepreload" crossorigin href="/assets/radix-DGbhwkRp.js">
+    <link rel="modulepreload" crossorigin href="/assets/ui-utils-BmjxSsjX.js">
+    <link rel="modulepreload" crossorigin href="/assets/pages-C6uMFImO.js">
+    <link rel="modulepreload" crossorigin href="/assets/page-quran-BeotLaJv.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-yvVfJPd3.css">
+    <script type="module">import'data:text/javascript,if(!import.meta.resolve)throw Error("import.meta.resolve not supported")';import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>
+    <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+  <body>
+    <noscript>
+      <div style="direction:rtl;text-align:center;padding:2rem;font-family:sans-serif;background:#0a150a;color:#c8a84b;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <h1 style="font-size:1.5rem;margin-bottom:1rem">مركز الأذكار الإسلامي</h1>
+        <p>يرجى تفعيل JavaScript لاستخدام هذا التطبيق</p>
+        <p style="margin-top:.5rem;font-size:.8rem;opacity:.7">Please enable JavaScript to use this application</p>
+      </div>
+    </noscript>
+    <div id="root"></div>
+    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-CI49w00P.js"></script>
+    <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-CM55clrH.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  </body>
+</html>
